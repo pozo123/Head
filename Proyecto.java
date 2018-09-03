@@ -12,6 +12,7 @@ import java.util.Date;
  * @author franciscopozodelatijera
  */
 public class Proyecto {
+    private String nombre;
     private ArrayList<String> lista_requisitos; //Lista de requisitos que habrá que llenar para activar el proyecto
     private ArrayList<Boolean> estatus_requisitos; //Lista de estatus de requisitos, true si el requisito se ha cumplido
     private int estado; //1-> Activo 2-> No activo 3-> Terminado
@@ -32,7 +33,8 @@ public class Proyecto {
 //        }
     }
 
-    public Proyecto(ArrayList<String> requisitos, Ingeniero lider) {
+    public Proyecto(String nombre, ArrayList<String> requisitos, Ingeniero lider) {
+        this.nombre = nombre;
         this.lista_requisitos = requisitos;
         this.lider = lider;
         this.estado = 2;
@@ -43,7 +45,8 @@ public class Proyecto {
         }
     }
     
-    public Proyecto(ArrayList<String> requisitos, Ingeniero lider, Ingeniero[] asignados) {
+    public Proyecto(String nombre, ArrayList<String> requisitos, Ingeniero lider, Ingeniero[] asignados) {
+        this.nombre = nombre;
         this.lista_requisitos = requisitos;
         this.lider = lider;
         this.asignados = asignados;
@@ -55,6 +58,11 @@ public class Proyecto {
         }
     }
 
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
     public ArrayList<String> getLista_requisitos() {
         return lista_requisitos;
     }
@@ -91,6 +99,9 @@ public class Proyecto {
         return asignados;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     //Al cambiar este tambien hay que cambiar la lista de estatus_requisitos
     public void setLista_requisitos(ArrayList<String> lista_requisitos) {
         this.lista_requisitos = lista_requisitos;
