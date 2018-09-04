@@ -62,11 +62,12 @@ public class Head {
                        int il = -1;
                        st = in.nextLine();
                        for(i=0;i<inges.size();i++){
-                           if(inges.get(i).getNombre() == st)
+                           if(inges.get(i).getNombre().equals(st))
                                il = i;
                        }
-                       if(il == -1)
+                       if(il == -1){
                            System.out.println("No existe ese inge");
+                       }
                        else{
                            System.out.println("Ingresa nombre proyecto");
                            proyectos.add(new Proyecto(in.nextLine(), req, inges.get(il)));
@@ -80,17 +81,22 @@ public class Head {
             else if(var == 2){
                 while(flag2){
                     System.out.println("Username: ");
-                    st = in.nextLine();
+                    st = in.next();
                     int u = -1;
                     for(i=0;i<inges.size();i++){
-                        if(inges.get(i).getUsername() == st)
+                        if(inges.get(i).getUsername().equals(st))
                             u = i;
                         }
                     if(u != -1){
                         System.out.println("Password: ");
-                        st = in.nextLine();
-                        if(st == inges.get(u).getPassword()){
+                        st = in.next();
+                        if(st.equals(inges.get(u).getPassword())){
                             //Funcionalidad inge
+                            //Tomar proyecto
+                            //Soltar proyecto
+                            //Ingresar horas
+                                //En proyecto
+                                //Extracurriculares
                         }
                         else{
                             System.out.println("Password incorrecto.");
