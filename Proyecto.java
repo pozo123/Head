@@ -4,117 +4,187 @@
  * and open the template in the editor.
  */
 package head;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 /**
  *
- * @author DPOZOB
+ * @author franciscopozodelatijera
  */
+public class Proyecto {
+    private String nombre;
+    private ArrayList<String> lista_requisitos; //Lista de requisitos que habrá que llenar para activar el proyecto
+    private ArrayList<Boolean> estatus_requisitos; //Lista de estatus de requisitos, true si el requisito se ha cumplido
+    private int estado; //1-> Activo 2-> No activo 3-> Terminado
+    private Ingeniero lider;
+    private double horas;
+    private long fecha_inicio; //long porque se va a manejar con java.util.date getTime()
+    private long fecha_activacion; 
+    private long fecha_fin;//long porque se va a manejar con java.util.date getTime()
+    private Ingeniero[] asignados;
+    private Date date = new Date();
 
+    public Proyecto() {
+        this.estado = 2;
+        this.horas= 0;
+        this.fecha_inicio = date.getTime();
+//        for(int i=0; i < lista_requisitos.size(); i++){
+//            this.estatus_requisitos.add(false);
+//        }
+    }
 
-public class Head {
+    public Proyecto(String nombre, ArrayList<String> requisitos, Ingeniero lider) {
+        this.nombre = nombre;
+        this.lista_requisitos = requisitos;
+        this.lider = lider;
+        this.estado = 2;
+        this.horas= 0;
+        this.fecha_inicio = date.getTime();
+        this.estatus_requisitos = new ArrayList<Boolean>();
+        for(int i=0; i < lista_requisitos.size(); i++){
+            this.estatus_requisitos.add(false);
+        }
+    }
+    
+    public Proyecto(String nombre, ArrayList<String> requisitos, Ingeniero lider, Ingeniero[] asignados) {
+        this.nombre = nombre;
+        this.lista_requisitos = requisitos;
+        this.lider = lider;
+        this.asignados = asignados;
+        this.estado = 2;
+        this.horas = 0;
+        this.fecha_inicio = date.getTime();
+        this.estatus_requisitos = new ArrayList<Boolean>();
+        for(int i=0; i < lista_requisitos.size(); i++){
+            this.estatus_requisitos.add(false);
+        }
+    }
 
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        String[][] tabla = new String[15][15];
-        ArrayList<Ingeniero> inges = new ArrayList<Ingeniero>();
-        ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
-        Scanner in = new Scanner(System.in);
-        int var;
-        int ni = 0; //numero de ingenieros
-        int np = 0; //numero de proyectos
-        int i;
-        int j;
-        boolean flag1 = true;
-        boolean flag2 = true;
-        String st;
-        
-        
-        //Llenar tabla de horas
-        
-        
-        tabla[0][0] = " ";
-        while(flag1){
-            System.out.println("1.- Admin"+"\n"+"2.- Inge"+"\n"+"3.- Imprimir"+"\n"+"4.- Salir"+"\n");
-            var = in.nextInt();
-            if(var == 1){
-                while(flag2){
-                    System.out.println("1.- Ingresar Ingeniero"+"\n"+"2.- Ingresar Proyecto"+"\n"+"3.- Cerrar"+"\n");
-                    var = in.nextInt();
-                    //Construye Inge y lo agrega
-                    if(var == 1){
-                       System.out.println("Ingresa datos: Nombre Username Password (separado por espacios).");
-                       inges.add(new Ingeniero(in.next(),in.next(),in.next()));
-                       ni++;
-                    }
-                    //Construye proyecto y lo agrega
-                    else if(var == 2){
-                       ArrayList<String> req = new ArrayList<String>();
-                       System.out.println("Ingresa requisitos (done para terminar)");
-                       st = in.nextLine();
-                       while(!st.equals("done")){
-                           req.add(st);
-                           st = in.nextLine();
-                       }
-                       System.out.println("Ingresa Nombre lider");
-                       int il = -1;
-                       st = in.nextLine();
-                       for(i=0;i<inges.size();i++){
-                           if(inges.get(i).getNombre() == st)
-                               il = i;
-                       }
-                       if(il == -1)
-                           System.out.println("No existe ese inge");
-                       else{
-                           System.out.println("Ingresa nombre proyecto");
-                           proyectos.add(new Proyecto(in.nextLine(), req, inges.get(il)));
-                           np++;
-                       }
-                    }
-                    else if(var == 3)
-                        flag2 = false;
-                }
-            }
-            else if(var == 2){
-                while(flag2){
-                    System.out.println("Username: ");
-                    st = in.nextLine();
-                    int u = -1;
-                    for(i=0;i<inges.size();i++){
-                        if(inges.get(i).getUsername() == st)
-                            u = i;
-                        }
-                    if(u != -1){
-                        System.out.println("Password: ");
-                        st = in.nextLine();
-                        if(st == inges.get(u).getPassword()){
-                            //Funcionalidad inge
-                        }
-                        else{
-                            System.out.println("Password incorrecto.");
-                        }
-                    }
-                    else{
-                        System.out.println("Username incorrecto");
-                           flag2 = false;
-                    }
-                }
-      
-            }
-            else if(var ==3)
-                for(final Object[] row : tabla){
-                    System.out.format("%-15s%-15s%15-s\n", row);
-                }
-            else if(var == 4) {
-                flag1 = false;
-            }
-            flag2 = true;
-        }
-             
-        
+    public String getNombre() {
+        return nombre;
     }
-        
+    
+    public ArrayList<String> getLista_requisitos() {
+        return lista_requisitos;
+    }
+
+    public ArrayList<Boolean> getEstatus_requisitos() {
+        return estatus_requisitos;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public Ingeniero getLider() {
+        return lider;
+    }
+
+    public double getHoras() {
+        return horas;
+    }
+
+    public long getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    public long getFecha_activacion() {
+        return fecha_activacion;
+    }
+    
+    public long getFecha_fin() {
+        return fecha_fin;
+    }
+
+    public Ingeniero[] getAsignados() {
+        return asignados;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    //Al cambiar este tambien hay que cambiar la lista de estatus_requisitos
+    public void setLista_requisitos(ArrayList<String> lista_requisitos) {
+        this.lista_requisitos = lista_requisitos;
+    }
+
+    public void setEstatus_requisitos(ArrayList<Boolean> estatus_requisitos) {
+        this.estatus_requisitos = estatus_requisitos;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public void setLider(Ingeniero lider) {
+        this.lider = lider;
+    }
+
+    public void setHoras(double horas) {
+        this.horas = horas;
+    }
+
+    public void setFecha_inicio(long fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
+
+    public void setFecha_activacion(long fecha_activacion) {
+        this.fecha_activacion = fecha_activacion;
+    }
+    
+    public void setFecha_fin(long fecha_fin) {
+        this.fecha_fin = fecha_fin;
+    }
+
+    public void setAsignados(Ingeniero[] asignados) {
+        this.asignados = asignados;
+    }
+    
+    //Revisa la lista de estatus_requisitos y actualiza el estado. Activo si todos se cumplen, no activo de otra manera.
+    public int updateEstado(){
+        boolean visto_bueno = true;
+        int i = 0;
+        while(visto_bueno && i < estatus_requisitos.size()){
+            if(!estatus_requisitos.get(i))
+                visto_bueno = false;
+            else
+                i++;
+        }
+        if(visto_bueno){
+            estado = 1;//activo
+            fecha_activacion = date.getTime();
+        }
+        else
+            estado = 2;//No activo
+        return estado;
+    }
+    
+    public void addHoras(double horas_nuevas){
+        horas = horas + horas_nuevas;
+    }
+    
+    public void finish(){
+        fecha_fin = date.getTime();
+        estado = 3;
+    }
+    
+    public boolean recibo_requisito(String req){
+        boolean found = false;
+        int i = 0;
+        while(!found && i < lista_requisitos.size()){
+            if(req.equals(lista_requisitos.get(i)))
+                found = true;
+            else
+                i++;
+        }
+        if(!found)
+            return false; //error, no lo encontró
+        else{
+            estatus_requisitos.set(i, true);
+            updateEstado();
+            return true;
+        }
+    }
     
 }
