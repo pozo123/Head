@@ -1,3 +1,13 @@
 Java/Excel -> https://stackoverflow.com/questions/12580519/java-modify-a-file-excel 
 Java/Passwords -> https://www.baeldung.com/java-storing-passwords
 
+Modificar spreadsheet -> https://en.wikipedia.org/wiki/JXL_(API)
+import jxl -> http://www.vogella.com/tutorials/JavaExcel/article.html
+
+
+Excel -> https://www.mkyong.com/java/jexcel-api-reading-and-writing-excel-file-in-java/
+
+
+
+https://www.youtube.com/watch?v=tvYaywrT-YE
+Para apache
