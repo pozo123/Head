@@ -1,20 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title>HeadTutorial</title>
 </head>
-<body>
+<body onload="loadDDL()">
     <div id="root"></div>
-    <h1>Ingeniero</h1>
+    <h1>Proyecto</h1>
     Nombre:             <input type="text" id="nombre" /><br />
-    Requisitos:         <input type="checkbox" id="req1" />req1
-                        <input type="checkbox" id="req2" />req2 
-                        <input type="checkbox" id="req3" />req3<br />
-    Lider:              <input type="text" id="lider" /><br />
-    Asignados:          <input type="text" id="Asignados" /><br />
-    <!-- Meter lider por radio y asignados por checkbox. Meter funcionalidad de horas-->
+    Requisitos:         <select id="reqs"></select> 
+    <button id="add_reqs">Añadir</button>
+    <br/>
+                        <input type="checkbox" id="req1" name="IFE"/>IFE <!-- id tiene que ser req#, el nombre puede cambiar-->
+                        <input type="checkbox" id="req2" name="req2"/>req2 
+                        <input type="checkbox" id="req3" name="req3"/>req3<br />
+    Lider:              <select id="lider"></select><br/>
+    Asignados:          <select id="asignados"></select> 
+    <button id="add_asignados">Añadir</button>
+    <br/>
+    <!-- Meter funcionalidad de horas, meter caja para "otros" en req ?-->
+    
+    <br/>
+    <br/>
+
     <button id="registrar">Registrar</button>
     <button id="imprimir">Imprimir</button>
 
