@@ -76,18 +76,17 @@ function loadDDL(){
 
 $('#' + id_add_asignados).click(function () {
     var selec = $("#" + id_asignados + " option:selected").val();
-    console.log($("#" + id_asignados + " option:selected").val());
     document.body.appendChild(document.createTextNode(selec));
     asignados.push(selec);
-    //Falta ver como imprimirlos en el lugar adecuado
+    //Falta ver como imprimirlos en el lugar adecuado y borrarlos al hacer click en registrar
 });
 
 $('#' + id_add_reqs).click(function () {
     var selec = $("#" + id_reqs + " option:selected").val();
-    console.log($("#" + id_reqs + " option:selected").val());
     document.body.appendChild(document.createTextNode(selec));
-    reqs.push(selec);
-    //Falta ver como imprimirlos en el lugar adecuado
+    reqs.push({nombre:""+selec,estatus: false,startedAt: new Date().toDateString()});//firebase.database.ServerValue.TIMESTAMP pero lo da en milisegundos
+
+    //Falta ver como imprimirlos en el lugar adecuado y borrarlos al hacer click en registrar
 });
 
 $('#' + id_registrar).click(function () {
@@ -102,8 +101,12 @@ $('#' + id_registrar).click(function () {
         lider: $('#' + id_lider + " option:selected").val(),
         requisitos: reqs,
         asignados: asignados,
-        horas: 0,
+        horas: 0,        
+        startedAt: new Date().toDateString(),
+        startedAtTimestamp: firebase.database.ServerValue.TIMESTAMP,
     }
+    reqs = [];
+    asignados = [];
     firebase.database().ref("" + rama_bd + "/" + $('#' + id_nombre).val()).set(proyecto)
 });
 
