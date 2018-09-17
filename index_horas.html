@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>HeadTutorial</title>
+</head>
+<body onload="loadDDL()">
+    <div id="root"></div>
+    <h1>Registro Horas</h1>
+    <input type="text" id="inge"/><br/>
+    
+                        <input type="radio" id="entrada"/>Entrada
+                        <input type="radio" id="salida"/>Salida <br/>
+    Proyecto:              <select id="proy"></select><br/>
+
+    <button id="registrar">Registrar</button>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCs9sktQ2n3HrVWzyAcgooT5uYRLTqSnHg",
+            authDomain: "headtutorial-7f105.firebaseapp.com",
+            databaseURL: "https://headtutorial-7f105.firebaseio.com",
+            projectId: "headtutorial-7f105",
+            storageBucket: "headtutorial-7f105.appspot.com",
+            messagingSenderId: "1029451883192"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="app_horas.js"></script>
+</body>
+</html>
