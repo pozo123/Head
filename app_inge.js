@@ -81,8 +81,8 @@ function guardaDatos(user) {
         password: $('#' + id_password).val(),
         especialidad: $('#' + id_especialidad).val(),
         proyecto: $('#' + id_proyecto).val(),
-        credenciales: $('#' + id_credenciales).val()
+        credenciales: $('#' + id_credenciales).val(),
+        activo: false,
     }
-    console.log(user.displayName);
     firebase.database().ref(""+rama_bd+"/" + user.uid).set(usuario)
 }
