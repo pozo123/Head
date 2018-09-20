@@ -9,7 +9,7 @@ var rama_bd_inges = "inges";
 
 var time = new Date();
 
-var username = $('#' + id_user).val();
+
 
 function loadDDL(){
 
@@ -30,18 +30,22 @@ function loadDDL(){
 
 $('#' + id_registrar).click(function () {
     
-    
+    var username = $('#' + id_user).val();
     var nuevas_horas;
+    var nuevas_horas_invalidas;
     firebase.database().ref('' + rama_bd_inges + "/" + username + "/" + $('#' + id_proy).val()).once("value").then(function(snapshot){
-        var user = snapshot.val();
-        var v_horas = 0;
 
-        if(!user){
+        var registro = snapshot.val();
+        var v_horas = 0;
+        var v_horas_invalidas = 0;
+
+        if(!registro){
             if(document.getElementById(id_entrada).checked == true){
             var proyecto = {
                 proyecto: $('#'+id_proy).val(),
                 checkin: time.getTime(),
                 horas: 0,
+                horas_invalidas: 0,
             }
             }
             else if(document.getElementById(id_salida).checked == true){
@@ -49,36 +53,55 @@ $('#' + id_registrar).click(function () {
                     proyecto: $('#'+id_proy).val(),
                     checkin: 0,
                     horas: 0,
+                    horas_invalidas: 0,
                 }
             }
+            firebase.database().ref(rama_bd_inges + "/" + username + "/" + $('#' + id_proy).val()).set(proyecto);
         }
         else{
-            if(!user.horas)
+            if(!registro.horas)
                 v_horas = 0;
             else
-                v_horas = user.horas;
-    
-            if(user.checkin == 0)
-                nuevas_horas = v_horas;
+                v_horas = registro.horas;
+            if(!registro.horas_invalidas)
+                v_horas_invalidas = 0;
             else
-                nuevas_horas = v_horas + (time.getTime() - user.checkin);
-            if(document.getElementById(id_entrada).checked == true){
-                var proyecto = {
-                    proyecto: $('#'+id_proy).val(),
-                    checkin: time.getTime(),
-                    horas: v_horas
+                v_horas_invalidas = registro.horas_invalidas;
+
+            
+            firebase.database().ref('' + rama_bd_inges + "/" + username).once("value").then(function(snapshot){
+                var ing = snapshot.val();
+                if(registro.checkin == 0 || ing.proyecto != $('#' + id_proy).val())
+                    nuevas_horas = v_horas;
+                else
+                    nuevas_horas = v_horas + (time.getTime() - registro.checkin);
+
+                if(registro.checkin == 0 || ing.proyecto == $('#' + id_proy).val())
+                    nuevas_horas_invalidas = v_horas_invalidas;
+                else
+                    nuevas_horas_invalidas = v_horas_invalidas + (time.getTime() - registro.checkin);
+                if(document.getElementById(id_entrada).checked == true){
+                    var proyecto = {
+                        proyecto: $('#'+id_proy).val(),
+                        checkin: time.getTime(),
+                        horas: v_horas,
+                        horas_invalidas: v_horas_invalidas,
+                    }
                 }
-            }
-            else if(document.getElementById(id_salida).checked == true){
-                var proyecto = {
-                    proyecto: $('#'+id_proy).val(),
-                    checkin: 0,
-                    horas: nuevas_horas,
+                else if(document.getElementById(id_salida).checked == true){
+                    var proyecto = {
+                        proyecto: $('#'+id_proy).val(),
+                        checkin: 0,
+                        horas: nuevas_horas,
+                        horas_invalidas: nuevas_horas_invalidas,
+                    }
                 }
-            }
+            firebase.database().ref(rama_bd_inges + "/" + username + "/" + $('#' + id_proy).val()).set(proyecto);
+            })
+            
+            
         }
         
-        firebase.database().ref(rama_bd_inges + "/" + username + "/" + $('#' + id_proy).val()).set(proyecto);
 
     });
     
