@@ -7,6 +7,8 @@ Pendientes semana 24 sept - 30 sept
 
   - Diagrama de todo la funcionalidad
   - Arreglar Login / Funcionalidad y Front ( dejar al 100%)
+    - Agregar opcion cambiar contraseña 
+    - Pedir correos para dar de alta a los ingenieros de verdad
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
   - Alguna tabla y/o gráfica para reportar horas trabajadas
   - Agregar a cada proyecto el atributo Presupuestos, en este atributo es donde se manejarán las horas (trabajan en presupuestos de cada proyecto general).
