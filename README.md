@@ -25,6 +25,7 @@ Pendientes semana 24 sept - 30 sept
   
 - Importantes pero no primordiales
   
+  - Subir req
   - asignar una sintaxis general para los IDs
   - darle funcionalidad a botones "borrar todo"
   - cuando se cambie de página, se borre lo que se escribió en formularios.
