@@ -14,6 +14,7 @@ Pendientes semana 24 sept - 30 sept
   - Agregar a cada proyecto el atributo Presupuestos, en este atributo es donde se manejarán las horas (trabajan en presupuestos de cada proyecto general).
   - Funcionalidad Horas
     - Dar funcionalidad a botones Entrada/Salida y bloquearlos, bloqueando el proyecto en el que trabaja, además necesitamos adaptarlo a que se ingrese en presupuestos.
+  - Checar variables en .js
     
   
 - Importantes pero no primordiales
