@@ -25,6 +25,7 @@ Pendientes semana 24 sept - 30 sept
   
 - Importantes pero no primordiales
   
+  - Cambiar reqs a checkboxes
   - Subir req
   - asignar una sintaxis general para los IDs
   - darle funcionalidad a botones "borrar todo"
