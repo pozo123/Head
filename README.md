@@ -8,6 +8,9 @@ Pendientes semana 24 sept - 30 sept
 - Primordiales
 
   - Diagrama de todo la funcionalidad
+    - funcionalidad
+    - bd
+    - front end
   - Arreglar Login / Funcionalidad y Front ( dejar al 100%)
     - Agregar opcion cambiar contraseña 
     - Pedir correos para dar de alta a los ingenieros de verdad
