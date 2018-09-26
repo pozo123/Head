@@ -52,6 +52,8 @@ $('#' + id_entrada_button_perfil).click(function () {
     var user = firebase.auth().currentUser;
     var username = user.uid;
     firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
+        
+    firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").setValue(true);
 
         var proyecto_trabajado = snapshot.val();
 
@@ -106,6 +108,9 @@ $('#' + id_salida_button_perfil).click(function () {
     var user = firebase.auth().currentUser;
     var username = user.uid;
     var horas_registro = 0;
+
+    firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").setValue(false);
+
     firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
 
         var proyecto_trabajado = snapshot.val();
