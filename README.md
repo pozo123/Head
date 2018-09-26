@@ -1,6 +1,8 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inges) TipoObjeto solo si no text
+
 Pendientes semana 24 sept - 30 sept
 
 - Primordiales
