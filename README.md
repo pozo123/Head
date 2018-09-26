@@ -33,3 +33,8 @@ Pendientes semana 24 sept - 30 sept
   - Lo más que se te ocurra.
   - Tab "Dar de Alta" solo para los que tienen credenciales de administrador o master (nosotros).
   
+
+
+To do:
+  - Candado para que los nombres de los proyectos (y cada presupuesto) sean diferentes
+  - Hablar con Emmanuel sobre el boton amarillo
