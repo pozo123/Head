@@ -5,6 +5,8 @@ var id_salida_button_perfil = "salida";
 var id_cambiarpassword_button_perfil = "cambio";
 var id_proyecto_ddl_perfil = "proy";
 var id_presupuestos_ddl_perfil = "presupuestos";
+var id_newpassword_perfil = "newpass";
+var id_confirmpass_perfil = "confirm";
 var rama_bd_proys = "proys";
 var rama_bd_inges = "inges";
 
@@ -143,4 +145,15 @@ $('#' + id_salida_button_perfil).click(function () {
         
 
     });
+});
+
+$('#' + id_cambiarpassword_button_perfil).click(function () {
+    if($('#' + id_newpassword_perfil).val() != $('#' + id_confirmpass_perfil))
+        alert("Password doesn't match");
+    else{
+        var user = firebase.auth().currentUser;
+        var username = user.uid;
+            firebase.database().ref(rama_bd_inges + "/" + username + "/password").setValue($('#' + id_newpassword_perfil).val());
+    }
+
 });
