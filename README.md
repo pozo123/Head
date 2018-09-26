@@ -20,6 +20,7 @@ Pendientes semana 24 sept - 30 sept
   - Funcionalidad Horas
     - Dar funcionalidad a botones Entrada/Salida y bloquearlos, bloqueando el proyecto en el que trabaja, además necesitamos adaptarlo a que se ingrese en presupuestos.
   - Checar variables en .js
+  - Checar registro inges porque no jala
     
   
 - Importantes pero no primordiales
