@@ -35,6 +35,7 @@ Pendientes semana 24 sept - 30 sept
   - Llenar toda la lista con requisitos finales.
   - Lo más que se te ocurra.
   - Tab "Dar de Alta" solo para los que tienen credenciales de administrador o master (nosotros).
+  - Editar altas
   
 
 
