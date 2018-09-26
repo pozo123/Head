@@ -42,3 +42,4 @@ Pendientes semana 24 sept - 30 sept
 To do:
   - Candado para que los nombres de los proyectos (y cada presupuesto) sean diferentes
   - Hablar con Emmanuel sobre el boton amarillo
+  - Hablar con Emmanuel sobre lider proyecto
