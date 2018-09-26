@@ -7,39 +7,28 @@ Pendientes semana 24 sept - 30 sept
 
 - Primordiales
 
-  - Diagrama de todo la funcionalidad
-    - funcionalidad
-    - bd
-    - front end
   - Arreglar Login / Funcionalidad y Front ( dejar al 100%)
-    - Agregar opcion cambiar contraseña 
     - Pedir correos para dar de alta a los ingenieros de verdad
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
   - Alguna tabla y/o gráfica para reportar horas trabajadas
-  - Agregar a cada proyecto el atributo Presupuestos, en este atributo es donde se manejarán las horas (trabajan en presupuestos de cada proyecto general).
-  - Funcionalidad Horas
-    - Dar funcionalidad a botones Entrada/Salida y bloquearlos, bloqueando el proyecto en el que trabaja, además necesitamos adaptarlo a que se ingrese en presupuestos.
+  - Fromato perfil (botones)
   - Checar variables en .js
   - Checar registro inges porque no jala
   - El ddl de PROYECTOS de registro horas tiene que tener un onChange="loadDDLPresupuestos(this)";
-  - añadir atributos reqs al cargar (jalar si es escencial de DB)
   - Generar presupuestos (ahi va la funcionalidad de reqs)
-    
+  - Editar altas (js y html)
   
 - Importantes pero no primordiales
-  
+
+  - añadir atributos reqs al cargar (jalar si es escencial de DB)
   - Cambiar reqs a checkboxes
-  - Subir req
-  - asignar una sintaxis general para los IDs
+  - Subir reqs
   - darle funcionalidad a botones "borrar todo"
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - cambiar la forma de eliminar requisitos agregados, en lugar de eliminar el último, mejor una lista con checkbox's para poder quitar todos los deseados de un golpe.
   - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método, etc.)
-  - Llenar toda la lista con requisitos finales.
-  - Lo más que se te ocurra.
   - Tab "Dar de Alta" solo para los que tienen credenciales de administrador o master (nosotros).
-  - Editar altas
-  
+  - alta reqs (vale madres)  
 
 
 To do:
