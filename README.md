@@ -22,7 +22,8 @@ Pendientes semana 24 sept - 30 sept
   - Checar variables en .js
   - Checar registro inges porque no jala
   - El ddl de PROYECTOS de registro horas tiene que tener un onChange="loadDDLPresupuestos(this)";
-  -añadir atributos reqs al cargar (jalar si es escencial de DB)
+  - añadir atributos reqs al cargar (jalar si es escencial de DB)
+  - Generar presupuestos (ahi va la funcionalidad de reqs)
     
   
 - Importantes pero no primordiales
