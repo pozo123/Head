@@ -1,0 +1,24 @@
+    - reqs
+      - nombre
+      - esencial
+    - presupuestos
+      - nombre
+      - requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
+      - horas_programadas
+    - proys (por nombre)
+      - nombre
+      - lider
+      - cliente
+      - asignados (array con json {nombre})
+      - timestamps: { startedAt, activacion, reqs_completos, finishedAt}
+      - presupuestos: nombre -> {todo lo de arriba}
+    - inges (por uid)
+      - uid
+      - nombre
+      - email
+      - password
+      - especialidad
+      - proyecto_asignado
+      - credenciales
+      - status
+      - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas, registros(es con push asi que no se como se guardan){checkin, horas}}
