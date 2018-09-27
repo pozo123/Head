@@ -1,10 +1,10 @@
 // JavaScript source code
 
-var id_entrada_button_perfil = "entrada";
-var id_salida_button_perfil = "salida";
-var id_cambiarpassword_button_perfil = "cambio";
-var id_proyecto_ddl_perfil = "proy";
-var id_presupuestos_ddl_perfil = "presupuestos";
+var id_entrada_button_perfil = "button_registro_entrada";
+var id_salida_button_perfil = "button_registro_salida";
+var id_cambiarpassword_button_perfil = "button_cambio_contraseña";
+var id_proyecto_ddl_perfil = "DDL_proyectoAsignado";
+var id_presupuestos_ddl_perfil = "DDL_presupuestoAsignado";
 var id_newpassword_perfil = "newpass";
 var id_confirmpass_perfil = "confirm";
 var rama_bd_proys = "proys";
@@ -12,9 +12,7 @@ var rama_bd_inges = "inges";
 
 var time = new Date();
 
-
-
-function loadDDL(){
+$(document).ready(function() {
 
     var select = document.getElementById(id_proyecto_ddl_perfil);
     var option = document.createElement('option');
@@ -30,7 +28,7 @@ function loadDDL(){
         select.appendChild(option2);
 
     });
-}
+});
 
 function loadDDLPresupuestos(select){
     var option = document.createElement('option');
@@ -49,56 +47,63 @@ function loadDDLPresupuestos(select){
 }
 
 $('#' + id_entrada_button_perfil).click(function () {
-    var user = firebase.auth().currentUser;
-    var username = user.uid;
-    firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
-        
-    firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").setValue(true);
 
-        var proyecto_trabajado = snapshot.val();
+    var user;
 
-        //Si no existe registro de ese proyecto para este inge
-        if(!proyecto_trabajado){
-            var proyecto = {
-                proyecto: $('#'+id_proyecto_ddl_perfil).val(),
-            }
-            var presupuesto = {
-                presupuesto: $('#' + id_presupuestos_ddl_perfil.val()),
-                checkin: time.getTime(),
-                horas_trabajadas: 0,
-                horas_invalidas: 0,
-            }
-            firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).set(proyecto);
-            firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
-        }
-        else{
-            firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).once("value").then(function(snapshot){
+    firebase.auth().onAuthStateChanged(user => {
+        if(user) {
+            var username = user.uid;
+            firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
+                
+            firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").set(true);
 
-                var presupuesto_trabajado = snapshot.val();
+            var proyecto_trabajado = snapshot.val();
 
-                //Si no existe registro de ese presupuesto para este inge
-                if(!presupuesto_trabajado){
-                    var presupuesto = {
-                        presupuesto: $('#' + id_presupuestos_ddl_perfil.val()),
-                        checkin: time.getTime(),
-                        horas_trabajadas: 0,
-                        horas_invalidas: 0,
-                    }
-
-                    firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+            //Si no existe registro de ese proyecto para este inge
+            if(!proyecto_trabajado){
+                var proyecto = {
+                    proyecto: $('#'+id_proyecto_ddl_perfil).val(),
                 }
-                else{
-                    var presupuesto = {
-                        presupuesto: $('#' + id_presupuestos_ddl_perfil.val()),
-                        checkin: time.getTime(),
-                        horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
-                        horas_invalidas: presupuesto_trabajado.horas_invalidas, 
-                    }
-                    firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+                var presupuesto = {
+                    presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
+                    checkin: time.getTime(),
+                    horas_trabajadas: 0,
+                    horas_invalidas: 0,
                 }
-            });
-        }
+                firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).set(proyecto);
+                firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+            }
+            else{
+                firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).once("value").then(function(snapshot){
 
+                    var presupuesto_trabajado = snapshot.val();
+
+                    //Si no existe registro de ese presupuesto para este inge
+                    if(!presupuesto_trabajado){
+                        var presupuesto = {
+                            presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
+                            checkin: time.getTime(),
+                            horas_trabajadas: 0,
+                            horas_invalidas: 0,
+                        }
+
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+                    }
+                    else{
+                        var presupuesto = {
+                            presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
+                            checkin: time.getTime(),
+                            horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
+                            horas_invalidas: presupuesto_trabajado.horas_invalidas, 
+                        }
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+                    }
+                });
+            }
+        });
+        } else {
+            alert("No jalo");
+        }
     });
 });
 
@@ -109,7 +114,7 @@ $('#' + id_salida_button_perfil).click(function () {
     var username = user.uid;
     var horas_registro = 0;
 
-    firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").setValue(false);
+    firebase.database().ref(rama_bd_inges + "/" + username + "/estatus").set(false);
 
     firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
 
@@ -126,7 +131,7 @@ $('#' + id_salida_button_perfil).click(function () {
                 }
                 if(proyecto_trabajado == ing.proyecto_asignado){
                     var presupuesto = {
-                        presupuesto: $('#' + id_presupuestos_ddl_perfil.val()),
+                        presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
                         checkin: 0,
                         horas_trabajadas: presupuesto_trabajado.horas_trabajadas + horas_registro,
                         horas_invalidas: presupuesto_trabajado.horas_invalidas, 
@@ -135,7 +140,7 @@ $('#' + id_salida_button_perfil).click(function () {
                 }
                 else{
                     var presupuesto = {
-                        presupuesto: $('#' + id_presupuestos_ddl_perfil.val()),
+                        presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
                         checkin: 0,
                         horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
                         horas_invalidas: presupuesto_trabajado.horas_invalidas + horas_registro, 
@@ -153,7 +158,7 @@ $('#' + id_salida_button_perfil).click(function () {
 });
 
 $('#' + id_cambiarpassword_button_perfil).click(function () {
-    if($('#' + id_newpassword_perfil).val() != $('#' + id_confirmpass_perfil))
+    if($('#' + id_newpassword_perfil).val() != $('#' + id_confirmpass_perfil).val())
         alert("Password doesn't match");
     else{
         var user = firebase.auth().currentUser;
