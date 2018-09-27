@@ -123,7 +123,7 @@ $('#' + id_registrar_button_proy).click(function () {
         lider: $('#' + id_lider_ddl_proy + " option:selected").val(),
         cliente: $('#' + id_cliente_proy).val(),
         asignados: asignados,
-        timesptamps: {
+        timestamps: {
             startedAt: time.getTime(),
             activacion: 0,
             reqs_completos: 0,
