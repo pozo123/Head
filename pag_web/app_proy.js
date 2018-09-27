@@ -134,7 +134,6 @@ $('#' + id_registrar_button_proy).click(function () {
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val()).set(proyecto)
 
     alert("¡Alta de proyecto exitosa!");
-    $("#alta").load(location.href+" #alta>*","");
 });
 
 // $('#' + id_imprimir_proy).click(function () {
