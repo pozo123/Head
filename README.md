@@ -7,21 +7,19 @@ Pendientes semana 24 sept - 30 sept
 
 - Primordiales
 
-  - Boton salida perfil
-  - manejar estatus perfil
-  - Checar variables en .js
-  - Checar registro inges porque no jala
-  - Editar altas
-  
+  - Alta cliente
+  ________
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
   - Alguna tabla y/o gráfica para reportar horas trabajadas
   - Generar presupuestos (ahi va la funcionalidad de reqs)
   - añadir registros a presupuestos
   - Credenciales -> hide
+  - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
 
   
 - Importantes pero no primordiales
 
+  - Foto en inges y en reqs
   - Modificar proy asignado en inge
   - Modificar inges asignados a proy
   - Submit en  login
