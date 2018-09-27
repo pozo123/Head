@@ -17,6 +17,7 @@ Pendientes semana 24 sept - 30 sept
   - Alguna tabla y/o gráfica para reportar horas trabajadas
   - Generar presupuestos (ahi va la funcionalidad de reqs)
   - añadir registros a presupuestos
+  - Credenciales -> hide
 
   
 - Importantes pero no primordiales
@@ -32,7 +33,6 @@ Pendientes semana 24 sept - 30 sept
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - cambiar la forma de eliminar requisitos agregados, en lugar de eliminar el último, mejor una lista con checkbox's para poder quitar todos los deseados de un golpe.
   - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método, etc.)
-  - Tab "Dar de Alta" solo para los que tienen credenciales de administrador o master (nosotros).
 
 
 To do:
