@@ -110,27 +110,27 @@ $('#' + id_registrar_button_proy).click(function () {
             nombre: $('#' + id_contrato_nombre_proy).val(),
             extension: $('#' + id_contrato_extension_proy).val(),
             email: $('#' + id_contrato_email_proy).val(),
-        }
+        },
         proyecto:{
             nombre: $('#' + id_proyecto_nombre_proy).val(),
             extension: $('#' + id_proyecto_extension_proy).val(),
             email: $('#' + id_proyecto_email_proy).val(),
-        }
+        },
         control_obra:{
             nombre: $('#' + id_control_obra_nombre_proy).val(),
             extension: $('#' + id_control_obra_extension_proy).val(),
             email: $('#' + id_control_obra_email_proy).val(),
-        }
+        },
         precios:{
             nombre: $('#' + id_precios_nombre_proy).val(),
             extension: $('#' + id_precios_extension_proy).val(),
             email: $('#' + id_precios_email_proy).val(),
-        }
+        },
         pagos:{
             nombre: $('#' + id_pagos_nombre_proy).val(),
             extension: $('#' + id_pagos_extension_proy).val(),
             email: $('#' + id_pagos_email_proy).val(),
-        }
+        },
     }
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + "option:selected").val()).set(cliente);
 
