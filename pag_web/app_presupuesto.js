@@ -74,7 +74,7 @@ $(document).ready(function() {
         var textnode = document.createTextNode(selec);        // Create a text node
         node.appendChild(textnode);                              // Append the text to <li>
         document.getElementById(lista_reqs_presupuesto).appendChild(node);  
-        reqs.push({nombre:""+selec,entregado: false,esencial: r.esencial,timestamps:{startedAt: new Date.getTime(), entrega: 0}});//firebase.database.ServerValue.TIMESTAMP pero lo da en milisegundos
+        reqs.push({nombre:""+selec,entregado: false,esencial: r.esencial,timestamps:{startedAt: new Date().getTime(), entrega: 0}});//firebase.database.ServerValue.TIMESTAMP pero lo da en milisegundos
         alert(JSON.stringify(reqs));
      });
 
@@ -99,7 +99,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
         requisitos: reqs,
         horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
         timestamps: {
-            startedAt: new Date.getTime(),
+            startedAt: new Date().getTime(),
             finishedAt: 0,
             activacion: 0,
             reqs_completados: 0
