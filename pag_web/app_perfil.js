@@ -166,7 +166,13 @@ $('#' + id_cambiarpassword_button_perfil).click(function () {
     else{
         var user = firebase.auth().currentUser;
         var username = user.uid;
-            firebase.database().ref(rama_bd_inges + "/" + username + "/password").setValue($('#' + id_newpassword_perfil).val());
+        var newPassword = $('#' + id_newpassword_perfil).val();
+        user.updatePassword(newPassword).then(function(){
+            firebase.database().ref(rama_bd_inges + "/" + username + "/password").setValue(newPassword);
+            alert("Cambio exitoso");
+        }).catch(function(error){
+            alert(error);
+        });
     }
 
 });
