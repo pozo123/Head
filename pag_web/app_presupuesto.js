@@ -76,7 +76,7 @@ $(document).ready(function() {
         document.getElementById(lista_reqs_presupuesto).appendChild(node);  
         reqs.push({nombre:""+selec,entregado: false,esencial: r.esencial,timestamps:{startedAt: new Date.getTime(), entrega: 0}});//firebase.database.ServerValue.TIMESTAMP pero lo da en milisegundos
         alert(JSON.stringify(reqs));
-     }
+     });
 
  });
 
