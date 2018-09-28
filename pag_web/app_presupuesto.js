@@ -5,7 +5,7 @@ var id_del_reqs_button_presupuesto = "borrar_reqs_asignados";
 var lista_reqs_presupuesto = "ListaReqs";
 var id_horas_programadas_presupuesto = "horasProgramadas";
 var id_registrar_button_presupuesto = "registrarPresupuesto";
-var id_proyecto_ddl_presupuesto = "proyetoPresupuesto";
+var id_proyecto_ddl_presupuesto = "proyectoPresupuesto";
 
 var rama_bd_proys = "proys";
 var rama_bd_reqs = "reqs";
