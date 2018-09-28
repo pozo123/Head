@@ -166,7 +166,7 @@ function guardaDatos(user) {
         proyecto_asignado: $('#' + id_proyectoAsignado_ddl_inge + " option:selected").val(),
         credenciales: creden,
         status: false,
-        foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0]);//A ver si jala...
+        foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0])//A ver si jala...
     }
 
     firebase.database().ref(rama_bd_inges+"/" + user.uid).set(usuario);
