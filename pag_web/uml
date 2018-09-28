@@ -24,7 +24,6 @@
       - credenciales
       - status
       - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas, registros(es con push asi que no se como se guardan){checkin, horas}}
-      - foto: se guarda como url... creo
     - clientes (por nombre)
         - nombre
         - director
