@@ -29,20 +29,19 @@ $(document).ready(function() {
     });
 });
 
-function loadDDLPresupuestos(select){
+function loadDDLPresupuestos(){
+    $('#' + id_presupuestos_ddl_perfil).empty();
     var select = document.getElementById(id_presupuestos_ddl_perfil);
     var option = document.createElement('option');
     option.style = "display:none";
     option.text = option.value = "";
     select.appendChild(option);
     
-    firebase.database().ref(rama_bd_proys + "/presupuestos").orderByChild('presupuesto').on('child_added',function(snapshot){
-        
-        var presu = snapshot.val();
+    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proyecto_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
+        var presu = snapshot.key;
         var option2 = document.createElement('option');
-        option2.text = option2.value = presu.presupuesto; 
+        option2.text = option2.value = presu; 
         select.appendChild(option2);
-
     });
 }
 
