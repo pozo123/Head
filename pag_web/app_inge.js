@@ -9,6 +9,7 @@ var id_lider_radio_inge = "inlineRadio2";
 var id_proyectoAsignado_ddl_inge = "proyectoAsignado";
 var id_proyectista_radio_inge = "inlineRadio3";
 var id_registrar_button_inge = "registrarIngeniero";
+var id_foto_input_inge = "foto";
 var rama_bd_inges = "inges";
 var rama_bd_proys = "proys";
 
@@ -165,7 +166,7 @@ function guardaDatos(user) {
         proyecto_asignado: $('#' + id_proyectoAsignado_ddl_inge + " option:selected").val(),
         credenciales: creden,
         status: false,
-        //Imagen
+        foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0]);//A ver si jala...
     }
 
     firebase.database().ref(rama_bd_inges+"/" + user.uid).set(usuario);
