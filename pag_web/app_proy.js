@@ -59,7 +59,7 @@ $(document).ready(function() {
         var option4 = document.createElement('OPTION');
         option4.text = option4.value = inge.nombre; 
         select.appendChild(option4);
-        select2.appendChild(option5);
+        select2.appendChild(option4);
 
     });
 
