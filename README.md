@@ -8,15 +8,22 @@ Pendientes semana 24 sept - 30 sept
 - Primordiales
 
   - Alta cliente
-  ________
-  - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
-  - Alguna tabla y/o gráfica para reportar horas trabajadas
-  - Generar presupuestos (ahi va la funcionalidad de reqs)
-  - añadir registros a presupuestos
   - Credenciales -> hide
+  - hacer cliente ddl en proy
+  - Añadir toda la info del mail a proy/cliente (que hueva)
+  
+  - Meter info a bd
+    - clientes/proyectos email
+    - usuarios
+    
+  - Alguna tabla y/o gráfica para reportar horas trabajadas
+  - Aprender git
+
+- Importantes pero no podemos porque no nos mandan nada
+  - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
+  - Generar presupuestos (ahi va la funcionalidad de reqs)
   - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
 
-  
 - Importantes pero no primordiales
 
   - Foto en inges y en reqs
@@ -24,10 +31,8 @@ Pendientes semana 24 sept - 30 sept
   - Modificar inges asignados a proy
   - Submit en  login
   - reqs
-    - añadir atributos reqs al cargar (jalar si es escencial o no de DB)
     - Cambiar reqs a checkboxes
     - Subir reqs
-  - darle funcionalidad a botones "borrar todo"
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - cambiar la forma de eliminar requisitos agregados, en lugar de eliminar el último, mejor una lista con checkbox's para poder quitar todos los deseados de un golpe.
   - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método, etc.)
