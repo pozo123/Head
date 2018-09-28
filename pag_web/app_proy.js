@@ -109,6 +109,7 @@ $('#' + id_registrar_button_proy).click(function () {
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val()).set(proyecto)
 
     var cliente = {
+        nombre: $('#' + id_cliente_ddl_proy + " option:selected").val(),
         contrato:{
             nombre: $('#' + id_contrato_nombre_proy).val(),
             extension: $('#' + id_contrato_extension_proy).val(),
@@ -135,7 +136,7 @@ $('#' + id_registrar_button_proy).click(function () {
             email: $('#' + id_pagos_email_proy).val(),
         }
     }
-    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + " option:selected").val()).set(cliente);
+    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente").set(cliente);
 
     alert("¡Alta de proyecto exitosa!");
 });
