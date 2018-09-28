@@ -128,6 +128,11 @@ $('#' + id_salida_button_perfil).click(function () {
                             checkin: presupuesto_trabajado.checkin,
                             horas: horas_registro,
                         }
+                        var registro_pres = {
+                            inge: ing.nombre,
+                            checkin: time.getTime(),
+                            horas: horas_registro,
+                        }
                         if(proyecto_trabajado == ing.proyecto_asignado){
                             var presupuesto = {
                                 presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
