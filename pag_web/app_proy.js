@@ -126,7 +126,6 @@ $('#' + id_registrar_button_proy).click(function () {
         timestamps: {
             startedAt: time.getTime(),
             activacion: 0,
-            reqs_completos: 0,
             finishedAt: 0,
         }
     }
