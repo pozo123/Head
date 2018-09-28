@@ -10,7 +10,6 @@ var id_confirmpass_perfil = "confirm";
 var rama_bd_proys = "proys";
 var rama_bd_inges = "inges";
 
-var time = new Date();
 
 $(document).ready(function() {
 
@@ -31,6 +30,7 @@ $(document).ready(function() {
 });
 
 function loadDDLPresupuestos(select){
+    var select = document.getElementById(id_presupuestos_ddl_perfil);
     var option = document.createElement('option');
     option.style = "display:none";
     option.text = option.value = "";
@@ -64,7 +64,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                 }
                 var presupuesto = {
                     presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
-                    checkin: time.getTime(),
+                    checkin: new Date.getTime(),
                     horas_trabajadas: 0,
                     horas_invalidas: 0,
                 }
@@ -80,7 +80,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                     if(!presupuesto_trabajado){
                         var presupuesto = {
                             presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
-                            checkin: time.getTime(),
+                            checkin: new Date.getTime(),
                             horas_trabajadas: 0,
                             horas_invalidas: 0,
                         }
@@ -90,7 +90,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                     else{
                         var presupuesto = {
                             presupuesto: $('#' + id_presupuestos_ddl_perfil).val(),
-                            checkin: time.getTime(),
+                            checkin: new Date.getTime(),
                             horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
                             horas_invalidas: presupuesto_trabajado.horas_invalidas, 
                         }
@@ -123,14 +123,14 @@ $('#' + id_salida_button_perfil).click(function () {
                     var presupuesto_trabajado = snapshot.val();
                     firebase.database().ref('' + rama_bd_inges + "/" + username).once("value").then(function(snapshot){
                         var ing = snapshot.val();
-                        horas_registro = time.getTime() - presupuesto_trabajado.checkin;
+                        horas_registro = new Date.getTime() - presupuesto_trabajado.checkin;
                         var registro = {
                             checkin: presupuesto_trabajado.checkin,
                             horas: horas_registro,
                         }
                         var registro_pres = {
                             inge: ing.nombre,
-                            checkin: time.getTime(),
+                            checkin: new Date.getTime(),
                             horas: horas_registro,
                         }
                         if(proyecto_trabajado == ing.proyecto_asignado){
