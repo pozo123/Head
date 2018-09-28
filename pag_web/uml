@@ -9,7 +9,7 @@
     - proys (por nombre)
       - nombre
       - lider
-      - cliente
+      - cliente: nombre -> {contrato:{nombre, extension, email},proyecto:{nombre, extension, email}, control_obra:{nombre, extension, email}, precios:{nombre, extension, email},pagos:{nombre, extension, email}}
       - asignados (array con json {nombre})
       - timestamps: { startedAt, finishedAt}
       - presupuestos: nombre -> {todo lo de arriba}
