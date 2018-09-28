@@ -93,7 +93,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                             horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
                             horas_invalidas: presupuesto_trabajado.horas_invalidas, 
                         }
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).update(presupuesto);
                     }
                 });
             }
@@ -150,7 +150,7 @@ $('#' + id_salida_button_perfil).click(function () {
                             }
                         }
                         
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).set(presupuesto);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val()).update(presupuesto);
                         firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + $('#' + id_presupuestos_ddl_perfil).val() + "/registros").push(registro);
 
                     });
