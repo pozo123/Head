@@ -10,6 +10,27 @@ var rama_bd_proys = "proys";
 var rama_bd_inges = "inges";
 var rama_bd_clientes = "clientes";
 
+
+var id_contrato_nombre_proy = "contratoNombre";
+var id_contrato_extension_proy = "contratoExtension";
+var id_contrato_email_proy = "contratoEmail";
+
+var id_proyecto_nombre_proy = "proyectoNombre";
+var id_proyecto_extension_proy = "proyectoExtension";
+var id_proyecto_email_proy = "proyectoEmail";
+
+var id_control_obra_nombre_proy = "control_obraNombre";
+var id_control_obra_extension_proy = "control_obraExtension";
+var id_control_obra_email_proy = "control_obraEmail";
+
+var id_precios_nombre_proy = "preciosNombre";
+var id_precios_extension_proy = "preciosExtension";
+var id_precios_email_proy = "preciosEmail";
+
+var id_pagos_nombre_proy = "pagosNombre";
+var id_pagos_extension_proy = "pagosExtension";
+var id_pagos_email_proy = "pagosEmail";
+
 var asignados = [];
 var time = new Date();
 
@@ -75,7 +96,6 @@ $('#' + id_registrar_button_proy).click(function () {
     var proyecto = {      
         nombre: $('#' + id_nombre_proy).val(),
         lider: $('#' + id_lider_ddl_proy + " option:selected").val(),
-        cliente: $('#' + id_cliente_ddl_proy + "option:selected").val(),
         asignados: asignados,
         timestamps: {
             startedAt: time.getTime(),
@@ -84,6 +104,35 @@ $('#' + id_registrar_button_proy).click(function () {
     }
     asignados = [];
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val()).set(proyecto)
+
+    var cliente = {
+        contrato:{
+            nombre: $('#' + id_contrato_nombre_proy).val(),
+            extension: $('#' + id_contrato_extension_proy).val(),
+            email: $('#' + id_contrato_email_proy).val(),
+        }
+        proyecto:{
+            nombre: $('#' + id_proyecto_nombre_proy).val(),
+            extension: $('#' + id_proyecto_extension_proy).val(),
+            email: $('#' + id_proyecto_email_proy).val(),
+        }
+        control_obra:{
+            nombre: $('#' + id_control_obra_nombre_proy).val(),
+            extension: $('#' + id_control_obra_extension_proy).val(),
+            email: $('#' + id_control_obra_email_proy).val(),
+        }
+        precios:{
+            nombre: $('#' + id_precios_nombre_proy).val(),
+            extension: $('#' + id_precios_extension_proy).val(),
+            email: $('#' + id_precios_email_proy).val(),
+        }
+        pagos:{
+            nombre: $('#' + id_pagos_nombre_proy).val(),
+            extension: $('#' + id_pagos_extension_proy).val(),
+            email: $('#' + id_pagos_email_proy).val(),
+        }
+    }
+    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + "option:selected").val()).set(cliente);
 
     alert("¡Alta de proyecto exitosa!");
 });
