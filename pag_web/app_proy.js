@@ -59,15 +59,18 @@ $(document).ready(function() {
         var option4 = document.createElement('OPTION');
         option4.text = option4.value = inge.nombre; 
         select.appendChild(option4);
-        select2.appendChild(option4);
+
+        var option5 = document.createElement('OPTION');
+        option5.text = option5.value = inge.nombre; 
+        select2.appendChild(option5);
 
     });
 
     firebase.database().ref(rama_bd_clientes).orderByChild('nombre').on('child_added',function(snapshot){
         var clien = snapshot.val();
-        var option5 = document.createElement('OPTION');
-        option5.text = option5.value = clien.nombre; 
-        select3.appendChild(option5);
+        var option6 = document.createElement('OPTION');
+        option6.text = option6.value = clien.nombre; 
+        select3.appendChild(option6);
     });
 
 });
@@ -130,7 +133,7 @@ $('#' + id_registrar_button_proy).click(function () {
             nombre: $('#' + id_pagos_nombre_proy).val(),
             extension: $('#' + id_pagos_extension_proy).val(),
             email: $('#' + id_pagos_email_proy).val(),
-        },
+        }
     }
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + "option:selected").val()).set(cliente);
 
