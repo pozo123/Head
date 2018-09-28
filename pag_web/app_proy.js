@@ -100,7 +100,7 @@ $('#' + id_registrar_button_proy).click(function () {
         lider: $('#' + id_lider_ddl_proy + " option:selected").val(),
         asignados: asignados,
         timestamps: {
-            startedAt: new Date.getTime(),
+            startedAt: new Date().getTime(),
             finishedAt: 0,
         }
     }
