@@ -7,17 +7,17 @@ Pendientes semana 24 sept - 30 sept
 
 - Primordiales
 
-  - Alta cliente
-  - Credenciales -> hide
-  - hacer cliente ddl en proy
-  - Añadir toda la info del mail a proy/cliente (que hueva)
+  - arreglar el pedo del set registro en perfil
   
   - Meter info a bd
     - clientes/proyectos email
     - usuarios
     
-  - Alguna tabla y/o gráfica para reportar horas trabajadas
-  - Aprender git
+  - Tabla
+    - Hacer query para jalar info
+    - frontend: plugins?
+
+  - Plugins, que verga?
 
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
@@ -25,7 +25,7 @@ Pendientes semana 24 sept - 30 sept
   - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
 
 - Importantes pero no primordiales
-
+  - Credenciales -> hide
   - Foto en inges y en reqs
   - Modificar proy asignado en inge
   - Modificar inges asignados a proy
