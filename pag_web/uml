@@ -6,6 +6,7 @@
       - requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
       - horas_programadas
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
+      - registros: (con push asi que ni idea) {inge, checkin, horas}
     - proys (por nombre)
       - nombre
       - lider
@@ -23,6 +24,7 @@
       - credenciales
       - status
       - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas, registros(es con push asi que no se como se guardan){checkin, horas}}
+      - foto: se guarda como url... creo
     - clientes (por nombre)
         - nombre
         - director
