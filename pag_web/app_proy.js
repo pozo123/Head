@@ -32,7 +32,6 @@ var id_pagos_extension_proy = "pagosExtension";
 var id_pagos_email_proy = "pagosEmail";
 
 var asignados = [];
-var time = new Date();
 
 $(document).ready(function() {
 
@@ -101,7 +100,7 @@ $('#' + id_registrar_button_proy).click(function () {
         lider: $('#' + id_lider_ddl_proy + " option:selected").val(),
         asignados: asignados,
         timestamps: {
-            startedAt: time.getTime(),
+            startedAt: new Date.getTime(),
             finishedAt: 0,
         }
     }
