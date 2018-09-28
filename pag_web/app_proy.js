@@ -125,7 +125,6 @@ $('#' + id_registrar_button_proy).click(function () {
         asignados: asignados,
         timestamps: {
             startedAt: time.getTime(),
-            activacion: 0,
             finishedAt: 0,
         }
     }
