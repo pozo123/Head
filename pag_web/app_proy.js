@@ -135,7 +135,7 @@ $('#' + id_registrar_button_proy).click(function () {
             email: $('#' + id_pagos_email_proy).val(),
         }
     }
-    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + "option:selected").val()).set(cliente);
+    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_nombre_proy).val() + "/cliente/" + $('#' + id_cliente_ddl_proy + " option:selected").val()).set(cliente);
 
     alert("¡Alta de proyecto exitosa!");
 });
