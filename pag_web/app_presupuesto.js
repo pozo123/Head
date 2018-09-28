@@ -99,6 +99,12 @@ $('#' + id_registrar_button_presupuesto).click(function () {
         nombre: $('#' + id_nombre_presupuesto).val(),
         requisitos: reqs,
         horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+        timestamps: {
+            startedAt: time.getTime(),
+            finishedAt: 0,
+            activacion: 0,
+            reqs_completados: 0
+        }
     }
     reqs = [];
     firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proyecto_ddl_presupuesto + " option:selected").val() + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto)
