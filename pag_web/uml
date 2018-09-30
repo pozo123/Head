@@ -6,7 +6,7 @@
       - requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
       - horas_programadas
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
-      - registros: (con push asi que ni idea) {inge, checkin, horas}
+    - registros: (con push asi que con clave unica) {inge, ,proyecto, presupuesto, checkin, horas}
     - proys (por nombre)
       - nombre
       - lider
@@ -23,7 +23,7 @@
       - proyecto_asignado
       - credenciales
       - status
-      - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas, registros(es con push asi que no se como se guardan){checkin, horas}}
+      - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas}
     - clientes (por nombre)
         - nombre
         - director
