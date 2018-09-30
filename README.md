@@ -6,18 +6,11 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana 24 sept - 30 sept
 
 - Primordiales
-
-  - arreglar el pedo del set registro en perfil
   
-  - Meter info a bd
-    - clientes/proyectos email
-    - usuarios
-    
-  - Tabla
-    - Hacer query para jalar info
-    - frontend: plugins?
+  - datatable 
+  - Hacer query para jalar info
+  - frontend: plugins?
 
-  - Plugins, que verga?
 
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
