@@ -55,13 +55,15 @@ $(document).ready(function() {
     firebase.database().ref(rama_bd_inges).orderByChild('nombre').on('child_added',function(snapshot){
         
         var inge = snapshot.val();
-        var option4 = document.createElement('OPTION');
-        option4.text = option4.value = inge.nombre; 
-        select.appendChild(option4);
+        if(inge.proyecto_asignado === ""){
+            var option4 = document.createElement('OPTION');
+            option4.text = option4.value = inge.nombre; 
+            select.appendChild(option4);
 
-        var option5 = document.createElement('OPTION');
-        option5.text = option5.value = inge.nombre; 
-        select2.appendChild(option5);
+            var option5 = document.createElement('OPTION');
+            option5.text = option5.value = inge.nombre; 
+            select2.appendChild(option5);
+        }
 
     });
 
@@ -95,6 +97,13 @@ $('#' + id_del_asignados_button_proy).click(function () {
 
 $('#' + id_registrar_button_proy).click(function () {
     
+    for(var i = 0; i < asignados.length; i++){
+        firebase.database().ref(rama_bd_inges).orderByChild('nombre').equalTo(asignados[i]).on("child_added", function (snapshot) {
+            var inge = snapshot.val();
+            firebase.database().ref(rama_bd_inges + "/" + inge.uid + "/proyecto_asignado").set($('#' + id_nombre_proy).val());
+        });    
+    }
+
     var proyecto = {      
         nombre: $('#' + id_nombre_proy).val(),
         lider: $('#' + id_lider_ddl_proy + " option:selected").val(),
