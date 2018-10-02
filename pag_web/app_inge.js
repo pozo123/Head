@@ -171,3 +171,4 @@ function guardaDatos(user) {
 
     firebase.database().ref(rama_bd_inges+"/" + user.uid).set(usuario);
 }
+
