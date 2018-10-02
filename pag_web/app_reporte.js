@@ -69,7 +69,7 @@ function loadDDLPresupuestos(){
 
 $('#' + id_imprime_button_reporte).click(function () {
 	regs = [];
-	firebase.database(rama_bd_inges).ref().orderByKey().on('child_added',function(snapshot){
+	firebase.database(rama_bd_registros).ref().orderByKey().on('child_added',function(snapshot){
     	var registro = snapshot.val();
     	var horas_trabajadas = "" + Math.floor(registro.horas/3600000) + ":" + Math.floor((registro.horas % 3600000)/60000);
     	var datos = {
