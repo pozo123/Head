@@ -34,3 +34,4 @@ To do:
   - Hablar con Emmanuel sobre lider proyecto
   - Proyecto asignado o tambien  presupuesto?
   - Pedir correos para dar de alta a los ingenieros de verdad
+  - Sólo puede haber un lider?
