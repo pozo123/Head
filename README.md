@@ -18,6 +18,7 @@ Pendientes semana 24 sept - 30 sept
   - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
 
 - Importantes pero no primordiales
+  - Activar reqs
   - Credenciales -> hide
   - Foto en inges y en reqs
   - Modificar proy asignado en inge
