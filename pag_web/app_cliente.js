@@ -1,7 +1,7 @@
-var id_nombre_cliente = "nombreCliente";
-var id_director_cliente = "director";
-var id_direccion_cliente = "direccion";
-var id_tel_cliente = "telefono";
+var id_nombre_cliente = "clienteNombre";
+var id_director_cliente = "clienteDirectorGeneral";
+var id_direccion_cliente = "clienteDireccion";
+var id_tel_cliente = "clienteTelefono";
 var id_registrar_button_cliente = "registrarCliente";
 var rama_bd_clientes = "clientes";
 
