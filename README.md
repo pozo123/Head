@@ -6,26 +6,25 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana 24 sept - 30 sept
 
 - Primordiales
-  - Quitar proy_asignado de alta_inge, añadir que al hacer proy con asignados, les asigne el proy a los inges seleccionados
-
+  - Editar proys
+    - Activa reqs
+    - Edita info
+    - alta y BAJA inges asignados
+  
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
   - Generar presupuestos (ahi va la funcionalidad de reqs)
   - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
 
 - Importantes pero no primordiales
-  - Activar reqs
   - Credenciales -> hide
   - Foto en inges y en reqs
-  - Modificar proy asignado en inge
-  - Modificar inges asignados a proy
-  - Submit en  login
+  - Submit en login
   - reqs
     - Cambiar reqs a checkboxes
-    - Subir reqs
+    - Subir reqs (No nos los han mandado)
   - cuando se cambie de página, se borre lo que se escribió en formularios.
-  - cambiar la forma de eliminar requisitos agregados, en lugar de eliminar el último, mejor una lista con checkbox's para poder quitar todos los deseados de un golpe.
-  - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método, etc.)
+  - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método,  No repetir nombres en proys o presu, etc.)
 
 
 To do:
