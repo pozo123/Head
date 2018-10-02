@@ -44,7 +44,7 @@ $(document).ready(function() {
     });
 });
 
-function loadDDLPresupuestos(){
+function loadDDLPresupuestosReporte(){
     $('#' + id_pres_ddl_reporte).empty();
     var select = document.getElementById(id_pres_ddl_reporte);
     var option = document.createElement('option');
