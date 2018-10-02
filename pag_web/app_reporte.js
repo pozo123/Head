@@ -1,3 +1,35 @@
+$('#' + id_imprime_button_reporte).click(function () {
+    var doc;
+	firebase.database().ref(rama_bd_registros).orderByKey().on('value',function(data){
+        var registros_db = data.val();
+        var keys = Object.keys(registros_db);
+        
+        var regs = [];
+        for (var i = 0; i<keys.length; i++){
+            regs[i] = [
+                //registros_db[keys[i]].checkin.toLocaleString('en-GB', {timeZone: 'America/Chicago'}), 
+                "" + Math.floor(registros_db[keys[i]].horas/360000) + ":" + Math.floor((registros_db[keys[i]].horas % 360000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
+                registros_db[keys[i]].inge, 
+                registros_db[keys[i]].presupuesto, 
+                registros_db[keys[i]].proyecto
+            ]
+        }
+        
+        doc = {
+            content: [
+                {
+                    table: {
+                        body: [regs]
+                    }
+                }
+            ]
+        };
+        pdfMake.createPdf(doc).open();
+    });
+});
+
+
+
 var rama_bd_registros = "registros";
 var rama_bd_inges = "inges";
 var rama_bd_proys = "proys";
