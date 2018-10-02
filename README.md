@@ -6,11 +6,7 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana 24 sept - 30 sept
 
 - Primordiales
-  
-  - datatable 
-  - Hacer query para jalar info
-  - frontend: plugins?
-
+  - Quitar proy_asignado de alta_inge, añadir que al hacer proy con asignados, les asigne el proy a los inges seleccionados
 
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
