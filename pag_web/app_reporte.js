@@ -1,35 +1,3 @@
-$('#' + id_imprime_button_reporte).click(function () {
-    var doc;
-	firebase.database().ref(rama_bd_registros).orderByKey().on('value',function(data){
-        var registros_db = data.val();
-        var keys = Object.keys(registros_db);
-        
-        var regs = [];
-        for (var i = 0; i<keys.length; i++){
-            regs[i] = [
-                //registros_db[keys[i]].checkin.toLocaleString('en-GB', {timeZone: 'America/Chicago'}), 
-                "" + Math.floor(registros_db[keys[i]].horas/360000) + ":" + Math.floor((registros_db[keys[i]].horas % 360000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
-                registros_db[keys[i]].inge, 
-                registros_db[keys[i]].presupuesto, 
-                registros_db[keys[i]].proyecto
-            ]
-        }
-        
-        doc = {
-            content: [
-                {
-                    table: {
-                        body: [regs]
-                    }
-                }
-            ]
-        };
-        pdfMake.createPdf(doc).open();
-    });
-});
-
-
-
 var rama_bd_registros = "registros";
 var rama_bd_inges = "inges";
 var rama_bd_proys = "proys";
@@ -37,6 +5,8 @@ var id_imprime_button_reporte = "imprime_reporte";
 var id_inge_ddl_reporte = "DDL_inge";
 var id_proy_ddl_reporte = "DDL_proy";
 var id_pres_ddl_reporte = "DDL_pres";
+var id_presupuestosgroup_reporte = "presAsignado_form";
+
 
 var regs = new Array();
 
@@ -85,10 +55,10 @@ function loadDDLPresupuestosReporte(){
     select.appendChild(option);
 
     if($('#' + id_proy_ddl_reporte + " option:selected").val() === "Todos"){
-        $('#' + id_pres_ddl_reporte).addClass("hidden");
+        $('#' + id_presupuestosgroup_reporte).addClass("hidden");
     }
     else{
-        $('#' + id_pres_ddl_reporte).removeClass("hidden");
+        $('#' + id_presupuestosgroup_reporte).removeClass("hidden");
         firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proy_ddl_reporte + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var presu = snapshot.key;
             var option2 = document.createElement('option');
@@ -100,29 +70,47 @@ function loadDDLPresupuestosReporte(){
 }
 
 $('#' + id_imprime_button_reporte).click(function () {
-	regs = [];
-	firebase.database(rama_bd_registros).ref().orderByKey().on('child_added',function(snapshot){
-    	var registro = snapshot.val();
-    	var horas_trabajadas = "" + Math.floor(registro.horas/3600000) + ":" + Math.floor((registro.horas % 3600000)/60000);
-    	var datos = {
-    		checkin: registro.checkin.toLocaleString('en-GB', {timeZone: 'America/Chicago'}), 
-    		horas: horas_trabajadas, 
-    		ingeniero: registro.inge, 
-    		presupuesto: registro.presupuesto, 
-    		proyecto: registro. proyecto
-    	}
-    	regs.push(datos);
+    var doc;
+    var selec_inge = $('#' + id_inge_ddl_reporte).val();
+    var selec_proy = $('#' + id_proy_ddl_reporte).val();
+    var selec_pres = $('#' + id_pres_ddl_reporte).val();
+    var filtro_inges =  selec_inge === "Todos";
+    var filtro_proys =  selec_proy === "Todos";
+    var filtro_presu =  selec_pres === "Todos";
+
+    firebase.database().ref(rama_bd_registros).orderByKey().on('value',function(data){
+        var registros_db = data.val();
+        var keys = Object.keys(registros_db);
+        var regs = [];
+
+        for (var i = 0; i<keys.length; i++){
+        	var j = 0;
+        	//filtros
+        	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
+        		if(filtro_proys || ((selec_proy === registros_db[keys[i]].proyecto) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
+        			//REGISTRAR
+	            	regs[j] = [
+	                	registros_db[keys[i]].checkin,//new Date(registros_db[keys[i]].checkin).,
+		                "" + Math.floor(registros_db[keys[i]].horas/360000) + ":" + Math.floor((registros_db[keys[i]].horas % 360000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
+		                registros_db[keys[i]].inge, 
+		                registros_db[keys[i]].presupuesto, 
+		                registros_db[keys[i]].proyecto
+		            ];
+		            //REGISTRAR end
+		            j++;
+        		}
+        	}        	
+        }
+        doc = {
+            content: [
+                {
+                    table: {
+                        body: [regs]
+                    }
+                }
+            ]
+        };
+        pdfMake.createPdf(doc).open();
     });
-	var doc = {
-		content: [
-			{
-				table: {
-					headerRows: 1,
-					widths: [ '*', 'auto', 100, '*'],
-					body: regs
-				}
-			}
-		]
-	};
-	pdfMake.createPdf(doc).open();
 });
+
