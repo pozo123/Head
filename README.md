@@ -13,6 +13,7 @@ Pendientes semana  1 oct
     - En pdf (en el app_presupuesto)
   - Subir a bd tipos de presupeusto con clave
   - programar consecutivo para clave presu
+  - Cliente tiene clave o solo se usa para la clave del presu? con substring o jalamos de atributo?
   
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
