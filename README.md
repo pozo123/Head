@@ -10,9 +10,9 @@ Pendientes semana  1 oct
     - Nombres apps
     - botones que sobren y falten
   - Generar presupuesto
-    - En pdf 
-    - Como alta (son simultaneos)
+    - En pdf (en el app_presupuesto)
   - Subir a bd tipos de presupeusto con clave
+  - programar consecutivo para clave presu
   
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
