@@ -36,6 +36,7 @@
       - obras: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas} //, horas_invalidas}
     - clientes (por nombre)
         - nombre
+        - telefono (de la empresa)
         - atencion: nombre -> {area, celular, email, extension}
         - direccion: {calle, numero, colonia, delegacion, ciudad, cp}
     - tipos_presupuesto (por nombre)
