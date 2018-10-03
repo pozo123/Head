@@ -6,9 +6,7 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana  1 oct 
 
 - Primordiales
-  - Actualizar uml
-    - Nombres apps
-    - botones que sobren y falten
+  - Actualizar botones html
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
   - Subir a bd tipos de presupeusto con clave
