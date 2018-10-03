@@ -86,11 +86,11 @@ $('#' + id_registrar_button_obra).click(function () {
         clave: $('#' + id_clave_obra).val(),
         direccion: {
             calle: $('#' + id_direccion_calle_obra).val(),
-            numero: $('#' + ).val(),
-            colonia: $('#' + ).val(),
-            delegacion: $('#' + ).val(),
-            ciudad: $('#' + ).val(),
-            cp: $('#' + ).val()
+            numero: $('#' + id_direccion_num_obra).val(),
+            colonia: $('#' + id_direccion_colonia_obra).val(),
+            delegacion: $('#' + id_direccion_delegacion_obra).val(),
+            ciudad: $('#' + id_direccion_ciudad_obra).val(),
+            cp: $('#' + id_direccion_cp_obra).val()
         },
         cliente: $('#' + id_cliente_ddl_obra + " option:selected").val(),
         //lider: $('#' + id_lider_ddl_obra + " option:selected").val(),
