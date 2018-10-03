@@ -1,6 +1,6 @@
 var rama_bd_registros = "registros";
 var rama_bd_inges = "inges";
-var rama_bd_proys = "proys";
+var rama_bd_obras = "obras";
 var id_imprime_button_reporte = "button_generar_reporte";
 var id_inge_ddl_reporte = "reporte_DDL_ingeniero";
 var id_proy_ddl_reporte = "reporte_DDL_proyecto";
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
     });
 
-    firebase.database().ref(rama_bd_proys).orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
         var proy = snapshot.val();
         var option4 = document.createElement('option');
@@ -63,7 +63,7 @@ function loadDDLPresupuestosReporte(){
     }
     else{
         $('#' + id_presupuestosgroup_reporte).removeClass("hidden");
-        firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proy_ddl_reporte + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_proy_ddl_reporte + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var presu = snapshot.key;
             var option2 = document.createElement('option');
             option2.text = option2.value = presu; 
