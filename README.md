@@ -12,6 +12,7 @@ Pendientes semana  1 oct
   - Generar presupuesto
     - En pdf 
     - Como alta (son simultaneos)
+  - Subir a bd tipos de presupeusto con clave
   
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
