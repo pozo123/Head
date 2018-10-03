@@ -124,8 +124,6 @@ $('#' + id_entrada_button_perfil).click(function () {
     });
 });
 
-
-
 $('#' + id_salida_button_perfil).click(function () {
     var chamba;
     if($('#' + id_proyecto_ddl_perfil + " option:selected").val() === "Miscelaneo"){

@@ -26,6 +26,10 @@
     min-height: 450px;
 }
 
+hr.style2 {
+	border-top: 3px double #e00d1f;
+}
+
 .scrollbar-primary::-webkit-scrollbar {
   width: 12px;
   background-color: #F5F5F5; }

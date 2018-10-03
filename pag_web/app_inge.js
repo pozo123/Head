@@ -6,7 +6,7 @@ var id_elec_checkbox_inge = "checkboxElectricidad";
 var id_plom_checkbox_inge = "checkboxPlomeria";
 var id_admin_radio_inge = "inlineRadio1";
 var id_lider_radio_inge = "inlineRadio2";
-//var id_proyectoAsignado_ddl_inge = "proyectoAsignado";
+var id_proyectoAsignado_ddl_inge = "proyectoAsignado";
 var id_proyectista_radio_inge = "inlineRadio3";
 var id_registrar_button_inge = "registrarIngeniero";
 var id_foto_input_inge = "foto";
@@ -16,20 +16,20 @@ var rama_bd_proys = "proys";
 //var id_imprimir_button_inge = "imprimir";
 //var id_uid_inge = "uid";
 
-// $(document).ready(function(){
-//     var select = document.getElementById(id_proyectoAsignado_ddl_inge);
-//     var option = document.createElement('option');
-//     option.style = "display:none";
-//     option.text = option.value = "";
-//     select.appendChild(option);
+$(document).ready(function(){
+    var select = document.getElementById(id_proyectoAsignado_ddl_inge);
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
     
-//     firebase.database().ref(rama_bd_proys).orderByChild('nombre').on('child_added',function(snapshot){
-//         var proy = snapshot.val();
-//         var option2 = document.createElement('option');
-//         option2.text = option2.value = proy.nombre; 
-//         select.appendChild(option2);
-//     });
-// });
+    firebase.database().ref(rama_bd_proys).orderByChild('nombre').on('child_added',function(snapshot){
+        var proy = snapshot.val();
+        var option2 = document.createElement('option');
+        option2.text = option2.value = proy.nombre; 
+        select.appendChild(option2);
+    });
+});
 
 $('#' + id_registrar_button_inge).click((function () {
     firebase.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
@@ -163,7 +163,7 @@ function guardaDatos(user) {
         email: user.email,
         password: $('#' + id_password_inge).val(),
         especialidad: espec,
-        proyecto_asignado: "", //$('#' + id_proyectoAsignado_ddl_inge + " option:selected").val(),
+        proyecto_asignado: $('#' + id_proyectoAsignado_ddl_inge + " option:selected").val(),
         credenciales: creden,
         status: false,
         //foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0])//A ver si jala...
