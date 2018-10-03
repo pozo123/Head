@@ -5,13 +5,17 @@ var id_del_reqs_button_presupuesto = "borrar_reqs_asignados";
 var lista_reqs_presupuesto = "ListaReqs";
 var id_horas_programadas_presupuesto = "horasProgramadas";
 var id_registrar_button_presupuesto = "registrarPresupuesto";
-var id_proyecto_ddl_presupuesto = "proyectoPresupuesto";
+var id_obra_ddl_presupuesto = "obraPresupuesto";
+var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto"; //Nueva variable
 
-var rama_bd_proys = "proys";
+var rama_bd_tipos_presupuesto = "tipos_presupuesto";
+var rama_bd_obras = "obras";
 var rama_bd_reqs = "reqs";
 
 //Necesaria si son checkboxes
 //var num_max_req = "3";
+
+var precio_hora = 2000;
 
 var reqs = [];
 
@@ -23,11 +27,17 @@ $(document).ready(function() {
     option.text = option.value = "";
     select.appendChild(option);
 
-    var select2 = document.getElementById(id_proyecto_ddl_presupuesto);   
+    var select2 = document.getElementById(id_obra_ddl_presupuesto);   
     var option2 = document.createElement('option');
     option2.style = "display:none";
     option2.text = option2.value = "";
     select2.appendChild(option2);
+
+    var select3 = document.getElementById(id_tipo_presupuesto_ddl_presupuesto);   
+    var option5 = document.createElement('option');
+    option5.style = "display:none";
+    option5.text = option5.value = "";
+    select3.appendChild(option5);
     
     firebase.database().ref(rama_bd_reqs).orderByChild('nombre').on('child_added',function(snapshot){
         
@@ -38,12 +48,22 @@ $(document).ready(function() {
 
     });
 
-    firebase.database().ref(rama_bd_proys).orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
-        var proy = snapshot.val();
+        var obra = snapshot.val();
         var option4 = document.createElement('OPTION');
-        option4.text = option4.value = proy.nombre; 
+        option4.text = option4.value = obra.nombre; 
         select2.appendChild(option4);
+
+    });
+
+    firebase.database().ref(rama_bd_tipos_presupuesto).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var tipo = snapshot.val();
+        var option6 = document.createElement('OPTION');
+        option6.text = tipo.nombre; 
+        option6.value = tipo.codigo;
+        select3.appendChild(option6);
 
     });
 });
@@ -94,19 +114,33 @@ $('#' + id_registrar_button_presupuesto).click(function () {
     //         if(document.getElementById('req'+i).checked == true)
     //             reqs.push(document.getElementById('req'+i).name)
     //     }
-    var presupuesto = {      
-        nombre: $('#' + id_nombre_presupuesto).val(),
-        requisitos: reqs,
-        horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-        timestamps: {
-            startedAt: new Date().getTime(),
-            finishedAt: 0,
-            activacion: 0,
-            reqs_completados: 0
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
+        var obra_selec = snapshot.val();
+        var codigo_obra = obra_selec.clave;
+        var codigo_cliente = obra_selec.cliente.substring(0,3);
+        var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
+        var consecutivo = 0; //Falta programar este pedo, esta denso
+        var presupuesto = {      
+            nombre: $('#' + id_nombre_presupuesto).val(),
+            clave: codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + consecutivo,
+            requisitos: reqs,
+            horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+            cash_presupuestado: $('#' + id_horas_programadas_presupuesto).val() * precio_hora,
+            timestamps: {
+                startedAt: new Date().getTime(),
+                finishedAt: 0,
+                activacion: 0,
+                reqs_completados: 0
+            },
+            contrato: false
         }
-    }
-    reqs = [];
-    firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proyecto_ddl_presupuesto + " option:selected").val() + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto)
+        reqs = [];
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto)
 
-    alert("¡Alta de presupuesto exitosa!");
+        alert("¡Alta de presupuesto exitosa!");
+
+        //Aqui se genera el pdf... creo
+    });
+
+    
 });
