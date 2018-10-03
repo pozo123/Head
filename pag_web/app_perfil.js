@@ -3,21 +3,21 @@
 var id_entrada_button_perfil = "button_registro_entrada";
 var id_salida_button_perfil = "button_registro_salida";
 var id_cambiarpassword_button_perfil = "button_cambio_contraseña";
-var id_proyecto_ddl_perfil = "DDL_proyectoAsignado";
+var id_obra_ddl_perfil = "DDL_obraAsignado";
 var id_presupuestos_ddl_perfil = "DDL_presupuestoAsignado";
 var id_newpassword_perfil = "newpass";
 var id_confirmpass_perfil = "confirm";
 var id_misc_perfil = "misc";
 var id_miscgroup_perfil = "misc_group";
 var id_presupuestosgroup_perfil = "presAsignado_form";
-var rama_bd_proys = "proys";
+var rama_bd_obras = "obras";
 var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 
 
 $(document).ready(function() {
 
-    var select = document.getElementById(id_proyecto_ddl_perfil);
+    var select = document.getElementById(id_obra_ddl_perfil);
     var option = document.createElement('option');
     option.style = "display:none";
     option.text = option.value = "";
@@ -26,11 +26,11 @@ $(document).ready(function() {
     option2.text = option2.value = "Miscelaneo";
     select.appendChild(option2);
 
-    firebase.database().ref(rama_bd_proys).orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
-        var proy = snapshot.val();
+        var obra = snapshot.val();
         var option3 = document.createElement('option');
-        option3.text = option3.value = proy.nombre; 
+        option3.text = option3.value = obra.nombre; 
         select.appendChild(option3);
 
     });
@@ -44,14 +44,14 @@ function loadDDLPresupuestos(){
     option.text = option.value = "";
     select.appendChild(option);
 
-    if($('#' + id_proyecto_ddl_perfil + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
         $('#' + id_presupuestosgroup_perfil).addClass("hidden");
         $('#' + id_miscgroup_perfil).removeClass("hidden");
     }
     else{
         $('#' + id_presupuestosgroup_perfil).removeClass("hidden");
         $('#' + id_miscgroup_perfil).addClass("hidden");
-        firebase.database().ref(rama_bd_proys + "/" + $('#' + id_proyecto_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var presu = snapshot.key;
             var option2 = document.createElement('option');
             option2.text = option2.value = presu; 
@@ -63,7 +63,7 @@ function loadDDLPresupuestos(){
 
 $('#' + id_entrada_button_perfil).click(function () {
     var chamba;
-    if($('#' + id_proyecto_ddl_perfil + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
         chamba = $('#' + id_misc_perfil).val();
     }
     else{
@@ -72,15 +72,15 @@ $('#' + id_entrada_button_perfil).click(function () {
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             var username = user.uid;
-            firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
+            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).once("value").then(function(snapshot){
                 
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true);
 
-            var proyecto_trabajado = snapshot.val();
-            //Si no existe registro de ese proyecto para este inge
-            if(!proyecto_trabajado){
-                var proyecto = {
-                    proyecto: $('#'+id_proyecto_ddl_perfil).val(),
+            var obra_trabajada = snapshot.val();
+            //Si no existe registro de ese obra para este inge
+            if(!obra_trabajada){
+                var obra = {
+                    obra: $('#'+id_obra_ddl_perfil).val(),
                 }
                 var presupuesto = {
                     presupuesto: chamba,
@@ -88,11 +88,11 @@ $('#' + id_entrada_button_perfil).click(function () {
                     horas_trabajadas: 0,
                     horas_invalidas: 0,
                 }
-                firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).set(proyecto);
-                firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).set(presupuesto);
+                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).set(obra);
+                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
             }
             else{
-                firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
+                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
                     var presupuesto_trabajado = snapshot.val();
 
                     //Si no existe registro de ese presupuesto para este inge
@@ -104,7 +104,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                             horas_invalidas: 0,
                         }
 
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).set(presupuesto);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
                     }
                     else{
                         var presupuesto = {
@@ -113,7 +113,7 @@ $('#' + id_entrada_button_perfil).click(function () {
                             horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
                             horas_invalidas: presupuesto_trabajado.horas_invalidas, 
                         }
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).update(presupuesto);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).update(presupuesto);
                     }
                 });
             }
@@ -126,7 +126,7 @@ $('#' + id_entrada_button_perfil).click(function () {
 
 $('#' + id_salida_button_perfil).click(function () {
     var chamba;
-    if($('#' + id_proyecto_ddl_perfil + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
         chamba = $('#' + id_misc_perfil).val();
     }
     else{
@@ -139,9 +139,9 @@ $('#' + id_salida_button_perfil).click(function () {
 
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
 
-            firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val()).once("value").then(function(snapshot){
-                var proyecto_trabajado = snapshot.val();
-                firebase.database().ref('' + rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
+            firebase.database().ref('' + rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).once("value").then(function(snapshot){
+                var obra_trabajada = snapshot.val();
+                firebase.database().ref('' + rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
 
                     var presupuesto_trabajado = snapshot.val();
                     firebase.database().ref('' + rama_bd_inges + "/" + username).once("value").then(function(snapshot){
@@ -153,30 +153,28 @@ $('#' + id_salida_button_perfil).click(function () {
                             inge: ing.nombre,
                             checkin: new Date().getTime(),
                             horas: horas_registro,
-                            proyecto: $('#' + id_proyecto_ddl_perfil).val(),
+                            obra: $('#' + id_obra_ddl_perfil).val(),
                             presupuesto: chamba,
                         }
 
-                        if(proyecto_trabajado == ing.proyecto_asignado){
+                        //if(obra_trabajada == ing.proyecto_asignado){
                             var presupuesto = {
                                 presupuesto: chamba,
                                 checkin: 0,
                                 horas_trabajadas: presupuesto_trabajado.horas_trabajadas + horas_registro,
                                 horas_invalidas: presupuesto_trabajado.horas_invalidas, 
                             }
-
-                        }
-                        else{
-                            var presupuesto = {
-                                presupuesto: chamba,
-                                checkin: 0,
-                                horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
-                                horas_invalidas: presupuesto_trabajado.horas_invalidas + horas_registro, 
-                            }
-                        }
-
-                    
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/proyectos/"  + $('#' + id_proyecto_ddl_perfil).val() + "/" + chamba).update(presupuesto);
+                        //}
+                        //else{
+                        //    var presupuesto = {
+                        //        presupuesto: chamba,
+                        //        checkin: 0,
+                        //        horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
+                        //        horas_invalidas: presupuesto_trabajado.horas_invalidas + horas_registro, 
+                        //    }
+                        //}
+                        
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).update(presupuesto);
                         firebase.database().ref(rama_bd_registros).push(registro);
 
                     });
