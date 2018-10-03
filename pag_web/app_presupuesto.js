@@ -120,12 +120,15 @@ $('#' + id_registrar_button_presupuesto).click(function () {
         var codigo_cliente = obra_selec.cliente.substring(0,3);
         var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
         var consecutivo = 0; //Falta programar este pedo, esta denso
+        var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + consecutivo;
+        var fecha = new Date().getTime();
+        var cash = $('#' + id_horas_programadas_presupuesto).val() * precio_hora;
         var presupuesto = {      
             nombre: $('#' + id_nombre_presupuesto).val(),
-            clave: codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + consecutivo,
+            clave: clave_presu,
             requisitos: reqs,
             horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-            cash_presupuestado: $('#' + id_horas_programadas_presupuesto).val() * precio_hora,
+            cash_presupuestado: cash,
             timestamps: {
                 startedAt: new Date().getTime(),
                 finishedAt: 0,
@@ -135,11 +138,20 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             contrato: false
         }
         reqs = [];
-        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto)
+        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto)
 
         alert("¡Alta de presupuesto exitosa!");
 
         //Aqui se genera el pdf... creo
+        // Variables: 
+        // fecha (falta darle el formato adecuado)
+        // obra_selec.nombre
+        // obra_selec.direccion (o quieren la direccion del cliente?)
+        // obra_selec.cliente
+        // clave_presu
+        // $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text() (text jala? el value es el codigo)
+        // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
+        // cash (ponerlo nada mas como sugerencia, pero jalar de un campo nuevo)
     });
 
     
