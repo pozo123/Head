@@ -3,16 +3,26 @@
       - esencial
     - presupuestos
       - nombre
+      - clave (obra/cliente/tipo_presu+consecutivo)
       - requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
       - horas_programadas
+      - cash_presupuestado
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
-    - registros: (con push asi que con clave unica) {inge, ,proyecto, presupuesto, checkin, horas}
-    - proys (por nombre)
+      - contrato
+    - registros: (con push asi que con clave unica) 
+        - inge
+        - proyecto 
+        - presupuesto
+        - checkin 
+        - horas
+    - obra (por nombre)
       - nombre
-      - lider
-      - cliente: nombre -> {contrato:{nombre, extension, email},proyecto:{nombre, extension, email}, control_obra:{nombre, extension, email}, precios:{nombre, extension, email},pagos:{nombre, extension, email}}
-      - asignados (array con json {nombre})
-      - timestamps: { startedAt, finishedAt}
+      - clave (max 6 carac)
+      - direccion: {calle, numero, colonia, delegacion, ciudad, cp}
+      //- lider
+      - cliente: nombre 
+      //- asignados (array con json {nombre})
+      - timestamps: {startedAt, finishedAt}
       - presupuestos: nombre -> {todo lo de arriba}
     - inges (por uid)
       - uid
@@ -20,12 +30,11 @@
       - email
       - password
       - especialidad
-      - proyecto_asignado
+      //- proyecto_asignado
       - credenciales
       - status
-      - proyectos: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas, horas_invalidas}
+      - obras: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas} //, horas_invalidas}
     - clientes (por nombre)
         - nombre
-        - director
-        - direccion
-        - telefono
+        - atencion: nombre -> {area, celular, email, extension}
+        - direccion: {calle, numero, colonia, delegacion, ciudad, cp}
