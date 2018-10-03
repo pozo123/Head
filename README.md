@@ -3,13 +3,15 @@ Depto. de Innovacion y Optimizacion
 
 sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inges) TipoObjeto solo si no text
 
-Pendientes semana 24 sept - 30 sept
+Pendientes semana  1 oct 
 
 - Primordiales
-  - Editar proys
-    - Activa reqs
-    - Edita info
-    - alta y BAJA inges asignados
+  - Actualizar uml
+    - Nombres apps
+    - botones que sobren y falten
+  - Generar presupuesto
+    - En pdf 
+    - Como alta (son simultaneos)
   
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
@@ -25,7 +27,10 @@ Pendientes semana 24 sept - 30 sept
     - Subir reqs (No nos los han mandado)
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - en formularios, escribir el código para evitar cosas tipo (si los campos están vacios, mandar alerta y no aplicar método,  No repetir nombres en proys o presu, etc.)
-
+ - Editar proys
+    - Activa reqs
+    - Edita info
+    - alta y BAJA inges asignados
 
 To do:
   - Candado para que los nombres de los proyectos (y cada presupuesto) sean diferentes
