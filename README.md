@@ -9,6 +9,7 @@ Pendientes semana  1 oct
 
   - Generar opcion actualizar presupuesto
     - En lugar de guardar viejo y nuevo, se guarda precio anterior en un atriuto "precios_anteriores" con push
+    - el PEDO es que puedene haber presu con misma obra, mismo cliente (duh) y mismo tipo sin que sean actualizaciones
   - Actualizar botones html
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
