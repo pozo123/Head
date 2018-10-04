@@ -6,6 +6,9 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana  1 oct 
 
 - Primordiales
+
+  - Generar opcion actualizar presupuesto
+    - En lugar de guardar viejo y nuevo, se guarda precio anterior en un atriuto "precios_anteriores" con push
   - Actualizar botones html
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
