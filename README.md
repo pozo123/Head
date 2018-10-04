@@ -17,11 +17,16 @@ Pendientes semana  1 oct
   - Subir a bd tipos de presupeusto con clave
   - programar consecutivo para clave presu
   - Cliente tiene clave o solo se usa para la clave del presu? con substring o jalamos de atributo?
+  - Bloquear obra y presu cuando picas entrada, incluso si sales de pagina
   
 - Importantes pero no podemos porque no nos mandan nada
   - Front y back del generador de presupuestos (PDFs) (falta definir realmente este trabajo)
   - Generar presupuestos (ahi va la funcionalidad de reqs)
   - Programar que jale el valor de cada hora de la bd para meter $$ en presupuesto en vez de solo horas
+
+- Candados
+  - Boton entrada bloqueado si no hay obra selec
+  - que los valores sean int cuando int, double cuando double, y así
 
 - Importantes pero no primordiales
   - Credenciales -> hide
