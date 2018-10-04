@@ -37,8 +37,8 @@ Pendientes semana  1 oct
 
     cuando encuentres este registro
 
-    actualizar horas: new date().getTime() - registro[i].ckeckin
-    actualizar: "finalizado"
+    -actualizar horas: new date().getTime() - registro[i].ckeckin
+    -actualizar recordStatus: "finalizado"
 
     actualizar currentUser.currentRecord == "".
 
