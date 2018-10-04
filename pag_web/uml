@@ -15,6 +15,7 @@
         - presupuesto
         - checkin 
         - horas
+        - status
     - obra (por nombre)
       - nombre
       - clave (max 6 carac)
@@ -33,7 +34,7 @@
       //- proyecto_asignado
       - credenciales
       - status
-      - obras: nombre-> nombre_presupuesto -> { presupuesto, checkin, horas_trabajadas} //, horas_invalidas}
+      - obras: nombre-> nombre_presupuesto -> { presupuesto, horas_trabajadas} //, horas_invalidas}
     - clientes (por nombre)
         - nombre
         - telefono (de la empresa)
