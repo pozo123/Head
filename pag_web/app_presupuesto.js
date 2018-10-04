@@ -7,6 +7,7 @@ var id_horas_programadas_presupuesto = "horasProgramadas";
 var id_registrar_button_presupuesto = "registrarPresupuesto";
 var id_obra_ddl_presupuesto = "obraPresupuesto";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto"; //Nueva variable
+var id_precio_presupuesto = "precioPresupuesto";
 
 var rama_bd_tipos_presupuesto = "tipos_presupuesto";
 var rama_bd_obras = "obras";
@@ -15,7 +16,9 @@ var rama_bd_reqs = "reqs";
 //Necesaria si son checkboxes
 //var num_max_req = "3";
 
-var precio_hora = 2000;
+
+//Funcion on change de $('#' + id_precio_presupuesto).val() var cash_sugerido = $('#' + id_horas_programadas_presupuesto).val() * precio_hora;
+
 
 var reqs = [];
 
@@ -122,13 +125,12 @@ $('#' + id_registrar_button_presupuesto).click(function () {
         var consecutivo = 0; //Falta programar este pedo, esta denso
         var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + consecutivo;
         var fecha = new Date().getTime();
-        var cash = $('#' + id_horas_programadas_presupuesto).val() * precio_hora;
         var presupuesto = {      
             nombre: $('#' + id_nombre_presupuesto).val(),
             clave: clave_presu,
             requisitos: reqs,
             horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-            cash_presupuestado: cash,
+            cash_presupuestado: $('#' + id_precio_presupuesto).val(),
             timestamps: {
                 startedAt: new Date().getTime(),
                 finishedAt: 0,
@@ -151,7 +153,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
         // clave_presu
         // $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text() (text jala? el value es el codigo)
         // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
-        // cash (ponerlo nada mas como sugerencia, pero jalar de un campo nuevo)
+        // $('#' + id_precio_presupuesto).val()
     });
 
     
