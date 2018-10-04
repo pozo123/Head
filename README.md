@@ -26,6 +26,7 @@ Pendientes semana  1 oct
     - inge: currentUser
     - obra: la obra seleccionada
     - presupuesto: el presupuesto seleccionado
+    - recordStatus: "activo"
 
     y actualizar el currentRecord del currentUser de la forma currentUser.currentRecord = registro.uid
 
@@ -37,6 +38,7 @@ Pendientes semana  1 oct
     cuando encuentres este registro
 
     actualizar horas: new date().getTime() - registro[i].ckeckin
+    actualizar: "finalizado"
 
     actualizar currentUser.currentRecord == "".
 
