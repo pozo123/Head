@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        
+        <!-- Font Awesome-->
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">  
+        
+        <link rel="stylesheet" href="BS-DDL-checkbox/bootstrap-dropdown-checkbox.css">
+
+        <!-- My styles-->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="stylesheet" type="text/css" href="sidebar.css">
+        <link rel="stylesheet" type="text/css" href="tabs.css">
+
+        
+
+        
+        
+
+        <title>Head SCORE</title>   
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Panel de Control</h3>
+                </div>
+                <!-- Sidebar Links -->
+                <ul class="list-unstyled components">
+                    <div class="text-center">
+                        <img src="img/pp.png" alt="..." class="rounded-circle" height="150" width="150">
+                        <p>Nombre:</p>
+                    </div>
+                </ul>
+                <ul class="list-unstyled components">
+                    <div class="card text-center text-white bg-dark">
+                        <div class="card-body" id="card">
+                            <h6 class="card-title" id="usuarioConectado"></h6>
+                            <div class="container-fluid" id="entrada_form">
+                                <label for="">¿En qué vas a trabajar hoy?</label>
+                                <div class="form-group">
+                                    <label for="">Obra:</label>
+                                    <select id ="DDL_obraAsignado" class="form-control" onChange="loadDDLPresupuestos()"></select>
+                                </div>
+                                <div class="form-group" id="presAsignado_form">
+                                    <label for="">Presupuesto:</label>
+                                    <select id ="DDL_presupuestoAsignado" class="form-control"></select>
+                                </div>
+    
+                                <div class="form-group hidden" id="misc_group">
+                                    <label for="misc">¿En qué vas a trabajar?</label>
+                                    <textarea class="form-control" id="misc" rows="5"></textarea>
+                                </div>
+    
+                                <button type="button" name="" id="button_registro_entrada" class="btn btn-success btn-lg btn-block">Entrada</button> 
+                            </div>
+                            <div class="container-fluid">
+                                <button type="button" name="" id="button_registro_salida" class="btn btn-danger btn-lg btn-block hidden">Salida</button>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+                <div>
+
+                </div>    
+                <ul class="list-unstyled components">
+                    <li class="tab active" id="tabDashboard"><a href="#" onclick="openTabs('tabDashboard','dashboard')">Dashboard</a></li>
+                    <li class="tab" id="tabPresupuesto"><a href="#" onclick="openTabs('tabPresupuesto','presupuesto')">Generar Presupuesto</a></li>
+                    <li><!-- Link with dropdown items -->
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dar de alta</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li class="tab" id="tabAltaColaborador"><a href="#" onclick="openTabs('tabAltaColaborador','altaColaborador')">Colaborador HEAD</a></li>
+                            <li class="tab" id="tabAltaObra"><a href="#" onclick="openTabs('tabAltaObra','altaObra')">Obra</a></li>
+                            <li class="tab" id="tabAltaCliente"><a href="#" onclick="openTabs('tabAltaCliente','altaCliente')">Cliente</a></li>
+                        </ul>
+                    <li class="tab" id="tabReporte"><a href="#" onclick="openTabs('tabReporte','reporte')">Reporte</a></li>
+                    <li class="tab"><a href="#contraseñaModal">Cambiar contraseña</a></li>
+                </ul>
+                <ul class="list-unstyled components">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger" id="cerrarSesion">Cerrar sesión</button>
+                    </div>
+                </ul>
+            </nav>
+        
+            <!-- Page Content -->
+            <div id="content" class="container-fluid">
+                <div class="row">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div id="dashboard" class="tabcontent">
+                            <h1>Dashboard</h1>
+
+                            <div class="card-columns" id="dashCards"></div>
+
+                            <button id="buttonCards">Generar DashCards</button>
+
+
+                        </div>
+
+                        <div id="presupuesto" class="tabcontent hidden">
+                            <h1>Generador de Presupuesto</h1>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-12">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="presupuestoNombre">Nombre:</label>
+                                                <input type="text" name="" id="presupuestoNombre"class="form-control" placeholder="Nombre del presupuesto">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="obraPresupuesto">Obra:</label>
+                                                <select class="form-control" name="" id="obraPresupuesto"></select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="DDLtipoPresupuesto">Tipo de Presupuesto:</label>
+                                                <select class="form-control" name="" id="DDLtipoPresupuesto"></select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="reqs"> Requisitos:</label>
+
+                                                <button id ="reqs" class="dropdown-checkbox-toggle btn btn-danger" data-toggle="dropdown" href="#">Dropdown Checkbox</button>
+                                                <!--<div class="form-control myDropdownCheckbox" name="" id=""></div>-->
+                                                <!--<div class="myDropdownCheckbox" id="reqs"></div>-->
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="exc">Exclusiones:</label>
+
+                                                <button id ="exc" class="dropdown-checkbox-toggle btn btn-danger" data-toggle="dropdown" href="#">Dropdown Checkbox</button>
+                                                <!-- <select class="form-control" name="" id="exc"></select> -->
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-lg-6">
+                                                    <label for="horasProgramadas">Horas Programadas:</label>
+                                                    <input class="form-control" name="" id="horasProgramadas"></select>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                      <label for="precioPresupuesto">Precio Presupuesto:</label>
+                                                      <input type="text" id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
+                                                      <small id="labelCash" class="text-muted">*Precio Sugerido</small>
+                                                </div>
+                                                <button id="registrarPresupuesto" type="button" class="btn btn-outline-danger btn-lg btn-block">Generar Presupuesto</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="altaColaborador" class="tabcontent hidden">
+                            <h1>Colaborador Head</h1><br/>
+
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-12">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="ingeNombre">Nombre:</label>
+                                                <input type="text" name="" id="ingeNombre"class="form-control" placeholder="Ingresa el nombre del Ingeniero a dar de alta">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingeEmail">Email:</label>
+                                                <input type="text" name="" id="ingeEmail"class="form-control" placeholder="Ingresa su correo HEAD">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingePwd">Contraseña:</label>
+                                                <input type="password" name="" id="ingePwd"class="form-control" placeholder="Ingresa su contraseña a desear">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingePwdConfirmed">Vuelve a escribir la contraseña:</label>
+                                                <input type="password" name="" id="ingePwdConfirmed"class="form-control" placeholder="Vuelve a escribir la contraseña">
+                                            </div>
+                                            <div class="form-group">
+                                                <button id="confirmButton" type="button" class="btn btn-outline-danger">Confirma la contraseña</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="foto" accept="image/*">
+                                                    <label class="custom-file-label" for="foto">Foto Personal (Opcional)</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Especialidad:</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="checkboxElectricidad" value="">
+                                                    <label class="form-check-label" for="checkboxElectricidad">Electricidad</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="checkboxPlomeria" value="option2">
+                                                    <label class="form-check-label" for="checkboxPlomeria">Plomería</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Credenciales:</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                    <label class="form-check-label" for="inlineRadio1">Administrador</label>
+                                                </div>
+<!--                                                 <div class="col-auto form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                    <label class="form-check-label" for="inlineRadio2">Lider de Proyecto</label>
+                                                </div> -->
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                    <label class="form-check-label" for="inlineRadio3">Proyectista</label>
+                                                </div>
+                                            </div>
+                                            <button id="registrarIngeniero" type="submit" class="btn btn-success btn-lg btn-block">Registrar</button>
+                                            <button id="borrarTodoIngeniero" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="altaObra" class="tabcontent hidden">
+                            <h1>Obra</h1><br/>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-12">
+                                        <form action ="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="obraNombre">Nombre:</label>
+                                                <input type="text" name="" id="obraNombre" class="form-control" placeholder="Ingresa el nombre de la obra">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="obraClave">Clave de la obra (máx 6 caracteres):</label>
+                                                <input type="text" name="" id="obraClave" class="form-control" placeholder="Ingresa la clave de la obra">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="cliente">Cliente:</label>
+                                                <select class="form-control" name="" id="cliente"></select>
+                                            </div>
+                                            <hr class="style2">
+                                            <div class="form-group">
+                                                <h4>Dirección</h4><br/>
+                                                <div class="form-row">
+                                                    <div class="col-lg-4">
+                                                        <input type="text" id="calleObra" class="form-control" placeholder="Nombre de la calle">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="numObra"  class="form-control" placeholder="Teléfono">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="coloniaObra" class="form-control" placeholder="Colonia">
+                                                    </div>
+
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="delegacionObra" class="form-control" placeholder="Delegación">
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="form-row">
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="cpObra" class="form-control" placeholder="Código Postal">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="ciudadObra" class="form-control" placeholder="Ciudad">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button id="registrarObra" type="submit" class="btn btn-success btn-lg btn-block">Registrar</button>
+                                            <button id="borrarTodoObra" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>                                                                
+                                        </form>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="altaCliente" class="tabcontent hidden">
+                            <h1>Cliente</h1>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="container-fluid">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-row">
+                                                <div class="col-lg-4">
+                                                    <label for="clienteNombre">Nombre de la empresa:</label>
+                                                    <input type="text" name="" id="clienteNombre" class="form-control" placeholder="Ingresa el nombre de la empresa">
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label for="claveCliente">Clave:</label>
+                                                    <input type="text" name="" id="claveCliente" class="form-control" placeholder="Clave:">
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <label for="clienteTelefono">Teléfono Oficina:</label>
+                                                    <input type="text" name="" id="clienteTelefono" class="form-control" placeholder="Ingresa el telefono de la empresa ">
+                                                </div>
+                                            </div> 
+
+                                            <hr class="style2">
+                                            <div class="form-group">
+                                                <h4>Dirección</h4><br/>
+                                                <div class="form-row">
+                                                    <div class="col-lg-4">
+                                                        <input type="text" id="calleCliente" class="form-control" placeholder="Nombre de la calle">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="numCliente"  class="form-control" placeholder="Teléfono">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="coloniaCliente" class="form-control" placeholder="Colonia">
+                                                    </div>
+
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="delegacionCliente" class="form-control" placeholder="Delegación">
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="form-row">
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="cpCliente" class="form-control" placeholder="Código Postal">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="ciudadCliente" class="form-control" placeholder="Ciudad">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr class="style2">
+                                            <form action="#" onsubmit="return false;">
+                                                <div class="form-group">
+                                                    <h4>Personal de atención</h4><br/>
+                                                    <div class="form-group">
+                                                        <label for="nombreAtencion">Nombre:</label>
+                                                        <input type="text" name="" id="nombreAtencion" class="form-control" placeholder="Ingresa el nombre de la persona que vas a agregar:">
+                                                    </div> 
+                                                    <div class="form-row">
+                                                        <div class="col-lg-4">
+                                                            <input type="text" id="areaAtencion" class="form-control" placeholder="Área/departamento">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input type="text" id="celAtencion"  class="form-control" placeholder="Celular">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="text" id="emailAtencion" class="form-control" placeholder="Email">
+                                                        </div>
+
+                                                        <div class="col-lg-3">
+                                                            <input type="text" id="extAtencion" class="form-control" placeholder="Extensión">
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                </div>
+                                                <div class="form-row align-items-center">
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <button id="addAtencion" type="button" class="btn btn-outline-danger btn-lg btn-block">Añadir</button>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                            <button id="delAtencion" type="button" class="btn btn-outline-secondary btn-lg btn-block">Eliminar último</button>
+                                                    </div>
+                                                </div>
+                            
+                                                <div class="form-group pt-3">
+                                                    <div class="card w-100 scrollbar scrollbar-danger">
+                                                        <div class="card-header text-center">
+                                                            Personal de atención
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <ul id="ListaClientes"class="list-group list-group-flush">
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <button id="registrarCliente" type="button" class="btn btn-success btn-lg btn-block">Registrar</button>
+                                            <button id="borrarTodoCliente" type="reset" class="btn btn-outline-danger btn -lg btn-block">Borrar Todo</button>   
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="reporte" class="tabcontent hidden">
+                            <h1>Generador de reportes</h1>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <form action="#" onsubmit="return false;">
+                                        <div class="form-group" id="">
+                                            <label for="reporte_DDL_ingeniero">Colaborador:</label>
+                                            <select id ="reporte_DDL_ingeniero" class="form-control"></select>
+                                        </div>
+                                        <div class="form-group" id="">
+                                            <label for="reporte_DDL_proyecto">Obra:</label>
+                                            <select id ="reporte_DDL_proyecto" class="form-control" onChange="loadDDLPresupuestosReporte()"></select>
+                                        </div>
+                                        <div class="form-group hidden" id="id_presupuestosgroup_reporte">
+                                            <label for="reporte_DDL_presupuesto">Presupuesto:</label>
+                                            <select id ="reporte_DDL_presupuesto" class="form-control"></select>
+                                        </div>
+                                        <button type="submit" name="" id="button_generar_reporte" class="btn btn-success">Generar PDF</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+
+
+        <!-- Jquery scripts-->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        
+        <!-- DDL CHECKBOX JS -->
+
+        <script src="BS-DDL-checkbox/bootstrap-dropdown-checkbox.js"></script>
+
+
+        <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+        <script>
+
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBJ8dJ8G-B6SldpKwHSe085VYRrzBZC0dA",
+            authDomain: "ingenieriahead.firebaseapp.com",
+            databaseURL: "https://ingenieriahead.firebaseio.com",
+            projectId: "ingenieriahead",
+            storageBucket: "",
+            messagingSenderId: "893795596481"
+        };
+        firebase.initializeApp(config);
+        </script>
+
+        <!--My scripts-->        
+
+        <script src="app_inge.js"></script>
+        <script src="app_obra.js"></script>
+        <script src="app_perfil.js"></script>
+        <script src="app_presupuesto.js"></script>
+        <script src="app_cliente.js"></script>
+        <script src="app_reporte.js"></script>
+        <script src="app_dashboard.js"></script>
+
+
+        <script src="pdfMake/pdfmake.min.js"></script>
+        <script src="pdfMake/vfs_fonts.js" ></script>
+
+        <script src="comunidad.js"></script>
+    </body>
+</html>

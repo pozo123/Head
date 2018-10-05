@@ -1,8 +1,32 @@
 // JavaScript source code
-$(document).ready(function() {
-
+$(document).ready(function() {    
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+        $(this).toggleClass('active');
+    });
 });
 
+
+function openTabs(tabLink, tabName) {
+
+    var i;
+    var tabContent;
+    var tabLinks;
+    tabContent = document.getElementsByClassName("tabcontent");
+
+    for (i = 0; i < tabContent.length; i++) {
+        $(tabContent[i]).addClass('hidden');
+    }
+
+    tabLinks = document.getElementsByClassName("tab");
+
+    for (i = 0; i < tabLinks.length; i++) {
+        $(tabLinks[i]).removeClass('active');
+    }
+
+    $("#"+tabName).removeClass('hidden');
+    $("#"+tabLink).addClass('active');
+};
 
 
 firebase.auth().onAuthStateChanged(user => {
@@ -37,7 +61,7 @@ $("#cerrarSesion").click((function () {
       location.reload();
 }));
 
-$("#button_registro_entrada").click((function () {
+/* $("#button_registro_entrada").click((function () {
     $("#button_registro_entrada").addClass("hidden");
     $("#button_registro_salida").removeClass("hidden");
 }));
@@ -45,4 +69,4 @@ $("#button_registro_entrada").click((function () {
 $("#button_registro_salida").click(function () {
     $("#button_registro_salida").addClass("hidden");
     $("#button_registro_entrada").removeClass("hidden");
-});
+});  */

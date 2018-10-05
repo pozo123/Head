@@ -3,7 +3,7 @@ var rama_bd_inges = "inges";
 var rama_bd_obras = "obras";
 var id_imprime_button_reporte = "button_generar_reporte";
 var id_inge_ddl_reporte = "reporte_DDL_ingeniero";
-var id_obra_ddl_reporte = "reporte_DDL_obra";
+var id_obra_ddl_reporte = "reporte_DDL_proyecto";
 var id_pres_ddl_reporte = "reporte_DDL_presupuesto";
 var id_presupuestosgroup_reporte = "id_presupuestosgroup_reporte";
 
@@ -99,7 +99,7 @@ $('#' + id_imprime_button_reporte).click(function () {
         	//filtros
         	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
         		if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
-                    if(fecha_i < registros_db[keys[i]].checkin && registros_db[keys[i]] < fecha_f){
+                    //if(fecha_i < registros_db[keys[i]].checkin && registros_db[keys[i]] < fecha_f){
                         //REGISTRAR
     	            	regs[j] = [
     	                	new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
@@ -110,7 +110,7 @@ $('#' + id_imprime_button_reporte).click(function () {
     		            ];
     		            //REGISTRAR end
     		            j = j + 1;;
-                    }
+                    //}
         		}
         	}        	
         }
@@ -129,7 +129,7 @@ $('#' + id_imprime_button_reporte).click(function () {
                     ]
                 },
                 {text: 'Reporte de registros', style: 'header',alignment: 'center'},
-                'El siguiente reporta muestra los registros de trabajo del ingeniero "' + selec_inge + '" en la obra "' + selec_obra + '" en el periodo seleccionado.',
+                'El siguiente reporta muestra los registros de trabajo del ingeniero "' + selec_inge + '" en la obra  "' + selec_obra + '" en el periodo seleccionado.',
                 " ",
                 " ",
                 {text: 'Periodo:', alignment: 'center'},
