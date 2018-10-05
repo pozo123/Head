@@ -15,7 +15,17 @@ var hasBeenClicked = false;
 var fecha_actual = new Date();
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
+
+jQuery.datetimepicker.setLocale('es');
+
 $(document).ready(function() {
+    
+    jQuery('#' + id_fecha_inicio_reporte).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'}
+    );
+    jQuery('#' + id_fecha_final_reporte).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'},
+    );
 
     var select = document.getElementById(id_inge_ddl_reporte);
     var option = document.createElement('option');
@@ -53,6 +63,8 @@ $(document).ready(function() {
     });
 });
 
+// Datapicker
+
 function loadDDLPresupuestosReporte(){
     $('#' + id_pres_ddl_reporte).empty();
     var select = document.getElementById(id_pres_ddl_reporte);
@@ -85,21 +97,36 @@ $('#' + id_imprime_button_reporte).click(function () {
     var filtro_obras =  selec_obra === "Todos";
     var filtro_presu =  selec_pres === "Todos";
 
-    hasBeenClicked = true;
-
-    firebase.database().ref(rama_bd_registros).orderByKey().on('value',function(data){
+    firebase.database().ref(rama_bd_registros).orderByKey().once('value',function(data){
         var registros_db = data.val();
         var keys = Object.keys(registros_db);
         var regs = [];
         regs[0] = [{text:"Fecha", style:"tableHeader"},{text:"Horas trabajadas", style:"tableHeader"},{text:"Ingeniero", style:"tableHeader"},{text:"Obra", style:"tableHeader"},{text:"Presupuesto / Actividad", style:"tableHeader"}]
         var j = 1;
-        var fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());//Transformar a milli dependiendo del formato
-        var fecha_f = new Date($('#' + id_fecha_final_reporte).val());//Transformar a milli dependiendo del formato
+        var fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
+        var fecha_i_timestamp = fecha_i.getTime();
+
+        alert(fecha_i);
+
+        var fecha_f;
+        var fecha_f_timestamp;
+
+        if($('#' + id_fecha_final_reporte).val() === ""){
+            fecha_f ="";
+            fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
+            prueba = new Date(fecha_f_timestamp);
+        } else {
+            fecha_f = new Date($('#' + id_fecha_final_reporte).val());
+            fecha_f_timestamp = fecha_f.getTime() + (24*3600*1000); 
+        }
+
         for (var i = 0; i<keys.length; i++){
+
         	//filtros
         	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
         		if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
-                    //if(fecha_i < registros_db[keys[i]].checkin && registros_db[keys[i]] < fecha_f){
+                    if(fecha_i_timestamp < registros_db[keys[i]].checkin && registros_db[keys[i]].checkin < fecha_f_timestamp){
+
                         //REGISTRAR
     	            	regs[j] = [
     	                	new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
@@ -110,7 +137,7 @@ $('#' + id_imprime_button_reporte).click(function () {
     		            ];
     		            //REGISTRAR end
     		            j = j + 1;;
-                    //}
+                    }
         		}
         	}        	
         }
@@ -168,10 +195,6 @@ $('#' + id_imprime_button_reporte).click(function () {
                  columnGap: 240
             }
         };
-
-        if(hasBeenClicked){
-            pdfMake.createPdf(doc).open();
-            hasBeenClicked = false;
-        }
+        pdfMake.createPdf(doc).open();
     });
 });
