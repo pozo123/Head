@@ -7,6 +7,7 @@ var id_direccion_ciudad_cliente = "ciudadCliente"; //Campo nuevo
 var id_direccion_cp_cliente = "cpCliente"; //Campo nuevo
 var id_tel_cliente = "clienteTelefono";
 var id_registrar_button_cliente = "registrarCliente";
+var id_clave_cliente = "claveCliente";
 
 var id_nombre_atencion_cliente = "nombreAtencion";
 var id_area_atencion_cliente = "areaAtencion";
@@ -48,6 +49,7 @@ $('#' + id_registrar_button_cliente).click(function () {
 
     var cliente = {      
         nombre: $('#' + id_nombre_cliente).val(),
+        clave: $('#' + id_clave_cliente).val(),
         atencion: atencion,
         direccion: {
             calle: $('#' + id_direccion_calle_cliente).val(),
