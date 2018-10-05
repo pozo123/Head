@@ -8,6 +8,7 @@ var id_registrar_button_presupuesto = "registrarPresupuesto";
 var id_obra_ddl_presupuesto = "obraPresupuesto";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto"; //Nueva variable
 var id_precio_presupuesto = "precioPresupuesto";
+var id_precio_sugerido_label_presupuesto = "labelCash";
 
 var rama_bd_tipos_presupuesto = "tipos_presupuesto";
 var rama_bd_obras = "obras";
@@ -16,9 +17,10 @@ var rama_bd_reqs = "reqs";
 //Necesaria si son checkboxes
 //var num_max_req = "3";
 
-
-//Funcion on change de $('#' + id_precio_presupuesto).val() var cash_sugerido = $('#' + id_horas_programadas_presupuesto).val() * precio_hora;
-
+var precio_hora = 2000;
+$('#' + id_horas_programadas_presupuesto).change(function(){
+    $('#' + id_precio_sugerido_label_presupuesto).text(""+($('#' + id_horas_programadas_presupuesto).val() * precio_hora));
+});
 
 var reqs = [];
 
