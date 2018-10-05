@@ -87,8 +87,15 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var codigo_obra = obra_selec.clave;
             var codigo_cliente = cliente_selec.clave;
             var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
-            var consecutivo = 0; //Falta programar este pedo, esta denso
-            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + consecutivo;
+            var consecutivo = 0; 
+            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
+            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").once('child_added').then(function(snapshot){
+                var p = snapshot.val();
+                if((""+p.clave).substring(0,(""+p.clave).length-3) === (codigo_obra))
+                    consecutivo++;
+            });
+            consecutivo_str = ("00" + consecutivo).slice(-3);
+            clave_presu = clave_presu + consecutivo_str;
             var fecha = new Date().getTime();
             var presupuesto = {      
                 nombre: $('#' + id_nombre_presupuesto).val(),
