@@ -93,8 +93,8 @@ $('#' + id_imprime_button_reporte).click(function () {
         var regs = [];
         regs[0] = [{text:"Fecha", style:"tableHeader"},{text:"Horas trabajadas", style:"tableHeader"},{text:"Ingeniero", style:"tableHeader"},{text:"Proyecto", style:"tableHeader"},{text:"Presupuesto / Actividad", style:"tableHeader"}]
         var j = 1;
-        var fecha_i = $('#' + id_fecha_inicio_reporte).val();//Transformar a milli dependiendo del formato
-        var fecha_f = $('#' + id_fecha_final_reporte).val();//Transformar a milli dependiendo del formato
+        var fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());//Transformar a milli dependiendo del formato
+        var fecha_f = new Date($('#' + id_fecha_final_reporte).val());//Transformar a milli dependiendo del formato
         for (var i = 0; i<keys.length; i++){
         	//filtros
         	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
