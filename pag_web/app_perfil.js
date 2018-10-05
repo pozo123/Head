@@ -151,8 +151,11 @@ $('#' + id_entrada_button_perfil).click(function () {
                             obra: $('#' + id_obra_ddl_perfil).val(),
                             presupuesto: chamba,
                             status: false,
+                            cu: 0
                     }
-                    firebase.database().ref(rama_bd_registros).push(registro);
+                    var ref_cu = firebase.database().ref(rama_bd_registros).push(registro);
+                    var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
+                    firebase.database().ref(rama_bd_registros + "/" + cu + "/cu").set(cu);
 
                 });
             });
@@ -175,14 +178,14 @@ $('#' + id_salida_button_perfil).click(function () {
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
             loadPerfil();
-            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('value').then(function(snapshot){
+            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
                 var ing = snapshot.val();
-                firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(ing.nombre).once('value').then(function(snapshot){
+                firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(ing.nombre).once('child_added').then(function(snapshot){
                     var regis = snapshot.val();
                     if(regis.status === false){
                         var horas_registro = new Date().getTime() - regis.checkin;
-                        firebase.database().ref(rama_bd_registros + "/" + Object.keys(snapshot.val())[0] + "/status").set(true);
-                        firebase.database().ref(rama_bd_registros + "/" + Object.keys(snapshot.val())[0] + "/horas").set(horas_registro);
+                        firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
+                        firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
                         firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/hotas_trabajadas").set(horas_registro);
                     }
                 });
