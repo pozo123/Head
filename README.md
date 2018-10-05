@@ -20,14 +20,12 @@ Pendientes semana  1 oct
     - generar formato
     - llenar con query
     - formato grid
-  - Ligar html con apps
   
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
   - Subir a bd tipos de presupeusto con clave
   - Credenciales -> hide
-  - todo lo de la clave del presupuesto
-    - programar consecutivo para clave presu
+  - programar consecutivo para clave presu
   - Subir reqs a presupuesto con json adecuado y no como array
 
   
