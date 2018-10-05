@@ -9,6 +9,8 @@
       - cash_presupuestado
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
       - contrato
+      - reqs
+      - exclusiones
     - registros: (con push asi que con clave unica) 
         - inge
         - proyecto 
@@ -43,3 +45,6 @@
     - tipos_presupuesto (por nombre)
         - nombre
         - codigo
+    - exclusiones (por nombre)
+        - nombre 
+        - texto
