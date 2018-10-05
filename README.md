@@ -12,7 +12,6 @@ Pendientes semana  1 oct
   
   - datepicker
     - html
-    - como filtro
   - foto
     - en inges
     - en reqs
@@ -21,20 +20,15 @@ Pendientes semana  1 oct
     - generar formato
     - llenar con query
     - formato grid
-  - Definir cómo se guardan los presupuestos en la rama_bd. chance en cliente-> obra -> presu? puede ayudar para consecutivos
   - Ligar html con apps
+  
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
-    - Añadir las ddl/checkbox necesarias
-      - exclusiones
-      - reqs
   - Subir a bd tipos de presupeusto con clave
-  - programar consecutivo para clave presu
-  - Generar clave cliente
-  - Bloquear obra y presu cuando picas entrada, incluso si sales de pagina
-  - ddl -> checkboxes
   - Credenciales -> hide
   - todo lo de la clave del presupuesto
+    - programar consecutivo para clave presu
+    - Generar clave cliente
 
   
 - Candados
