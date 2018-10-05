@@ -7,6 +7,9 @@ var id_proy_ddl_reporte = "reporte_DDL_proyecto";
 var id_pres_ddl_reporte = "reporte_DDL_presupuesto";
 var id_presupuestosgroup_reporte = "id_presupuestosgroup_reporte";
 
+var id_fecha_inicio_reporte = "fechaInicio";
+var id_fecha_final_reporte = "fichaFinal";
+
 var regs = new Array();
 var hasBeenClicked = false;
 var fecha_actual = new Date();
@@ -90,22 +93,24 @@ $('#' + id_imprime_button_reporte).click(function () {
         var regs = [];
         regs[0] = [{text:"Fecha", style:"tableHeader"},{text:"Horas trabajadas", style:"tableHeader"},{text:"Ingeniero", style:"tableHeader"},{text:"Proyecto", style:"tableHeader"},{text:"Presupuesto / Actividad", style:"tableHeader"}]
         var j = 1;
-
+        var fecha_i = $('#' + id_fecha_inicio_reporte).val();//Transformar a milli dependiendo del formato
+        var fecha_f = $('#' + id_fecha_final_reporte).val();//Transformar a milli dependiendo del formato
         for (var i = 0; i<keys.length; i++){
         	//filtros
         	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
         		if(filtro_proys || ((selec_proy === registros_db[keys[i]].proyecto) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
-                    //alert("i: " + i + " j: " + j);
-                    //REGISTRAR
-	            	regs[j] = [
-	                	new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
-		                "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,//"" + Math.floor(registros_db[keys[i]].horas/3600000) + ":" + Math.floor((registros_db[keys[i]].horas % 3600000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
-		                registros_db[keys[i]].inge, 
-                        registros_db[keys[i]].proyecto,
-                        registros_db[keys[i]].presupuesto
-		            ];
-		            //REGISTRAR end
-		            j = j + 1;;
+                    if(fecha_i < registros_db[keys[i]].checkin && registros_db[keys[i]] < fecha_f){
+                        //REGISTRAR
+    	            	regs[j] = [
+    	                	new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
+    		                "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,//"" + Math.floor(registros_db[keys[i]].horas/3600000) + ":" + Math.floor((registros_db[keys[i]].horas % 3600000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
+    		                registros_db[keys[i]].inge, 
+                            registros_db[keys[i]].proyecto,
+                            registros_db[keys[i]].presupuesto
+    		            ];
+    		            //REGISTRAR end
+    		            j = j + 1;;
+                    }
         		}
         	}        	
         }
