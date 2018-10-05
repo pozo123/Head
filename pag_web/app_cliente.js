@@ -24,10 +24,9 @@ var rama_bd_clientes = "clientes";
 var atencion = [];
 
 $('#' + id_add_atencion_button_cliente).click(function () {
-
     var node = document.createElement("LI");
-    node.classList.add("list-group-item");                 // Create a <li> node
-    var textnode = document.createTextNode(id_nombre_atencion_cliente);        // Create a text node
+    node.classList.add("list-group-item");               // Create a <li> node
+    var textnode = document.createTextNode($('#' + id_nombre_atencion_cliente).val());        // Create a text node
     node.appendChild(textnode);                              // Append the text to <li>
     document.getElementById(lista_atencion_cliente).appendChild(node);  
     atencion.push({area: "" + id_area_atencion_cliente, 
