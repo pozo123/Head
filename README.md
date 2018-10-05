@@ -28,7 +28,7 @@ Pendientes semana  1 oct
   - Credenciales -> hide
   - todo lo de la clave del presupuesto
     - programar consecutivo para clave presu
-    - Generar clave cliente
+  - Subir reqs a presupuesto con json adecuado y no como array
 
   
 - Candados
