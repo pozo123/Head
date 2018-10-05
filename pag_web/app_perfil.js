@@ -35,24 +35,30 @@ $(document).ready(function() {
         select.appendChild(option3);
 
     });
+    loadPerfil();
+    
+});
 
+function loadPerfil(){
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
-            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(user.uid).once("value").then(function(snapshot){
+            var username = user.uid;
+            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
                 var ing = snapshot.val();
                 if(ing.status === true){
-                    $('#' + id_presupuestosgroup_perfil).addClass("hidden");
+                    $('#' + id_entradagroup_perfil).addClass("hidden");
                     $('#' + id_salida_button_perfil).removeClass("hidden");
                 }
                 else{
-                    $('#' + id_presupuestosgroup_perfil).removeClass("hidden");
+                    $('#' + id_entradagroup_perfil).removeClass("hidden");
                     $('#' + id_salida_button_perfil).addClass("hidden");
                 }
             });
 
         }
     });
-});
+} 
+
 
 function loadDDLPresupuestos(){
     $('#' + id_presupuestos_ddl_perfil).empty();
@@ -91,8 +97,10 @@ $('#' + id_entrada_button_perfil).click(function () {
         if(user) {
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).once("value").then(function(snapshot){
-                    
-                firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true);
+                firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true).then(() => {
+                    loadPerfil();
+                });
+                
 
                 var obra_trabajada = snapshot.val();
                 //Si no existe registro de ese obra para este inge
@@ -166,6 +174,7 @@ $('#' + id_salida_button_perfil).click(function () {
             }
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
+            loadPerfil();
             firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('value').then(function(snapshot){
                 var ing = snapshot.val();
                 firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(ing.nombre).once('value').then(function(snapshot){
