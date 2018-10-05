@@ -39,6 +39,7 @@
       - obras: nombre-> nombre_presupuesto -> { presupuesto, horas_trabajadas} //, horas_invalidas}
     - clientes (por nombre)
         - nombre
+        - clave
         - telefono (de la empresa)
         - atencion: nombre -> {area, celular, email, extension}
         - direccion: {calle, numero, colonia, delegacion, ciudad, cp}
