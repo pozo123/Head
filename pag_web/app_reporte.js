@@ -3,7 +3,7 @@ var rama_bd_inges = "inges";
 var rama_bd_obras = "obras";
 var id_imprime_button_reporte = "button_generar_reporte";
 var id_inge_ddl_reporte = "reporte_DDL_ingeniero";
-var id_proy_ddl_reporte = "reporte_DDL_proyecto";
+var id_obra_ddl_reporte = "reporte_DDL_obra";
 var id_pres_ddl_reporte = "reporte_DDL_presupuesto";
 var id_presupuestosgroup_reporte = "id_presupuestosgroup_reporte";
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
     option.text = option.value = 'Todos';
     select.appendChild(option);
 
-    var select2 = document.getElementById(id_proy_ddl_reporte);
+    var select2 = document.getElementById(id_obra_ddl_reporte);
     var option2 = document.createElement('option');
     /*option.style = "display:none";
     option.text = option.value = "";*/
@@ -45,9 +45,9 @@ $(document).ready(function() {
 
     firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
-        var proy = snapshot.val();
+        var obra = snapshot.val();
         var option4 = document.createElement('option');
-        option4.text = option4.value = proy.nombre; 
+        option4.text = option4.value = obra.nombre; 
         select2.appendChild(option4);
 
     });
@@ -61,12 +61,12 @@ function loadDDLPresupuestosReporte(){
     option.text = option.value = "Todos";
     select.appendChild(option);
 
-    if($('#' + id_proy_ddl_reporte + " option:selected").val() === "Todos" || $('#' + id_proy_ddl_reporte + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_reporte + " option:selected").val() === "Todos" || $('#' + id_obra_ddl_reporte + " option:selected").val() === "Miscelaneo"){
         $('#' + id_presupuestosgroup_reporte).addClass("hidden");
     }
     else{
         $('#' + id_presupuestosgroup_reporte).removeClass("hidden");
-        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_proy_ddl_reporte + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_reporte + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var presu = snapshot.key;
             var option2 = document.createElement('option');
             option2.text = option2.value = presu; 
@@ -79,10 +79,10 @@ function loadDDLPresupuestosReporte(){
 $('#' + id_imprime_button_reporte).click(function () {
     var doc;
     var selec_inge = $('#' + id_inge_ddl_reporte).val();
-    var selec_proy = $('#' + id_proy_ddl_reporte).val();
+    var selec_obra = $('#' + id_obra_ddl_reporte).val();
     var selec_pres = $('#' + id_pres_ddl_reporte).val();
     var filtro_inges =  selec_inge === "Todos";
-    var filtro_proys =  selec_proy === "Todos";
+    var filtro_obras =  selec_obra === "Todos";
     var filtro_presu =  selec_pres === "Todos";
 
     hasBeenClicked = true;
@@ -91,21 +91,21 @@ $('#' + id_imprime_button_reporte).click(function () {
         var registros_db = data.val();
         var keys = Object.keys(registros_db);
         var regs = [];
-        regs[0] = [{text:"Fecha", style:"tableHeader"},{text:"Horas trabajadas", style:"tableHeader"},{text:"Ingeniero", style:"tableHeader"},{text:"Proyecto", style:"tableHeader"},{text:"Presupuesto / Actividad", style:"tableHeader"}]
+        regs[0] = [{text:"Fecha", style:"tableHeader"},{text:"Horas trabajadas", style:"tableHeader"},{text:"Ingeniero", style:"tableHeader"},{text:"Obra", style:"tableHeader"},{text:"Presupuesto / Actividad", style:"tableHeader"}]
         var j = 1;
         var fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());//Transformar a milli dependiendo del formato
         var fecha_f = new Date($('#' + id_fecha_final_reporte).val());//Transformar a milli dependiendo del formato
         for (var i = 0; i<keys.length; i++){
         	//filtros
         	if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
-        		if(filtro_proys || ((selec_proy === registros_db[keys[i]].proyecto) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
+        		if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
                     if(fecha_i < registros_db[keys[i]].checkin && registros_db[keys[i]] < fecha_f){
                         //REGISTRAR
     	            	regs[j] = [
     	                	new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
     		                "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,//"" + Math.floor(registros_db[keys[i]].horas/3600000) + ":" + Math.floor((registros_db[keys[i]].horas % 3600000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
     		                registros_db[keys[i]].inge, 
-                            registros_db[keys[i]].proyecto,
+                            registros_db[keys[i]].obra,
                             registros_db[keys[i]].presupuesto
     		            ];
     		            //REGISTRAR end
@@ -129,7 +129,7 @@ $('#' + id_imprime_button_reporte).click(function () {
                     ]
                 },
                 {text: 'Reporte de registros', style: 'header',alignment: 'center'},
-                'El siguiente reporta muestra los registros de trabajo del ingeniero "' + selec_inge + '" en el proyecto "' + selec_proy + '" en el periodo seleccionado.',
+                'El siguiente reporta muestra los registros de trabajo del ingeniero "' + selec_inge + '" en la obra "' + selec_obra + '" en el periodo seleccionado.',
                 " ",
                 " ",
                 {text: 'Periodo:', alignment: 'center'},
