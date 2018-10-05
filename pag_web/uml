@@ -4,12 +4,12 @@
     - presupuestos
       - nombre
       - clave (obra/cliente/tipo_presu+consecutivo)
-      - requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
+      //- requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
       - horas_programadas
       - cash_presupuestado
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
       - contrato
-      - reqs
+      - reqs // Se esta jalando de un array, hay que subirlo con el json de arriba
       - exclusiones
     - registros: (con push asi que con clave unica) 
         - inge
