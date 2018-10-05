@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
-            firebase.database().ref(rama_bd_inge).orderByKey().equalTo(user.uid).once("value").then(function(snapshot){
+            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(user.uid).once("value").then(function(snapshot){
                 var ing = snapshot.val();
                 if(ing.status === true){
                     $('#' + id_presupuestosgroup_perfil).addClass("hidden");
