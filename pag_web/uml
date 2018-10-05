@@ -12,6 +12,7 @@
       - reqs // Se esta jalando de un array, hay que subirlo con el json de arriba
       - exclusiones
     - registros: (con push asi que con clave unica) 
+        - cu
         - inge
         - proyecto 
         - presupuesto
