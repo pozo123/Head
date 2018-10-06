@@ -8,7 +8,7 @@ $(document).ready(function(){
        var inge = snapshot.val();
        var card = document.createElement('div');
        card.id = "card_" + inge.uid;
-       if(inge.status){
+       if(inge.status === true){
         firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added_", function(snapshot){
             var reg = snapshot.val();
             if(reg.status === false){
