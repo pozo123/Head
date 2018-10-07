@@ -4,7 +4,8 @@ var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 
 $(document).ready(function(){
-    firebas.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
+    //firebas.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
+    firebas.database().ref(rama_bd_inges).orderByChild("nombre").on("value",function(snapshot){
        var inge = snapshot.val();
        var card = document.createElement('div');
        card.id = "card_" + inge.uid;
