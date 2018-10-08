@@ -29,10 +29,12 @@ $('#' + id_add_atencion_button_cliente).click(function () {
     var textnode = document.createTextNode($('#' + id_nombre_atencion_cliente).val());        // Create a text node
     node.appendChild(textnode);                              // Append the text to <li>
     document.getElementById(lista_atencion_cliente).appendChild(node);  
-    atencion.push({area: "" + id_area_atencion_cliente, 
-    	celular: "" + id_celular_atencion_cliente,
-    	email: "" + id_email_atencion_cliente,
-    	extension: "" + id_extension_atencion_cliente,
+    atencion.push({
+        nombre: "" + $('#' + id_nombre_atencion_cliente),
+        area: "" + $('#' + id_area_atencion_cliente), 
+    	celular: "" + $('#' + id_celular_atencion_cliente),
+    	email: "" + $('#' + id_email_atencion_cliente),
+    	extension: "" + $('#' + id_extension_atencion_cliente),
     });
     //alert(JSON.stringify(atencion));
 });
