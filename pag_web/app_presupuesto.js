@@ -107,6 +107,17 @@ function loadAtn(){
     });
 };
 
+function formatMoney(n, c, d, t) {
+  var c = isNaN(c = Math.abs(c)) ? 2 : c,
+    d = d == undefined ? "." : d,
+    t = t == undefined ? "," : t,
+    s = n < 0 ? "-" : "",
+    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+    j = (j = i.length) > 3 ? j % 3 : 0;
+
+  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
+
 $('#' + id_registrar_button_presupuesto).click(function () {
 
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
@@ -160,6 +171,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             for(i=0;i<atn_lista.length;i++){
                 atn_str = atn_str + atn_lista[i].label + "\n";
             }
+
+            var precio_str = formatMoney($('#' + id_precio_presupuesto).val());
 
             var presupuesto = {      
                 nombre: $('#' + id_nombre_presupuesto).val(),
