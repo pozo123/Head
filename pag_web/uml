@@ -42,7 +42,7 @@
         - nombre
         - clave
         - telefono (de la empresa)
-        - atencion: nombre -> {area, celular, email, extension}
+        - atencion: nombre -> {nombre, area, celular, email, extension}
         - direccion: {calle, numero, colonia, delegacion, ciudad, cp}
     - tipos_presupuesto (por nombre)
         - nombre
