@@ -6,7 +6,11 @@ var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 
 $(document).ready(function(){
-    firebase.database().ref(rama_bd_inges).orderByChild("status").on("child_added",function(snapshot){
+    setInterval(loadDashcards, 10000)
+});
+
+function loadDashcards(){
+  firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
        var inge = snapshot.val();
        var card = document.createElement('div');
        card.id = "card_" + inge.uid;
@@ -24,8 +28,10 @@ $(document).ready(function(){
                 body.className = "card-body text-success";
                 var p_obra = document.createElement("p");
                 var p_presupuesto = document.createElement("p");
+                var p_checkin = document.createElement("p");
                 var node_obra = document.createTextNode("" + reg.obra);
                 var node_presupuesto = document.createTextNode("" + reg.presupuesto);
+                var node_checkin = document.createTextNode("" + reg.checkin.toLocaleTimeString());
                 p_obra.appendChild(node_obra);
                 p_presupuesto.appendChild(node_presupuesto);
                 body.appendChild(p_obra);
@@ -44,7 +50,7 @@ $(document).ready(function(){
            header.innerHTML = inge.nombre;
            var body = document.createElement('div');
            body.className = "card-body text-danger";
-           var node = document.createTextNode("aquí");
+           var node = document.createTextNode("No activo");
            body.appendChild(node);
            header.appendChild(body);
            card.appendChild(header);
@@ -55,4 +61,4 @@ $(document).ready(function(){
        
        
     });
-});
+}
