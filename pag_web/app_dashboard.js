@@ -1,19 +1,21 @@
 // JavaScript source code
 
+var id_card_column_dashboard = "dashCards";
+
 var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 
 $(document).ready(function(){
-    //firebas.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
-    firebas.database().ref(rama_bd_inges).orderByChild("nombre").on("value",function(snapshot){
+    firebase.database().ref(rama_bd_inges).orderByChild("status").on("child_added",function(snapshot){
        var inge = snapshot.val();
        var card = document.createElement('div');
        card.id = "card_" + inge.uid;
        if(inge.status === true){
-        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added_", function(snapshot){
+         alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
+        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added", function(snapshot){
             var reg = snapshot.val();
             if(reg.status === false){
-                card.className = "card borded-success mb-3";
+                card.className = "card border-success mb-3";
                 card.setAttribute("style", "max-width: 18rem;");
                 var header = document.createElement('div');
                 header.className = "card-header";
@@ -30,7 +32,8 @@ $(document).ready(function(){
                 body.appendChild(p_presupuesto);
                 header.appendChild(body);
                 card.appendChild(header);
-                $('#' + id_card_column_dashboard).appendChild(card);
+                var div = document.getElementById(id_card_column_dashboard);
+                div.appendChild(card);
             }
         });
        }else{
@@ -41,9 +44,12 @@ $(document).ready(function(){
            header.innerHTML = inge.nombre;
            var body = document.createElement('div');
            body.className = "card-body text-danger";
+           var node = document.createTextNode("aquí");
+           body.appendChild(node);
            header.appendChild(body);
            card.appendChild(header);
-           $('#' + id_card_column_dashboard).appendChild(card);
+           var div = document.getElementById(id_card_column_dashboard);
+           div.appendChild(card);
        }
        
        
