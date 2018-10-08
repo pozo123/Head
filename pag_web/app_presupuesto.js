@@ -46,25 +46,21 @@ $(document).ready(function() {
     option5.text = option5.value = "";
     select3.appendChild(option5);
     
-    var myData = [];
+    //El id puede que tenga que ser integer
+    //var myData = [];
     firebase.database().ref(rama_bd_reqs).orderByChild('nombre').on('child_added',function(snapshot){
         var req = snapshot.val();
-        myData.push({id: req.nombre, label: req.nombre});        
-        $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("reset",myData);
-        $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox({
-            data: myData,
-            title:"Requisitos"
+        //myData.push({id: req.nombre, label: req.nombre});        
+        //$('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("reset",myData);
+        $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("append",{
+            id: req.nombre, label: req.nombre
         });
     });
 
-    var myData2 = [];
     firebase.database().ref(rama_bd_exclusiones).orderByChild('nombre').on('child_added',function(snapshot){
         var exc = snapshot.val();
-        myData2.push({id: exc.nombre, label: exc.texto});
-        $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("reset",myData2);
         $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox({
-            data: myData2,
-            title: "Exclusiones"
+            id: exc.nombre, label: exc.texto
         });
     });
 
@@ -108,8 +104,12 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             consecutivo_str = ("00" + consecutivo).slice(-3);
             clave_presu = clave_presu + consecutivo_str;
             var fecha = new Date().getTime();
-
-
+            var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
+            var reqs_str = "";
+            for(i=0;i<reqs_lista.length();i++){
+                reqs_str = reqs_str + reqs_lista[i].label();
+                alert(reqs_str);
+            }
 
             var presupuesto = {      
                 nombre: $('#' + id_nombre_presupuesto).val(),
@@ -123,7 +123,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                     reqs_completados: 0
                 },
                 contrato: false,
-                reqs: $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked"),
+                reqs: reqs_str,
                 exclusiones: $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("checked")
             }
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
@@ -141,6 +141,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
             // $('#' + id_precio_presupuesto).val()
 
+
+            //________________________________________________________________________________________
             var alcance = $('#' + 'alcance').val()
 
             var pdfPresupuesto = {
