@@ -86,19 +86,21 @@ $(document).ready(function() {
 });
 
 function loadAtn(){
+    $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("reset",[]);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
         var obra_selec = snapshot.val();
-        firebase.database().ref(rama_bd_clientes).orderByChild('nombre').equalTo(obra_selec.cliente).once('value').then(function(snapshot){
+        firebase.database().ref(rama_bd_clientes).orderByChild('nombre').equalTo(obra_selec.cliente).once('child_added',function(snapshot){
             var cliente = snapshot.val();
-            firebase.database().ref(rama_bd_clientes + "atencion").orderByChild('nombre').on("child_added",function(snapshot){
+            firebase.database().ref(rama_bd_clientes + "/" + cliente.nombre + "/atencion").orderByChild('nombre').once("child_added",function(snapshot){
                 var atn = snapshot.val();
+                alert(atn.nombre);
                 $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("append",{
                     id: atn.nombre, label: atn.nombre
                 });
             });
         });
     });
-}
+};
 
 $('#' + id_registrar_button_presupuesto).click(function () {
 
@@ -135,7 +137,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var atn_lista = $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("checked");
             var atn_str = "";
             for(i=0;i<atn_lista.length;i++){
-                atn_str = atn_str + "-" + atn_lista[i].label + "\n";
+                atn_str = atn_str + atn_lista[i].label + "\n";
             }
 
             var presupuesto = {      
@@ -169,8 +171,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
             // $('#' + id_precio_presupuesto).val()
 
-
             //________________________________________________________________________________________
+
             var alcance = $('#' + 'alcance').val()
 
             var pdfPresupuesto = {
@@ -348,7 +350,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     {   colSpan:2,
                                         border: [false, false, true, false],
-                                        text: "Arq Carlos Magaña", // falta la programación del ATN
+                                        text:  atn_str, // falta la programación del ATN
                                         bold: true,
                                         margin: [0,5],
                                         fontSize: 10,
@@ -522,7 +524,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     {  
                                         colSpan:5,
                                         border: [true, true, true, true],
-                                        text: 'aquí van los requisitos',			
+                                        text: reqs_str,			
                                         margin: [0,5],
                                         fontSize:8,
                                     },
@@ -581,7 +583,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     {  
                                         colSpan:5,
                                         border: [true, true, true, true],
-                                        text: 'aquí van las exclusiones',			
+                                        text: exc_str,			
                                         margin: [0,5],
                                         fontSize:8,
                                     },
@@ -590,6 +592,183 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     '',
                                 ],
+                                [
+                                    {  
+                                        colSpan: 6,
+                                        border: [true, true, true, true],
+                                        margin: [0,2],
+                                        text: "",
+                                    },
+                                    '',
+                                    '',
+                                    '',
+                                    '',
+                                    '',
+                                ],
+                                [
+                                    {  
+                                        border: [true, true, true, true],
+                                        text: 'IMPORTE CON LETRA',
+                                        margin: [0,5],
+                                        fillColor: '#dddddd',
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                    },
+                                    {  
+                                        colSpan:5,
+                                        border: [true, true, true, true],
+                                        text: 'AQUÍ VA EL IMPORTE CON LETRA',
+                                        bold: true,
+                                        margin: [0,5],
+                                        fillColor: '#dddddd',
+                                        alignment: 'center',
+                                        fontSize: 10,
+                                    },
+                                    '',
+                                    '',
+                                    '',
+                                    '',
+                                ],
+                                [
+                                    {  
+                                        colSpan:3,
+                                        border: [true, false, true, false],
+                                        text: '',
+                                        margin: [0,0],
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    '',
+                                    {  
+                                        colSpan:2,
+                                        border: [true, true, true, false],
+                                        text: 'Subtotal',
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    {  
+                                        border: [true, true, true, true],
+                                        text: $('#' + id_precio_presupuesto).val(),
+                                        bold: true,
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    }
+
+                                ],
+                                [
+                                    {  
+                                        colSpan:3,
+                                        border: [true, false, true, false],
+                                        text: '',
+                                        margin: [0,0],
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    '',
+                                    {  
+                                        colSpan:2,
+                                        border: [true, false, true, false],
+                                        text: 'I.V.A',
+                                        bold: true,
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    {  
+                                        border: [true, true, true, true],
+                                        text: $('#' + id_precio_presupuesto).val()*0.16,
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    }
+                                ],
+
+                                [
+                                    {  
+                                        colSpan:3,
+                                        border: [true, false, true, false],
+                                        text: '',
+                                        margin: [0,0],
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    '',
+                                    {  
+                                        colSpan:2,
+                                        border: [true, false, true, true],
+                                        text: 'TOTAL',
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    {  
+                                        border: [true, true, true, true],
+                                        text: $('#' + id_precio_presupuesto).val()*1.16,
+                                        bold: true,
+                                        margin: [0,0],
+                                        alignment: 'right',
+                                        fontSize: 8,
+                                    }
+
+                                ],
+                                [
+                                    {  
+                                        colSpan:2,
+                                        border: [true, false, false, false],
+                                        text: '',
+                                        margin: [0,20],
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                    },
+                                    '',
+                                    {  
+                                        colSpan:4,
+                                        border: [false, false, true, false],
+                                        text: 'Condiciones Comerciales: ',
+                                        bold:true,
+                                        margin: [0,20],
+                                        alignment: 'left',
+                                        fontSize: 10,
+                                    },
+                                    '','','',
+
+                                ],
+
+                                [
+                                    {  
+                                        colSpan:2,
+                                        border: [true, false, false, false],
+                                        text: 'Precios incluyen IVA' + '\n' + 'Precios expresados en moneda nacional. ',
+                                        margin: [0,20],
+                                        alignment: 'center',
+                                        fontSize: 8,
+                                        color :"#6FAFB4"
+                                    },
+                                    '',
+                                    {  
+                                        colSpan:4,
+                                        border: [false, false, true, false],
+                                        text: 'aquí va el valor de los radiobuttons',
+                                        bold:true,
+                                        margin: [0,20],
+                                        alignment: 'left',
+                                        fontSize: 10,
+                                    },
+                                    '','','',
+
+                                ],
+
+
+
+
                             ],
                         }
                     }
