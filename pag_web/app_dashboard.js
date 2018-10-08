@@ -6,10 +6,12 @@ var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 
 $(document).ready(function(){
-    setInterval(loadDashcards, 10000)
+  loadDashcards();
+  setInterval(loadDashcards, 10000)
 });
 
 function loadDashcards(){
+  $('#' + id_card_column_dashboard).empty();
   firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
        var inge = snapshot.val();
        var card = document.createElement('div');
