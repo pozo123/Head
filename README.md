@@ -19,7 +19,7 @@ Pendientes semana  1 oct
   - Credenciales -> hide
   - probar consecutivo (por asincronia)
   - Subir reqs a presupuesto con json adecuado y no como array
-
+  - opciones de editar TOOODOOOOOOO
   
 - Candados
   - Boton entrada bloqueado si no hay obra selec
