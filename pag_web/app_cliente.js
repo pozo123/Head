@@ -30,11 +30,11 @@ $('#' + id_add_atencion_button_cliente).click(function () {
     node.appendChild(textnode);                              // Append the text to <li>
     document.getElementById(lista_atencion_cliente).appendChild(node);  
     atencion.push({
-        nombre: "" + $('#' + id_nombre_atencion_cliente),
-        area: "" + $('#' + id_area_atencion_cliente), 
-    	celular: "" + $('#' + id_celular_atencion_cliente),
-    	email: "" + $('#' + id_email_atencion_cliente),
-    	extension: "" + $('#' + id_extension_atencion_cliente),
+        nombre: "" + $('#' + id_nombre_atencion_cliente).val(),
+        area: "" + $('#' + id_area_atencion_cliente).val(), 
+    	celular: "" + $('#' + id_celular_atencion_cliente).val(),
+    	email: "" + $('#' + id_email_atencion_cliente).val(),
+    	extension: "" + $('#' + id_extension_atencion_cliente).val(),
     });
     //alert(JSON.stringify(atencion));
 });
