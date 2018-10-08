@@ -8,6 +8,7 @@ var id_precio_sugerido_label_presupuesto = "labelCash";
 
 var id_reqs_ddlcheck_presupuesto = "reqs";
 var id_exclusiones_ddl_check_presupuesto = "exc";
+var id_atn_ddl_check_presupuesto = "atn";
 
 var rama_bd_tipos_presupuesto = "tipos_presupuesto";
 var rama_bd_obras = "obras";
@@ -59,7 +60,7 @@ $(document).ready(function() {
 
     firebase.database().ref(rama_bd_exclusiones).orderByChild('nombre').on('child_added',function(snapshot){
         var exc = snapshot.val();
-        $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox({
+        $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("append",{
             id: exc.nombre, label: exc.texto
         });
     });
@@ -84,6 +85,19 @@ $(document).ready(function() {
     });
 });
 
+function loadAtn(){
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
+        var obra_selec = snapshot.val();
+        firebase.database().ref(rama_bd_clientes).orderByChild('nombre').equalTo(obra_selec.cliente)once('value').then(function(snapshot){
+            var cliente = snapshot.val();
+            firebase.database().ref(rama_bd_clientes + "atencion").orderByChild('nombre').on("child_added",function(snapshot){
+                var atn = snapshot.val();
+                $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("append",{
+                    id: atn.nombre, label: atn.nombre
+                });
+            });
+        });
+}
 
 $('#' + id_registrar_button_presupuesto).click(function () {
 
@@ -104,11 +118,23 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             consecutivo_str = ("00" + consecutivo).slice(-3);
             clave_presu = clave_presu + consecutivo_str;
             var fecha = new Date().getTime();
+
             var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
             var reqs_str = "";
-            for(i=0;i<reqs_lista.length();i++){
-                reqs_str = reqs_str + reqs_lista[i].label();
-                alert(reqs_str);
+            for(i=0;i<reqs_lista.length;i++){
+                reqs_str = reqs_str + "-" + reqs_lista[i].label + "\n";
+            }
+
+            var exc_lista = $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("checked");
+            var exc_str = "";
+            for(i=0;i<exc_lista.length;i++){
+                exc_str = exc_str + "-" + exc_lista[i].label + "\n";
+            }
+
+            var atn_lista = $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("checked");
+            var atn_str = "";
+            for(i=0;i<atn_lista.length;i++){
+                atn_str = atn_str + "-" + atn_lista[i].label + "\n";
             }
 
             var presupuesto = {      
@@ -123,8 +149,9 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                     reqs_completados: 0
                 },
                 contrato: false,
-                reqs: reqs_str,
-                exclusiones: $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("checked")
+                reqs: reqs_lista,
+                exclusiones: exc_lista,
+                atencion: atn_lista
             }
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
 
