@@ -10,22 +10,14 @@ Pendientes semana  1 oct
   
 - Primordiales
   
-  - datepicker
-    - html
-  - foto
-    - en inges
-    - en reqs
-    - en pptos?
-  - Dashcards
-    - generar formato
-    - llenar con query
-    - formato grid
-  
+
+  - Dashcards probar  
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
+  
   - Subir a bd tipos de presupeusto con clave
   - Credenciales -> hide
-  - programar consecutivo para clave presu
+  - probar consecutivo (por asincronia)
   - Subir reqs a presupuesto con json adecuado y no como array
 
   
@@ -37,3 +29,7 @@ Pendientes semana  1 oct
 - Importantes pero no primordiales
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - los presupuestos no necesitan nombre
+  - foto
+    - en inges
+    - en reqs
+    - en pptos?
