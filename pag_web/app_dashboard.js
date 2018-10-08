@@ -34,8 +34,10 @@ function loadDashcards(){
                 var node_checkin = document.createTextNode("" + reg.checkin.toLocaleTimeString());
                 p_obra.appendChild(node_obra);
                 p_presupuesto.appendChild(node_presupuesto);
+                p_checkin.appendChild(node_checkin);
                 body.appendChild(p_obra);
                 body.appendChild(p_presupuesto);
+                body.appendChild(p_checkin);
                 header.appendChild(body);
                 card.appendChild(header);
                 var div = document.getElementById(id_card_column_dashboard);
