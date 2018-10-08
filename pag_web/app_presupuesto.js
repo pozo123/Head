@@ -6,6 +6,11 @@ var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto"; //Nueva variable
 var id_precio_presupuesto = "precioPresupuesto";
 var id_precio_sugerido_label_presupuesto = "labelCash";
 
+var id_anticipo1_rb_presupuesto = "rb1anticipo";
+var id_anticipo2_rb_presupuesto = "rb2anticipo";
+var id_anticipo3_rb_presupuesto = "rb3anticipo";
+var id_anticipo_presupuesto = "anticipo";
+
 var id_reqs_ddlcheck_presupuesto = "reqs";
 var id_exclusiones_ddl_check_presupuesto = "exc";
 var id_atn_ddl_check_presupuesto = "atn";
@@ -32,7 +37,7 @@ $(document).ready(function() {
     "- Dimensionamiento de cuartos eléctricos, muros de concentración de medidores, ubicación de transformadores, planta de emergencia y multitransfer." +  "\n" +
     "- Definición de ductos verticales, eléctrica, instalaciones especiales, hidráulicos y de PCI." +  "\n" +
     "- Proyecto de salidas de iluminación, contactos, apagadores, timbre, zumbador, extractor, salidas de TV y Telefonía, en estacionamiento, bodegas, departamentos, vestíbulos departamentos, escaleras, cuartos eléctricos, de bombas y elevadores." +  "\n" +
-    "- Proyecto de salidas de CCTV y Control de Acceso."			
+    "- Proyecto de salidas de CCTV y Control de Acceso."            
 
 
     var select2 = document.getElementById(id_obra_ddl_presupuesto);   
@@ -111,15 +116,31 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var codigo_obra = obra_selec.clave;
             var codigo_cliente = cliente_selec.clave;
             var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
-            var consecutivo = 0; 
+            var anticipo;
+            var anticipo_str;
+            if($('#' + id_anticipo1_rb_presupuesto).checked === true){
+                anticipo = 0;
+                anticipo_str = "100% contra entrega";
+            }
+            else if($('#' + id_anticipo2_rb_presupuesto).checked === true){
+                anticipo = $('#' + id_anticipo_presupuesto).val();
+                anticipo_str = anticipo + "% anticipo, resto contra estimaciones";
+            }
+            else if($('#' + id_anticipo3_rb_presupuesto).checked === true){
+                anticipo = 100;
+                anticipo_str = "100% anticipo";
+            }
+                 
+            var consecutivo = 1;
             var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").once('child_added').then(function(snapshot){
                 var p = snapshot.val();
-                if((""+p.clave).substring(0,(""+p.clave).length-3) === (codigo_obra))
+                if((""+p.clave).substring(0,(""+p.clave).length-3) === (codigo_obra)){
                     consecutivo++;
+                    consecutivo_str = ("00" + consecutivo).slice(-3);
+                    clave_presu = clave_presu + consecutivo_str;
+                }
             });
-            consecutivo_str = ("00" + consecutivo).slice(-3);
-            clave_presu = clave_presu + consecutivo_str;
             var fecha = new Date().getTime();
 
             var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
@@ -170,7 +191,6 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             // $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text() (text jala? el value es el codigo)
             // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
             // $('#' + id_precio_presupuesto).val()
-
             //________________________________________________________________________________________
 
             var alcance = $('#' + 'alcance').val()
