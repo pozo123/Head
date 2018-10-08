@@ -97,6 +97,7 @@ function loadAtn(){
                 });
             });
         });
+    });
 }
 
 $('#' + id_registrar_button_presupuesto).click(function () {
