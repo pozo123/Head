@@ -178,7 +178,7 @@ $('#' + id_salida_button_perfil).click(function () {
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
             loadPerfil();
-            firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+            firebase.database().ref(rama_bd_inges).orderByChild("uid").equalTo(username).once('child_added').then(function(snapshot){
                 var ing = snapshot.val();
                 firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(ing.nombre).once('child_added').then(function(snapshot){
                     var regis = snapshot.val();

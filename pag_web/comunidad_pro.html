@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" type="text/css" href="sidebar.css">
         <link rel="stylesheet" type="text/css" href="tabs.css">
+        <link rel="stylesheet" type ="text/css" href="dataPicker/jquery.datetimepicker.css">
 
         
 
@@ -127,8 +128,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="obraPresupuesto">Obra:</label>
-                                                <select class="form-control" name="" id="obraPresupuesto"></select>
+                                                <select class="form-control" name="" id="obraPresupuesto" onChange="loadAtn()"></select>
                                             </div>
+                                            <div class="form-group">
+                                                    <label for="atn"> ¿A quién va dirigido el presupuesto?</label>
+                                                    <div class="form-control myDropdownCheckbox" name="" id="atn"></div>
+                                                    <!--<div class="myDropdownCheckbox" id="reqs"></div>-->
+                                                </div>
 
                                             <div class="form-group">
                                                 <label for="DDLtipoPresupuesto">Tipo de Presupuesto:</label>
@@ -136,10 +142,13 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="reqs"> Requisitos:</label>
+                                                    <label for="alcance">Alcance del presupuesto:</label>
+                                                    <textarea class="form-control" rows="6" id="alcance"></textarea>
+                                                  </div>
 
-                                                <button id ="reqs" class="dropdown-checkbox-toggle btn btn-danger" data-toggle="dropdown" href="#">Dropdown Checkbox</button>
-                                                <!--<div class="form-control myDropdownCheckbox" name="" id=""></div>-->
+                                            <div class="form-group">
+                                                <label for="reqs"> Requisitos:</label>
+                                                <div class="form-control myDropdownCheckbox" name="" id="reqs"></div>
                                                 <!--<div class="myDropdownCheckbox" id="reqs"></div>-->
                                             </div>
 
@@ -153,13 +162,32 @@
                                             <div class="form-row">
                                                 <div class="col-lg-6">
                                                     <label for="horasProgramadas">Horas Programadas:</label>
-                                                    <input class="form-control" name="" id="horasProgramadas"></select>
+                                                    <input class="form-control" name="" id="horasProgramadas">
                                                 </div>
                                                 <div class="col-lg-6">
                                                       <label for="precioPresupuesto">Precio Presupuesto:</label>
                                                       <input type="text" id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
                                                       <small id="labelCash" class="text-muted">*Precio Sugerido</small>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for=""></label>
+                                              <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb1anticipo" value="option1">
+                                                    <label class="form-check-label" for="rb1anticipo">100% contra entrega</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb2anticipo" value="option2">
+                                                    <label class="form-check-label" for="rb2anticipo">Elige el % de anticipo</label>
+                                                    <input type="text" id="anticipo" class="form-control">
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb3anticipo" value="option3">
+                                                    <label class="form-check-label" for="rb3anticipo">100% anticipo</label>
+                                                  </div>
+                                            </div>
+                                            <br/>
+                                            <div class="form-group">
                                                 <button id="registrarPresupuesto" type="button" class="btn btn-outline-danger btn-lg btn-block">Generar Presupuesto</button>
                                             </div>
                                         </form>
@@ -397,10 +425,27 @@
                         </div>
 
                         <div id="reporte" class="tabcontent hidden">
-                            <h1>Generador de reportes</h1>
+                            <h1>Generador de reportes</h1><br/>
                             <div class="container-fluid">
                                 <div class="row">
                                     <form action="#" onsubmit="return false;">
+                                        <div class="form-row align-items-center">
+                                            <div class="col-lg-3 col-sm-12">
+                                                <label for="fechaInicio">Fecha inicio de reporte:</label>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-12">
+                                                <input class="form-control" type="text" id="fechaInicio" placeholder="" readonly="readonly">
+                                            </div>
+                                            <div class="col-lg-3 col-sm-12">
+                                                <label for="fichaFinal">Fecha final del reporte:</label>
+                                                
+                                            </div>
+                                            <div class="col-lg-3 col-sm-12">
+                                                <input class="form-control" type="text" id="fichaFinal" placeholder="" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <p>*Para generar reporte de un solo día coloca en "Fecha inicio de reporte" el día deseado y deja en blanco "Fecha final del reporte"</p>
                                         <div class="form-group" id="">
                                             <label for="reporte_DDL_ingeniero">Colaborador:</label>
                                             <select id ="reporte_DDL_ingeniero" class="form-control"></select>
@@ -434,6 +479,9 @@
         <!-- DDL CHECKBOX JS -->
 
         <script src="BS-DDL-checkbox/bootstrap-dropdown-checkbox.js"></script>
+        
+        <!--DataPicker JS-->
+        <script src="dataPicker/jquery.datetimepicker.full.min.js"></script>
 
 
         <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
@@ -460,11 +508,11 @@
         <script src="app_cliente.js"></script>
         <script src="app_reporte.js"></script>
         <script src="app_dashboard.js"></script>
+        <script src="comunidad.js"></script>
 
+        <!-- PdfMaker-->
 
         <script src="pdfMake/pdfmake.min.js"></script>
         <script src="pdfMake/vfs_fonts.js" ></script>
-
-        <script src="comunidad.js"></script>
     </body>
 </html>

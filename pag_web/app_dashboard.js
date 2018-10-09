@@ -17,7 +17,7 @@ function loadDashcards(){
        var card = document.createElement('div');
        card.id = "card_" + inge.uid;
        if(inge.status === true){
-         alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
+         //alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
         firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added", function(snapshot){
             var reg = snapshot.val();
             if(reg.status === false){
@@ -28,12 +28,14 @@ function loadDashcards(){
                 header.innerHTML = inge.nombre;
                 var body = document.createElement('div');
                 body.className = "card-body text-success";
-                var p_obra = document.createElement("p");
-                var p_presupuesto = document.createElement("p");
-                var p_checkin = document.createElement("p");
-                var node_obra = document.createTextNode("" + reg.obra);
-                var node_presupuesto = document.createTextNode("" + reg.presupuesto);
-                var node_checkin = document.createTextNode("" + reg.checkin.toLocaleTimeString());
+                var p_obra = document.createElement("h6");
+                var p_presupuesto = document.createElement("h6");
+                var p_checkin = document.createElement("h6");
+                var node_obra = document.createTextNode("Obra: " + reg.obra);
+                var node_presupuesto = document.createTextNode("Presupuesto: " + reg.presupuesto);
+                var d = new Date(reg.checkin);
+                //alert(reg.checkin);
+                var node_checkin = document.createTextNode("Hora de Inicio: " + d.toLocaleTimeString());
                 p_obra.appendChild(node_obra);
                 p_presupuesto.appendChild(node_presupuesto);
                 p_checkin.appendChild(node_checkin);

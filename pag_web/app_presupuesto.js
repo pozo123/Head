@@ -26,7 +26,7 @@ var alcance_txt = 'alcance';
 var fecha_actual = new Date();
 var precio_hora = 2000;
 $('#' + id_horas_programadas_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: "+($('#' + id_horas_programadas_presupuesto).val() * precio_hora));
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: "+ formatMoney(($('#' + id_horas_programadas_presupuesto).val() * precio_hora)));
 });
 
 $(document).ready(function() {
@@ -98,7 +98,6 @@ function loadAtn(){
             var cliente = snapshot.val();
             firebase.database().ref(rama_bd_clientes + "/" + cliente.nombre + "/atencion").orderByChild('nombre').once("child_added",function(snapshot){
                 var atn = snapshot.val();
-                alert(atn.nombre);
                 $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("append",{
                     id: atn.nombre, label: atn.nombre
                 });
@@ -129,15 +128,15 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
             var anticipo;
             var anticipo_str;
-            if($('#' + id_anticipo1_rb_presupuesto).checked === true){
+            if(document.getElementById(id_anticipo1_rb_presupuesto).checked === true){
                 anticipo = 0;
                 anticipo_str = "100% contra entrega";
             }
-            else if($('#' + id_anticipo2_rb_presupuesto).checked === true){
+            else if(document.getElementById(id_anticipo2_rb_presupuesto).checked === true){
                 anticipo = $('#' + id_anticipo_presupuesto).val();
                 anticipo_str = anticipo + "% anticipo, resto contra estimaciones";
             }
-            else if($('#' + id_anticipo3_rb_presupuesto).checked === true){
+            else if(document.getElementById(id_anticipo3_rb_presupuesto).checked === true){
                 anticipo = 100;
                 anticipo_str = "100% anticipo";
             }
@@ -148,10 +147,11 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 var p = snapshot.val();
                 if((""+p.clave).substring(0,(""+p.clave).length-3) === (codigo_obra)){
                     consecutivo++;
-                    consecutivo_str = ("00" + consecutivo).slice(-3);
-                    clave_presu = clave_presu + consecutivo_str;
+                    
                 }
             });
+                consecutivo_str = ("00" + consecutivo).slice(-3);
+                clave_presu = clave_presu + consecutivo_str;
             var fecha = new Date().getTime();
 
             var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
@@ -172,7 +172,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 atn_str = atn_str + atn_lista[i].label + "\n";
             }
 
-            var precio_str = formatMoney($('#' + id_precio_presupuesto).val());
+            var precio_str = "$" + formatMoney($('#' + id_precio_presupuesto).val());
 
             var presupuesto = {      
                 nombre: $('#' + id_nombre_presupuesto).val(),
@@ -204,8 +204,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             // $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text() (text jala? el value es el codigo)
             // AT'N hay que jalarlo de un DDL dependiendo de la obra seleccionada, que se puedan añadir como si fueran reqs
             // $('#' + id_precio_presupuesto).val()
-            //________________________________________________________________________________________
 
+            //________________________________________________________________________________________
             var alcance = $('#' + 'alcance').val()
 
             var pdfPresupuesto = {
@@ -240,11 +240,13 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     {
                                         border: [true, false, false, true],
                                         text: "CDMX,",
+                                        fontSize: 8,
                                     },
                                     {
                                         colSpan: 4,
                                         border: [false, false, false, true],
                                         text: fecha_actual.toLocaleDateString("es-ES",options),
+                                        fontSize:8,
                                     },
                                     '',
                                     '',
@@ -258,6 +260,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         text: "Proyecto:",
                                         alignment: 'center',
                                         margin: [0,5],
+                                        fontSize: 8,
                                     },
                                     {
                                         border: [false, false, false, false],
@@ -265,6 +268,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         bold: true,
                                         color:'#2C3F5A',
                                         margin: [0,5],
+                                        fontSize:10,
                                     },
                                     {   
                                         colSpan:2,
@@ -274,7 +278,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         bold: true,
                                         alignment: 'center',
                                         margin: [0,5],
-                                        fontSize: 14,
+                                        fontSize: 10,
                                     },
                                     '',
                                     {   
@@ -283,7 +287,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         text: $('#' + id_nombre_presupuesto).val().toUpperCase(),
                                         bold: true,
                                         margin: [0,5],
-                                        fontSize: 14,
+                                        fontSize: 10,
                                     },
                                     '',
                                 ],
@@ -296,13 +300,14 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         text: "Dirección:",
                                         alignment: 'center',
                                         margin: [0,5],
+                                        fontSize: 8,
                                     },
                                     {
                                         rowSpan:5,
                                         border: [false, false, false, false],
                                         text: "Calle," + "num:" + "\n" + "Colonia," + "Delegación," + "\n" + "ciudad",
                                         margin: [0,5],
-                                        fontSize:10,
+                                        fontSize:8,
                                     },
                                     {   // aquí poner el tipo de presupuesto
                                         colSpan:4,
@@ -310,7 +315,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         text: 'PROYECTO DE INSTALACIONES HIDROSANITARIAS, ELECTRICAS Y ESPECIALES: ',
                                         bold: true,
                                         margin: [0,5],
-                                        fontSize: 10,
+                                        fontSize: 8,
                                     },
                                     '',
                                     '',
@@ -324,8 +329,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2, rowSpan:2,
                                         border: [false, false, false, false],
                                         text: 'CLAVE: ',
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'right',
                                     },
                                     '',
@@ -333,8 +338,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [false, false, true, false],
                                         text: clave_presu,
                                         bold: true,
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'center',
                                     },
                                     '',
@@ -354,8 +359,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2,
                                         border: [false, false, false, false],
                                         text: 'CLIENTE: ',
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'right',
                                     },
                                     '',
@@ -363,8 +368,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [false, false, true, false],
                                         text: obra_selec.cliente,
                                         bold: true,
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'center',
                                     },
                                     '',
@@ -376,8 +381,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2,
                                         border: [false, false, false, false],
                                         text: 'AT \' N: ',
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'right',
                                     },
                                     '',
@@ -385,8 +390,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [false, false, true, false],
                                         text:  atn_str, // falta la programación del ATN
                                         bold: true,
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,1],
+                                        fontSize: 8,
                                         alignment: 'center',
                                     },
                                     '',
@@ -396,8 +401,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:6,
                                         border: [true, false, true, false],
                                         text: 'Presentamos a su consideración las especificaciones, descripción, alcances y condiciones de este presupuesto por el diseño de las instalaciones abajo mencionadas a efectuarse en la obra:',
-                                        margin: [0,5],
-                                        fontSize: 10,
+                                        margin: [0,2],
+                                        fontSize: 8,
                                         alignment: 'justify',
                                     },
                                     '',
@@ -413,7 +418,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         text: obra_selec.nombre.toUpperCase(),
                                         bold: true,
                                         color:'#2C3F5A',
-                                        margin: [0,5],
+                                        margin: [0,2],
                                         alignment: 'center'
                                     },
                                     '',
@@ -459,7 +464,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [true, true, true, true],
                                         text: '1',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center'
                                     },
@@ -468,7 +473,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [true, true, true, true],
                                         text: $('#' + id_nombre_presupuesto).val().toUpperCase(),
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
@@ -501,10 +506,10 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     {  
                                         border: [true, true, true, true],
-                                        text: $('#' + id_precio_presupuesto).val(),
+                                        text:"$ "+ formatMoney($('#' + id_precio_presupuesto).val()),
                                         margin: [0,5],
                                         alignment: 'center',
-                                        fontSize:12,
+                                        fontSize:10,
                                     },
                                 ],
                                 [
@@ -520,23 +525,21 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     '',
                                 ],
-
                                 [
                                     {  
                                         border: [true, true, true, true],
                                         text: '2',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,'auto'],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
                                     },
-                                    {  
-                                        colSpan:5,
+                                    {   colSpan:5,
                                         border: [true, true, true, true],
                                         text: 'REQUERIMIENTOS ANTES DE INICIAR',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
@@ -579,12 +582,13 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     '',
                                 ],
+
                                 [
                                     {  
                                         border: [true, true, true, true],
                                         text: '3',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
@@ -594,7 +598,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [true, true, true, true],
                                         text: 'EXCLUSIONES',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
@@ -642,7 +646,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     {  
                                         border: [true, true, true, true],
                                         text: 'IMPORTE CON LETRA',
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 8,
@@ -652,7 +656,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [true, true, true, true],
                                         text: 'AQUÍ VA EL IMPORTE CON LETRA',
                                         bold: true,
-                                        margin: [0,5],
+                                        margin: [0,1],
                                         fillColor: '#dddddd',
                                         alignment: 'center',
                                         fontSize: 10,
@@ -684,7 +688,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     {  
                                         border: [true, true, true, true],
-                                        text: $('#' + id_precio_presupuesto).val(),
+                                        text: "$ "+formatMoney($('#' + id_precio_presupuesto).val()),
                                         bold: true,
                                         margin: [0,0],
                                         alignment: 'right',
@@ -707,7 +711,6 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2,
                                         border: [true, false, true, false],
                                         text: 'I.V.A',
-                                        bold: true,
                                         margin: [0,0],
                                         alignment: 'right',
                                         fontSize: 8,
@@ -715,7 +718,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     {  
                                         border: [true, true, true, true],
-                                        text: $('#' + id_precio_presupuesto).val()*0.16,
+                                        text: "$ " + formatMoney($('#' + id_precio_presupuesto).val()*0.16),
+                                        bold:true,
                                         margin: [0,0],
                                         alignment: 'right',
                                         fontSize: 8,
@@ -737,6 +741,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2,
                                         border: [true, false, true, true],
                                         text: 'TOTAL',
+                                        bold:true,
                                         margin: [0,0],
                                         alignment: 'right',
                                         fontSize: 8,
@@ -744,7 +749,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     '',
                                     {  
                                         border: [true, true, true, true],
-                                        text: $('#' + id_precio_presupuesto).val()*1.16,
+                                        text: "$ " + formatMoney($('#' + id_precio_presupuesto).val()*1.16),
                                         bold: true,
                                         margin: [0,0],
                                         alignment: 'right',
@@ -757,7 +762,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan:2,
                                         border: [true, false, false, false],
                                         text: '',
-                                        margin: [0,20],
+                                        margin: [0,3],
                                         alignment: 'center',
                                         fontSize: 8,
                                     },
@@ -767,7 +772,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         border: [false, false, true, false],
                                         text: 'Condiciones Comerciales: ',
                                         bold:true,
-                                        margin: [0,20],
+                                        margin: [0,3],
                                         alignment: 'left',
                                         fontSize: 10,
                                     },
@@ -778,20 +783,19 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 [
                                     {  
                                         colSpan:2,
-                                        border: [true, false, false, false],
+                                        border: [true, false, false, true],
                                         text: 'Precios incluyen IVA' + '\n' + 'Precios expresados en moneda nacional. ',
-                                        margin: [0,20],
-                                        alignment: 'center',
+                                        margin: [0,3],
+                                        alignment: 'left',
                                         fontSize: 8,
                                         color :"#6FAFB4"
                                     },
                                     '',
                                     {  
                                         colSpan:4,
-                                        border: [false, false, true, false],
-                                        text: 'aquí va el valor de los radiobuttons',
-                                        bold:true,
-                                        margin: [0,20],
+                                        border: [false, false, true, true],
+                                        text: anticipo_str,
+                                        margin: [0,3],
                                         alignment: 'left',
                                         fontSize: 10,
                                     },
@@ -806,6 +810,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                         }
                     }
                 ],
+                
+                
               };
 
               pdfMake.createPdf(pdfPresupuesto).open();
