@@ -186,7 +186,7 @@ $('#' + id_salida_button_perfil).click(function () {
                         var horas_registro = new Date().getTime() - regis.checkin;
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/hotas_trabajadas").set(horas_registro);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_registro);
                     }
                 });
             });
