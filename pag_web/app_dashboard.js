@@ -18,7 +18,7 @@ function loadDashcards(){
        card.id = "card_" + inge.uid;
        if(inge.status === true){
          //alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
-        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added", function(snapshot){
+        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).on("child_added").then(function(snapshot){
             var reg = snapshot.val();
             if(reg.status === false){
                 card.className = "card border-success mb-3";
