@@ -5,12 +5,21 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 
 Pendientes semana  1 oct 
 
-- 4/oct 
 
   
 - Primordiales
   
-
+  
+  - Editar 
+    - presupuesto
+    - todo
+  - Imprimir pdf presupuesto
+  
+  - Arturo
+    - Imagenes 
+    - Pasar pdf a dataURL
+    - Credenciales
+  
   - Dashcards probar  
   - Generar presupuesto
     - En pdf (en el app_presupuesto)
