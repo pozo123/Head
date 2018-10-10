@@ -12,6 +12,7 @@
       - reqs // Se esta jalando de un array, hay que subirlo con el json de arriba
       - exclusiones
       - pagos (luego vemos si es el total pagado o los pagos)
+      - consecutivos: consecutivo_num->{precio, pdf_url}//checar que si se llama asi
     - registros: (con push asi que con clave unica) 
         - cu
         - inge
