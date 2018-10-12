@@ -106,8 +106,6 @@ $('#' + id_imprime_button_reporte).click(function () {
         var fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
         var fecha_i_timestamp = fecha_i.getTime();
 
-        alert(fecha_i);
-
         var fecha_f;
         var fecha_f_timestamp;
 

@@ -32,9 +32,13 @@ function openTabs(tabLink, tabName) {
 firebase.auth().onAuthStateChanged(user => {
     if(user) {
         $('body').removeClass("hidden");
-        userPrueba = user.uid;
         firebase.database().ref('inges').orderByChild('uid').equalTo(user.uid).on("child_added", function (snapshot) {
             var user_bd = snapshot.val();
+
+            var usuarioNombre = document.getElementById('usuarioConectado');
+            usuarioNombre.innerHTML = user_bd.nombre;
+            
+
             });
     } else {
         alert("Inicia sesión para entrar a comunidad");

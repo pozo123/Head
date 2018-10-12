@@ -30,7 +30,44 @@
 
     </head>
 
-    <body>
+    <body class = "hidden">
+
+    <div class="modal fade" id="contraseñaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cambia tu contraseña</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 <div class="container">
+                     <form onsubmit="return false;">
+                         <div class="form-group">
+                           <label for="">Ingresa la nueva contraseña</label>
+                           <input type="password" name="" id="newpass" class="form-control" placeholder="" aria-describedby="helpId">
+                         </div>
+
+                         <div class="form-group">
+                            <label for="">Confirma la nueva contraseña</label>
+                            <input type="password" name="" id="confirm" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+                        <div class="form-row align-items-center">
+                            <div class="col-md-6 col-sm-12">
+                                <button id="button_cambio_contraseña" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                            </div>
+                        </div>
+                     </form>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <div class="wrapper">
             <!-- Sidebar -->
             <nav id="sidebar">
@@ -41,14 +78,14 @@
                 <ul class="list-unstyled components">
                     <div class="text-center">
                         <img src="img/pp.png" alt="..." class="rounded-circle" height="150" width="150">
-                        <p>Nombre:</p>
                     </div>
                 </ul>
                 <ul class="list-unstyled components">
                     <div class="card text-center text-white bg-dark">
                         <div class="card-body" id="card">
-                            <h6 class="card-title" id="usuarioConectado"></h6>
+                            
                             <div class="container-fluid" id="entrada_form">
+                                <h6 class="card-title" id="usuarioConectado"></h6>
                                 <label for="">¿En qué vas a trabajar hoy?</label>
                                 <div class="form-group">
                                     <label for="">Obra:</label>
@@ -86,7 +123,7 @@
                             <li class="tab" id="tabAltaCliente"><a href="#" onclick="openTabs('tabAltaCliente','altaCliente')">Cliente</a></li>
                         </ul>
                     <li class="tab" id="tabReporte"><a href="#" onclick="openTabs('tabReporte','reporte')">Reporte</a></li>
-                    <li class="tab"><a href="#contraseñaModal">Cambiar contraseña</a></li>
+                    <li class="tab"><a href="#" data-toggle="modal" data-target="#contraseñaModal">Cambiar contraseña</a></li>
                 </ul>
                 <ul class="list-unstyled components">
                     <div class="text-center">
@@ -108,12 +145,7 @@
                     <div class="container">
                         <div id="dashboard" class="tabcontent">
                             <h1>Dashboard</h1>
-
                             <div class="card-columns" id="dashCards"></div>
-
-                            <button id="buttonCards">Generar DashCards</button>
-
-
                         </div>
 
                         <div id="presupuesto" class="tabcontent hidden">
@@ -131,7 +163,7 @@
                                                 <select class="form-control" name="" id="obraPresupuesto" onChange="loadAtn()"></select>
                                             </div>
                                             <div class="form-group">
-                                                    <label for="atn"> ¿A quién va dirigido el presupuesto?</label>
+                                                    <label for="atn"> AT'N:</label>
                                                     <div class="form-control myDropdownCheckbox" name="" id="atn"></div>
                                                     <!--<div class="myDropdownCheckbox" id="reqs"></div>-->
                                                 </div>
@@ -142,9 +174,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                    <label for="alcance">Alcance del presupuesto:</label>
-                                                    <textarea class="form-control" rows="6" id="alcance"></textarea>
-                                                  </div>
+                                                <label for="alcance">Alcance del presupuesto:</label>
+                                                <textarea class="form-control" rows="6" id="alcance"></textarea>
+                                             </div>
 
                                             <div class="form-group">
                                                 <label for="reqs"> Requisitos:</label>
@@ -154,8 +186,8 @@
 
                                             <div class="form-group">
                                                 <label for="exc">Exclusiones:</label>
-
-                                                <button id ="exc" class="dropdown-checkbox-toggle btn btn-danger" data-toggle="dropdown" href="#">Dropdown Checkbox</button>
+                                                <div class="form-control myDropdownCheckbox" name="" id="exc"></div>
+                                                <!-- <button id ="exc" class="dropdown-checkbox-toggle btn btn-danger" data-toggle="dropdown" href="#">Holi</button> -->
                                                 <!-- <select class="form-control" name="" id="exc"></select> -->
                                             </div>
 
@@ -164,14 +196,16 @@
                                                     <label for="horasProgramadas">Horas Programadas:</label>
                                                     <input class="form-control" name="" id="horasProgramadas">
                                                 </div>
+
                                                 <div class="col-lg-6">
                                                       <label for="precioPresupuesto">Precio Presupuesto:</label>
-                                                      <input type="text" id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
+                                                      <input type="number" min="1" step="any" id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
                                                       <small id="labelCash" class="text-muted">*Precio Sugerido</small>
                                                 </div>
                                             </div>
+                                            <br/>
+                                            <h2>Condiciones Comerciales</h2>
                                             <div class="form-group">
-                                              <label for=""></label>
                                               <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb1anticipo" value="option1">
                                                     <label class="form-check-label" for="rb1anticipo">100% contra entrega</label>
@@ -179,13 +213,29 @@
                                                   <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb2anticipo" value="option2">
                                                     <label class="form-check-label" for="rb2anticipo">Elige el % de anticipo</label>
-                                                    <input type="text" id="anticipo" class="form-control">
+                                                    <input type="text"  for="rb2anticipo" id="anticipo" class="form-control">
                                                   </div>
                                                   <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb3anticipo" value="option3">
                                                     <label class="form-check-label" for="rb3anticipo">100% anticipo</label>
                                                   </div>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="tiempoEntrega">Tiempo de Entrega:</label>
+                                                <textarea class="form-control" rows="6" id="tiempoEntrega"></textarea>
+                                             </div>
+
+                                             <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="bancarios">
+                                                <label class="custom-control-label" for="bancarios">Agregar datos bancarios</label>
+                                              </div>
+
+                                              <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="fiscales">
+                                                <label class="custom-control-label" for="fiscales">Agregar datos fiscales</label>
+                                              </div>
+
                                             <br/>
                                             <div class="form-group">
                                                 <button id="registrarPresupuesto" type="button" class="btn btn-outline-danger btn-lg btn-block">Generar Presupuesto</button>
@@ -289,7 +339,7 @@
                                                         <input type="text" id="calleObra" class="form-control" placeholder="Nombre de la calle">
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <input type="text" id="numObra"  class="form-control" placeholder="Teléfono">
+                                                        <input type="text" id="numObra"  class="form-control" placeholder="Número">
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <input type="text" id="coloniaObra" class="form-control" placeholder="Colonia">
@@ -348,7 +398,7 @@
                                                         <input type="text" id="calleCliente" class="form-control" placeholder="Nombre de la calle">
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <input type="text" id="numCliente"  class="form-control" placeholder="Teléfono">
+                                                        <input type="text" id="numCliente"  class="form-control" placeholder="número">
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <input type="text" id="coloniaCliente" class="form-control" placeholder="Colonia">
@@ -372,7 +422,7 @@
                                             <hr class="style2">
                                             <form action="#" onsubmit="return false;">
                                                 <div class="form-group">
-                                                    <h4>Personal de atención</h4><br/>
+                                                    <h4>AT'N</h4><br/>
                                                     <div class="form-group">
                                                         <label for="nombreAtencion">Nombre:</label>
                                                         <input type="text" name="" id="nombreAtencion" class="form-control" placeholder="Ingresa el nombre de la persona que vas a agregar:">
@@ -406,7 +456,7 @@
                                                 <div class="form-group pt-3">
                                                     <div class="card w-100 scrollbar scrollbar-danger">
                                                         <div class="card-header text-center">
-                                                            Personal de atención
+                                                            AT'N
                                                         </div>
                                                         <div class="card-body">
                                                             <ul id="ListaClientes"class="list-group list-group-flush">
@@ -459,6 +509,7 @@
                                             <select id ="reporte_DDL_presupuesto" class="form-control"></select>
                                         </div>
                                         <button type="submit" name="" id="button_generar_reporte" class="btn btn-success">Generar PDF</button>
+                                        <button type="reset" name="" id="" class="btn btn-danger">Limpiar campos</button>
                                     </form>
                                 </div>
                             </div>
@@ -505,6 +556,7 @@
         <script src="app_obra.js"></script>
         <script src="app_perfil.js"></script>
         <script src="app_presupuesto.js"></script>
+        <script src="numeroLetras.js"></script>
         <script src="app_cliente.js"></script>
         <script src="app_reporte.js"></script>
         <script src="app_dashboard.js"></script>

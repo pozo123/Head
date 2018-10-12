@@ -160,7 +160,6 @@ $('#' + id_entrada_button_perfil).click(function () {
                 });
             });
         } else {
-            alert("No jalo");
         }
     });
 });
@@ -169,12 +168,12 @@ $('#' + id_salida_button_perfil).click(function () {
     var clicked = true;
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
-            var chamba;
+            var chamba; // cambié a .text pq pide el equalsTo un strings
             if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
-                chamba = $('#' + id_misc_perfil).val();
+                chamba = $('#' + id_misc_perfil).text();
             }
             else{
-                chamba = $('#' + id_presupuestos_ddl_perfil).val();
+                chamba = $('#' + id_presupuestos_ddl_perfil).text();
             }
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
@@ -209,7 +208,7 @@ $('#' + id_cambiarpassword_button_perfil).click(function () {
         var username = user.uid;
         var newPassword = $('#' + id_newpassword_perfil).val();
         user.updatePassword(newPassword).then(function(){
-            firebase.database().ref(rama_bd_inges + "/" + username + "/password").setValue(newPassword);
+            firebase.database().ref(rama_bd_inges + "/" + username + "/password").set(newPassword);
             alert("Cambio exitoso");
         }).catch(function(error){
             alert(error);

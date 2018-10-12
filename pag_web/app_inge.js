@@ -5,7 +5,7 @@ var id_password_inge = "ingePwd";
 var id_elec_checkbox_inge = "checkboxElectricidad";
 var id_plom_checkbox_inge = "checkboxPlomeria";
 var id_admin_radio_inge = "inlineRadio1";
-var id_lider_radio_inge = "inlineRadio2";
+//var id_lider_radio_inge = "inlineRadio2";
 var id_proyectista_radio_inge = "inlineRadio3";
 //var id_obraAsignada_ddl_inge = "obraAsignada";
 var id_registrar_button_inge = "registrarIngeniero";
@@ -150,9 +150,9 @@ function guardaDatos(user) {
     else espec = -1; //no ingresada
 
     if(document.getElementById(id_admin_radio_inge).checked == true)
-        creden = 1;
-    else if(document.getElementById(id_lider_radio_inge).checked == true)
         creden = 2;
+    /*else if(document.getElementById(id_lider_radio_inge).checked == true)
+        creden = 2;*/
     else if(document.getElementById(id_proyectista_radio_inge).checked == true)
         creden = 3;
     else creden = 4; //No ingresada

@@ -3,9 +3,13 @@ $(document).ready(function() {
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             $("#navComunidad").removeClass("hidden");
-            $("#navIniciarSesion").addClass("hidden");
-            $("#formLogin").addClass("hidden");
+            $("#loginEmail").addClass("hidden");
+            $("#loginPassword").addClass("hidden");
+            $("#loginAceptar").addClass("hidden");
+            $("#cerrar").removeClass("hidden");
+
         } else {
+            $("#cerrar").addClass("hidden");
         }
     }); 
         
@@ -28,9 +32,13 @@ $("#loginAceptar").click(function () {
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             $("#navComunidad").removeClass("hidden");
-            $("#navIniciarSesion").addClass("hidden");
-            $("#formLogin").addClass("hidden");
+            $("#loginEmail").addClass("hidden");
+            $("#loginPassword").addClass("hidden");
+            $("#loginAceptar").addClass("hidden");
+            $("#cerrar").removeClass("hidden");
+
         } else {
+            $("#cerrar").add("hidden");
         }
     }); 
 });
