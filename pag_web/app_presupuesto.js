@@ -150,18 +150,6 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 anticipo = 100;
                 anticipo_str = "100% anticipo";
             }
-                 
-            var consecutivo = 1;
-            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
-            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").once('child_added').then(function(snapshot){
-                var p = snapshot.val();
-                if((""+p.clave).substring(0,(""+p.clave).length-3) === (codigo_obra)){
-                    consecutivo++;
-                    
-                }
-            });
-                consecutivo_str = ("00" + consecutivo).slice(-3);
-                clave_presu = clave_presu + consecutivo_str;
 
             var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
             var reqs_str = "";
@@ -180,6 +168,21 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             for(i=0;i<atn_lista.length;i++){
                 atn_str = atn_str + atn_lista[i].label + "\n";
             }
+            
+            //Querys a probar para contar cons
+            var consecutivo = 1;
+            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
+            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
+                var p = snapshot;
+                if(p.numChildren() > 1){
+                    consecutivo = p.numChildren();
+                    
+                }
+            });
+            consecutivo_str = ("00" + consecutivo).slice(-3);
+            clave_presu = clave_presu + consecutivo_str;
+            //_____
+            
             var presupuesto = {      
                 nombre: $('#' + id_nombre_presupuesto).val(),
                 clave: clave_presu,
