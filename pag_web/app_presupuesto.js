@@ -173,10 +173,13 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var consecutivo = 1;
             var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
-                var p = snapshot;
-                if(p.numChildren() > 1){
-                    consecutivo = p.numChildren();
-                    
+                var p = snapshot.val();
+                consecutivo = p.consecutivos.numChildren();
+                if(consecutivo > 1){
+                    var cons = {
+                        precio: p.cash_presupuestado,
+                        pdf: "vacio",//dice vacio para no dar "" y que luego truene
+                        checkin: p.timestamps.startedAt,
                 }
             });
             consecutivo_str = ("00" + consecutivo).slice(-3);
@@ -197,7 +200,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 consecutivos:{
                     1:{
                         precio: $('#' + id_precio_presupuesto).val(),
-                        pdf: "",
+                        pdf: "vacio",
                         checkin: new Date().getTime(),
                     }
                 },
