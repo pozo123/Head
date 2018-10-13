@@ -180,6 +180,9 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                         precio: p.cash_presupuestado,
                         pdf: "vacio",//dice vacio para no dar "" y que luego truene
                         checkin: p.timestamps.startedAt,
+                    }
+                } else {
+                
                 }
             });
             consecutivo_str = ("00" + consecutivo).slice(-3);
