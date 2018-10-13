@@ -76,10 +76,13 @@ function loadDDLPresupuestos(){
         $('#' + id_presupuestosgroup_perfil).removeClass("hidden");
         $('#' + id_miscgroup_perfil).addClass("hidden");
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
-            var presu = snapshot.key;
-            var option2 = document.createElement('option');
-            option2.text = option2.value = presu; 
-            select.appendChild(option2);
+            var p = snapshot.val();
+            if(p.contrato === true){
+                var presu = snapshot.key;
+                var option2 = document.createElement('option');
+                option2.text = option2.value = presu; 
+                select.appendChild(option2);
+            }
         });
     }
     
