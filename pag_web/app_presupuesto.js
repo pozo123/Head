@@ -170,53 +170,84 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             }
             
             //Querys a probar para contar cons
+            //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
             var consecutivo = 1;
             var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
                 var p = snapshot.val();
                 consecutivo = p.consecutivos.numChildren();
-                if(consecutivo > 1){
+                if(consecutivo > 0){
                     var cons = {
                         precio: p.cash_presupuestado,
                         pdf: "vacio",//dice vacio para no dar "" y que luego truene
                         checkin: p.timestamps.startedAt,
                     }
+                    firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivo/" + consecutivo).set(presupuesto);
+                    var consecutivo_str = ("00" + consecutivo).slice(-3);
+                    clave_presu = clave_presu + consecutivo_str;
+                    var presupuesto = {      
+                        //nombre: $('#' + id_nombre_presupuesto).val(),
+                        clave: clave_presu,
+                        horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+                        cash_presupuestado: $('#' + id_precio_presupuesto).val(),
+                        timestamps: {
+                            startedAt: new Date().getTime(),
+                            finishedAt: 0,
+                            activacion: 0,
+                            reqs_completados: 0
+                        },
+                        /*consecutivos:{
+                            1:{
+                                precio: $('#' + id_precio_presupuesto).val(),
+                                pdf: "vacio",
+                                checkin: new Date().getTime(),
+                            }
+                        },*/
+                        contrato: false,
+                        reqs: reqs_lista,
+                        exclusiones: exc_lista,
+                        atencion: atn_lista,
+                        pagos: "vacio",
+                    }
+                    
+                    firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
+                    
                 } else {
-                
+                    clave_presu = clave_presu + "001";
+                    var presupuesto = {      
+                        nombre: $('#' + id_nombre_presupuesto).val(),
+                        clave: clave_presu,
+                        horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+                        cash_presupuestado: $('#' + id_precio_presupuesto).val(),
+                        timestamps: {
+                            startedAt: new Date().getTime(),
+                            finishedAt: 0,
+                            activacion: 0,
+                            reqs_completados: 0
+                        },
+                        consecutivos:{
+                            1:{
+                                precio: $('#' + id_precio_presupuesto).val(),
+                                pdf: "vacio",
+                                checkin: new Date().getTime(),
+                            }
+                        },
+                        contrato: false,
+                        reqs: reqs_lista,
+                        exclusiones: exc_lista,
+                        atencion: atn_lista,
+                        pagos: "vacio",
+                    }
+                    
+                    firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
+                    
                 }
             });
-            consecutivo_str = ("00" + consecutivo).slice(-3);
-            clave_presu = clave_presu + consecutivo_str;
+            
             //_____
             
-            var presupuesto = {      
-                nombre: $('#' + id_nombre_presupuesto).val(),
-                clave: clave_presu,
-                horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-                cash_presupuestado: $('#' + id_precio_presupuesto).val(),
-                timestamps: {
-                    startedAt: new Date().getTime(),
-                    finishedAt: 0,
-                    activacion: 0,
-                    reqs_completados: 0
-                },
-                consecutivos:{
-                    1:{
-                        precio: $('#' + id_precio_presupuesto).val(),
-                        pdf: "vacio",
-                        checkin: new Date().getTime(),
-                    }
-                },
-                contrato: false,
-                reqs: reqs_lista,
-                exclusiones: exc_lista,
-                atencion: atn_lista,
-                pagos: "",
 
-            }
-            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
-            //firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivo/1").set(presupuesto);
-            alert("¡Alta de presupuesto exitosa!");
+
 
             //Aqui se genera el pdf... creo
             // Variables: 
