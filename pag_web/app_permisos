@@ -1,0 +1,28 @@
+var id_colaborador_ddl_permisos = "DDLcolaborador";
+var id_clase_checkbox_permisos = "claseCheck";
+var id_guardar_button_permisos = "guardadPermisos";
+var rama_bd_inges = "inges";
+
+$(document).ready(function() {
+
+    var select = document.getElementById(id_colaborador_ddl_permisos);
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
+
+    firebase.database().ref(rama_bd_inges).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var inge = snapshot.val();
+        var option2 = document.createElement('option');
+        option2.text = option2.value = inge.nombre; 
+        select.appendChild(option2);
+
+    });
+    
+});
+
+
+$('#' + id_guardar_button_permisos).click(function () {
+    firebase.database().ref(rama_bd_inges + "/" + $('#' + id_colaborardor_ddl_permisos + " option:selected").val() + "/permisos/" + $(.id_clase_checkbox_permisos).val()).set($(.id_clase_checkbox_permisos).checked));
+}
