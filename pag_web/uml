@@ -12,7 +12,7 @@
       - reqs // Se esta jalando de un array, hay que subirlo con el json de arriba
       - exclusiones
       - pagos (luego vemos si es el total pagado o los pagos)
-      - consecutivos: consecutivo_num->{precio, pdf_url}//checar que si se llama asi
+      - consecutivos: consecutivo_num->{precio, pdf_url, checkin}//checar que si se llama asi
     - registros: (con push asi que con clave unica) 
         - cu
         - inge
@@ -40,6 +40,7 @@
       - credenciales
       - status
       - obras: nombre-> nombre_presupuesto -> { presupuesto, horas_trabajadas} //, horas_invalidas}
+      - permisos: (nombre de las paginas, una por una, y el valor es boolean)
     - clientes (por nombre)
         - nombre
         - clave
