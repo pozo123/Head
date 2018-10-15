@@ -2,7 +2,8 @@ var id_nombre_presupuesto = "presupuestoNombre";
 var id_horas_programadas_presupuesto = "horasProgramadas";
 var id_registrar_button_presupuesto = "registrarPresupuesto";
 var id_obra_ddl_presupuesto = "obraPresupuesto";
-var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto"; //Nueva variable
+var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto";
+var id_genero_ddl_presupuesto = "DDLgenero";
 var id_precio_presupuesto = "precioPresupuesto";
 var id_precio_sugerido_label_presupuesto = "labelCash";
 
@@ -16,6 +17,7 @@ var id_exclusiones_ddl_check_presupuesto = "exc";
 var id_atn_ddl_check_presupuesto = "atn";
 
 var rama_bd_tipos_presupuesto = "tipos_presupuesto";
+var rama_bd_generos = "generos";
 var rama_bd_obras = "obras";
 var rama_bd_reqs = "reqs";
 var rama_bd_exclusiones = "exclusiones";
@@ -69,6 +71,12 @@ $(document).ready(function() {
     option5.text = option5.value = "";
     select3.appendChild(option5);
     
+    var select4 = document.getElementById(id_genero_ddl_presupuesto);   
+    var option7 = document.createElement('option');
+    option7.style = "display:none";
+    option7.text = option7.value = "";
+    select4.appendChild(option7);
+    
     //El id puede que tenga que ser integer
     //var myData = [];
     firebase.database().ref(rama_bd_reqs).orderByChild('nombre').on('child_added',function(snapshot){
@@ -103,6 +111,16 @@ $(document).ready(function() {
         option6.text = tipo.nombre; 
         option6.value = tipo.codigo;
         select3.appendChild(option6);
+
+    });
+    
+    firebase.database().ref(rama_bd_generos).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var genero = snapshot.val();
+        var option8 = document.createElement('OPTION');
+        option8.text = genero.nombre; 
+        option8.value = genero.codigo;
+        select4.appendChild(option8);
 
     });
 });
@@ -143,6 +161,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var codigo_obra = obra_selec.clave;
             var codigo_cliente = cliente_selec.clave;
             var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
+            var codigo_genero = $('#' + id_genero_ddl_presupuesto + " option:selected").val();            
             var anticipo;
             var anticipo_str;
             if(document.getElementById(id_anticipo1_rb_presupuesto).checked === true){
@@ -178,16 +197,17 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             
             //Querys a probar para contar cons
             //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
-            var consecutivo = 1;
-            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto;
+            var consecutivo;
+            var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
                 var p = snapshot.val();
                 consecutivo = p.consecutivos.numChildren();
                 if(consecutivo > 0){
+                    consecutivo = consecutivo + 1;
                     var cons = {
-                        precio: p.cash_presupuestado,
+                        precio: $('#' + id_precio_presupuesto).val(),
                         pdf: "vacio",//dice vacio para no dar "" y que luego truene
-                        checkin: p.timestamps.startedAt,
+                        checkin: new Date().getTime(),
                     }
                     firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivo/" + consecutivo).set(cons);
 
