@@ -1,0 +1,9 @@
+firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once("child_added").then(function(snapshot){
+    var ing = snapshot.val();
+    
+    if(ing.consecutivos.nombre_pag){
+        nombre_pag.removeClass('hidden');
+    } else {
+        nombre_pag.addClass('hidden');
+    }
+});
