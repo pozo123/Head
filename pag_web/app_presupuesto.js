@@ -201,7 +201,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
                 var p = snapshot.val();
-                consecutivo = p.consecutivos.numChildren();
+                consecutivo = p.child("consecutivos").numChildren();
                 if(consecutivo > 0){
                     consecutivo = consecutivo + 1;
                     var cons = {
