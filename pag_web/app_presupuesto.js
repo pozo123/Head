@@ -199,47 +199,52 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
             var consecutivo;
             var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
-            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_nombre_presupuesto).val()).once('child_added').then(function(snapshot){
-                var p = snapshot.val();
-                consecutivo = p.child("consecutivos").numChildren();
-                if(consecutivo > 0){
-                    consecutivo = consecutivo + 1;
-                    var cons = {
-                        precio: $('#' + id_precio_presupuesto).val(),
-                        pdf: "vacio",//dice vacio para no dar "" y que luego truene
-                        checkin: new Date().getTime(),
-                    }
-                    firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivo/" + consecutivo).set(cons);
 
-                    var consecutivo_str = ("00" + consecutivo).slice(-3);
-                    clave_presu = clave_presu + consecutivo_str;
-                    var presupuesto = {      
-                        //nombre: $('#' + id_nombre_presupuesto).val(),
-                        clave: clave_presu,
-                        horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-                        cash_presupuestado: $('#' + id_precio_presupuesto).val(),
-                        timestamps: {
-                            startedAt: new Date().getTime(),
-                            finishedAt: 0,
-                            activacion: 0,
-                            reqs_completados: 0
-                        },
-                        /*consecutivos:{
-                            1:{
-                                precio: $('#' + id_precio_presupuesto).val(),
-                                pdf: "vacio",
-                                checkin: new Date().getTime(),
-                            }
-                        },*/
-                        contrato: false,
-                        reqs: reqs_lista,
-                        exclusiones: exc_lista,
-                        atencion: atn_lista,
-                        pagos: "vacio",
+
+            firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).orderByChild('nombre').on('child_added',function(snapshot){
+                alert('hola');
+                var p = snapshot.val();
+                alert(p.nombre);
+                if(p !== null){
+                    if (p.nombre === $('#' + id_nombre_presupuesto).val()){
+                        consecutivo = 2;
+                        var cons = {
+                            precio: $('#' + id_precio_presupuesto).val(),
+                            pdf: "vacio",//dice vacio para no dar "" y que luego truene
+                            checkin: new Date().getTime(),
+                        }
+                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivos/" + consecutivo).set(cons);
+        
+                        var consecutivo_str = ("00" + consecutivo).slice(-3);
+                        clave_presu = clave_presu + consecutivo_str;
+                        var presupuesto = {      
+                            //nombre: $('#' + id_nombre_presupuesto).val(),
+                            clave: clave_presu,
+                            horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+                            cash_presupuestado: $('#' + id_precio_presupuesto).val(),
+                            timestamps: {
+                                startedAt: new Date().getTime(),
+                                finishedAt: 0,
+                                activacion: 0,
+                                reqs_completados: 0
+                            },
+                            /*consecutivos:{
+                                1:{
+                                    precio: $('#' + id_precio_presupuesto).val(),
+                                    pdf: "vacio",
+                                    checkin: new Date().getTime(),
+                                }
+                            },*/
+                            contrato: false,
+                            reqs: reqs_lista,
+                            exclusiones: exc_lista,
+                            atencion: atn_lista,
+                            pagos: "vacio",
+                        }
+                        
+                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
                     }
-                    
-                    firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
-                    
+
                 } else {
                     clave_presu = clave_presu + "001";
                     var presupuesto = {      
@@ -265,11 +270,11 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                         exclusiones: exc_lista,
                         atencion: atn_lista,
                         pagos: "vacio",
+                        consecutivo:1,
                     }
                     
                     firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
-                    
-                }
+                };
             });
             
             //_____
@@ -302,7 +307,6 @@ $('#' + id_registrar_button_presupuesto).click(function () {
 
             var fecha_nota = new Date($('#' + id_fecha_nota).val())
 
-            alert(fecha_nota)
 
 
             if(document.getElementById('fiscales').checked === true){
@@ -423,7 +427,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     {   
                                         colSpan:2,
                                         border: [false, false, true, false],
-                                        text: $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val().toUpperCase(),
+                                        text: $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text().toUpperCase(),
                                         bold: true,
                                         margin: [0,5],
                                         fontSize: 10,
@@ -834,6 +838,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         colSpan: 6,
                                         border: [true, true, true, true],
                                         margin: [0,2],
+                                        text: "",
                                         //text: function(currentPage, pageCount) { return (currentPage == 1 && pageCount == 2) ? 'after' : '';},
                                         //pageBreak: function(currentPage, pageCount) { return currentPage == 1 ? 'after' : ''},
                                         //pageBreak: "after",
@@ -1163,7 +1168,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
             pdfDocGenerator.open()
             
             pdfDocGenerator.getBase64((data) => {
-                alert(data);
+                //alert(data);
             });
         });            
     });
