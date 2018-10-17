@@ -40,7 +40,7 @@
       - credenciales
       - status
       - obras: nombre-> nombre_presupuesto -> { presupuesto, horas_trabajadas} //, horas_invalidas}
-      - permisos: (nombre de las paginas, una por una, y el valor es boolean)
+      - permisos: (nombre de las paginas, una por una, y el valor es boolean) alta_colaborador, alta_obra, alta_cliente, reoprte, perfil
     - clientes (por nombre)
         - nombre
         - clave
