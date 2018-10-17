@@ -38,7 +38,35 @@ firebase.auth().onAuthStateChanged(user => {
             var usuarioNombre = document.getElementById('usuarioConectado');
             usuarioNombre.innerHTML = user_bd.nombre;
             
+            if(user_bd.permisos.alta_colaborador === true)
+                $('#tabAltaColaborador').removeClass('hidden');
+            else
+                $('#tabAltaColaborador').addClass('hidden');
 
+            if(user_bd.permisos.alta_obra === true)
+                $('#tabAltaObra').removeClass('hidden');
+            else
+                $('#tabAltaObra').addClass('hidden');
+
+            if(user_bd.permisos.alta_cliente === true)
+                $('#tabAltaCliente').removeClass('hidden');
+            else
+                $('#tabAltaCliente').addClass('hidden');
+
+            if(user_bd.permisos.reporte === true)
+                $('#tabReporte').removeClass('hidden');
+            else
+                $('#tabReporte').addClass('hidden');
+
+            if(user_bd.permisos.perfil === true)
+                $('#tabPerfil').removeClass('hidden');
+            else
+                $('#tabPerfil').addClass('hidden');
+
+            if(user_bd.credenciales === 2 || user_bd.credenciales === 1 || user_bd.credenciales === 0)
+                $('#tabPermisos').removeClass('hidden');
+            else
+                $('#tabPermisos').addClass('hidden');
             });
     } else {
         alert("Inicia sesión para entrar a comunidad");
