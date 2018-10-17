@@ -171,7 +171,16 @@ function guardaDatos(user) {
             perfil: true,
         }
     }
-    else creden = 4; //No ingresada
+    else {
+        creden = 4; //No ingresada
+        var perm = {
+            alta_colaborador: false,
+            alta_obra: false,
+            alta_cliente: false,
+            reporte: false,
+            perfil: false,
+        }
+    }
     
     var usuario = {
         uid: user.uid,
