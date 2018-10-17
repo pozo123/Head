@@ -149,12 +149,28 @@ function guardaDatos(user) {
         espec = 2; //especialidad plom
     else espec = -1; //no ingresada
 
-    if(document.getElementById(id_admin_radio_inge).checked == true)
+    if(document.getElementById(id_admin_radio_inge).checked == true){
         creden = 2;
+        var perm = {
+            alta_colaborador: true,
+            alta_obra: true,
+            alta_cliente: true,
+            reporte: true,
+            perfil: false,
+        }
+    }
     /*else if(document.getElementById(id_lider_radio_inge).checked == true)
         creden = 2;*/
-    else if(document.getElementById(id_proyectista_radio_inge).checked == true)
+    else if(document.getElementById(id_proyectista_radio_inge).checked == true){
         creden = 3;
+        var perm = {
+            alta_colaborador: false,
+            alta_obra: false,
+            alta_cliente: false,
+            reporte: true,
+            perfil: true,
+        }
+    }
     else creden = 4; //No ingresada
     
     var usuario = {
@@ -166,6 +182,7 @@ function guardaDatos(user) {
         //proyecto_asignado: $('#' + id_obraAsignada_ddl_inge + " option:selected").val(),
         credenciales: creden,
         status: false,
+        permisos: perm,
         //foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0])//A ver si jala...
     }
 
