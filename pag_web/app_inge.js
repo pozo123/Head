@@ -32,25 +32,29 @@ $(document).ready(function(){
 });
 
 $('#' + id_registrar_button_inge).click((function () {
-    secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
-        .then(function (result) {
-            guardaDatos(result.user);
-            secondaryApp.auth().signOut();
-        });
+    if(!$('#' + id_nombre_inge).val() || !$('#' + id_email_inge).val() || !$('#' + id_password_inge).val()){
+        alert("Llena todos los campos requeridos");
+    } else {
+        secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
+            .then(function (result) {
+                guardaDatos(result.user);
+                secondaryApp.auth().signOut();
+            });
 
-    /*Para imprimir errores, .catch en vez de .then
-     * .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
-                alert('The password is too weak.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
-            
-        });*/
+        /*Para imprimir errores, .catch en vez de .then
+         * .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode == 'auth/weak-password') {
+                    alert('The password is too weak.');
+                } else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+                
+            });*/
+    }
 }));
 
 // $('#' + id_imprimir_button_inge).click((function () {
