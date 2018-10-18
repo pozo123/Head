@@ -74,4 +74,5 @@ $('#' + id_registrar_button_cliente).click(function () {
                     alert("¡Alta exitosa!");
                 }       
             }
+    });
 });
