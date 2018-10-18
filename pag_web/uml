@@ -34,7 +34,6 @@
       - uid
       - nombre
       - email
-      - password
       - especialidad
       //- proyecto_asignado
       - credenciales
