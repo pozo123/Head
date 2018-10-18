@@ -52,7 +52,7 @@ $('#' + id_registrar_button_cliente).click(function () {
             if(c !== null){
                 alert("Cliente ya existente");
             } else {
-                if(!$('#' + id_nombre_cliente).val() || !$('#' + id_clave_cliente).val() || (typeof atencion != "undefined" && atencion != null && atencion.length != null && atencion.length > 0)){
+                if(!$('#' + id_nombre_cliente).val() || !$('#' + id_clave_cliente).val() || !(typeof atencion != "undefined" && atencion != null && atencion.length != null && atencion.length > 0)){
                     alert("Llena todos los campos requeridos");
                 }else{
                     var cliente = {      
