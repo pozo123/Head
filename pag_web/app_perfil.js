@@ -217,10 +217,10 @@ $('#' + id_cambiarpassword_button_perfil).click(function () {
         alert("Password doesn't match");
     else{
         var user = firebase.auth().currentUser;
-        var username = user.uid;
+        //var username = user.uid;
         var newPassword = $('#' + id_newpassword_perfil).val();
         user.updatePassword(newPassword).then(function(){
-            firebase.database().ref(rama_bd_inges + "/" + username + "/password").set(newPassword);
+            //firebase.database().ref(rama_bd_inges + "/" + username + "/password").set(newPassword);
             alert("Cambio exitoso");
         }).catch(function(error){
             alert(error);

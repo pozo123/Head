@@ -194,7 +194,6 @@ function guardaDatos(user) {
         uid: user.uid,
         nombre: $('#' + id_nombre_inge).val(),
         email: user.email,
-        password: $('#' + id_password_inge).val(),
         especialidad: espec,
         //proyecto_asignado: $('#' + id_obraAsignada_ddl_inge + " option:selected").val(),
         credenciales: creden,
