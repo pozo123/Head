@@ -40,18 +40,22 @@ $(document).ready(function() {
 });
 
 function loadPerfil(){
+    var flag = true;
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             var username = user.uid;
             firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
-                var ing = snapshot.val();
-                if(ing.status === true){
-                    $('#' + id_entradagroup_perfil).addClass("hidden");
-                    $('#' + id_salida_button_perfil).removeClass("hidden");
-                }
-                else{
-                    $('#' + id_entradagroup_perfil).removeClass("hidden");
-                    $('#' + id_salida_button_perfil).addClass("hidden");
+                if(flag === true){
+                    var ing = snapshot.val();
+                    if(ing.status === true){
+                        $('#' + id_entradagroup_perfil).addClass("hidden");
+                        $('#' + id_salida_button_perfil).removeClass("hidden");
+                    }
+                    else{
+                        $('#' + id_entradagroup_perfil).removeClass("hidden");
+                        $('#' + id_salida_button_perfil).addClass("hidden");
+                    }
+                    flag = false;
                 }
             });
 
