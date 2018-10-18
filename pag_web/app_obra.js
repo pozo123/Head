@@ -80,30 +80,33 @@ $(document).ready(function() {
 
 
 $('#' + id_registrar_button_obra).click(function () {
-    
-    var obra = {      
-        nombre: $('#' + id_nombre_obra).val(),
-        clave: $('#' + id_clave_obra).val(),
-        direccion: {
-            calle: $('#' + id_direccion_calle_obra).val(),
-            numero: $('#' + id_direccion_num_obra).val(),
-            colonia: $('#' + id_direccion_colonia_obra).val(),
-            delegacion: $('#' + id_direccion_delegacion_obra).val(),
-            ciudad: $('#' + id_direccion_ciudad_obra).val(),
-            cp: $('#' + id_direccion_cp_obra).val()
-        },
-        cliente: $('#' + id_cliente_ddl_obra + " option:selected").val(),
-        //lider: $('#' + id_lider_ddl_obra + " option:selected").val(),
-        //asignados: asignados,
-        timestamps: {
-            startedAt: new Date().getTime(),
-            finishedAt: 0,
+    if(!$('#' + id_nombre_obra).val() || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === "" || !$('#' + id_direccion_calle_obra).val() || !$('#' + id_direccion_num_obra).val() || !$('#' + id_direccion_colonia_obra).val() || !$('#' + id_direccion_delegacion_obra).val() || !$('#' + id_direccion_ciudad_obra).val() || !$('#' + id_direccion_cp_obra).val()){
+        alert("Llena todos los campos requeridos");
+    } else {
+        var obra = {      
+            nombre: $('#' + id_nombre_obra).val(),
+            clave: $('#' + id_clave_obra).val(),
+            direccion: {
+                calle: $('#' + id_direccion_calle_obra).val(),
+                numero: $('#' + id_direccion_num_obra).val(),
+                colonia: $('#' + id_direccion_colonia_obra).val(),
+                delegacion: $('#' + id_direccion_delegacion_obra).val(),
+                ciudad: $('#' + id_direccion_ciudad_obra).val(),
+                cp: $('#' + id_direccion_cp_obra).val()
+            },
+            cliente: $('#' + id_cliente_ddl_obra + " option:selected").val(),
+            //lider: $('#' + id_lider_ddl_obra + " option:selected").val(),
+            //asignados: asignados,
+            timestamps: {
+                startedAt: new Date().getTime(),
+                finishedAt: 0,
+            }
         }
-    }
-    //asignados = [];
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val()).set(obra)
+        //asignados = [];
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val()).set(obra)
 
-    alert("¡Alta de obra exitosa!");
+        alert("¡Alta exitosa!");
+    }
 });
 
 // $('#' + id_imprimir_proy).click(function () {
