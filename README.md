@@ -17,8 +17,8 @@ Pendientes semana  1 oct
     - inges
     - reqs
     - contratos
-  - Subir a bd tipos de presupeusto con clave
   - pagos en cada presupuesto
+  - poner funcionalidad reqs
   
 - Candados
   - que los valores sean int cuando int, double cuando double, y así
