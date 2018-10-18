@@ -32,9 +32,10 @@ $(document).ready(function(){
 });
 
 $('#' + id_registrar_button_inge).click((function () {
-    firebase.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
+    secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
         .then(function (result) {
             guardaDatos(result.user);
+            secondaryApp.auth().signOut();
         });
 
     /*Para imprimir errores, .catch en vez de .then
@@ -157,6 +158,7 @@ function guardaDatos(user) {
             alta_cliente: true,
             reporte: true,
             perfil: false,
+            activar: true,
         }
     }
     /*else if(document.getElementById(id_lider_radio_inge).checked == true)
@@ -169,6 +171,7 @@ function guardaDatos(user) {
             alta_cliente: false,
             reporte: true,
             perfil: true,
+            activar: false,
         }
     }
     else {
@@ -179,6 +182,7 @@ function guardaDatos(user) {
             alta_cliente: false,
             reporte: false,
             perfil: false,
+            activar: false,
         }
     }
     
@@ -196,4 +200,5 @@ function guardaDatos(user) {
     }
 
     firebase.database().ref(rama_bd_inges+"/" + user.uid).set(usuario);
+    alert("¡Alta exitosa!")
 }

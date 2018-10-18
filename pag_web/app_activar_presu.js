@@ -73,5 +73,6 @@ function loadDDLPresupuestosActivar(){
 
 $('#' + id_activar_button_activar).click(function () {
 //Chance falta un orderBy?
-    firebase.database().ref(rama_bd_obras + "/" + ('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/contrato").set(true);
-}
+    var activado = true;
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/contrato").set(activado);
+})
