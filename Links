@@ -10,3 +10,11 @@ https://getbootstrap.com/docs/4.0/components/card/
 
 
 https://parzibyte.me/blog/2018/04/30/javascript-numero-moneda-texto-letras/
+
+
+Para deploy page
+
+https://github.com/firebase/firebase-tools/issues/113
+
+Necesitamos escribir: alias firebase="`npm config get prefix`/bin/firebase"
+en terminal
