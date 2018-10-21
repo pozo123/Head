@@ -129,9 +129,9 @@ function loadAtn(){
     $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("reset",[]);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
         var obra_selec = snapshot.val();
-        firebase.database().ref(rama_bd_clientes).orderByChild('nombre').equalTo(obra_selec.cliente).once('child_added',function(snapshot){
+        firebase.database().ref(rama_bd_clientes).orderByChild('nombre').equalTo(obra_selec.cliente).on('child_added').then(function(snapshot){
             var cliente = snapshot.val();
-            firebase.database().ref(rama_bd_clientes + "/" + cliente.nombre + "/atencion").orderByChild('nombre').once("child_added",function(snapshot){
+            firebase.database().ref(rama_bd_clientes + "/" + cliente.nombre + "/atencion").orderByChild('nombre').once("child_added").then(function(snapshot){
                 var atn = snapshot.val();
                 $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("append",{
                     id: atn.nombre, label: atn.nombre
