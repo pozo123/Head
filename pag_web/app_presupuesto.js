@@ -216,9 +216,11 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 }
                 
                 //Genero el bloque dinamico de 1.i alcances
+                var precio_total = 0;
                 var alcance_pdf = [];
                 for(i = 0; i < alcance.length; i++){
                     alcance_pdf.push({"1." + (i+1), alcance[i].texto, alcance[i].precio});   
+                    precio_total = precio_total + alcance[i].precio;
                 }
                 
                 //Querys a probar para contar cons
@@ -1129,7 +1131,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 //nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
                                 horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-                                cash_presupuestado: $('#' + id_precio_presupuesto).val(),
+                                cash_presupuestado: precio_total,
                                 timestamps: {
                                     startedAt: new Date().getTime(),
                                     finishedAt: 0,
@@ -1157,7 +1159,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
                                 horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
-                                cash_presupuestado: $('#' + id_precio_presupuesto).val(),
+                                cash_presupuestado: precio_total,
                                 timestamps: {
                                     startedAt: new Date().getTime(),
                                     finishedAt: 0,
