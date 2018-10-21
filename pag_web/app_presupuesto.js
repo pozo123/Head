@@ -7,6 +7,9 @@ var id_genero_ddl_presupuesto = "DDLgenero";
 var id_precio_presupuesto = "precioPresupuesto";
 var id_precio_sugerido_label_presupuesto = "labelCash";
 
+var id_add_alcance_button_presupuesto = "addAlcance";
+var lista_alcance = "ListaAlcance";
+
 var id_anticipo1_rb_presupuesto = "rb1anticipo";
 var id_anticipo2_rb_presupuesto = "rb2anticipo";
 var id_anticipo3_rb_presupuesto = "rb3anticipo";
@@ -31,6 +34,8 @@ var id_fecha_nota = 'fechaNota';
 var fecha_actual = new Date();
 var precio_hora = 2000;
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
+var alcance = [];
 
 $('#' + id_horas_programadas_presupuesto).change(function(){
     $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: "+ formatMoney(($('#' + id_horas_programadas_presupuesto).val() * precio_hora)));
@@ -152,6 +157,19 @@ function formatMoney(n, c, d, t) {
   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
+$('#' + id_add_alcance_button_presupuesto).click(function () {
+    var node = document.createElement("LI");
+    node.classList.add("list-group-item");               // Create a <li> node
+    var textnode = document.createTextNode($('#' + alcance_txt).val());        // Create a text node
+    node.appendChild(textnode);                              // Append the text to <li>
+    document.getElementById(lista_alcance).appendChild(node);  
+    alcance.push({
+        texto: "" + $('#' + alcance_txt).val(),
+        precio: "" + $('#' + id_precio_presupuesto).val(),
+    });
+    //alert(JSON.stringify(alcance));
+});
+
 $('#' + id_registrar_button_presupuesto).click(function () {
     if(!$('#' + id_nombre_presupuesto).val() || !$('#' + id_horas_programadas_presupuesto).val() || !$('#' + id_precio_presupuesto).val() || $('#' + id_obra_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_genero_ddl_presupuesto + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
@@ -195,6 +213,12 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 var atn_str = "";
                 for(i=0;i<atn_lista.length;i++){
                     atn_str = atn_str + atn_lista[i].label + "\n";
+                }
+                
+                //Genero el bloque dinamico de 1.i alcances
+                var alcance_pdf = [];
+                for(i = 0; i < alcance.length; i++){
+                    alcance_pdf.push({"1." + (i+1), alcance[i].texto, alcance[i].precio});   
                 }
                 
                 //Querys a probar para contar cons
