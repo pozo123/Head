@@ -10,6 +10,9 @@ var id_datatable_clientes_librerias = "dataTableClientes";
 var id_datatable_exclusiones_librerias = "dataTableExclusiones";
 var id_datatable_generos_librerias = "dataTableGeneros";
 var id_datatable_tipos_presupuesto_librerias = "dataTableTipos";
+var id_datatable_reqs_librerias = "dataTableReqs";
+var id_datatable_obras_librerias = "dataTableObras";
+var id_datatable_inges_librerias = "dataTableInges";
 
 $(document).ready(function() {
 	
@@ -65,6 +68,60 @@ $(document).ready(function() {
 			columns: [
 				{title: "Nombre"},
 				{title: "Codigo"}
+			]
+		});
+	});
+
+	var datos_reqs = [];
+	firebase.database().ref(rama_bd_reqs).orderByChild("nombre").on("child_added",function(snapshot){
+		var req = snapshot.val();
+		datos_reqs.push([req.nombre, req.escencial]);
+		$('#'+ id_datatable_reqs_librerias).dataTable({
+            destroy: true,
+			data: datos_reqs,
+			columns: [
+				{title: "Nombre"},
+				{title: "Escencial"}
+			]
+		});
+	});
+
+	var datos_obras = [];
+	firebase.database().ref(rama_bd_obras).orderByChild("nombre").on("child_added",function(snapshot){
+		var obra = snapshot.val();
+		datos_obras.push([obra.nombre, obra.clave, obra.cliente, obra.direccion.calle + ", No. " + obra.direccion.numero + " Col. " + obra.direccion.colonia + ", " + obra.direccion.delegacion + ", " + obra.direccion.ciudad]);
+		$('#'+ id_datatable_obras_librerias).dataTable({
+            destroy: true,
+			data: datos_obras,
+			columns: [
+				{title: "Nombre"},
+				{title: "Clave"},
+				{title: "Cliente"},
+				{title: "Direccion"}
+			]
+		});
+	});
+
+	var datos_inges = [];
+	firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
+		var inge = snapshot.val();
+		var esp;
+		if(inge.especialidad === 1)
+			esp = "Electricidad";
+		else if(inge.especialidad === 2)
+			esp = "Plomeria";
+		else if(inge.especialidad === 3)
+			esp = "Electricidad y plomeria";
+		else 
+			esp = "NA";
+		datos_inges.push([inge.nombre, inge.email, esp]);
+		$('#'+ id_datatable_inges_librerias).dataTable({
+            destroy: true,
+			data: datos_inges,
+			columns: [
+				{title: "Nombre"},
+				{title: "Email"},
+				{title: "Especialidad"}
 			]
 		});
 	});
