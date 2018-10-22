@@ -8,6 +8,10 @@ Pendientes semana  1 oct
 
   
 - Primordiales
+  - Imprimir no jala consecutivos
+  - probar lo de alcance dinámico
+  - editar/eliminar
+  
   - on change obra en perfil limpia el textarea de misc
   - activar reqs
   - Editar todo
