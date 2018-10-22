@@ -18,6 +18,7 @@ $(document).ready(function() {
 		var cliente = snapshot.val();
 		datos_clientes.push([cliente.nombre, cliente.clave, cliente.telefono]);
 		$('#'+ id_datatable_clientes_librerias).dataTable({
+			destroy: true,
 			data: datos_clientes,
 			columns: [
 				{title: "Nombre"},
