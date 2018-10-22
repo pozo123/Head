@@ -3,7 +3,7 @@ var id_presupuestos_ddl_activar = "DDL_presupuesto";
 // Esconder este a menos que se haga click en presu Y haya más de uno
 //var id_consecutivo_ddl_activar = "DDL_consecutivo";
 var id_activar_button_activar = "activar_button";
-
+var id_desactivar_button_activar = "desactivar_button";
 var rama_bd_obras = "obras";
 
 //var multiples_consecutivos = false;
@@ -75,4 +75,9 @@ $('#' + id_activar_button_activar).click(function () {
 //Chance falta un orderBy?
     var activado = true;
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/contrato").set(activado);
-})
+});
+
+$('#' + id_desactivar_button_activar).click(function () {
+    var activado = false;
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/contrato").set(activado);
+});
