@@ -1,0 +1,68 @@
+var rama_bd_tipos_presupuesto = "tipos_presupuesto";
+var rama_bd_generos = "generos";
+var rama_bd_obras = "obras";
+var rama_bd_reqs = "reqs";
+var rama_bd_exclusiones = "exclusiones";
+var rama_bd_clientes = "clientes";
+var rama_bd_inges = "inges";
+
+var id_datatable_clientes_librerias = "dataTableClientes";
+var id_datatable_exclusiones_librerias = "dataTableExclusiones";
+var id_datatable_generos_librerias = "dataTableGeneros";
+var id_datatable_tipos_presupuesto_librerias = "dataTableTipos";
+
+$(document).ready(function() {
+	
+	var datos_clientes = [];
+	firebase.database().ref(rama_bd_clientes).orderByChild("nombre").on("child_added",function(snapshot){
+		var cliente = snapshot.val();
+		datos_clientes.push([cliente.nombre, cliente.clave, cliente.telefono]);
+		$('#'+ id_datatable_clientes_librerias).dataTable({
+			data: datos_clientes,
+			columns: [
+				{title: "Nombre"},
+				{title: "Clave"},
+				{title: "Telefono"}
+			]
+		});
+	});
+
+	/*var datos_exclusiones = [];
+	firebase.database().ref(rama_bd_exclusiones).orderByChild("nombre").on("child_added",function(snapshot){
+		var exc = snapshot.val();
+		datos_exclusiones.push([exc.nombre]);
+		$('#'+ id_datatable_exclusiones_librerias).dataTable({
+			data: datos_exclusiones,
+			columns: [
+				{title: "Nombre"}
+			]
+		});
+	});
+
+	var datos_generos = [];
+	firebase.database().ref(rama_bd_generos).orderByChild("nombre").on("child_added",function(snapshot){
+		var gen = snapshot.val();
+		datos_exclusiones.push([gen.nombre, gen.codigo]);
+		$('#'+ id_datatable_generos_librerias).dataTable({
+			data: datos_generos,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"}
+			]
+		});
+	});
+
+	var datos_tipos_presupuesto = [];
+	firebase.database().ref(rama_bd_tipos_presupuesto).orderByChild("nombre").on("child_added",function(snapshot){
+		var tipo = snapshot.val();
+		datos_exclusiones.push([tipo.nombre, tipo.codigo]);
+		$('#'+ id_datatable_tipos_presupuesto_librerias).dataTable({
+			data: datos_tipos_presupuesto,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"}
+			]
+		});
+	});*/
+
+});
