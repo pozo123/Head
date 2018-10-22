@@ -7,6 +7,7 @@ var id_direccion_ciudad_cliente = "ciudadCliente"; //Campo nuevo
 var id_direccion_cp_cliente = "cpCliente"; //Campo nuevo
 var id_tel_cliente = "clienteTelefono";
 var id_registrar_button_cliente = "registrarCliente";
+var id_borrar_todo_cliente = "borrarTodoCliente";
 var id_clave_cliente = "claveCliente";
 
 var id_nombre_atencion_cliente = "nombreAtencion";
@@ -45,34 +46,41 @@ $('#' + id_add_atencion_button_cliente).click(function () {
      list.removeChild(list.lastChild);
      atencion.pop(); 
  });
+ $('#' + id_borrar_todo_cliente).click(function () {
+    var list = document.getElementById(lista_atencion_cliente);   // Get the <ul> element with id="myList"
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }
+    atencion = [];
+});
 
 $('#' + id_registrar_button_cliente).click(function () {
     firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_nombre_cliente).val()).once('value').then(function(snapshot){
         var c = snapshot.val();
-            if(c !== null){
-                alert("Cliente ya existente");
-            } else {
-                if(!$('#' + id_nombre_cliente).val() || !$('#' + id_clave_cliente).val() || !(typeof atencion != "undefined" && atencion != null && atencion.length != null && atencion.length > 0)){
-                    alert("Llena todos los campos requeridos");
-                }else{
-                    var cliente = {      
-                        nombre: $('#' + id_nombre_cliente).val(),
-                        clave: $('#' + id_clave_cliente).val(),
-                        atencion: atencion,
-                        direccion: {
-                            calle: $('#' + id_direccion_calle_cliente).val(),
-                            numero: $('#' + id_direccion_num_cliente).val(),
-                            colonia: $('#' + id_direccion_colonia_cliente).val(),
-                            delegacion: $('#' + id_direccion_delegacion_cliente).val(),
-                            ciudad: $('#' + id_direccion_ciudad_cliente).val(),
-                            cp: $('#' + id_direccion_cp_cliente).val()
-                        },
-                        telefono: $('#' + id_tel_cliente).val(),
-                    }
-                    firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_nombre_cliente).val()).set(cliente)
-
-                    alert("¡Alta exitosa!");
-                }       
-            }
+        if(c !== null){
+            alert("Cliente ya existente");
+        } else {
+            if(!$('#' + id_nombre_cliente).val() || !$('#' + id_clave_cliente).val() || !(typeof atencion != "undefined" && atencion != null && atencion.length != null && atencion.length > 0)){
+                alert("Llena todos los campos requeridos");
+            }else{
+                var cliente = {      
+                    nombre: $('#' + id_nombre_cliente).val(),
+                    clave: $('#' + id_clave_cliente).val(),
+                    atencion: atencion,
+                    direccion: {
+                        calle: $('#' + id_direccion_calle_cliente).val(),
+                        numero: $('#' + id_direccion_num_cliente).val(),
+                        colonia: $('#' + id_direccion_colonia_cliente).val(),
+                        delegacion: $('#' + id_direccion_delegacion_cliente).val(),
+                        ciudad: $('#' + id_direccion_ciudad_cliente).val(),
+                        cp: $('#' + id_direccion_cp_cliente).val()
+                    },
+                    telefono: $('#' + id_tel_cliente).val(),
+                }
+                firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_nombre_cliente).val()).set(cliente)
+                alert("¡Alta exitosa!");
+                atencion = [];
+            }       
+        }
     });
-});
+ });
