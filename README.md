@@ -12,6 +12,26 @@ Pendientes semana  1 oct
   - editar/eliminar
   - Reporte sumando/ semanal
   
+  - meter * s en generar ppto
+  - Agregar direccion en biblio cliente
+  - LoadBiblios() en vez de en ready, en click a las pestañas y en reload con el editar
+  - Quitar el eliminar de cliente
+  - Bibliotecas por pestaña (iguales que en altas)
+  - Altas 
+    - req/exc
+    - tipos/generos
+  - biblios
+    - ppto
+    - atn
+  - Cambiar nombre "añadir numeral"
+  - Sumar horas presupuestadas, igual que dinero total
+  - En list numeral poner punto antes de "precio", se ve feo
+  - logo izq y datos der
+  - "contra avance/entrega" no estimaciones
+  - Atte y MBD abajo de ______
+  - Probar pdfs que se descarguen bien
+  - cambiar lib por biblio
+  
   - Timestamp activar presu
   - Altas 
     - reqs
@@ -35,7 +55,7 @@ Pendientes semana  1 oct
 - Importantes pero no primordiales
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - los presupuestos no necesitan nombre
-
+  - Pasar cargar ddls a pestañas en vez de doc ready
 - Con Emmanuel
   - Cuando se desactiva un ppto?
   - Se puede desactivar y volver a activar?
