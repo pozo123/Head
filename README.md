@@ -9,7 +9,7 @@ Pendientes semana  1 oct
   
 - Primordiales
   - editar/eliminar
-  
+  - Generar funcion cerrar dia para emmanuel
   
   - meter * s en generar ppto
   - LoadBiblios() en vez de en ready, en click a las pestañas y en reload con el editar
