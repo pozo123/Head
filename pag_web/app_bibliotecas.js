@@ -16,6 +16,46 @@ var id_datatable_inges_bibliotecas = "dataTableInges";
 var id_datatable_presupuestos_bibliotecas = "dataTablePresu";
 var id_datatable_atn_bibliotecas = "dataTableAtn";
 
+var id_tab_clientes_bibliotecas = "tabBibClientes"
+var id_tab_colaborador_bibliotecas = "tabBibColaborador"
+var id_tab_obras_bibliotecas = "tabBibObras"
+var id_tab_presupuestos_bibliotecas = "tabBibPresupuestos"
+var id_tab_atencion_bibliotecas = "tabBibAtencion"
+var id_tab_reqsExcs_bibliotecas = "tabBibReqsExcs"
+var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
+
+// métodos para cargar las funciones cuando se den click en los tabs del panel lateral
+
+$('#' + id_tab_clientes_bibliotecas).click(function(){
+	loadTablaClientes();
+});
+
+$('#' + id_tab_reqsExcs_bibliotecas).click(function(){
+	loadTablaExclusionesYReqs();
+});
+
+$('#' + id_tab_tiposGens_bibliotecas).click(function(){
+	loadTablaGenerosYTipos();
+});
+
+$('#' + id_tab_obras_bibliotecas).click(function(){
+	loadTablaObras();
+});
+
+$('#' + id_tab_colaborador_bibliotecas).click(function(){
+	loadTablaInges();
+});
+
+$('#' + id_tab_presupuestos_bibliotecas).click(function(){
+	loadTablaPresupuestos();
+});
+
+$('#' + id_tab_atencion_bibliotecas).click(function(){
+	loadTablaAtn();
+});
+
+// -----------------------------------------------------------------------------------
+
 function loadTablaClientes(){
 	var datos_clientes = [];
 	firebase.database().ref(rama_bd_clientes).orderByChild("nombre").on("child_added",function(snapshot){
@@ -44,7 +84,7 @@ function editar_cliente(tbody, table){
 	});
 }
 
-function loadTablaExclusiones(){
+function loadTablaExclusionesYReqs(){
 	var datos_exclusiones = [];
 	firebase.database().ref(rama_bd_exclusiones).orderByChild("nombre").on("child_added",function(snapshot){
 		var exc = snapshot.val();
@@ -60,68 +100,7 @@ function loadTablaExclusiones(){
 		});
 		editar_exclusion("#" + id_datatable_exclusiones_bibliotecas + " tbody", tabla_exclusiones);
 	});
-}
 
-function editar_exclusion(tbody, table){
-	$(tbody).on("click", "button.editar",function(){
-		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
-	});
-}
-
-function loadTablaGeneros(){
-	var datos_generos = [];
-	firebase.database().ref(rama_bd_generos).orderByChild("nombre").on("child_added",function(snapshot){
-		var gen = snapshot.val();
-		datos_generos.push([gen.nombre, gen.codigo]);
-		var tabla_generos = $('#'+ id_datatable_generos_bibliotecas).DataTable({
-            destroy: true,
-			data: datos_generos,
-			columns: [
-				{title: "Nombre"},
-				{title: "Codigo"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
-			],
-            language: idioma_espanol,
-		});
-		editar_genero("#" + id_datatable_generos_bibliotecas + " tbody", tabla_generos);
-	});
-}
-
-function editar_genero(tbody, table){
-	$(tbody).on("click", "button.editar",function(){
-		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
-	});
-}
-
-function loadTablaTipos(){
-	var datos_tipos_presupuesto = [];
-	firebase.database().ref(rama_bd_tipos_presupuesto).orderByChild("nombre").on("child_added",function(snapshot){
-		var tipo = snapshot.val();
-		datos_tipos_presupuesto.push([tipo.nombre, tipo.codigo]);
-		var tabla_tipos = $('#'+ id_datatable_tipos_presupuesto_bibliotecas).DataTable({
-            destroy: true,
-			data: datos_tipos_presupuesto,
-			columns: [
-				{title: "Nombre"},
-				{title: "Codigo"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
-			],
-            language: idioma_espanol,
-		});
-		editar_tipo("#" + id_datatable_tipos_presupuesto_bibliotecas + " tbody", tabla_tipos);
-	});
-}
-
-function editar_tipo(tbody, table){
-	$(tbody).on("click", "button.editar",function(){
-		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
-	});
-}
-
-function loadTablaReqs(){
 	var datos_reqs = [];
 	firebase.database().ref(rama_bd_reqs).orderByChild("nombre").on("child_added",function(snapshot){
 		var req = snapshot.val();
@@ -140,7 +119,64 @@ function loadTablaReqs(){
 	});
 }
 
+function editar_exclusion(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
 function editar_req(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaGenerosYTipos(){
+	var datos_generos = [];
+	firebase.database().ref(rama_bd_generos).orderByChild("nombre").on("child_added",function(snapshot){
+		var gen = snapshot.val();
+		datos_generos.push([gen.nombre, gen.codigo]);
+		var tabla_generos = $('#'+ id_datatable_generos_bibliotecas).DataTable({
+            destroy: true,
+			data: datos_generos,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_genero("#" + id_datatable_generos_bibliotecas + " tbody", tabla_generos);
+	});
+
+	var datos_tipos_presupuesto = [];
+	firebase.database().ref(rama_bd_tipos_presupuesto).orderByChild("nombre").on("child_added",function(snapshot){
+		var tipo = snapshot.val();
+		datos_tipos_presupuesto.push([tipo.nombre, tipo.codigo]);
+		var tabla_tipos = $('#'+ id_datatable_tipos_presupuesto_bibliotecas).DataTable({
+            destroy: true,
+			data: datos_tipos_presupuesto,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_tipo("#" + id_datatable_tipos_presupuesto_bibliotecas + " tbody", tabla_tipos);
+	});
+}
+
+function editar_genero(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function editar_tipo(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
 		console.log(data);
