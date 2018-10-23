@@ -1,0 +1,234 @@
+var rama_bd_tipos_presupuesto = "tipos_presupuesto";
+var rama_bd_generos = "generos";
+var rama_bd_obras = "obras";
+var rama_bd_reqs = "reqs";
+var rama_bd_exclusiones = "exclusiones";
+var rama_bd_clientes = "clientes";
+var rama_bd_inges = "inges";
+
+var id_datatable_clientes_bibliotecas = "dataTableClientes";
+var id_datatable_exclusiones_bibliotecas = "dataTableExclusiones";
+var id_datatable_generos_bibliotecas = "dataTableGeneros";
+var id_datatable_tipos_presupuesto_bibliotecas = "dataTableTipos";
+var id_datatable_reqs_bibliotecas = "dataTableReqs";
+var id_datatable_obras_bibliotecas = "dataTableObras";
+var id_datatable_inges_bibliotecas = "dataTableInges";
+
+function loadTablaClientes(){
+	var datos_clientes = [];
+	firebase.database().ref(rama_bd_clientes).orderByChild("nombre").on("child_added",function(snapshot){
+		var cliente = snapshot.val();
+		datos_clientes.push([cliente.nombre, cliente.clave, cliente.telefono]);
+		var tabla_clientes = $('#'+ id_datatable_clientes_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_clientes,
+			columns: [
+				{title: "Nombre"},
+				{title: "Clave"},
+				{title: "Telefono"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_cliente("#" + id_datatable_clientes_bibliotecas + " tbody", tabla_clientes);
+	});
+}
+
+function editar_cliente(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaExclusiones(){
+	var datos_exclusiones = [];
+	firebase.database().ref(rama_bd_exclusiones).orderByChild("nombre").on("child_added",function(snapshot){
+		var exc = snapshot.val();
+		datos_exclusiones.push([exc.nombre]);
+		var tabla_exclusiones = $('#'+ id_datatable_exclusiones_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_exclusiones,
+			columns: [
+				{title: "Nombre"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_exclusion("#" + id_datatable_exclusiones_bibliotecas + " tbody", tabla_exclusiones);
+	});
+}
+
+function editar_exclusion(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaGeneros(){
+	var datos_generos = [];
+	firebase.database().ref(rama_bd_generos).orderByChild("nombre").on("child_added",function(snapshot){
+		var gen = snapshot.val();
+		datos_generos.push([gen.nombre, gen.codigo]);
+		var tabla_generos = $('#'+ id_datatable_generos_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_generos,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_genero("#" + id_datatable_generos_bibliotecas + " tbody", tabla_generos);
+	});
+}
+
+function editar_genero(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaTipos(){
+	var datos_tipos_presupuesto = [];
+	firebase.database().ref(rama_bd_tipos_presupuesto).orderByChild("nombre").on("child_added",function(snapshot){
+		var tipo = snapshot.val();
+		datos_tipos_presupuesto.push([tipo.nombre, tipo.codigo]);
+		var tabla_tipos = $('#'+ id_datatable_tipos_presupuesto_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_tipos_presupuesto,
+			columns: [
+				{title: "Nombre"},
+				{title: "Codigo"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_tipo("#" + id_datatable_tipos_presupuesto_bibliotecas + " tbody", tabla_tipos);
+	});
+}
+
+function editar_tipo(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaReqs(){
+	var datos_reqs = [];
+	firebase.database().ref(rama_bd_reqs).orderByChild("nombre").on("child_added",function(snapshot){
+		var req = snapshot.val();
+		datos_reqs.push([req.nombre, req.esencial]);
+		var tabla_reqs = $('#'+ id_datatable_reqs_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_reqs,
+			columns: [
+				{title: "Nombre"},
+				{title: "Esencial"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_req("#" + id_datatable_reqs_bibliotecas + " tbody", tabla_reqs);
+	});
+}
+
+function editar_req(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaObras(){
+	var datos_obras = [];
+	firebase.database().ref(rama_bd_obras).orderByChild("nombre").on("child_added",function(snapshot){
+		var obra = snapshot.val();
+		datos_obras.push([obra.nombre, obra.clave, obra.cliente, obra.direccion.calle + ", No. " + obra.direccion.numero + " Col. " + obra.direccion.colonia + ", " + obra.direccion.delegacion + ", " + obra.direccion.ciudad]);
+		var tabla_obras = $('#'+ id_datatable_obras_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_obras,
+			columns: [
+				{title: "Nombre"},
+				{title: "Clave"},
+				{title: "Cliente"},
+				{title: "Direccion", width: 500},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+			],
+            language: idioma_espanol,
+		});
+		editar_obra("#" + id_datatable_obras_bibliotecas + " tbody", tabla_obras);
+	});
+}
+
+function editar_obra(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+function loadTablaInges(){
+	var datos_inges = [];
+	firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
+		var inge = snapshot.val();
+		var esp;
+		if(inge.especialidad === 1)
+			esp = "Electricidad";
+		else if(inge.especialidad === 2)
+			esp = "Plomeria";
+		else if(inge.especialidad === 3)
+			esp = "Electricidad y plomeria";
+		else 
+			esp = "NA";
+		datos_inges.push([inge.nombre, inge.email, esp]);
+		var tabla_inges = $('#'+ id_datatable_inges_bibliotecas).dataTable({
+            destroy: true,
+			data: datos_inges,
+			columns: [
+				{title: "Nombre"},
+				{title: "Email"},
+				{title: "Especialidad"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+            ],
+            language: idioma_espanol,
+		});
+		editar_inge("#" + id_datatable_inges_bibliotecas + " tbody", tabla_inges);
+	});
+}
+
+function editar_inge(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		console.log(data);
+	});
+}
+
+var idioma_espanol = {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+}
