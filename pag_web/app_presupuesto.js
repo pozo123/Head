@@ -163,7 +163,7 @@ $('#' + id_add_alcance_button_presupuesto).click(function () {
     if(alcance.length < 11){
         var node = document.createElement("LI");
         node.classList.add("list-group-item");               // Create a <li> node
-        var textnode = document.createTextNode($('#' + alcance_txt).val() + " precio: " + $('#' + id_precio_presupuesto).val());        // Create a text node
+        var textnode = document.createTextNode($('#' + alcance_txt).val() + ". Precio: " + $('#' + id_precio_presupuesto).val());        // Create a text node
         node.appendChild(textnode);                              // Append the text to <li>
         document.getElementById(lista_alcance).appendChild(node);  
         alcance.push({
