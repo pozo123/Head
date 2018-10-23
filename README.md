@@ -12,6 +12,11 @@ Pendientes semana  1 oct
   - editar/eliminar
   - Reporte sumando/ semanal
   
+  - Altas 
+    - reqs
+    - exc
+    - tipos
+    - generos
   - activar reqs
   - Editar todo
     - todo
