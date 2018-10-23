@@ -8,7 +8,6 @@ Pendientes semana  1 oct
 
   
 - Primordiales
-  - Imprimir no jala consecutivos
   - editar/eliminar
   - Reporte sumando/ semanal
   
