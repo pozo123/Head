@@ -75,6 +75,7 @@ $('#' + id_activar_button_activar).click(function () {
 //Chance falta un orderBy?
     var activado = true;
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/contrato").set(activado);
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_activar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_activar + " option:selected").val() + "/timestamps/activacion").set(new Date.getTime());
     alert("Presupuesto activado");
 });
 
