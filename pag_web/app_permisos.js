@@ -79,6 +79,8 @@ $('#' + id_guardar_button_permisos).click(function () {
     firebase.database().ref(rama_bd_inges).orderByChild("nombre").equalTo($('#' + id_colaborador_ddl_permisos + " option:selected").val()).once("child_added").then(function(snapshot){
         firebase.database().ref(rama_bd_inges + "/" + snapshot.val().uid + "/permisos").set(perm);
     });
+
+    alert("¡Permisos actualizados!")
     //Hecho con clase:
     //firebase.database().ref(rama_bd_inges + "/" + $('#' + id_colaborardor_ddl_permisos + " option:selected").val() + "/permisos/" + $(.id_clase_checkbox_permisos).val()).set($(.id_clase_checkbox_permisos).checked);
 })
