@@ -15,11 +15,15 @@
         
         <link rel="stylesheet" href="BS-DDL-checkbox/bootstrap-dropdown-checkbox.css">
 
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
         <!-- My styles-->
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" type="text/css" href="sidebar.css">
         <link rel="stylesheet" type="text/css" href="tabs.css">
         <link rel="stylesheet" type ="text/css" href="dataPicker/jquery.datetimepicker.css">
+
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
         
 
@@ -29,7 +33,7 @@
         <title>Head SCORE</title>   
 
     </head>
-
+    
     <body class = "hidden">
 
     <div class="modal fade" id="contraseñaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,11 +85,15 @@
                     </div>
                 </ul>
                 <ul class="list-unstyled components">
+                    <div class="text-center">
+                        <h6 class="card-title" id="usuarioConectado"></h6>
+                    </div>
+                </ul>
+                <ul class="list-unstyled components" id = "tabPerfil">
                     <div class="card text-center text-white bg-dark">
                         <div class="card-body" id="card">
                             
                             <div class="container-fluid" id="entrada_form">
-                                <h6 class="card-title" id="usuarioConectado"></h6>
                                 <label for="">¿En qué vas a trabajar hoy?</label>
                                 <div class="form-group">
                                     <label for="">Obra:</label>
@@ -114,16 +122,28 @@
                 </div>    
                 <ul class="list-unstyled components">
                     <li class="tab active" id="tabDashboard"><a href="#" onclick="openTabs('tabDashboard','dashboard')">Dashboard</a></li>
-                    <li class="tab" id="tabPresupuesto"><a href="#" onclick="openTabs('tabPresupuesto','presupuesto')">Generar Presupuesto</a></li>
-                    <li><!-- Link with dropdown items -->
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dar de alta</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
+
+                    <li>
+                        <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Presupuestos</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu1">
+                            <li class="tab" id="tabPresupuesto"><a href="#" onclick="openTabs('tabPresupuesto','presupuesto')">Generar Presupuesto</a></li>
+                            <li class="tab" id="tabActivar"><a href="#" onclick="openTabs('tabActivar','activarPresupuesto')">Activar/Desactivar presupuesto (Contrato)</a></li>
+                            <li class="tab" id="tabImprimirPresupuesto"><a href="#" onclick="openTabs('tabImprimirPresupuesto','imprimirPresupuesto')">Imprimir PDF de presupuesto</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dar de alta</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu2">
                             <li class="tab" id="tabAltaColaborador"><a href="#" onclick="openTabs('tabAltaColaborador','altaColaborador')">Colaborador HEAD</a></li>
                             <li class="tab" id="tabAltaObra"><a href="#" onclick="openTabs('tabAltaObra','altaObra')">Obra</a></li>
                             <li class="tab" id="tabAltaCliente"><a href="#" onclick="openTabs('tabAltaCliente','altaCliente')">Cliente</a></li>
                         </ul>
+                    </li>
                     <li class="tab" id="tabReporte"><a href="#" onclick="openTabs('tabReporte','reporte')">Reporte</a></li>
                     <li class="tab"><a href="#" data-toggle="modal" data-target="#contraseñaModal">Cambiar contraseña</a></li>
+                    <li class="tab" id="tabPermisos"><a href="#" onclick="openTabs('tabPermisos','permisos')">Permisos de usuario</a></li>
+                    <li class="tab" id="tabLibrerias"><a href="#" onclick="openTabs('tabLibrerias','librerias')">Librerías</a></li>
                 </ul>
                 <ul class="list-unstyled components">
                     <div class="text-center">
@@ -141,11 +161,19 @@
                         <span></span>
                     </button>
                 </div>
+
                 <div class="row">
                     <div class="container">
                         <div id="dashboard" class="tabcontent">
-                            <h1>Dashboard</h1>
-                            <div class="card-columns" id="dashCards"></div>
+                            <div class="container-fluid">
+                                <h1>Dashboard</h1>
+                                <button type="button" class="btn btn-outline-dark btn-xs" id="fullScreen"><i class="fas fa-expand"></i></button>
+                                <button type="button" class="btn btn-outline-dark btn-xs hidden" id="notFullScreen"><i class="fas fa-expand"></i></button>
+                            </div>
+                            <br/>
+                            <div class="card-columns" id="dashCards">
+                                    <!-- Aquí se genera solo el código-->
+                            </div>
                         </div>
 
                         <div id="presupuesto" class="tabcontent hidden">
@@ -174,14 +202,54 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="alcance">Alcance del presupuesto:</label>
-                                                <textarea class="form-control" rows="6" id="alcance"></textarea>
-                                             </div>
+                                                <label for="DDLGenero">Género:</label>
+                                                <select class="form-control" name="" id="DDLgenero"></select>
+                                            </div>
+                                            <hr class="style2">
 
+                                            <div class="form-group">
+                                                <label for="alcance">Descripción del presupuesto:</label>
+                                                <textarea class="form-control" rows="6" id="alcance"></textarea>
+                                            </div>
+
+                                            <div class="form-row">
+                                                    <div class="col-lg-6">
+                                                        <label for="horasProgramadas">Horas Programadas:</label>
+                                                        <input class="form-control" name="" id="horasProgramadas">
+                                                    </div>
+    
+                                                    <div class="col-lg-6">
+                                                          <label for="precioPresupuesto">Precio Presupuesto:</label>
+                                                          <input type="text"  id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
+                                                          <small id="labelCash" class="text-muted">*Precio mínimo sugerido</small>
+                                                    </div>
+                                                </div>
+
+                                            <div class="form-row align-items-center">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <button id="addAlcance" type="button" class="btn btn-outline-danger btn-lg btn-block">Añadir numeral</button>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <button id="delAlcance" type="button" class="btn btn-outline-secondary btn-lg btn-block">Eliminar último</button>
+                                                </div>
+                                            </div>
+                                
+                                            <div class="form-group pt-3">
+                                                <div class="card w-100 scrollbar scrollbar-danger">
+                                                    <div class="card-header text-center">
+                                                        Descripción
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul id="ListaAlcance"class="list-group list-group-flush">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
                                             <div class="form-group">
                                                 <label for="reqs"> Requisitos:</label>
                                                 <div class="form-control myDropdownCheckbox" name="" id="reqs"></div>
-                                                <!--<div class="myDropdownCheckbox" id="reqs"></div>-->
+                                                <!--<div class="myDropdownCheckbox" id="reqs"></div>-->               
                                             </div>
 
                                             <div class="form-group">
@@ -191,20 +259,13 @@
                                                 <!-- <select class="form-control" name="" id="exc"></select> -->
                                             </div>
 
-                                            <div class="form-row">
-                                                <div class="col-lg-6">
-                                                    <label for="horasProgramadas">Horas Programadas:</label>
-                                                    <input class="form-control" name="" id="horasProgramadas">
-                                                </div>
-
-                                                <div class="col-lg-6">
-                                                      <label for="precioPresupuesto">Precio Presupuesto:</label>
-                                                      <input type="number" min="1" step="any" id="precioPresupuesto" class="form-control" placeholder="" aria-describedby="helpId">
-                                                      <small id="labelCash" class="text-muted">*Precio Sugerido</small>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="anexos">Anexos:</label>
+                                                <textarea class="form-control" rows="6" id="anexos" placeholder='Separa cada anexo con un "Enter"'></textarea>
                                             </div>
                                             <br/>
-                                            <h2>Condiciones Comerciales</h2>
+                                            <h4>Condiciones Comerciales</h4>
+                                            <br/>
                                             <div class="form-group">
                                               <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rb1anticipo" value="option1">
@@ -236,9 +297,22 @@
                                                 <label class="custom-control-label" for="fiscales">Agregar datos fiscales</label>
                                               </div>
 
+                                              <br/>
+                                              <h4>Notas</h4>
+
+                                              <div class="form-row align-items-center">
+                                                <div class="col-lg-9 col-sm-12">
+                                                    <label for="fechaNota">Todas las cantidades o volumetrías fueron tomadas de acuerdo al proyecto enviado por el cliente el día </label>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-12">
+                                                    <input class="form-control" type="text" id="fechaNota" placeholder="" readonly="readonly">
+                                                </div>
+                                            </div>
+
                                             <br/>
                                             <div class="form-group">
-                                                <button id="registrarPresupuesto" type="button" class="btn btn-outline-danger btn-lg btn-block">Generar Presupuesto</button>
+                                                <button id="registrarPresupuesto" type="button" class="btn btn-outline-success btn-lg btn-block">Generar Presupuesto</button>
+                                                <button id="borrarTodoPresupuesto" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>
                                             </div>
                                         </form>
                                     </div>
@@ -246,31 +320,100 @@
                             </div>
                         </div>
 
+                        <div id="activarPresupuesto" class="tabcontent hidden">
+                            <h1>Activa un contrato</h1>
+                            <p>Selecciona un presupuesto y activalo como contrato</p>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="DDL_obra">Selecciona la Obra</label>
+                                                <select class="form-control" name="" id="DDL_obra" onChange="loadDDLPresupuestosActivar()"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DDL_presupuesto">Selecciona el presupuesto</label>
+                                                <select class="form-control" name="" id="DDL_presupuesto"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DDL_obra">Selecciona archivo de evidencia</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="foto" accept="image/*">
+                                                    <label class="custom-file-label" for="foto">Aún no disponible</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class= "col-lg-6">
+                                                    <button id="activar_button" type="button" class="btn btn-outline-success btn-block">Activar</button>
+                                                </div>
+                                                <div class= "col-lg-6">
+                                                    <button id="desactivar_button" type="button" class="btn btn-outline-danger btn-block">Desactivar</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="imprimirPresupuesto" class="tabcontent hidden">
+                            <h1>Imprime un presupuesto</h1>
+                            <p>Genera el pdf del presupuesto que quieras, selecciona la obra deseada</p>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="DDL_obra_imp">Selecciona la Obra</label>
+                                                <select class="form-control" name="" id="DDL_obra_imp" onChange="loadDDLPresupuestosImprimir()"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DDL_presupuesto_imp">Selecciona el presupuesto</label>
+                                                <select class="form-control" name="" id="DDL_presupuesto_imp" onChange= "loadDDLConsecutivosImprimir()"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DDL_consecutivo_imp">Selecciona el consecutivo</label>
+                                                <select class="form-control" name="" id="DDL_consecutivo_imp"></select>
+                                            </div>
+                                            <button id="imprimir_presu" type="button" class="btn btn-outline-success btn-block">Genera el PDF</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="altaColaborador" class="tabcontent hidden">
                             <h1>Colaborador Head</h1><br/>
+                            <p>* Los campos son obligatorios</p>
 
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-lg-12">
                                         <form action="#" onsubmit="return false;">
                                             <div class="form-group">
-                                                <label for="ingeNombre">Nombre:</label>
+                                                <label for="ingeNombre">*Nombre:</label>
                                                 <input type="text" name="" id="ingeNombre"class="form-control" placeholder="Ingresa el nombre del Ingeniero a dar de alta">
                                             </div>
                                             <div class="form-group">
-                                                <label for="ingeEmail">Email:</label>
+                                                <label for="ingeEmail">*Email:</label>
                                                 <input type="text" name="" id="ingeEmail"class="form-control" placeholder="Ingresa su correo HEAD">
                                             </div>
                                             <div class="form-group">
-                                                <label for="ingePwd">Contraseña:</label>
+                                                <label for="ingePwd">*Contraseña:</label>
                                                 <input type="password" name="" id="ingePwd"class="form-control" placeholder="Ingresa su contraseña a desear">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ingePwdConfirmed">Vuelve a escribir la contraseña:</label>
-                                                <input type="password" name="" id="ingePwdConfirmed"class="form-control" placeholder="Vuelve a escribir la contraseña">
-                                            </div>
-                                            <div class="form-group">
-                                                <button id="confirmButton" type="button" class="btn btn-outline-danger">Confirma la contraseña</button>
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-file">
@@ -301,7 +444,7 @@
                                                 </div> -->
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                                    <label class="form-check-label" for="inlineRadio3">Proyectista</label>
+                                                    <label class="form-check-label" for="inlineRadio3">Colaborador</label>
                                                 </div>
                                             </div>
                                             <button id="registrarIngeniero" type="submit" class="btn btn-success btn-lg btn-block">Registrar</button>
@@ -314,26 +457,27 @@
 
                         <div id="altaObra" class="tabcontent hidden">
                             <h1>Obra</h1><br/>
+                            <p>* Los campos son obligatorios</p>
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-lg-12">
                                         <form action ="#" onsubmit="return false;">
                                             <div class="form-group">
-                                                <label for="obraNombre">Nombre:</label>
+                                                <label for="obraNombre">*Nombre:</label>
                                                 <input type="text" name="" id="obraNombre" class="form-control" placeholder="Ingresa el nombre de la obra">
                                             </div>
                                             <div class="form-group">
-                                                <label for="obraClave">Clave de la obra (máx 6 caracteres):</label>
+                                                <label for="obraClave">*Clave de la obra (máx 5 caracteres):</label>
                                                 <input type="text" name="" id="obraClave" class="form-control" placeholder="Ingresa la clave de la obra">
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label for="cliente">Cliente:</label>
+                                                <label for="cliente">*Cliente:</label>
                                                 <select class="form-control" name="" id="cliente"></select>
                                             </div>
                                             <hr class="style2">
                                             <div class="form-group">
-                                                <h4>Dirección</h4><br/>
+                                                <h4>*Dirección</h4><br/>
                                                 <div class="form-row">
                                                     <div class="col-lg-4">
                                                         <input type="text" id="calleObra" class="form-control" placeholder="Nombre de la calle">
@@ -346,7 +490,7 @@
                                                     </div>
 
                                                     <div class="col-lg-3">
-                                                        <input type="text" id="delegacionObra" class="form-control" placeholder="Delegación">
+                                                        <input type="text" id="delegacionObra" class="form-control" placeholder="Delegación/Municipio">
                                                     </div>
                                                 </div>
                                                 <br/>
@@ -355,7 +499,7 @@
                                                         <input type="text" id="cpObra" class="form-control" placeholder="Código Postal">
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <input type="text" id="ciudadObra" class="form-control" placeholder="Ciudad">
+                                                        <input type="text" id="ciudadObra" class="form-control" placeholder="Estado">
                                                     </div>
                                                 </div>
                                             </div>
@@ -370,17 +514,18 @@
 
                         <div id="altaCliente" class="tabcontent hidden">
                             <h1>Cliente</h1>
+                            <p>* Los campos son obligatorios</p>
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="container-fluid">
                                         <form action="#" onsubmit="return false;">
                                             <div class="form-row">
                                                 <div class="col-lg-4">
-                                                    <label for="clienteNombre">Nombre de la empresa:</label>
+                                                    <label for="clienteNombre">*Nombre de la empresa:</label>
                                                     <input type="text" name="" id="clienteNombre" class="form-control" placeholder="Ingresa el nombre de la empresa">
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <label for="claveCliente">Clave:</label>
+                                                    <label for="claveCliente">*Clave:</label>
                                                     <input type="text" name="" id="claveCliente" class="form-control" placeholder="Clave:">
                                                 </div>
 
@@ -405,7 +550,7 @@
                                                     </div>
 
                                                     <div class="col-lg-3">
-                                                        <input type="text" id="delegacionCliente" class="form-control" placeholder="Delegación">
+                                                        <input type="text" id="delegacionCliente" class="form-control" placeholder="Delegación/Municipio">
                                                     </div>
                                                 </div>
                                                 <br/>
@@ -414,60 +559,58 @@
                                                         <input type="text" id="cpCliente" class="form-control" placeholder="Código Postal">
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <input type="text" id="ciudadCliente" class="form-control" placeholder="Ciudad">
+                                                        <input type="text" id="ciudadCliente" class="form-control" placeholder="Estado">
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <hr class="style2">
-                                            <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <h4>*AT'N</h4><br/>
                                                 <div class="form-group">
-                                                    <h4>AT'N</h4><br/>
-                                                    <div class="form-group">
-                                                        <label for="nombreAtencion">Nombre:</label>
-                                                        <input type="text" name="" id="nombreAtencion" class="form-control" placeholder="Ingresa el nombre de la persona que vas a agregar:">
-                                                    </div> 
-                                                    <div class="form-row">
-                                                        <div class="col-lg-4">
-                                                            <input type="text" id="areaAtencion" class="form-control" placeholder="Área/departamento">
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <input type="text" id="celAtencion"  class="form-control" placeholder="Celular">
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <input type="text" id="emailAtencion" class="form-control" placeholder="Email">
-                                                        </div>
+                                                    <label for="nombreAtencion">Nombre:</label>
+                                                    <input type="text" name="" id="nombreAtencion" class="form-control" placeholder="Ingresa el nombre de la persona que vas a agregar:">
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-lg-4">
+                                                        <input type="text" id="areaAtencion" class="form-control" placeholder="Área/departamento">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input type="text" id="celAtencion"  class="form-control" placeholder="Celular">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="emailAtencion" class="form-control" placeholder="Email">
+                                                    </div>
 
-                                                        <div class="col-lg-3">
-                                                            <input type="text" id="extAtencion" class="form-control" placeholder="Extensión">
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                </div>
-                                                <div class="form-row align-items-center">
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <button id="addAtencion" type="button" class="btn btn-outline-danger btn-lg btn-block">Añadir</button>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                            <button id="delAtencion" type="button" class="btn btn-outline-secondary btn-lg btn-block">Eliminar último</button>
+                                                    <div class="col-lg-3">
+                                                        <input type="text" id="extAtencion" class="form-control" placeholder="Extensión">
                                                     </div>
                                                 </div>
+                                                <br/>
+                                            </div>
+                                            <div class="form-row align-items-center">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <button id="addAtencion" type="button" class="btn btn-outline-danger btn-lg btn-block">Añadir AT'N</button>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                        <button id="delAtencion" type="button" class="btn btn-outline-secondary btn-lg btn-block">Eliminar último</button>
+                                                </div>
+                                            </div>
                             
-                                                <div class="form-group pt-3">
-                                                    <div class="card w-100 scrollbar scrollbar-danger">
-                                                        <div class="card-header text-center">
-                                                            AT'N
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <ul id="ListaClientes"class="list-group list-group-flush">
-                                                            </ul>
-                                                        </div>
+                                            <div class="form-group pt-3">
+                                                <div class="card w-100 scrollbar scrollbar-danger">
+                                                    <div class="card-header text-center">
+                                                        AT'N
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul id="ListaClientes"class="list-group list-group-flush">
+                                                        </ul>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
 
-                                            <button id="registrarCliente" type="button" class="btn btn-success btn-lg btn-block">Registrar</button>
-                                            <button id="borrarTodoCliente" type="reset" class="btn btn-outline-danger btn -lg btn-block">Borrar Todo</button>   
+                                            <button id="registrarCliente" type="button" class="btn btn-success btn-lg btn-block">Registrar Cliente</button>
+                                            <button id="borrarTodoCliente" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>   
                                         </form>
                                     </div>
                                 </div>
@@ -514,6 +657,136 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="permisos" class="tabcontent hidden">
+                            <h1>Permisos de usuario</h1>
+                            <p>Otorga permisos de acceso a el usuario seleccionado</p>
+                            <div class="container-fluid">
+                                <form action="#" onsubmit="return false;">
+                                    <div class="form-row align-items-center">
+                                        <div class = "col-lg-3">
+
+                                        </div>
+                                        <div class = "col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="DDL_obra">Selecciona el Colaborador</label>
+                                                    <select class="form-control" name="" id="DDLcolaborador" onChange="loadCheckboxesPermisos()"></select>
+                                                </div>
+
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id="checkColaborador" class ="checkbox-permisos" type="checkbox" checked  data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta a otro colaborador
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id="checkObra" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta una obra
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id="checkCliente" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta un cliente
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id = "checkReporte" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede generar reportes de actividad
+                                                    </label>
+                                                </div>
+
+                                                    <div class="form-group align-items-center">
+                                                        <label class="checkbox-inline">
+                                                            <input id= "checkPerfil" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle"data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de registrar sus horas de trabajo y salir en el dashboard
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group align-items-center">
+                                                        <label class="checkbox-inline">
+                                                            <input id= "checkActivar" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de activar un contrato
+                                                        </label>
+                                                    </div>
+
+                                                <button id="guardadPermisos" type="button" class="btn btn-outline-success btn-block">Actualizar</button>
+                                        </div>
+                                        <div class = "col-lg-3">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id= "librerias" class="tabcontent hidden">
+                            <div class="container-fluid">
+                                <h1>Librerías HEAD</h1>
+                                <p>Aquí puedes revisar las librerías y editar/eliminar información</p>
+                                
+                                <div class="row mt-3">
+                                    <h3>Clientes</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableClientes" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <h3>Obras</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableObras" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <h3>Exclusiones</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableExclusiones" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <h3>Requisitos</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableReqs" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <h3>Géneros</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableGeneros" class="display" style="width:100%">
+                                        </table>
+                                    </div> 
+                                </div>
+                                <div class="row mt-3">
+                                    <h3>Tipos de Presupuesto</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableTipos" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <h3>Colaboradores</h3>
+                                    <br>
+                                    <div class="container-fluid">
+                                        <table id="dataTableInges" class="display" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>  
@@ -526,10 +799,17 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <!-- DataTable-->
+
+        <script src= "https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         
         <!-- DDL CHECKBOX JS -->
 
         <script src="BS-DDL-checkbox/bootstrap-dropdown-checkbox.js"></script>
+
+
         
         <!--DataPicker JS-->
         <script src="dataPicker/jquery.datetimepicker.full.min.js"></script>
@@ -548,6 +828,9 @@
             messagingSenderId: "893795596481"
         };
         firebase.initializeApp(config);
+
+        var secondaryApp = firebase.initializeApp(config, "Secondary");
+        
         </script>
 
         <!--My scripts-->        
@@ -561,10 +844,17 @@
         <script src="app_reporte.js"></script>
         <script src="app_dashboard.js"></script>
         <script src="comunidad.js"></script>
+        <script src="app_activar_presu.js"></script>
+        <script src="app_permisos.js"></script>
+        <script src="app_imprimir_presupuesto.js"></script>
+        <script src="app_librerias.js"></script>
+        
 
         <!-- PdfMaker-->
 
         <script src="pdfMake/pdfmake.min.js"></script>
         <script src="pdfMake/vfs_fonts.js" ></script>
+
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     </body>
 </html>

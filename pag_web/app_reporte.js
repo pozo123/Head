@@ -19,6 +19,7 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
 jQuery.datetimepicker.setLocale('es');
 
 $(document).ready(function() {
+
     
     jQuery('#' + id_fecha_inicio_reporte).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}

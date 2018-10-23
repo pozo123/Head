@@ -65,6 +65,7 @@ function loadPerfil(){
 
 
 function loadDDLPresupuestos(){
+    $('#' + id_misc_perfil).val("");
     $('#' + id_presupuestos_ddl_perfil).empty();
     var select = document.getElementById(id_presupuestos_ddl_perfil);
     var option = document.createElement('option');
@@ -210,6 +211,7 @@ $('#' + id_salida_button_perfil).click(function () {
         } else {
         }
     });
+    location.reload();
 });
 
 $('#' + id_cambiarpassword_button_perfil).click(function () {

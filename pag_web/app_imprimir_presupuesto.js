@@ -44,10 +44,10 @@ function loadDDLPresupuestosImprimir(){
 
 //Agregar esta en onChange de ddlpresupuesto
 function loadDDLConsecutivosImprimir(){
-    
-    firebase.database().ref(rama_bd_obras + "/" + ('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos").orderByKey().once('value').then(function(snapshot){
-        var cons = snapshot;
-        if(cons.numChildren() > 1){
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val()).orderByChild('nombre').once('value').then(function(snapshot){        
+        var presu = snapshot.val();
+        if(presu.consec > 1){
+            var i_cons = 0;
             $('#' + id_consecutivo_ddl_imprimir).removeClass("hidden");
             multiples_consecutivos = true;
             var select = document.getElementById(id_consecutivo_ddl_imprimir);
@@ -55,9 +55,10 @@ function loadDDLConsecutivosImprimir(){
             option.style = "display:none";
             option.text = option.value = "";
             select.appendChild(option);
-            cons.forEach(function(child){
+            presu.consecutivos.forEach(function(){
+                i_cons++;
                 var option2 = document.createElement('option');
-                option2.text = option2.value = child.key;
+                option2.text = option2.value = i_cons;
                 select.appendChild(option2);                
             });
         }
@@ -69,11 +70,15 @@ function loadDDLConsecutivosImprimir(){
 }
 
 $('#' + id_imprimir_button_imprimir).click(function () {
+    
     if(multiples_consecutivos === true){
-        //firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/" + $('#' + id_consecutivos_ddl_imprimir + " option:selected").val() + "/pdf").once('child_added').then(function(snapshot){
-    //});
+        alert(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/" + $('#' + id_consecutivo_ddl_imprimir + " option:selected").val() + "/pdf");
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/" + $('#' + id_consecutivo_ddl_imprimir + " option:selected").val()).once('value').then(function(snapshot){
+            pdf = snapshot.val().pdf;
+    });
     } else {
-        //firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/1/pdf").once('child_added').then(function(snapshot){
-    //});
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/1").once('value').then(function(snapshot){
+            pdf = snapshot.val().pdf;
+        });
     }
 })
