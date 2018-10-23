@@ -10,6 +10,7 @@ Pendientes semana  1 oct
 - Primordiales
   - Imprimir no jala consecutivos
   - editar/eliminar
+  - Reporte sumndo
   
   - on change obra en perfil limpia el textarea de misc
   - activar reqs
