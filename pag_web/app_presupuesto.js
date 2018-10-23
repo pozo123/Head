@@ -169,6 +169,7 @@ $('#' + id_add_alcance_button_presupuesto).click(function () {
         alcance.push({
             texto: "" + $('#' + alcance_txt).val(),
             precio: "" + $('#' + id_precio_presupuesto).val(),
+            horas: "" + $('#' + id_horas_programadas_presupuesto).val(),
         });
     } else {
         alert("Maximo 10 descriptivos");
@@ -237,8 +238,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 
                 //Genero el bloque dinamico de 1.i alcances
                 var precio_total = 0;
+                var horas_totales = 0;
                 var alcance_pdf = [];
-                
                 
                 for(i = 0; i < 10; i++){
                     var num = i+1;
@@ -271,6 +272,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 fontSize:10,
                             }];
                             precio_total = precio_total + Number(alcance[i].precio);
+                            horas_totales = horas_totales + Number(alcance[i].horas);
                     } else {
                         alcance_pdf[i] = [
                             {  
@@ -1124,7 +1126,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                             var presupuesto = {      
                                 //nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
-                                horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+                                horas_programadas: horas_totales,
                                 cash_presupuestado: precio_total,
                                 timestamps: {
                                     startedAt: new Date().getTime(),
@@ -1152,7 +1154,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                             var presupuesto = {      
                                 nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
-                                horas_programadas: $('#' + id_horas_programadas_presupuesto).val(),
+                                horas_programadas: horas_totales,
                                 cash_presupuestado: precio_total,
                                 timestamps: {
                                     startedAt: new Date().getTime(),
