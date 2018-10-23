@@ -36,3 +36,6 @@ Pendientes semana  1 oct
   - cuando se cambie de página, se borre lo que se escribió en formularios.
   - los presupuestos no necesitan nombre
 
+- Con Emmanuel
+  - Cuando se desactiva un ppto?
+  - Se puede desactivar y volver a activar?
