@@ -1,0 +1,26 @@
+var id_nombre_exclusion = "nombreExclusion";
+var id_nombre_req= "codigoTipo";
+var id_esencial_req = "nombreTipo";
+
+var id_agregar_button_exclusion = "agregarExclusion";
+var id_agregar_button_req = "agregarTipo";
+
+var rama_bd_exclusiones = "exclusiones";
+var rama_bd_reqs = "reqs";
+
+$('#' + id_agregar_button_exclusion).click(function(){
+	var exc = {
+		nombre: $('#' + id_nombre_exclusion).val(),
+	}
+	var num_exc = 0;
+	
+	firebase.database().ref(rama_bd_generos + "/" + $('#' + id_nombre_genero).val()).set(genero);
+});
+
+$('#' + id_agregar_button_tipo).click(function(){
+	var tipo = {
+		nombre: $('#' + id_nombre_tipo).val(),
+		codigo: $('#' + id_codigo_tipo).val(),
+	}
+	firebase.database().ref(rama_bd_tipos + "/" + $('#' + id_nombre_tipo).val()).set(tipo);
+});
