@@ -12,9 +12,7 @@ Pendientes semana  1 oct
   - Reporte sumando/ semanal
   
   - meter * s en generar ppto
-  - Agregar direccion en biblio cliente
   - LoadBiblios() en vez de en ready, en click a las pestañas y en reload con el editar
-  - Quitar el eliminar de cliente
   - Bibliotecas por pestaña (iguales que en altas)
   - Altas 
     - req/exc
@@ -23,20 +21,13 @@ Pendientes semana  1 oct
     - ppto
     - atn
   - Cambiar nombre "añadir numeral"
-  - Sumar horas presupuestadas, igual que dinero total
-  - En list numeral poner punto antes de "precio", se ve feo
   - logo izq y datos der
   - "contra avance/entrega" no estimaciones
   - Atte y MBD abajo de ______
   - Probar pdfs que se descarguen bien
-  - cambiar lib por biblio
-  
   - Timestamp activar presu
-  - Altas 
-    - reqs
-    - exc
-    - tipos
-    - generos
+  
+
   - activar reqs
   - Editar todo
     - todo
