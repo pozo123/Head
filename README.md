@@ -17,8 +17,6 @@ Pendientes semana  1 oct
   - Altas 
     - req/exc
     - tipos/generos
-  - Cambiar nombre "añadir numeral"
-  - logo izq y datos der
   - "contra avance/entrega" no estimaciones
   - Atte y MBD abajo de ______
   - Probar pdfs que se descarguen bien  
