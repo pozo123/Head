@@ -12,6 +12,7 @@ Pendientes semana  1 oct
   - editar/eliminar
   - Reporte sumando/ semanal
   
+  - Timestamp activar presu
   - Altas 
     - reqs
     - exc
