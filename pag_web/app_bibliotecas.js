@@ -24,6 +24,8 @@ var id_tab_atencion_bibliotecas = "tabBibAtencion"
 var id_tab_reqsExcs_bibliotecas = "tabBibReqsExcs"
 var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
 
+var options_bibliotecas = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
 // métodos para cargar las funciones cuando se den click en los tabs del panel lateral
 
 $('#' + id_tab_clientes_bibliotecas).click(function(){
@@ -248,7 +250,7 @@ function editar_inge(tbody, table){
 }
 
 function loadTablaPresupuestos(){
-	var datos_obras = [];
+	var datos_presupuestos = [];
 	firebase.database().ref(rama_bd_obras).orderByChild("nombre").on("child_added",function(snapshot){
 		var obr = snapshot.val();
 		firebase.database().ref(rama_bd_obras + "/" + obr.nombre + "/presupuestos").orderByChild("nombre").on("child_added",function(snapshot){
@@ -258,14 +260,23 @@ function loadTablaPresupuestos(){
 				contrato = "Activo";
 			else
 				contrato = "No activo";
-			var atn;
-			for(i=0;i<presupuesto.atencion.length;i++){
-				atn = atn + presupuesto.atencion.child(i).id + "\n";
+			var atn = "";
+			for(i=0;i<snapshot.child("atencion").numChildren();i++){
+				atn = atn + snapshot.child("atencion/" +i).val().id + "\n";
 			}
-			alert(atn);
-			datos_presupuestos.push([presupuesto.nombre, presupuesto.cash_presupuestado, presupuesto.clave, contrato, presupuesto.horas_programadas, presupuesto.timestamps.startedAt, presupuesto.timestamps.activacion, atn]);
+			var fecha_act;
+			var cash = "$" + formatMoney(presupuesto.cash_presupuestado);
+			if(presupuesto.timestamps.activacion === 0)
+				fecha_act = "NA";
+				else{
+					fecha_act = new Date(presupuesto.timestamps.activacion).toLocaleDateString("es-ES", options_bibliotecas)
+				}
+				fecha_inicio = new Date(presupuesto.timestamps.startedAt).toLocaleDateString("es-ES", options_bibliotecas)
+			//alert(atn);
+			datos_presupuestos.push([presupuesto.nombre, cash, presupuesto.clave, contrato, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
 			var tabla_presupuestos = $('#'+ id_datatable_presupuestos_bibliotecas).DataTable({
-	            destroy: true,
+				destroy: true,
+				scrollX: true,
 				data: datos_presupuestos,
 				columns: [
 					{title: "Nombre"},
