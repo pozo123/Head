@@ -12,14 +12,9 @@ Pendientes semana  1 oct
   - Generar funcion cerrar dia para emmanuel
   
   - meter * s en generar ppto
-  - LoadBiblios() en vez de en ready, en click a las pestañas y en reload con el editar
-  - Bibliotecas por pestaña (iguales que en altas)
   - Altas 
     - req/exc
     - tipos/generos
-  - "contra avance/entrega" no estimaciones
-  - Atte y MBD abajo de ______
-  - Probar pdfs que se descarguen bien  
 
   - activar reqs
   - Editar todo
