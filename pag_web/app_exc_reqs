@@ -1,9 +1,9 @@
 var id_nombre_exclusion = "nombreExclusion";
-var id_nombre_req= "codigoTipo";
-var id_esencial_req = "nombreTipo";
+var id_nombre_req= "nombreReq";
+var id_esencial_radio_req = "radioEsen";
 
 var id_agregar_button_exclusion = "agregarExclusion";
-var id_agregar_button_req = "agregarTipo";
+var id_agregar_button_req = "agregarReq";
 
 var rama_bd_exclusiones = "exclusiones";
 var rama_bd_reqs = "reqs";
@@ -13,14 +13,27 @@ $('#' + id_agregar_button_exclusion).click(function(){
 		nombre: $('#' + id_nombre_exclusion).val(),
 	}
 	var num_exc = 0;
-	
-	firebase.database().ref(rama_bd_generos + "/" + $('#' + id_nombre_genero).val()).set(genero);
+	firebase.database().ref(rama_bd_exclusiones).orderByKey().once('vale',function(data){
+		var exclu = data.val();
+		num_exc = Object.keys(exclu).length + 1;
+		firebase.database().ref(rama_bd_exclusiones + "/exc" + num_exc).set(exc);
+	});
 });
 
-$('#' + id_agregar_button_tipo).click(function(){
-	var tipo = {
-		nombre: $('#' + id_nombre_tipo).val(),
-		codigo: $('#' + id_codigo_tipo).val(),
+$('#' + id_agregar_button_req).click(function(){
+	var esen;
+	if(document.getElementById(id_esencial_radio_req).checked === true)
+		esen = true;
+	else
+		esen = false;
+	var req = {
+		nombre: $('#' + id_nombre_req).val(),
+		esencial: esen,
 	}
-	firebase.database().ref(rama_bd_tipos + "/" + $('#' + id_nombre_tipo).val()).set(tipo);
+	var num_req = 0;
+	firebase.database().ref(rama_bd_reqs).orderByKey().once('vale',function(data){
+		var r = data.val();
+		num_req = Object.keys(r).length + 1;
+		firebase.database().ref(rama_bd_reqs + "/req" + num_req).set(req);
+	});
 });
