@@ -135,6 +135,9 @@ $('#' + id_editar_cliente_button_bibliotecas).click(function(){
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
 	} else {
+		firebase.database().ref(rama_bd_obras).orderByChild("cliente").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
+			firebase.database().ref(rama_bd_obras + "/" + snapshot.val().nombre + "/cliente").update(nom);
+		});
 		firebase.database().ref(rama_bd_clientes).child(nombre_seleccionado).once('value').then(function(snapshot){
 			var data = snapshot.val();
 			data.nombre = nom;
