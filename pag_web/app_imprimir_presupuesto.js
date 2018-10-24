@@ -75,10 +75,50 @@ $('#' + id_imprimir_button_imprimir).click(function () {
         alert(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/" + $('#' + id_consecutivo_ddl_imprimir + " option:selected").val() + "/pdf");
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/" + $('#' + id_consecutivo_ddl_imprimir + " option:selected").val()).once('value').then(function(snapshot){
             pdf = snapshot.val().pdf;
+
+            var downloadLink = document.createElement('a');
+            downloadLink.target   = '_blank';
+            downloadLink.download = $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + '.pdf';
+
+            var URL = window.URL || window.webkitURL;
+            var downloadUrl = pdf;
+
+            // set object URL as the anchor's href
+            downloadLink.href = downloadUrl;
+
+            // append the anchor to document body
+            document.body.appendChild(downloadLink);
+
+            // fire a click event on the anchor
+            downloadLink.click();
+
+            // cleanup: remove element and revoke object URL
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(downloadUrl);
     });
     } else {
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + "/consecutivos/1").once('value').then(function(snapshot){
             pdf = snapshot.val().pdf;
+
+            var downloadLink = document.createElement('a');
+            downloadLink.target   = '_blank';
+            downloadLink.download = $('#' + id_presupuestos_ddl_imprimir + " option:selected").val() + '.pdf';
+
+            var URL = window.URL || window.webkitURL;
+            var downloadUrl = pdf;
+
+            // set object URL as the anchor's href
+            downloadLink.href = downloadUrl;
+
+            // append the anchor to document body
+            document.body.appendChild(downloadLink);
+
+            // fire a click event on the anchor
+            downloadLink.click();
+
+            // cleanup: remove element and revoke object URL
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(downloadUrl);
         });
     }
 })

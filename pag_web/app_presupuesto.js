@@ -1123,6 +1123,9 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                     const pdfDocGenerator = pdfMake.createPdf(pdfPresupuesto)
 
                     pdfDocGenerator.open()
+
+                    pdfDocGenerator.download(clave_presu+'.pdf')
+
                     
                     pdfDocGenerator.getDataUrl((data) => {
                         var pdf_var;
