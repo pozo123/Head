@@ -26,8 +26,24 @@ var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
 
 var options_bibliotecas = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
-// métodos para cargar las funciones cuando se den click en los tabs del panel lateral
+//_____POR MODAL______
+var id_cliente_modal_editar_bibliotecas = "clienteModalEditar";
 
+var id_clave_cliente_editar_bibliotecas = "claveClienteEditar";
+var id_nombre_cliente_editar_bibliotecas = "nombreClienteEditar";
+var id_tel_cliente_editar_bibliotecas = "telClienteEditar";
+var id_dir_calle_cliente_editar_bibliotecas = "dir_calleClienteEditar";
+var id_dir_numero_cliente_editar_bibliotecas = "dir_numeroClienteEditar";
+var id_dir_colonia_cliente_editar_bibliotecas = "dir_coloniaClienteEditar";
+var id_dir_delegacion_cliente_editar_bibliotecas = "dir_delegacionClienteEditar";
+var id_dir_ciudad_cliente_editar_bibliotecas = "dir_ciudadClienteEditar";
+var id_dir_cp_cliente_editar_bibliotecas = "dir_cpClienteEditar";
+
+var id_editar_cliente_button_bibliotecas = "editarCliente";
+//____TERMINA MODAL_____
+
+var nombre_seleccionado;
+// métodos para cargar las funciones cuando se den click en los tabs del panel lateral
 $('#' + id_tab_clientes_bibliotecas).click(function(){
 	loadTablaClientes();
 });
@@ -62,7 +78,7 @@ function loadTablaClientes(){
 	var datos_clientes = [];
 	firebase.database().ref(rama_bd_clientes).orderByChild("nombre").on("child_added",function(snapshot){
 		var cliente = snapshot.val();
-		datos_clientes.push([cliente.nombre, cliente.clave, cliente.telefono, cliente.direccion.calle + ", No. " + cliente.direccion.numero + " Col. " + cliente.direccion.colonia + ", " + cliente.direccion.delegacion + ", " + cliente.direccion.ciudad]);
+		datos_clientes.push([cliente.nombre, cliente.clave, cliente.telefono, cliente.direccion.calle + ", No. " + cliente.direccion.numero + " Col. " + cliente.direccion.colonia + ", " + cliente.direccion.delegacion + ", " + cliente.direccion.ciudad + " CP " + cliente.direccion.cp]);
 		var tabla_clientes = $('#'+ id_datatable_clientes_bibliotecas).DataTable({
             destroy: true,
 			data: datos_clientes,
@@ -82,9 +98,54 @@ function loadTablaClientes(){
 function editar_cliente(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
+		if(data){
+			console.log(data);
+			firebase.database().ref(rama_bd_clientes).orderByChild("nombre").equalTo(data[0]).once('child_added').then(function(snapshot){
+				var clien = snapshot.val();
+				$('#' + id_clave_cliente_editar_bibliotecas).val(clien.clave);
+				$('#' + id_nombre_cliente_editar_bibliotecas).val(clien.nombre);
+				$('#' + id_tel_cliente_editar_bibliotecas).val(clien.telefono);
+				$('#' + id_dir_calle_cliente_editar_bibliotecas).val(clien.direccion.calle);
+				$('#' + id_dir_numero_cliente_editar_bibliotecas).val(clien.direccion.numero);
+				$('#' + id_dir_colonia_cliente_editar_bibliotecas).val(clien.direccion.colonia);
+				$('#' + id_dir_delegacion_cliente_editar_bibliotecas).val(clien.direccion,delegacion);
+				$('#' + id_dir_ciudad_cliente_editar_bibliotecas).val(clien.direccion.ciudad);
+				$('#' + id_dir_cp_cliente_editar_bibliotecas).val(clien.direccion.cp);
+			});
+		nombre_seleccionado = data[0];
+		}
 	});
 }
+
+$('#' + id_editar_cliente_button_bibliotecas).click(function(){
+	var nom = $('#' + id_nombre_cliente_editar_bibliotecas).val();
+	var cliente = {
+		clave: $('#' + id_clave_cliente_editar_bibliotecas).val(),
+		nombre: nom,
+		telefono: $('#' + id_tel_cliente_editar_bibliotecas).val(),
+		direccion: {
+			calle: $('#' + id_dir_calle_cliente_editar_bibliotecas).val(),
+			numero: $('#' + id_dir_numero_cliente_editar_bibliotecas).val(),
+			colonia: $('#' + id_dir_colonia_cliente_editar_bibliotecas).val(),
+			delegacion: $('#' + id_dir_delegacion_cliente_editar_bibliotecas).val(),
+			ciudad: $('#' + id_dir_ciudad_cliente_editar_bibliotecas).val(),
+			cp: $('#' + id_dir_cp_cliente_editar_bibliotecas).val(),
+		}
+	}
+	if(nombre_seleccionado === nom){
+		firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
+	} else {
+		firebase.database().ref(rama_bd_clientes).child(nombre_seleccionado).once('value').then(function(snapshot){
+			var data = snapshot.val();
+			data.nombre = nom;
+			var update = {};
+			update[nombre_seleccionado] = null;
+			update[nom] = data;
+			firebase.database().ref(rama_bd_clientes).update(update);
+			firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
+		});
+	}
+});
 
 function loadTablaExclusionesYReqs(){
 	var datos_exclusiones = [];
@@ -189,7 +250,7 @@ function loadTablaObras(){
 	var datos_obras = [];
 	firebase.database().ref(rama_bd_obras).orderByChild("nombre").on("child_added",function(snapshot){
 		var obra = snapshot.val();
-		datos_obras.push([obra.nombre, obra.clave, obra.cliente, obra.direccion.calle + ", No. " + obra.direccion.numero + " Col. " + obra.direccion.colonia + ", " + obra.direccion.delegacion + ", " + obra.direccion.ciudad]);
+		datos_obras.push([obra.nombre, obra.clave, obra.cliente, obra.direccion.calle + ", No. " + obra.direccion.numero + " Col. " + obra.direccion.colonia + ", " + obra.direccion.delegacion + ", " + obra.direccion.ciudad + " CP " + obra.direccion.cp]);
 		var tabla_obras = $('#'+ id_datatable_obras_bibliotecas).DataTable({
             destroy: true,
 			data: datos_obras,
@@ -273,13 +334,14 @@ function loadTablaPresupuestos(){
 				}
 				fecha_inicio = new Date(presupuesto.timestamps.startedAt).toLocaleDateString("es-ES", options_bibliotecas)
 			//alert(atn);
-			datos_presupuestos.push([presupuesto.nombre, cash, presupuesto.clave, contrato, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
+			datos_presupuestos.push([presupuesto.nombre, obr.nombre, cash, presupuesto.clave, contrato, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
 			var tabla_presupuestos = $('#'+ id_datatable_presupuestos_bibliotecas).DataTable({
 				destroy: true,
 				scrollX: true,
 				data: datos_presupuestos,
 				columns: [
 					{title: "Nombre"},
+					{title: "Obra"},
 					{title: "Precio total"},
 					{title: "Clave"},
 					{title: "Estatus"},
