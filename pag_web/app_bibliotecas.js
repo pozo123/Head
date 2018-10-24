@@ -260,7 +260,7 @@ function loadTablaPresupuestos(){
 				contrato = "No activo";
 			var atn;
 			for(i=0;i<presupuesto.atencion.length;i++){
-				atn = atn + presupuesto.atencion[i].id + "\n";
+				atn = atn + presupuesto.atencion.child(i).id + "\n";
 			}
 			alert(atn);
 			datos_presupuestos.push([presupuesto.nombre, presupuesto.cash_presupuestado, presupuesto.clave, contrato, presupuesto.horas_programadas, presupuesto.timestamps.startedAt, presupuesto.timestamps.activacion, atn]);
@@ -298,12 +298,13 @@ function loadTablaAtn(){
 		var clie = snapshot.val();
 		firebase.database().ref(rama_bd_clientes + "/" + clie.nombre + "/atencion").orderByChild("nombre").on("child_added",function(snapshot){
 			var atn = snapshot.val();
-			datos_atn.push([atn.nombre, atn.email, atn.area, atn.celular, atn.extension]);
+			datos_atn.push([atn.nombre, clie.nombre, atn.email, atn.area, atn.celular, atn.extension]);
 			var tabla_atn = $('#'+ id_datatable_atn_bibliotecas).DataTable({
 	            destroy: true,
 				data: datos_atn,
 				columns: [
 					{title: "Nombre"},
+					{title: "Cliente"},
 					{title: "Email"},
 					{title: "Area"},
 					{title: "Celular"},
