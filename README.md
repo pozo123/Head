@@ -5,20 +5,29 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 
 Pendientes semana  1 oct 
 
-
+- ARTURO
+  - Presupuesto 
+  - Gestionar
+    - bajar y html
+  - Perfil
+  - reporte
+    - bajar y html
   
 - Primordiales
   - editar/eliminar
+    - Solo salen si admin
   - Generar funcion cerrar dia para emmanuel
   
+  
+  - Generar ppto
+    - Vista previa (separar de generar)
+  - refresh en editars
+  - Reporte descargar para excel
+  - Gestionar divs para administrar horas entre inges
+  - añadir nuevas altas a permisos
   - meter * s en generar ppto
-  - Altas 
-    - req/exc
-    - tipos/generos
 
   - activar reqs
-  - Editar todo
-    - todo
   - Imagenes 
     - inges
     - reqs
