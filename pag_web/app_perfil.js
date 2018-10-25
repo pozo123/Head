@@ -82,7 +82,7 @@ function loadDDLPresupuestos(){
         $('#' + id_miscgroup_perfil).addClass("hidden");
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var p = snapshot.val();
-            if(p.contrato === true){
+            if(p.contrato === true && p.oculto === false){
                 var presu = snapshot.key;
                 var option2 = document.createElement('option');
                 option2.text = option2.value = presu; 
