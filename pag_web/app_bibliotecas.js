@@ -87,7 +87,7 @@ function loadTablaClientes(){
 				{title: "Clave"},
 				{title: "Telefono"},
 				{title: "Direccion", width: 500},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button>"},
+				{defaultContent: "<button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#clienteModalEditar'><i class='fas fa-edit'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -108,7 +108,7 @@ function editar_cliente(tbody, table){
 				$('#' + id_dir_calle_cliente_editar_bibliotecas).val(clien.direccion.calle);
 				$('#' + id_dir_numero_cliente_editar_bibliotecas).val(clien.direccion.numero);
 				$('#' + id_dir_colonia_cliente_editar_bibliotecas).val(clien.direccion.colonia);
-				$('#' + id_dir_delegacion_cliente_editar_bibliotecas).val(clien.direccion,delegacion);
+				$('#' + id_dir_delegacion_cliente_editar_bibliotecas).val(clien.direccion.delegacion);
 				$('#' + id_dir_ciudad_cliente_editar_bibliotecas).val(clien.direccion.ciudad);
 				$('#' + id_dir_cp_cliente_editar_bibliotecas).val(clien.direccion.cp);
 			});
