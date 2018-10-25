@@ -13,6 +13,7 @@
       - exclusiones
       - pagos (luego vemos si es el total pagado o los pagos)
       - consecutivos: consecutivo_num->{precio, pdf_url, checkin}//checar que si se llama asi
+      - oculto
     - registros: (con push asi que con clave unica) 
         - cu
         - inge
