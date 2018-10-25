@@ -256,7 +256,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                             {  
                                 colSpan:4,
                                 border: [true, false, true, false],
-                                text: alcance[i].texto,			
+                                text: alcance[i].texto,         
                                 margin: [0,5],
                                 fontSize:8,
                                 alignment: 'justify',
@@ -590,7 +590,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         //     {  
                                         //         colSpan:4,
                                         //         border: [true, true, true, true],
-                                        //         text: alcance,			
+                                        //         text: alcance,           
                                         //         margin: [0,5],
                                         //         fontSize:8,
                                         //         alignment: 'justify',
@@ -655,7 +655,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                             {  
                                                 colSpan:5,
                                                 border: [true, true, true, true],
-                                                text: reqs_str,			
+                                                text: reqs_str,         
                                                 margin: [0,5],
                                                 fontSize:8,
                                             },
@@ -714,7 +714,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                             {  
                                                 colSpan:5,
                                                 border: [true, true, true, true],
-                                                text: exc_str,			
+                                                text: exc_str,          
                                                 margin: [0,5],
                                                 fontSize:8,
                                             },
@@ -772,7 +772,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                             {  
                                                 colSpan:5,
                                                 border: [true, true, true, true],
-                                                text: anexos,			
+                                                text: anexos,           
                                                 margin: [0,5],
                                                 fontSize:8,
                                             },
@@ -1163,7 +1163,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 atencion: atn_lista,
                                 pagos: "vacio",
                                 consec: consecutivo,
-
+                                oculto: false,
                             }
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
                         } else {
@@ -1191,6 +1191,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 atencion: atn_lista,
                                 pagos: "vacio",
                                 consec: 1,
+                                oculto: false,
                             }
                             
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
