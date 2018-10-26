@@ -163,6 +163,8 @@ function guardaDatos(user) {
             reporte: true,
             perfil: false,
             activar: true,
+            alta_exc_reqs: true,
+            alta_generos_tipos: true,
         }
     }
     /*else if(document.getElementById(id_lider_radio_inge).checked == true)
@@ -176,6 +178,8 @@ function guardaDatos(user) {
             reporte: true,
             perfil: true,
             activar: false,
+            alta_exc_reqs: false,
+            alta_generos_tipos: false,
         }
     }
     else {
