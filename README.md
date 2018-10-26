@@ -12,6 +12,9 @@ Pendientes semana  1 oct
   - Perfil
   - reporte
     - bajar y html
+  - Inges
+  - Permisos
+    - bajar y html
   
 - Primordiales
   - editar/eliminar
@@ -24,7 +27,6 @@ Pendientes semana  1 oct
   - refresh en editars
   - Reporte descargar para excel
   - Gestionar divs para administrar horas entre inges
-  - añadir nuevas altas a permisos
   - meter * s en generar ppto
 
   - activar reqs
