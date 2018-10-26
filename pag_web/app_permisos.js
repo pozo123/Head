@@ -9,6 +9,8 @@ var id_alta_cliente_checkbox_permisos = "checkCliente";
 var id_reporte_checkbox_permisos = "checkReporte";
 var id_perfil_checkbox_permisos = "checkPerfil";
 var id_activar_checkbox_permisos = "checkActivar";
+var id_alta_exc_reqs_checkbox_permisos = "checkExcReqs";
+var id_alta_generos_tipos_checkbox_permisos = "checkGenerosTipos";
 
 $(document).ready(function() {
 
@@ -38,7 +40,7 @@ function loadCheckboxesPermisos(){
         else
             $('#' + id_alta_colaborador_checkbox_permisos).bootstrapToggle('off');
 
-            if(perms.alta_obra === true)
+        if(perms.alta_obra === true)
             $('#' + id_alta_obra_checkbox_permisos).bootstrapToggle('on');
         else
             $('#' + id_alta_obra_checkbox_permisos).bootstrapToggle('off');
@@ -62,6 +64,16 @@ function loadCheckboxesPermisos(){
             $('#' + id_activar_checkbox_permisos).bootstrapToggle('on');
         else
             $('#' + id_activar_checkbox_permisos).bootstrapToggle('off');
+        
+        if(perms.alta_exc_reqs === true)
+            $('#' + id_alta_exc_reqs_checkbox_permisos).bootstrapToggle('on');
+        else
+            $('#' + id_alta_exc_reqs_checkbox_permisos).bootstrapToggle('off');
+        
+        if(perms.alta_generos_tipos === true)
+            $('#' + id_alta_generos_tipos_checkbox_permisos).bootstrapToggle('on');
+        else
+            $('#' + id_alta_generos_tipos_checkbox_permisos).bootstrapToggle('off');
     });
 }
 
@@ -72,7 +84,9 @@ $('#' + id_guardar_button_permisos).click(function () {
         alta_cliente: $('#' + id_alta_cliente_checkbox_permisos).prop('checked'),
         reporte: $('#' + id_reporte_checkbox_permisos).prop('checked'),
         perfil: $('#' + id_perfil_checkbox_permisos).prop('checked'),
-        activar: $('#' + id_activar_checkbox_permisos).prop('checked')
+        activar: $('#' + id_activar_checkbox_permisos).prop('checked'),
+        alta_exc_reqs: $('#' + id_alta_exc_reqs_checkbox_permisos).prop('checked'),
+        alta_generos_tipos: $('#' + id_alta_generos_tipos_checkbox_permisos).prop('checked'),
     }
 
     
