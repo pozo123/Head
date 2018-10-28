@@ -6,6 +6,7 @@
       - clave (obra/cliente/tipo_presu+consecutivo)
       //- requisitos (array con json {nombre, entregado, esencial, timestamps:{startedAt, entrega}})
       - horas_programadas
+      - colaboradores_asignados: uid->(nombre, horas)
       - cash_presupuestado
       - timestamps: {startedAt, finishedAt, activacion, reqs_completados}
       - contrato
