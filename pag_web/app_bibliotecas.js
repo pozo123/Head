@@ -26,7 +26,7 @@ var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
 
 var options_bibliotecas = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
-//_____MODAL CLIENTE______
+//_____POR MODAL______
 var id_cliente_modal_editar_bibliotecas = "clienteModalEditar";
 
 var id_clave_cliente_editar_bibliotecas = "claveClienteEditar";
@@ -40,23 +40,7 @@ var id_dir_ciudad_cliente_editar_bibliotecas = "dir_ciudadClienteEditar";
 var id_dir_cp_cliente_editar_bibliotecas = "dir_cpClienteEditar";
 
 var id_editar_cliente_button_bibliotecas = "editarCliente";
-//____/CLIENTE MODAL_____
-
-//_____MODAL OBRA______
-//var id_cliente_modal_editar_bibliotecas = "clienteModalEditar";
-//
-//var id_clave_cliente_editar_bibliotecas = "claveClienteEditar";
-//var id_nombre_cliente_editar_bibliotecas = "nombreClienteEditar";
-//var id_tel_cliente_editar_bibliotecas = "telClienteEditar";
-//var id_dir_calle_cliente_editar_bibliotecas = "dir_calleClienteEditar";
-//var id_dir_numero_cliente_editar_bibliotecas = "dir_numeroClienteEditar";
-//var id_dir_colonia_cliente_editar_bibliotecas = "dir_coloniaClienteEditar";
-//var id_dir_delegacion_cliente_editar_bibliotecas = "dir_delegacionClienteEditar";
-//var id_dir_ciudad_cliente_editar_bibliotecas = "dir_ciudadClienteEditar";
-//var id_dir_cp_cliente_editar_bibliotecas = "dir_cpClienteEditar";
-//
-//var id_editar_cliente_button_bibliotecas = "editarCliente";
-//____/CLIENTE MODAL_____
+//____TERMINA MODAL_____
 
 var nombre_seleccionado;
 // métodos para cargar las funciones cuando se den click en los tabs del panel lateral
@@ -151,9 +135,13 @@ $('#' + id_editar_cliente_button_bibliotecas).click(function(){
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
 	} else {
+		alert("2");
 		firebase.database().ref(rama_bd_obras).orderByChild("cliente").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
-			firebase.database().ref(rama_bd_obras + "/" + snapshot.val().nombre + "/cliente").update(nom);
+			alert("1");
+			var obra = snapshot.val()
+			firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/cliente").set(nom);
 		});
+		alert("3");
 		firebase.database().ref(rama_bd_clientes).child(nombre_seleccionado).once('value').then(function(snapshot){
 			var data = snapshot.val();
 			data.nombre = nom;
@@ -164,6 +152,8 @@ $('#' + id_editar_cliente_button_bibliotecas).click(function(){
 			firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
 		});
 	}
+	location.reload();
+
 });
 
 function loadTablaExclusionesYReqs(){
