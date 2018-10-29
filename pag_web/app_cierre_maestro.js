@@ -23,5 +23,6 @@ $('#' + id_cerrar_button_cierre).click(function(){
                 clicked_cierre = false;
             }
 		});
+		alert("Sesion de " + ing.nombre + " cerrada.");
 	});
 });
