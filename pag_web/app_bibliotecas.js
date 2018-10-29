@@ -26,7 +26,7 @@ var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
 
 var options_bibliotecas = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
-//_____POR MODAL______
+//_____MODAL CLIENTE______
 var id_cliente_modal_editar_bibliotecas = "clienteModalEditar";
 
 var id_clave_cliente_editar_bibliotecas = "claveClienteEditar";
@@ -40,9 +40,38 @@ var id_dir_ciudad_cliente_editar_bibliotecas = "dir_ciudadClienteEditar";
 var id_dir_cp_cliente_editar_bibliotecas = "dir_cpClienteEditar";
 
 var id_editar_cliente_button_bibliotecas = "editarCliente";
-//____TERMINA MODAL_____
+//____MODAL REQS_____
+var id_req_modal_editar_bibliotecas = "reqModalEditar";
+
+var id_esencial_req_editar_bibliotecas = "claveReqEditar";
+var id_nombre_req_editar_bibliotecas = "nombreReqEditar";
+
+var id_eliminar_req_button_bibliotecas = "eliminarReq";
+var id_editar_req_button_bibliotecas = "editarReq";
+//____TERMINA MODAL REQS_____
 
 var nombre_seleccionado;
+var boton_editar_class;
+var boton_eliminar_class;
+
+$(document).ready(function() {
+	firebase.auth().onAuthStateChanged(user => {
+		if(user) {
+			var username = user.uid;
+			firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+				var ing = snapshot.val();
+				if(ing.credenciales === 0 || ing.credenciales === 1 || ing.credenciales === 2){
+					boton_editar_class = "class='editar btn btn-primary'";
+					boton_eliminar_class = "class='editar btn btn-danger'";
+				}
+				else{
+					boton_editar_class = "class='editar btn btn-primary hidden'";
+					boton_eliminar_class = "class='editar btn btn-danger hidden'";
+				}
+			});
+		}
+	})
+});
 // métodos para cargar las funciones cuando se den click en los tabs del panel lateral
 $('#' + id_tab_clientes_bibliotecas).click(function(){
 	loadTablaClientes();
@@ -87,7 +116,7 @@ function loadTablaClientes(){
 				{title: "Clave"},
 				{title: "Telefono"},
 				{title: "Direccion", width: 500},
-				{defaultContent: "<button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#clienteModalEditar'><i class='fas fa-edit'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + " data-toggle='modal' data-target='#clienteModalEditar'><i class='fas fa-edit'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -135,13 +164,10 @@ $('#' + id_editar_cliente_button_bibliotecas).click(function(){
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_clientes + "/" + nom).update(cliente);
 	} else {
-		alert("2");
 		firebase.database().ref(rama_bd_obras).orderByChild("cliente").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
-			alert("1");
 			var obra = snapshot.val()
 			firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/cliente").set(nom);
 		});
-		alert("3");
 		firebase.database().ref(rama_bd_clientes).child(nombre_seleccionado).once('value').then(function(snapshot){
 			var data = snapshot.val();
 			data.nombre = nom;
@@ -166,7 +192,7 @@ function loadTablaExclusionesYReqs(){
 			data: datos_exclusiones,
 			columns: [
 				{title: "Nombre"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -183,7 +209,7 @@ function loadTablaExclusionesYReqs(){
 			columns: [
 				{title: "Nombre"},
 				{title: "Esencial"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -201,10 +227,28 @@ function editar_exclusion(tbody, table){
 function editar_req(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
+		if(data){
+			console.log(data);	
+			$('#' + id_nombre_req_editar_bibliotecas).val(data[0]);
+			$('#' + id_esencial_req_editar_bibliotecas).val(data[1]);
+		}
+		nombre_seleccionado = data[0];
 	});
 }
 
+$('#' + id_editar_req_button_bibliotecas).click(function(){
+var nom = $('#' + id_nombre_req_editar_bibliotecas).val();
+	var req = {
+		esencial: $('#' + id_esencial_req_editar_bibliotecas).val(),
+		nombre: nom,
+	}
+	firebase.database().ref(rama_bd_reqs).orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
+		var r = snapshot.val();
+		firebase.database().ref(rama_bd_reqs + "/" +  Object.keys(r)[0]).update(req);
+	});
+	
+	location.reload();
+});
 function loadTablaGenerosYTipos(){
 	var datos_generos = [];
 	firebase.database().ref(rama_bd_generos).orderByChild("nombre").on("child_added",function(snapshot){
@@ -216,7 +260,7 @@ function loadTablaGenerosYTipos(){
 			columns: [
 				{title: "Nombre"},
 				{title: "Codigo"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -233,7 +277,7 @@ function loadTablaGenerosYTipos(){
 			columns: [
 				{title: "Nombre"},
 				{title: "Codigo"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -268,7 +312,7 @@ function loadTablaObras(){
 				{title: "Clave"},
 				{title: "Cliente"},
 				{title: "Direccion", width: 500},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 			],
             language: idioma_espanol,
 		});
@@ -304,7 +348,7 @@ function loadTablaInges(){
 				{title: "Nombre"},
 				{title: "Email"},
 				{title: "Especialidad"},
-				{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+				{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
             ],
             language: idioma_espanol,
 		});
@@ -358,7 +402,7 @@ function loadTablaPresupuestos(){
 					{title: "Fecha de creacion"},
 					{title: "Fecha de activacion"},
 					{title: "AT'N"},
-					{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+					{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 				],
 	            language: idioma_espanol,
 			});
@@ -391,7 +435,7 @@ function loadTablaAtn(){
 					{title: "Area"},
 					{title: "Celular"},
 					{title: "Extension"},
-					{defaultContent: "<button type='button' class='editar btn btn-primary'><i class='fas fa-edit'></i></button> <button type='button' class='editar btn btn-danger'><i class='fas fa-trash'></i></button>"},
+					{defaultContent: "<button type='button' " + boton_editar_class + "><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
 				],
 	            language: idioma_espanol,
 			});
