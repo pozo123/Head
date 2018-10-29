@@ -6,21 +6,28 @@ sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inge
 Pendientes semana  1 oct 
 
 - ARTURO
-  - Presupuesto 
   - Gestionar
-    - bajar y html
-  - Perfil
-  - reporte
-    - bajar y html
-  - Inges
+    - Bonito
+    - Boton guardar
+
   - Permisos
     - bajar y html
+  - Boton cerrar dia, solo para emmanuel  
+    - Hay que probarlo
   
-- Primordiales
+- DIEGO
+  - Gestionar
+    - Cargar las horas programadas por inge
+    - Revisar que se guarde bien las horas
   - editar/eliminar
+    - Hacerlos todos
     - Solo salen si admin
-  - Generar funcion cerrar dia para emmanuel
-  
+    
+- Primordiales
+  - Reporte por presupuesto
+    - Horas programadas vs trabajadas
+    - pagos
+    - etc
   
   - Generar ppto
     - Vista previa (separar de generar)
