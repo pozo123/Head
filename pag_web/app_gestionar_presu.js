@@ -99,7 +99,7 @@ function loadColaboradoresGestionar(){
       checkbox.type = "checkbox";
       checkbox.addClass("row_checkbox_gestionar");
       checkbox.value = inge.uid;
-      checbox.id = "check_" + inge.uid + "_gestionar";
+      checkbox.id = "check_" + inge.uid + "_gestionar";
       var label = document.createElement('label');
       label.innerHTML = inge.nombre;//Puede ser innerText?
       var textfield = document.createElement('input');
