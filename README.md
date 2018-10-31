@@ -17,10 +17,15 @@ Depto. de Innovacion y Optimizacion
     - Cargar las horas programadas por inge
     - Revisar que se guarde bien las horas
     - poner candado de ppto seleccionado
-  - editar/eliminar
-    - Hacerlos todos
-    - Solo salen si admin
-    
+  - editar
+    - Colaboradores
+    - Obras
+    - Presupuestos
+    - ATN
+    - Reqs/exc
+    - Tipos/genero
+  - Eliminar 
+  
 - Primordiales
   - Agregar atributo nickname a colaboradores
     - Alta
