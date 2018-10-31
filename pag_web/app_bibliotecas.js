@@ -97,7 +97,26 @@ var id_nombre_inge_editar_bibliotecas = "nombreIngeEditar";
 //var id_nickname_inge_editar_bibliotecas = "nicknameIngeEditar";
 
 var id_editar_inge_button_bibliotecas = "editarInge";
+//_____MODAL ATN______
+var id_atn_modal_editar_bibliotecas = "atnModalEditar";
 
+var id_nombre_atn_editar_bibliotecas = "nombreAtnEditar";
+var id_email_atn_editar_bibliotecas = "emailAtnEditar";
+var id_area_atn_editar_bibliotecas = "areaAtnEditar";
+var id_celular_atn_editar_bibliotecas = "celularAtnEditar";
+var id_extension_atn_editar_bibliotecas = "extensionAtnEditar";
+
+var id_editar_atn_button_bibliotecas = "editarAtn";
+var id_eliminar_atn_button_bibliotecas = "eliminarAtn";
+//_____MODAL PRESUPUESTO______
+var id_presu_modal_editar_bibliotecas = "presuModalEditar";
+
+var id_nombre_presu_editar_bibliotecas = "nombrePresuEditar";
+var id_horas_presu_editar_bibliotecas = "horasPresuEditar";
+var id_precio_presu_editar_bibliotecas = "precioPresuEditar";
+
+var id_editar_presu_button_bibliotecas = "editarPresu";
+//____FIN MODALES_____
 
 
 var nombre_seleccionado;
@@ -583,57 +602,47 @@ function editar_inge(tbody, table){
 	});
 }
 
-/*$('#' + id_editar_obra_button_bibliotecas).click(function(){
-	var nom = $('#' + id_nombre_obra_editar_bibliotecas).val();
-	var obra = {
-		clave: $('#' + id_clave_obra_editar_bibliotecas).val(),
-		nombre: nom,
-		cliente: $('#' + id_obra_obra_editar_bibliotecas).val(),
-		direccion: {
-			calle: $('#' + id_dir_calle_obra_editar_bibliotecas).val(),
-			numero: $('#' + id_dir_numero_obra_editar_bibliotecas).val(),
-			colonia: $('#' + id_dir_colonia_obra_editar_bibliotecas).val(),
-			delegacion: $('#' + id_dir_delegacion_obra_editar_bibliotecas).val(),
-			ciudad: $('#' + id_dir_ciudad_obra_editar_bibliotecas).val(),
-			cp: $('#' + id_dir_cp_obra_editar_bibliotecas).val(),
-		}
-	}
-	if(nombre_seleccionado === nom){
-		firebase.database().ref(rama_bd_obras + "/" + nom).update(obra);
-	} else {
-		firebase.database().ref(rama_bd_registros).orderByChild("obra").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
-			var reg = snapshot.val()
-			firebase.database().ref(rama_bd_registros + "/" + Object.keys(reg)[0] + "/obra").set(nom);
-		});
-		firebase.database().ref(rama_bd_inges).on('child_added',function(snapshot){
-			var ing = snapshot.val();
-			firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras").child(nombre_seleccionado).once('value').then(function(snapshot){
-				var data = snapshot.val();
-				if(!data){
-					//Este inge no trabaja en esa obra
-				} else {
-					data.obra = nom;
-					var update = {};
-					update[nombre_seleccionado] = null;
-					update[nom] = data;
-					firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras").update(update);
-					firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras/" + nom).update(obra);
-				}
-			});
-		});
-		firebase.database().ref(rama_bd_obras).child(nombre_seleccionado).once('value').then(function(snapshot){
-			var data = snapshot.val();
-			data.nombre = nom;
-			var update = {};
-			update[nombre_seleccionado] = null;
-			update[nom] = data;
-			firebase.database().ref(rama_bd_obras).update(update);
-			firebase.database().ref(rama_bd_obras + "/" + nom).update(obra);
-		});
-	}
-	location.reload();
+$('#' + id_editar_inge_button_bibliotecas).click(function(){
+	var nom = $('#' + id_nombre_inge_editar_bibliotecas).val();
+	var espec;
+    var creden;
+    if(document.getElementById(id_especialidad_elec_inge_editar_checkbox_bibliotecas).checked === true){
+        if(document.getElementById(id_especialidad_plom_inge_editar_checkbox_bibliotecas).checked === true){
+            espec = 3; //especialidad ambas
+        }
+        else
+            espec = 1; //especialidad elec
+    }
+    else if(document.getElementById(id_especialidad_plom_inge_editar_checkbox_bibliotecas).checked == true)
+        espec = 2; //especialidad plom
+    else espec = -1; //no ingresada
 
-});*/
+    if(document.getElementById(id_creden_admin_inge_editar_radio_bibliotecas).checked == true){
+    	creden = 2;
+    } else if(document.getElementById(id_creden_proyectista_inge_editar_radio_bibliotecas).checked == true){
+		creden = 3;
+	} else {
+		creden = -1;
+	}
+
+	var inge = {
+		especialidad: espec,
+		nombre: nom,
+		credenciales: creden,
+	}
+
+	firebase.database().ref(rama_bd_inges).orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
+		var ing =  snapshot.val();
+		if(nombre_seleccionado !== nom){
+			firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
+				var reg = snapshot.val()
+				firebase.database().ref(rama_bd_registros + "/" + Object.keys(reg)[0] + "/inge").set(nom);
+			});
+		}
+		firebase.database().ref(rama_bd_inges + "/" + ing.uid).update(inge);
+	});
+	location.reload();
+});
 
 function loadTablaPresupuestos(){
 	var datos_presupuestos = [];
@@ -683,12 +692,70 @@ function loadTablaPresupuestos(){
 	});
 }
 
+var obra_presu;
 function editar_presupuesto(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
+		if(data){
+			//console.log(data);
+			firebase.database().ref(rama_bd_obras).on('child_added',function(snapshot){
+				var obra = snapshot.val();
+				firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/presupuestos/" + data[0]).once('child_added').then(function(snapshot){
+					var presu = snapshot.val();
+					$('#' + id_nombre_presu_editar_bibliotecas).val(data[0]);
+					$('#' + id_precio_presu_editar_bibliotecas).val(presu.cash_presupuestado);
+					$('#' + id_horas_presu_editar_bibliotecas).val(presu.horas_programadas);
+					obra_presu = obra.nombre;
+				})
+			});
+		nombre_seleccionado = data[0];
+		}	
 	});
 }
+
+$('#' + id_editar_presu_button_bibliotecas).click(function(){
+	var nom = $('#' + id_nombre_presu_editar_bibliotecas).val();
+	var presu = {
+		cash_presupuestado: $('#' + id_precio_presu_editar_bibliotecas).val(),
+		nombre: nom,
+		horas_programadas: $('#' + id_horas_presu_editar_bibliotecas).val(),
+	}
+	if(nombre_seleccionado === nom){
+		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/preupuestos/" + nombre_seleccionado).update(presu);
+	} else {
+		firebase.database().ref(rama_bd_registros).orderByChild("presupuesto").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
+			var reg = snapshot.val()
+			firebase.database().ref(rama_bd_registros + "/" + Object.keys(reg)[0] + "/presupuesto").set(nom);
+		});
+		firebase.database().ref(rama_bd_inges).on('child_added',function(snapshot){
+			var ing = snapshot.val();
+			firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras/" + obra_presu).child(nombre_seleccionado).once('value').then(function(snapshot){
+				var data = snapshot.val();
+				if(!data){
+					//Este inge no trabaja en ese presu
+				} else {
+					data.presupuesto = nom;
+					var update = {};
+					update[nombre_seleccionado] = null;
+					update[nom] = data;
+					firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras/" + ob.nombre).update(update);
+					firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras/" + ob.nombre + "/" + nom).update(presu);
+				}
+			});
+		});
+		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos").child(nombre_seleccionado).once('value').then(function(snapshot){
+			var data = snapshot.val();
+			data.nombre = nom;
+			var update = {};
+			update[nombre_seleccionado] = null;
+			update[nom] = data;
+			firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos").update(update);
+			firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nom).update(presu);
+		});
+	}
+	location.reload();
+
+});
 
 function loadTablaAtn(){
 	var datos_atn = [];
@@ -716,12 +783,38 @@ function loadTablaAtn(){
 	});
 }
 
+var cliente_atn;
 function editar_atn(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
-		console.log(data);
+		if(data){
+			//console.log(data);	
+			$('#' + id_nombre_atn_editar_bibliotecas).val(data[0]);
+			cliente_atn = data[1];
+			$('#' + id_email_atn_editar_bibliotecas).val(data[2]);
+			$('#' + id_area_atn_editar_bibliotecas).val(data[3]);
+			$('#' + id_celular_atn_editar_bibliotecas).val(data[4]);
+			$('#' + id_extension_atn_editar_bibliotecas).val(data[5]);
+		}
+		nombre_seleccionado = data[0];
 	});
 }
+
+$('#' + id_editar_atn_button_bibliotecas).click(function(){
+	var nom = $('#' + id_nombre_atn_editar_bibliotecas).val();
+	var atn = {
+		nombre: nom,
+		email: $('#' + id_email_atn_editar_bibliotecas).val(),
+		area: $('#' + id_area_atn_editar_bibliotecas).val(),
+		celular: $('#' + id_celular_atn_editar_bibliotecas).val(),
+		extension: $('#' + id_extension_atn_editar_bibliotecas).val(),
+	}
+	firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion").orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
+		var a = snapshot.val();
+		firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion/" +  Object.keys(a)[0]).update(atn);
+	});
+	location.reload();
+});
 
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
