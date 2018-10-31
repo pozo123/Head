@@ -22,6 +22,11 @@ Depto. de Innovacion y Optimizacion
     - Solo salen si admin
     
 - Primordiales
+  - Agregar atributo nickname a colaboradores
+    - Alta
+    - Perfil
+    - Dashboard
+    - Gestionar?
   - Dividir horas programadas por especialidad (gestionar)
   - Cambiar dashboard
   - Reporte por presupuesto
