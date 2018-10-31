@@ -1,9 +1,6 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
-sintaxis ids: id_nombreDelObjeto_tipoObjeto_documento (e.g. id_proyecto_ddl_inges) TipoObjeto solo si no text
-
-Pendientes semana  1 oct 
 
 - ARTURO
   - Gestionar
@@ -19,11 +16,14 @@ Pendientes semana  1 oct
   - Gestionar
     - Cargar las horas programadas por inge
     - Revisar que se guarde bien las horas
+    - poner candado de ppto seleccionado
   - editar/eliminar
     - Hacerlos todos
     - Solo salen si admin
     
 - Primordiales
+  - Dividir horas programadas por especialidad (gestionar)
+  - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
     - pagos
