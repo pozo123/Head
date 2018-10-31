@@ -22,7 +22,6 @@ Depto. de Innovacion y Optimizacion
     - Obras
     - Presupuestos
     - ATN
-    - Reqs/exc
     - Tipos/genero
   - Eliminar 
   
