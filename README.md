@@ -19,10 +19,9 @@ Depto. de Innovacion y Optimizacion
     - poner candado de ppto seleccionado
   - editar
     - Colaboradores
-    - Obras
+      - Ya solo el boton guardar cambios
     - Presupuestos
     - ATN
-    - Tipos/genero
   - Eliminar 
   
 - Primordiales
