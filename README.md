@@ -14,9 +14,8 @@ Depto. de Innovacion y Optimizacion
   
 - DIEGO
   - Gestionar
-    - Cargar las horas programadas por inge
     - Revisar que se guarde bien las horas
-    - poner candado de ppto seleccionado
+    - Sumar todas las horas totales y actualizarlo en horas programadas?
   - Eliminar 
     - req exc
     - genero tipo
@@ -28,7 +27,6 @@ Depto. de Innovacion y Optimizacion
     - Perfil
     - Dashboard
     - Gestionar?
-  - Dividir horas programadas por especialidad (gestionar)
   - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
