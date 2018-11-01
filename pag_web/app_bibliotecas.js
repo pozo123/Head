@@ -541,11 +541,11 @@ function loadTablaInges(){
 		var inge = snapshot.val();
 		var esp;
 		if(inge.especialidad === 1)
-			esp = "Electricidad";
+			esp = "IE";
 		else if(inge.especialidad === 2)
-			esp = "Plomeria";
+			esp = "IHS";
 		else if(inge.especialidad === 3)
-			esp = "Electricidad y plomeria";
+			esp = "IE - IHS";
 		else 
 			esp = "NA";
 		datos_inges.push([inge.nombre, inge.email, esp]);
