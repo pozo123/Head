@@ -9,6 +9,7 @@ var rama_bd_obras = "obras";
 var id_guardar_button_gestionar = "guardarHorasGestionar";
 
 var horas_por_inge = [];
+var horas_ppto;
 //var multiples_consecutivos = false;
 
 $(document).ready(function() {
@@ -95,6 +96,9 @@ $('#' + id_ocultar_button_gestionar).click(function () {
 //Incluir en el ddl presupuestos
 function loadHorasGestionar(){
   $(".row_text_ie_gestionar").empty();
+  firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("child_added").then(function(snapshot){
+    horas_ppto = snapshot.val();
+  });
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie").orderByKey().on("child_added",function(snapshot){
     var ing = snapshot.val();
     $("#check_" + Object.keys(ing)[0] + "_ie_gestionar").prop("checked", true);
@@ -181,6 +185,8 @@ $('#' + id_guardar_button_gestionar).click(function () {
   if($('#' + id_presupuestos_ddl_gestionar + " option:selected").val() === ""){
     alert("Selecciona todos los campos");
   } else {
+    var horas_totales_ie = 0;
+    var horas_totales_ihs = 0;
     for(i=0;i<horas_por_inge.length;i++){
       var i_uid = horas_por_inge[i].uid;
       var esp = horas_por_inge[i].especialidad;
@@ -189,9 +195,19 @@ $('#' + id_guardar_button_gestionar).click(function () {
           nombre: horas_por_inge[i].nombre,
           horas: $("#text_" + i_uid + "_" + esp + "_gestionar").val()
         }
+        if(esp === "ie"){
+          horas_totales_ie = horas_totales_ie + parseInt($("#text_" + i_uid + "_ie_gestionar").val());
+        } else {
+          horas_totales_ihs = horas_totales_ihs + parseInt($("#text_" + i_uid + "_ihs_gestionar").val());
+        }
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(horas);
       }
     }
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie/horas_totales_ie").set(horas_totales_ie);
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ihs/horas_totales_ihs").set(horas_totales_ihs);
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales").set(horas_totales_ie + horas_totales_ihs);
+    if((horas_totales_ie + horas_totales_ihs) > horas_ppto) //Chance hacer un modal? para que si son distintas (mas o menos? o cualquiera?) ofrezca actualizarlas
+      alert("ADVERTENCIA: las horas totales superan las horas presupuestadas");
     alert("Distribucion de horas actualizada");
   }
 });
