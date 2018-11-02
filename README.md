@@ -15,7 +15,6 @@ Depto. de Innovacion y Optimizacion
 - DIEGO
   - Gestionar
     - Revisar que se guarde bien las horas
-    - Sumar todas las horas totales y actualizarlo en horas programadas?
   - Eliminar 
     - req exc
     - genero tipo
