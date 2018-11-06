@@ -8,8 +8,12 @@ var id_horas_column_ie_gestionar  = "horasIHSColumn";
 var rama_bd_obras = "obras";
 var id_guardar_button_gestionar = "guardarHorasGestionar";
 
+var id_horas_gestionadas_label_gestionar = "labelHorasGestionadas";
+var id_horas_ppto_label_gestionar = "labelHorasPpto";
+
 var horas_por_inge = [];
 var horas_ppto;
+var horas_gestionadas;
 //var multiples_consecutivos = false;
 
 $(document).ready(function() {
@@ -96,18 +100,24 @@ $('#' + id_ocultar_button_gestionar).click(function () {
 //Incluir en el ddl presupuestos
 function loadHorasGestionar(){
   $(".row_text_ie_gestionar").empty();
+  horas_gestionadas = 0;
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("child_added").then(function(snapshot){
     horas_ppto = snapshot.val();
+    $('#' + id_horas_ppto_label_gestionar).text("Horas presupuestadas: " + horas_ppto);
   });
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie").orderByKey().on("child_added",function(snapshot){
     var ing = snapshot.val();
     $("#check_" + Object.keys(ing)[0] + "_ie_gestionar").prop("checked", true);
     $("#text_" + Object.keys(ing)[0] + "_ie_gestionar").val(ing.horas);
+    horas_gestionadas = horas_gestionadas + ing.horas; //Hay que checar que no se dupiquen aquí + el on change
+    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
   });
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ihs").orderByKey().on("child_added",function(snapshot){
     var ing = snapshot.val();
     $("#check_" + Object.keys(ing)[0] + "_ihs_gestionar").prop("checked", true);
     $("#text_" + Object.keys(ing)[0] + "_ihs_gestionar").val(ing.horas);
+    horas_gestionadas = horas_gestionadas + ing.horas;  //Hay que checar que no se dupiquen aquí + el on change 
+    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
   });
 }
 
@@ -127,6 +137,12 @@ $(".row_checkbox_ihs_gestionar").on("click", function() {
       $("#text_" + $(this).value + "_ihs_gestionar").addClass("hidden");
 }).trigger("click");//Es necesario el trigger?
 //Este en el document.Ready??
+
+$('.row_text_ie_gestionar').change(function(){
+    horas_gestionadas = horas_gestionadas + $(this).val();
+    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+});
+
 function loadColaboradoresGestionar(){
   horas_por_inge = [];
   $('#' + id_horas_column_ie_gestionar).empty();
