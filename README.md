@@ -13,12 +13,6 @@ Depto. de Innovacion y Optimizacion
     - Hay que probarlo
   
 - DIEGO
-  - Gestionar
-    - Revisar que se guarde bien las horas
-  - Eliminar 
-    - req exc
-    - genero tipo
-    - atn
   - Nickname
   
 - Primordiales
