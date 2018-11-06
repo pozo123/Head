@@ -16,7 +16,7 @@ Depto. de Innovacion y Optimizacion
   - Nickname
   
 - Primordiales
-  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas
+  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Agregar atributo nickname a colaboradores
     - Alta
     - Perfil
