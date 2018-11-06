@@ -16,6 +16,7 @@ Depto. de Innovacion y Optimizacion
   - Nickname
   
 - Primordiales
+  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas
   - Agregar atributo nickname a colaboradores
     - Alta
     - Perfil
