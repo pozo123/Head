@@ -19,7 +19,6 @@ Depto. de Innovacion y Optimizacion
     - req exc
     - genero tipo
     - atn
-  - Sumar horas en label en gestionar
   - Nickname
   
 - Primordiales
