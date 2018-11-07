@@ -1,3 +1,4 @@
+
 var id_obra_ddl_gestionar = "DDL_obra";
 var id_presupuestos_ddl_gestionar = "DDL_presupuesto";
 var id_activar_button_gestionar = "activar_button";
@@ -12,8 +13,8 @@ var id_horas_gestionadas_label_gestionar = "labelHorasGestionadas";
 var id_horas_ppto_label_gestionar = "labelHorasPpto";
 
 var horas_por_inge = [];
-var horas_ppto;
-var horas_gestionadas;
+var horas_ppto = 0;
+var horas_gestionadas = 0;
 //var multiples_consecutivos = false;
 
 $(document).ready(function() {
@@ -101,10 +102,12 @@ $('#' + id_ocultar_button_gestionar).click(function () {
 function loadHorasGestionar(){
   $(".row_text_ie_gestionar").empty();
   horas_gestionadas = 0;
-  firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("child_added").then(function(snapshot){
+  // le cambié a once value
+  firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("value").then(function(snapshot){
     horas_ppto = snapshot.val();
     $('#' + id_horas_ppto_label_gestionar).text("Horas presupuestadas: " + horas_ppto);
   });
+  
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie").orderByKey().on("child_added",function(snapshot){
     var ing = snapshot.val();
     $("#check_" + Object.keys(ing)[0] + "_ie_gestionar").prop("checked", true);
@@ -121,24 +124,28 @@ function loadHorasGestionar(){
   });
 }
 
-$(".row_checkbox_ie_gestionar").on("click", function() {
+$("#" + id_horas_column_ie_gestionar).on("change", "input.row_checkbox_ie_gestionar",function(){
     //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
     if($(this).is(":checked"))
-      $("#text_" + $(this).value + "_ie_gestionar").removeClass("hidden");
+      $("#text_" + $(this).val() + "_ie_gestionar").removeClass("hidden");
     else
-      $("#text_" + $(this).value + "_ie_gestionar").addClass("hidden");
-}).trigger("click");
+      $("#text_" + $(this).val() + "_ie_gestionar").addClass("hidden");
+});
 
-$(".row_checkbox_ihs_gestionar").on("click", function() {
+$("#" + id_horas_column_ihs_gestionar).on("change", "input.row_checkbox_ihs_gestionar",function() {
     //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
     if($(this).is(":checked"))
-      $("#text_" + $(this).value + "_ihs_gestionar").removeClass("hidden");
+      $("#text_" + $(this).val() + "_ihs_gestionar").removeClass("hidden");
     else
-      $("#text_" + $(this).value + "_ihs_gestionar").addClass("hidden");
-}).trigger("click");//Es necesario el trigger?
-//Este en el document.Ready??
+      $("#text_" + $(this).val() + "_ihs_gestionar").addClass("hidden");
+});
 
 $('.row_text_ie_gestionar').change(function(){
+    horas_gestionadas = horas_gestionadas + $(this).val();
+    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+});
+
+$('.row_text_ihs_gestionar').change(function(){
     horas_gestionadas = horas_gestionadas + $(this).val();
     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
 });
@@ -151,11 +158,13 @@ function loadColaboradoresGestionar(){
     var inge = snapshot.val();
     if(inge.permisos.perfil === true){
       if(inge.especialidad === 1 || inge.especialidad === 3){
-        var row = document.createElement('div');
-        row.id = "row_" + inge.uid;
+        var row2 = document.createElement('div');
+        row2.id = "row_" + inge.uid;
+        row2.className = "holi";
+        console.log(row2);
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
-        checkbox.addClass("row_checkbox_ie_gestionar");
+        checkbox.className = "row_checkbox_ie_gestionar";
         checkbox.value = inge.uid;
         checkbox.id = "check_" + inge.uid + "_ie_gestionar";
         var label = document.createElement('label');
@@ -163,20 +172,20 @@ function loadColaboradoresGestionar(){
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ie_gestionar";
-        textfield.addClass("hidden row_text_ie_gestionar");
-        row.appendChild(checkbox);
-        row.appendChild(label);
-        row.appendChild(textfield);
+        textfield.className = "hidden row_text_ie_gestionar";
+        row2.appendChild(checkbox);
+        row2.appendChild(label);
+        row2.appendChild(textfield);
         var div = document.getElementById(id_horas_column_ie_gestionar);
-        div.appendChild(card);
+        div.appendChild(row2);
         horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ie"});
       } 
       if(inge.especialidad === 2|| inge.especialidad === 3){
-        var row = document.createElement('div');
-        row.id = "row_" + inge.uid;
+        var row1 = document.createElement('div');
+        row1.id = "row_" + inge.uid;
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
-        checkbox.addClass("row_checkbox_ihs_gestionar");
+        checkbox.className ="row_checkbox_ihs_gestionar";
         checkbox.value = inge.uid;
         checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
         var label = document.createElement('label');
@@ -184,12 +193,13 @@ function loadColaboradoresGestionar(){
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ihs_gestionar";
-        textfield.addClass("hidden row_text_ihs_gestionar");
-        row.appendChild(checkbox);
-        row.appendChild(label);
-        row.appendChild(textfield);
+        textfield.className = "hidden row_text_ihs_gestionar";
+        console.log(textfield)
+        row1.appendChild(checkbox);
+        row1.appendChild(label);
+        row1.appendChild(textfield);
         var div = document.getElementById(id_horas_column_ihs_gestionar);
-        div.appendChild(card);
+        div.appendChild(row1);
         horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ihs"});
       }
       
