@@ -16,11 +16,13 @@ Depto. de Innovacion y Optimizacion
   - Nickname
   
 - Primordiales
+  - Respaldo!!!
   - Cierre maestro contemplar horas extra
     - modal para confirmar el cierre?
     - que quien siga trabajando le pregunte si trabajó tiempo extra?
   - Borrar registros con la funcionalidad de reporte?
     - darle atributo a registro de valido o prueba o algo asi
+    - diferenci entre erase y delete
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Agregar atributo nickname a colaboradores
     - Alta
