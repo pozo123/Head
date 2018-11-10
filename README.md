@@ -17,6 +17,7 @@ Depto. de Innovacion y Optimizacion
   
 - Primordiales
   - Respaldo!!!
+  - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
   - Cierre maestro contemplar horas extra
     - modal para confirmar el cierre?
     - que quien siga trabajando le pregunte si trabajó tiempo extra?
