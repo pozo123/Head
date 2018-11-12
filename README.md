@@ -1,23 +1,29 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+- Actualizados:
+  - cierre maestro
+  - alta inges
+  - gestionar
+  
 - Truena:
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Horas trabajadas en inge
 
 - ARTURO
+  - Dashboard
   - Gestionar
     - Bonito
     - Boton guardar
-
-  - Permisos
-    - bajar y html
-  - Boton cerrar dia, solo para emmanuel  
-    - Hay que probarlo
+  - Modales eliminar
+  - Nickname
+    - Alta
+    - Perfil (panel de control)
+    - Dashboard
   
 - DIEGO
-  - Nickname
-  
+  - queries para el nuevo dash
+    
 - Primordiales
   - Respaldo!!!
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
@@ -27,16 +33,7 @@ Depto. de Innovacion y Optimizacion
   - Borrar registros con la funcionalidad de reporte?
     - darle atributo a registro de valido o prueba o algo asi
     - diferenci entre erase y delete
-  - Agregar atributo nickname a colaboradores
-    - Alta
-    - Perfil (panel de control)
-    - Dashboard
-    - Gestionar
-    - Bibliotecas
-      - tabla
-      - editar (modal + cambiar)
-    - Reporte?
-    - Permisos?
+    
   - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
