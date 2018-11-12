@@ -30,6 +30,7 @@ Depto. de Innovacion y Optimizacion
     - Perfil
     - Dashboard
     - Gestionar?
+    - Bibliotecas
   - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
