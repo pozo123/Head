@@ -2,7 +2,6 @@
 Depto. de Innovacion y Optimizacion
 
 - Truena:
-  - cierre maestro (registros)
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Horas trabajadas en inge
 
