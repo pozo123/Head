@@ -10,7 +10,8 @@ $('#' + id_cerrar_button_cierre).click(function(){
 			var regis = snapshot.val();
             if(regis.status === false && clicked_cierre === true){
                 var horas_registro = new Date().getTime() - regis.checkin;
-                firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
+                var status = true;
+                firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(status);
                 firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
                 firebase.database().ref(rama_bd_inges + "/" + ing.uid + "/obras").on('child_added',function(snapshot){
                 	var obra = snapshot.val();
