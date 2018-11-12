@@ -5,6 +5,7 @@ var id_password_inge = "ingePwd";
 var id_elec_checkbox_inge = "checkboxElectricidad";
 var id_plom_checkbox_inge = "checkboxPlomeria";
 var id_admin_radio_inge = "inlineRadio1";
+var id_nickname_inge = "ingeNickname";
 //var id_lider_radio_inge = "inlineRadio2";
 var id_proyectista_radio_inge = "inlineRadio3";
 //var id_obraAsignada_ddl_inge = "obraAsignada";
@@ -31,7 +32,7 @@ $(document).ready(function(){
     // });
 });
 
-$('#' + id_registrar_button_inge).click((function () {
+$('#' + id_registrar_button_inge).click(function () {
     if(!$('#' + id_nombre_inge).val() || !$('#' + id_email_inge).val() || !$('#' + id_password_inge).val()){
         alert("Llena todos los campos requeridos");
     } else {
@@ -52,93 +53,9 @@ $('#' + id_registrar_button_inge).click((function () {
                     alert(errorMessage);
                 }
                 console.log(error);
-                
             });*/
     }
-}));
-
-// $('#' + id_imprimir_button_inge).click((function () {
-//     if ($('#' + id_nombre_inge).val() != "") {
-//         firebase.database().ref('' + rama_bd_inges).orderByChild('nombre').equalTo($('#' + id_nombre_inge).val()).on("child_added", function (snapshot) {
-//             var user = snapshot.val();
-//             //console.log(user.nombre);
-//             $('#' + id_email_inge).val(user.email);
-//             $('#' + id_password_inge).val(user.password);
-//             if(user.especialidad == 1)
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//             else if(user.especialidad == 2)
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             else if(user.especialidad == 3){
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             }
-                
-//             //$('#' + id_obraAsignada_ddl_inge).val(user.proyecto);
-            
-//             if(user.credenciales == 1)
-//                 document.getElementById(id_admin_radio_inge).checked = true;
-//             else if(user.credenciales == 2)
-//                 document.getElementById(id_lider_radio_inge).checked = true;
-//             else if(user.credenciales == 3)
-//                 document.getElementById(id_proyectista_radio_inge).checked = true;
-                
-//             $('#' + id_uid_inge).val(user.uid);
-//         })
-//     }
-//     else if ($('#' + id_email_inge).val() != "") {
-//         firebase.database().ref('' + rama_bd_inges).orderByChild('email').equalTo($('#' + id_email_inge).val()).on("child_added", function (snapshot) {
-//             var user = snapshot.val();
-//             //console.log(user.nombre);
-//             $('#' + id_nombre_inge).val(user.nombre);
-//             $('#' + id_password_inge).val(user.password);
-//             if(user.especialidad == 1)
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//             else if(user.especialidad == 2)
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             else if(user.especialidad == 3){
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             }
-                
-//             //$('#' + id_obraAsignada_ddl_inge).val(user.proyecto);
-            
-//             if(user.credenciales == 1)
-//                 document.getElementById(id_admin_radio_inge).checked = true;
-//             else if(user.credenciales == 2)
-//                 document.getElementById(id_lider_radio_inge).checked = true;
-//             else if(user.credenciales == 3)
-//                 document.getElementById(id_proyectista_radio_inge).checked = true;
-            
-//             $('#' + id_uid_inge).val(user.uid);
-//         })
-//     }
-//     else if ($('#' + id_uid_inge).val() != "") {
-//         firebase.database().ref('' + rama_bd_inges).orderByChild('uid').equalTo($('#' + id_uid_inge).val()).on("child_added", function (snapshot) {
-//             var user = snapshot.val();
-//             //console.log(user.nombre);
-//             $('#' + id_nombre_inge).val(user.nombre);
-//             $('#' + id_email_inge).val(user.email);
-//             $('#' + id_password_inge).val(user.password);
-//             if(user.especialidad == 1)
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//             else if(user.especialidad == 2)
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             else if(user.especialidad == 3){
-//                 document.getElementById(id_elec_checkbox_inge).checked = true;
-//                 document.getElementById(id_plom_checkbox_inge).checked = true;
-//             }
-                
-//             //$('#' + id_obraAsignada_ddl_inge).val(user.proyecto);
-            
-//             if(user.credenciales == 1)
-//                 document.getElementById(id_admin_radio_inge).checked = true;
-//             else if(user.credenciales == 2)
-//                 document.getElementById(id_lider_radio_inge).checked = true;
-//             else if(user.credenciales == 3)
-//                 document.getElementById(id_proyectista_radio_inge).checked = true;
-//         })
-//     }
-// }))
+});
 
 function guardaDatos(user) {
     var espec;
@@ -203,6 +120,7 @@ function guardaDatos(user) {
         credenciales: creden,
         status: false,
         permisos: perm,
+        nickname: $('#' + id_nickname_inge).val(),
         //foto: URL.createObjectURL($('#' + id_foto_input_inge).files[0])//A ver si jala...
     }
 
