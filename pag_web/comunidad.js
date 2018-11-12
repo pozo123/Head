@@ -72,10 +72,15 @@ firebase.auth().onAuthStateChanged(user => {
                 else
                     $('#tabActivar').addClass('hidden');
 
-                    if(user_bd.credenciales === 2 || user_bd.credenciales === 1 || user_bd.credenciales === 0)
+                if(user_bd.credenciales === 2 || user_bd.credenciales === 1 || user_bd.credenciales === 0)
                     $('#tabPermisos').removeClass('hidden');
                 else
                     $('#tabPermisos').addClass('hidden');
+                    // agregar botón maestro
+                if(user_bd.credenciales === 2 || user_bd.credenciales === 1 || user_bd.credenciales === 0)
+                    $('#pageSubmenuCierre').removeClass('hidden');
+                else
+                    $('#pageSubmenuCierre').addClass('hidden');
                     
                 flag = false;
             }

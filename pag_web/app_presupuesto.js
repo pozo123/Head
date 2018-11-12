@@ -40,7 +40,7 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
 var alcance = [];
 
 $('#' + id_horas_programadas_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: "+ formatMoney(($('#' + id_horas_programadas_presupuesto).val() * precio_hora)));
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(($('#' + id_horas_programadas_presupuesto).val() * precio_hora)));
 });
 
 $(document).ready(function() {
@@ -384,7 +384,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         alignment: 'left',
                                     },
                                     {
-                                        text: "\n" + "página " + currentPage.toString() + " de " + pageCount +"\n" + fecha_actual.toLocaleDateString("es-ES",options) + "\n"+ "Ciudad de México",
+                                        text: "\n" + "página " + currentPage.toString() + " de " + pageCount +"\n" + fecha_actual.toLocaleDateString("es-ES",options) + "\n"+ "CDMX",
                                         fontSize: 8,
                                         alignment: 'right',   
                                     },

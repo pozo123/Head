@@ -9,6 +9,7 @@ var id_presupuestosgroup_reporte = "id_presupuestosgroup_reporte";
 var id_tabla_button_reporte = "llenarTabla";
 var id_fecha_inicio_reporte = "fechaInicio";
 var id_fecha_final_reporte = "fichaFinal";
+var id_datatable_reporte =  "dataTableReporte"
 
 var regs = new Array();
 var hasBeenClicked = false;
@@ -128,9 +129,11 @@ $('#' + id_tabla_button_reporte).click(function() {
                 }
             }           
         }
-        var tabla_clientes = $('#'+ id_datatable_clientes_bibliotecas).DataTable({
+        tabla_clientes = $('#'+ id_datatable_reporte).DataTable({
             destroy: true,
-            data: datos_clientes,
+            data: datos_reporte,
+            dom: 'Bfrtip',
+            buttons: ['excel'],
             columns: [
                 {title: "Fecha"},
                 {title: "Horas trabajadas"},
@@ -151,7 +154,6 @@ $('#' + id_imprime_button_reporte).click(function () {
     var filtro_inges =  selec_inge === "Todos";
     var filtro_obras =  selec_obra === "Todos";
     var filtro_presu =  selec_pres === "Todos";
-
     firebase.database().ref(rama_bd_registros).orderByKey().once('value',function(data){
         var registros_db = data.val();
         var keys = Object.keys(registros_db);
@@ -163,7 +165,7 @@ $('#' + id_imprime_button_reporte).click(function () {
 
         var fecha_f;
         var fecha_f_timestamp;
-
+        var horas_totales = 0;
         if($('#' + id_fecha_final_reporte).val() === ""){
             fecha_f ="";
             fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
@@ -179,22 +181,24 @@ $('#' + id_imprime_button_reporte).click(function () {
             if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
                 if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
                     if(fecha_i_timestamp < registros_db[keys[i]].checkin && registros_db[keys[i]].checkin < fecha_f_timestamp){
-
+                        var horas = Math.round(10000*registros_db[keys[i]].horas/3600000)/10000;
                         //REGISTRAR
                         regs[j] = [
                             new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
-                            "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,//"" + Math.floor(registros_db[keys[i]].horas/3600000) + ":" + Math.floor((registros_db[keys[i]].horas % 3600000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
+                            "" + horas,//"" + Math.floor(registros_db[keys[i]].horas/3600000) + ":" + Math.floor((registros_db[keys[i]].horas % 3600000)/60000) + ":" + Math.floor((registros_db[keys[i]].horas % 60000) /1000), 
                             registros_db[keys[i]].inge, 
                             registros_db[keys[i]].obra,
                             registros_db[keys[i]].presupuesto
                         ];
                         //REGISTRAR end
                         j = j + 1;;
+                        horas_totales = horas_totales + horas;
                     }
                 }
             }           
         }
 
+        regs[j] = [{text: "Horas totales: ", style: "tableHeader"}, {text: "" + horas_totales.toFixed(2)},{},{},{}]
 
         doc = {     
             content: [

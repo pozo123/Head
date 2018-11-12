@@ -325,11 +325,12 @@ function editar_req(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
 		if(data){
-			//console.log(data);	
+			console.log(data);	
 			$('#' + id_nombre_req_editar_bibliotecas).val(data[0]);
 			$('#' + id_esencial_req_editar_bibliotecas).val(data[1]);
+			nombre_seleccionado = data[0];
 		}
-		nombre_seleccionado = data[0];
+		
 	});
 }
 
@@ -525,7 +526,7 @@ $('#' + id_eliminar_tipo_button_bibliotecas).click(function(){
 	});
 
 	location.reload();
-}
+});
 
 function loadTablaObras(){
 	var datos_obras = [];
@@ -915,7 +916,7 @@ $('#' + id_editar_atn_button_bibliotecas).click(function(){
 	location.reload();
 });
 
-$('#' + id_elminar_atn_button_bibliotecas).click(function(){
+$('#' + id_eliminar_atn_button_bibliotecas).click(function(){
 	firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion").orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
 		snapshot.getRef().removeValue();
 	});

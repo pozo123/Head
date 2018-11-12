@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="BS-DDL-checkbox/bootstrap-dropdown-checkbox.css">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+        
 
         <!-- My styles-->
         <link rel="stylesheet" type="text/css" href="styles.css">
@@ -36,41 +38,308 @@
     
     <body class = "hidden">
 
-    <div class="modal fade" id="contraseñaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cambia tu contraseña</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                 <div class="container">
-                     <form onsubmit="return false;">
-                         <div class="form-group">
-                           <label for="">Ingresa la nueva contraseña</label>
-                           <input type="password" name="" id="newpass" class="form-control" placeholder="" aria-describedby="helpId">
-                         </div>
+        <div class="modal fade" id="contraseñaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cambia tu contraseña</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <div class="container">
+                        <form onsubmit="return false;">
+                            <div class="form-group">
+                            <label for="">Ingresa la nueva contraseña</label>
+                            <input type="password" name="" id="newpass" class="form-control" placeholder="" aria-describedby="helpId">
+                            </div>
 
-                         <div class="form-group">
-                            <label for="">Confirma la nueva contraseña</label>
-                            <input type="password" name="" id="confirm" class="form-control" placeholder="" aria-describedby="helpId">
-                        </div>
-                        <div class="form-row align-items-center">
-                            <div class="col-md-6 col-sm-12">
-                                <button id="button_cambio_contraseña" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                            <div class="form-group">
+                                <label for="">Confirma la nueva contraseña</label>
+                                <input type="password" name="" id="confirm" class="form-control" placeholder="" aria-describedby="helpId">
                             </div>
-                            <div class="col-md-6 col-sm-12">
-                                <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="button_cambio_contraseña" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
                             </div>
-                        </div>
-                     </form>
-                 </div>
+                        </form>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modales para los editar-->
+
+        <div class="modal fade" id="clienteModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreClienteEditar" class="col-form-label">Nombre de la empresa:</label>
+                                    <input type="text" class="form-control" id="nombreClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="claveClienteEditar" class="col-form-label">Clave:</label>
+                                    <input type="text" class="form-control" id="claveClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telClienteEditar" class="col-form-label">Teléfono oficina:</label>
+                                    <input type="text" class="form-control" id="telClienteEditar">
+                                </div>
+                                <h5>Dirección</h5>
+                                <div class="form-group">
+                                    <label for="dir_calleClienteEditar" class="col-form-label">Calle:</label>
+                                    <input type="text" class="form-control" id="dir_calleClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_numeroClienteEditar" class="col-form-label">Número:</label>
+                                    <input type="text" class="form-control" id="dir_numeroClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_coloniaClienteEditar" class="col-form-label">Colonia:</label>
+                                    <input type="text" class="form-control" id="dir_coloniaClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_delegacionClienteEditar" class="col-form-label">Delegación/Municipio:</label>
+                                    <input type="text" class="form-control" id="dir_delegacionClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_ciudadClienteEditar" class="col-form-label">Ciudad:</label>
+                                    <input type="text" class="form-control" id="dir_ciudadClienteEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_cpClienteEditar" class="col-form-label">Código Postal:</label>
+                                    <input type="text" class="form-control" id="dir_cpClienteEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarCliente" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reqModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Requisitos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="claveReqEditar" class="col-form-label">¿Esencial? 1 sí, 0 no.:</label>
+                                    <input type="text" class="form-control" id="claveReqEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombreReqEditar" class="col-form-label">Descripción:</label>
+                                    <input type="text" class="form-control" id="nombreReqEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarReq" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="excModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Exclusión</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreExcEditar" class="col-form-label">Descripción:</label>
+                                    <input type="text" class="form-control" id="nombreExcEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarExc" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="generoModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Género</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreGeneroEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombreGeneroEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="codigoGeneroEditar" class="col-form-label">Código:</label>
+                                    <input type="text" class="form-control" id="codigoGeneroEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarGenero" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="tipoModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Tipo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreTipoEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombreTipoEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="codigoTipoEditar" class="col-form-label">Código:</label>
+                                    <input type="text" class="form-control" id="codigoTipoEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarTipo" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="obraModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Obra:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreObraEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombreObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="claveObraEditar" class="col-form-label">Clave:</label>
+                                    <input type="text" class="form-control" id="claveObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="clienteObraEditar" class="col-form-label">Cliente:</label>
+                                    <input type="text" class="form-control" id="clienteObraEditar">
+                                </div>
+                                <h5>Dirección</h5>
+                                <div class="form-group">
+                                    <label for="dir_calleObraEditar" class="col-form-label">Calle:</label>
+                                    <input type="text" class="form-control" id="dir_calleObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_numeroObraEditar" class="col-form-label">Número:</label>
+                                    <input type="text" class="form-control" id="dir_numeroObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_coloniaObraEditar" class="col-form-label">Colonia:</label>
+                                    <input type="text" class="form-control" id="dir_coloniaObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_delegacionObraEditar" class="col-form-label">Delegación:</label>
+                                    <input type="text" class="form-control" id="dir_delegacionObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_ciudadObraEditar" class="col-form-label">Ciudad:</label>
+                                    <input type="text" class="form-control" id="dir_ciudadObraEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dir_cpObraEditar" class="col-form-label">Código Postal:</label>
+                                    <input type="text" class="form-control" id="dir_cpObraEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarObra" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="wrapper">
             <!-- Sidebar -->
@@ -107,6 +376,16 @@
                                 <div class="form-group hidden" id="misc_group">
                                     <label for="misc">¿En qué vas a trabajar?</label>
                                     <textarea class="form-control" id="misc" rows="5"></textarea>
+                                    <div class="row text-center">
+                                        <div class= "col-md-6">
+                                            <input type="radio" name="name" id="radio_ie_perfil" aria-label="">
+                                            <label>IE</label>
+                                        </div>
+                                        <div class= "col-md-6">
+                                            <input type="radio" name="name" id="radio_ihs_perfil" aria-label="">
+                                            <label>IHS</label>
+                                        </div>        
+                                    </div>
                                 </div>
     
                                 <button type="button" name="" id="button_registro_entrada" class="btn btn-success btn-lg btn-block">Entrada</button> 
@@ -127,7 +406,7 @@
                         <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Presupuestos</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu1">
                             <li class="tab" id="tabPresupuesto"><a href="#" onclick="openTabs('tabPresupuesto','presupuesto')">Generar Presupuesto</a></li>
-                            <li class="tab" id="tabActivar"><a href="#" onclick="openTabs('tabActivar','activarPresupuesto')">Activar/Desactivar presupuesto (Contrato)</a></li>
+                            <li class="tab" id="tabActivar"><a href="#" onclick="openTabs('tabActivar','activarPresupuesto')">Gestionar presupuestos</a></li>
                             <li class="tab" id="tabImprimirPresupuesto"><a href="#" onclick="openTabs('tabImprimirPresupuesto','imprimirPresupuesto')">Imprimir PDF de presupuesto</a></li>
                         </ul>
                     </li>
@@ -165,6 +444,9 @@
                         <button type="button" class="btn btn-danger" id="cerrarSesion">Cerrar sesión</button>
                     </div>
                 </ul>
+                <ul class="list-unstyled components hidden" id="pageSubmenuCierre">
+                    <button id="cerrarDia" type="button" class="btn btn-outline-warning btn-lg btn-block">Cierre Maestro</button>
+                </ul>
             </nav>
         
             <!-- Page Content -->
@@ -189,7 +471,177 @@
                             <div class="card-columns" id="dashCards">
                                     <!-- Aquí se genera solo el código-->
                             </div>
-                        </div>
+
+                            <div class="container-fluid">
+                                <h2 class ="text-secondary" >IE/IHS</h2>
+                            </div>
+
+                            <div class="card-columns" id="dashCards_IE_IHS">
+                                <!-- Aquí se genera solo el código-->
+                                <!-- Ejemplo No Activo-->
+                                <div class= "card card_dash border-secondary mb-3" style = "max-width: 20rem;">
+                                    <div class = "row card-header text-center ">
+                                        <div class = "col-md-8">
+                                            <p style="font-size: 1.1em; color:black;">N/A</p>
+                                        </div>
+                                        <div class = "col-md-4">
+                                            <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class = "card-body text-center">
+                                        <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
+                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                        <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
+                                    </div>
+                                    <div class = "row card-footer text-center">
+                                        <div class = "col-md-6">
+                                            <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                        </div>
+                                        <div class = "col-md-6">
+                                            <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Ejemplo Activo-->
+                                <div class= "card card_dash border-secondary mb-3" style = "max-width: 20rem;">
+                                    <div class = "row card-header text-center">
+                                        <div class = "col-md-8">
+                                            <p style="font-size: 1.1em; color:black;">Nombre de la Obra</p>
+                                        </div>
+                                        <div class = "col-md-4">
+                                            <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
+                                        </div>
+                                    </div>
+                                    <div class = "card-body text-center">
+                                        <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
+                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                        <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
+                                    </div>
+                                    <div class = "row card-footer text-center">
+                                        <div class = "col-md-6">
+                                            <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
+                                        </div>
+                                        <div class = "col-md-6">
+                                            <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <h2 class ="text-success">IE</h2>
+                            </div>
+
+                            <div class="card-deck" id="dashCards_IE">
+                                    <!-- Aquí se genera solo el código-->
+                                <!-- Ejemplo No Activo-->
+                                <div class= "card card_dash border-success mb-3" style = "max-width: 20rem;">
+                                    <div class = "card-header text-center ">
+                                        <div class="row">
+                                            <div class = "col-md-8">
+                                                <p style="font-size: 1.1em; color:black;">N/A</p>
+                                            </div>
+                                            <div class = "col-md-4">
+                                                <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class = "card-body text-center text-success">
+                                        <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
+                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                        <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
+                                    </div>
+                                    <div class = "card-footer text-center">
+                                        <div class="row">
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                            </div>
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <!-- Ejemplo Activo-->
+                                    <div class= "card card_dash border-success mb-3" style = "max-width: 20rem;">
+                                        <div class = "row card-header text-center">
+                                            <div class = "col-md-8">
+                                                <p style="font-size: 1.1e;color:black;">Nombre de la Obra</p>
+                                            </div>
+                                            <div class = "col-md-4">
+                                                <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
+                                            </div>
+                                        </div>
+                                        <div class = "card-body text-center text-success">
+                                            <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
+                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                            <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
+                                        </div>
+                                        <div class = "row card-footer text-center">
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
+                                            </div>
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="container-fluid">
+                                <h2 class ="text-info">IHS</h2>
+                            </div>
+
+                            <div class="card-columns" id="dashCards_IHS">
+                                    <!-- Aquí se genera solo el código-->
+                                <!-- Ejemplo No Activo-->
+                                <div class= "card card_dash border-info mb-3" style = "max-width: 20rem;">
+                                        <div class = "row card-header text-center">
+                                            <div class = "col-md-8">
+                                                <p style="font-size: 1.1em; color:black;">N/A</p>
+                                            </div>
+                                            <div class = "col-md-4">
+                                                <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
+                                            </div>
+                                        </div>
+                                        <div class = "card-body text-center text-info">
+                                            <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
+                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                            <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
+                                        </div>
+                                        <div class = "row card-footer text-center">
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                            </div>
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Ejemplo Activo-->
+                                    <div class= "card card_dash border-info mb-3" style = "max-width: 20rem;">
+                                        <div class = "row card-header text-center">
+                                            <div class = "col-md-8">
+                                                <p style="font-size: 1.1e;color:black;">Nombre de la Obra</p>
+                                            </div>
+                                            <div class = "col-md-4">
+                                                <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
+                                            </div>
+                                        </div>
+                                        <div class = "card-body text-center text-info">
+                                            <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
+                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
+                                            <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
+                                        </div>
+                                        <div class = "row card-footer text-center">
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
+                                            </div>
+                                            <div class = "col-md-6">
+                                                <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                         </div>
 
                         <div id="presupuesto" class="tabcontent hidden">
                             <h1>Generador de Presupuesto</h1>
@@ -326,8 +778,17 @@
 
                                             <br/>
                                             <div class="form-group">
-                                                <button id="registrarPresupuesto" type="button" class="btn btn-outline-success btn-lg btn-block">Generar Presupuesto</button>
-                                                <button id="borrarTodoPresupuesto" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <button id="registrarPresupuesto" type="button" class="btn btn-outline-success btn-lg btn-block">Generar Presupuesto</button>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <button id="vistaPresupuesto" type="button" class="btn btn-outline-warning btn-lg btn-block">Vista Previa</button>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <button id="borrarTodoPresupuesto" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -336,8 +797,8 @@
                         </div>
 
                         <div id="activarPresupuesto" class="tabcontent hidden">
-                            <h1>Activa un contrato</h1>
-                            <p>Selecciona un presupuesto y activalo como contrato</p>
+                            <h1>Gestiona un contrato</h1>
+                            <p>Selecciona un presupuesto</p>
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-lg-3">
@@ -347,11 +808,11 @@
                                         <form action="#" onsubmit="return false;">
                                             <div class="form-group">
                                                 <label for="DDL_obra">Selecciona la Obra</label>
-                                                <select class="form-control" name="" id="DDL_obra" onChange="loadDDLPresupuestosActivar()"></select>
+                                                <select class="form-control" name="" id="DDL_obra" onChange="loadDDLPresupuestosGestionar()"></select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="DDL_presupuesto">Selecciona el presupuesto</label>
-                                                <select class="form-control" name="" id="DDL_presupuesto"></select>
+                                                <select class="form-control" name="" id="DDL_presupuesto" onChange="loadHorasGestionar()"></select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="DDL_obra">Selecciona archivo de evidencia</label>
@@ -361,19 +822,34 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class= "col-lg-6">
+                                                <div class= "col-lg-4">
                                                     <button id="activar_button" type="button" class="btn btn-outline-success btn-block">Activar</button>
                                                 </div>
-                                                <div class= "col-lg-6">
-                                                    <button id="desactivar_button" type="button" class="btn btn-outline-danger btn-block">Desactivar</button>
+                                                <div class= "col-lg-4">
+                                                    <button id="ocultar_button" type="button" class="btn btn-outline-warning btn-block">Ocultar/Desocultar</button>
+                                                </div>
+                                                <div class= "col-lg-4">
+                                                    <button id="terminar_button" type="button" class="btn btn-outline-danger btn-block">Terminar</button>
                                                 </div>
                                             </div>
-                                            
                                         </form>
+
+                                        <h3>IHS</h3>
+                                        <div class="" id="horasIEColumn"></div>
+                                        <h3>IE</h3>
+                                        <div class="" id="horasIHSColumn"></div>
+                                        Horas Gestionadas:
+                                        <label id="labelHorasGestionadas"></label>
+                                        Horas Presupuesto:
+                                        <small id="labelHorasPpto"></small>
+
                                     </div>
                                     <div class="col-lg-3">
                                         
                                     </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="guardarHorasGestionar" type="button" class="btn btn-outline-danger btn-lg btn-block">Partida número 1.x</button>
                                 </div>
                             </div>
                         </div>
@@ -400,7 +876,7 @@
                                                 <label for="DDL_consecutivo_imp">Selecciona el consecutivo</label>
                                                 <select class="form-control" name="" id="DDL_consecutivo_imp"></select>
                                             </div>
-                                            <button id="imprimir_presu" type="button" class="btn btn-outline-success btn-block">Genera el PDF</button>
+                                            <button id="imprimir_presu" type="button" class="btn btn-outline-success btn-block">Reimprime el PDF</button>
                                         </form>
                                     </div>
                                     <div class="col-lg-3">
@@ -644,23 +1120,23 @@
                                         <h3>Requisitos</h3>
                                         <form action="#" onsubmit="return false;">
                                             <div class="form-group">
-                                                <label for="reqNombre">Descripción del requisito</label>
-                                                <input type="text" name="" id="reqNombre" class="form-control" placeholder="">
+                                                <label for="nombreReq">Descripción del requisito</label>
+                                                <input type="text" name="" id="nombreReq" class="form-control" placeholder="">
                                             </div>
                                             <div class="form-group">
                                                 <label for="">¿Es esencial?:</label>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radiobtn_req1" value="option1">
-                                                    <label class="form-check-label" for="radiobtn_req1">Sí</label>
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioEsen" value="option1">
+                                                    <label class="form-check-label" for="radioEsen">Sí</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radiobtn_req2" value="option2">
-                                                    <label class="form-check-label" for="radiobtn_req2">No</label>
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="" value="option2">
+                                                    <label class="form-check-label" for="">No</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class= "col-lg-6">
-                                                    <button id="registrarReqs" type="button" class="btn btn-outline-success btn-block">Registrar</button>
+                                                    <button id="agregarReq" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
                                                     <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
@@ -672,11 +1148,11 @@
                                         <form action="#" onsubmit="return false;">
                                             <div class="form-group">
                                                 <label for="excNombre">Descripción de la exclusión</label>
-                                                <input type="text" name="" id="excNombre" class="form-control" placeholder="">
+                                                <input type="text" name="" id="nombreExclusion" class="form-control" placeholder="">
                                             </div>
                                             <div class="row">
                                                 <div class= "col-lg-6">
-                                                    <button id="registrarExc" type="button" class="btn btn-outline-success btn-block">Registrar</button>
+                                                    <button id="agregarExclusion" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
                                                     <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
@@ -781,9 +1257,19 @@
                                             <label for="reporte_DDL_presupuesto">Presupuesto:</label>
                                             <select id ="reporte_DDL_presupuesto" class="form-control"></select>
                                         </div>
-                                        <button type="submit" name="" id="button_generar_reporte" class="btn btn-success">Generar PDF</button>
-                                        <button type="reset" name="" id="" class="btn btn-danger">Limpiar campos</button>
+                                        <div class="row">
+                                            <button type="reset" name="" id="" class="btn btn-danger">Limpiar campos</button>
+                                            <button type="button" name="" id="button_generar_reporte" class="btn btn-primary">Generar PDF</button>
+                                            <button type="button" name="" id="llenarTabla" class="btn btn-info">Ver tabla en esta página</button>                                                                           
+                                        </div>     
                                     </form>
+
+                                    <div class="row mt-3">
+                                        <div class="container-fluid">
+                                            <table id="dataTableReporte" class="display" style="width:100%">
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -799,7 +1285,7 @@
                                         </div>
                                         <div class = "col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="DDL_obra">Selecciona el Colaborador</label>
+                                                    <label for="DDLcolaborador">Selecciona el Colaborador</label>
                                                     <select class="form-control" name="" id="DDLcolaborador" onChange="loadCheckboxesPermisos()"></select>
                                                 </div>
 
@@ -818,6 +1304,16 @@
                                                 <div class="form-group align-items-center">
                                                     <label class="checkbox-inline">
                                                         <input id="checkCliente" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta un cliente
+                                                    </label>
+                                                </div>
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id= "checkExcReqs" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta exclusiones y requisitos
+                                                    </label>
+                                                </div>
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id= "checkGenerosTipos" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede dar de alta tipos y géneros de presupuestos 
                                                     </label>
                                                 </div>
 
@@ -877,7 +1373,7 @@
                             </div>
                         </div>
 
-                        <div id= "bibPresupuestos" class="tabcontent hidden">
+                        <div id= "bibPresupuestos" class="tabcontent hidden dataTables_wrapper">
                             <div class="container-fluid">
                                 <h1>Bibliotecas HEAD - Presupuestos</h1>
                                 <p>Aquí puedes revisar las bibliotecas y editar/eliminar información</p>
@@ -964,9 +1460,12 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-            </div>  
+            </div>
+            <!-- Modales --> 
+
         </div>
 
 
@@ -981,6 +1480,13 @@
 
         <script src= "https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src = "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
+
         
         <!-- DDL CHECKBOX JS -->
 
@@ -1011,7 +1517,7 @@
         </script>
 
         <!--My scripts-->        
-
+        
         <script src="app_inge.js"></script>
         <script src="app_obra.js"></script>
         <script src="app_perfil.js"></script>
@@ -1021,10 +1527,12 @@
         <script src="app_reporte.js"></script>
         <script src="app_dashboard.js"></script>
         <script src="comunidad.js"></script>
-        <script src="app_activar_presu.js"></script>
+        <script src="app_gestionar_presu.js"></script>
         <script src="app_permisos.js"></script>
         <script src="app_imprimir_presupuesto.js"></script>
         <script src="app_bibliotecas.js"></script>
+        <script src="app_exc_reqs.js"></script>
+        <script src="app_cierre_maestro.js"></script>
         
 
         <!-- PdfMaker-->

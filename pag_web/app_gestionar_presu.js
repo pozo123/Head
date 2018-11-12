@@ -65,7 +65,7 @@ $('#' + id_activar_button_gestionar).click(function () {
   } else {
     var activado = true;
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/contrato").set(activado);
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/timestamps/activacion").set(new Date.getTime());
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/timestamps/activacion").set(new Date().getTime());
     alert("Presupuesto activado");
   }
 });
@@ -76,7 +76,7 @@ $('#' + id_terminar_button_gestionar).click(function () {
   } else {
     var activado = false;
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/contrato").set(activado);
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/timestamps/finishedAt").set(new Date.getTime());
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/timestamps/finishedAt").set(new Date().getTime());
     alert("Presupuesto terminado");
   }
 });
@@ -100,26 +100,36 @@ $('#' + id_ocultar_button_gestionar).click(function () {
 
 //Incluir en el ddl presupuestos
 function loadHorasGestionar(){
-  $(".row_text_ie_gestionar").empty();
+  $(".row_text_ie_gestionar").val(null);
+  $(".row_text_ihs_gestionar").val(null);
+  $(".row_checkbox_ie_gestionar").prop("checked", false);
+  $(".row_checkbox_ihs_gestionar").prop("checked", false);
+  $(".row_text_ie_gestionar").addClass("hidden");
+  $(".row_text_ihs_gestionar").addClass("hidden");
+  
   horas_gestionadas = 0;
-  // le cambié a once value
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("value").then(function(snapshot){
     horas_ppto = snapshot.val();
     $('#' + id_horas_ppto_label_gestionar).text("Horas presupuestadas: " + horas_ppto);
   });
   
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie").orderByKey().on("child_added",function(snapshot){
+    var uid = snapshot.key;
     var ing = snapshot.val();
-    $("#check_" + Object.keys(ing)[0] + "_ie_gestionar").prop("checked", true);
-    $("#text_" + Object.keys(ing)[0] + "_ie_gestionar").val(ing.horas);
-    horas_gestionadas = horas_gestionadas + ing.horas; //Hay que checar que no se dupiquen aquí + el on change
+    $("#check_" + uid + "_ie_gestionar").prop("checked", true);
+    $("#text_" + $("#check_" + uid + "_ie_gestionar").val() + "_ie_gestionar").removeClass("hidden");
+    $("#text_" + uid + "_ie_gestionar").val(ing.horas);
+    horas_gestionadas = horas_gestionadas + parseInt(ing.horas); //Hay que checar que no se dupiquen aquí + el on change
     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
   });
+
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ihs").orderByKey().on("child_added",function(snapshot){
+    var uid = snapshot.key;
     var ing = snapshot.val();
-    $("#check_" + Object.keys(ing)[0] + "_ihs_gestionar").prop("checked", true);
-    $("#text_" + Object.keys(ing)[0] + "_ihs_gestionar").val(ing.horas);
-    horas_gestionadas = horas_gestionadas + ing.horas;  //Hay que checar que no se dupiquen aquí + el on change 
+    $("#check_" + uid + "_ihs_gestionar").prop("checked", true);
+    $("#text_" + $("#check_" + uid + "_ihs_gestionar").val() + "_ihs_gestionar").removeClass("hidden");
+    $("#text_" + uid + "_ihs_gestionar").val(ing.horas);
+    horas_gestionadas = horas_gestionadas + parseInt(ing.horas);  //Hay que checar que no se dupiquen aquí + el on change 
     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
   });
 }
@@ -140,12 +150,13 @@ $("#" + id_horas_column_ihs_gestionar).on("change", "input.row_checkbox_ihs_gest
       $("#text_" + $(this).val() + "_ihs_gestionar").addClass("hidden");
 });
 
-$('.row_text_ie_gestionar').change(function(){
+//No jalan
+$('.row_text_ie_gestionar').on("change",function(){
     horas_gestionadas = horas_gestionadas + $(this).val();
     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
 });
 
-$('.row_text_ihs_gestionar').change(function(){
+$(".row_text_ihs_gestionar").change(function(){
     horas_gestionadas = horas_gestionadas + $(this).val();
     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
 });
@@ -227,10 +238,12 @@ $('#' + id_guardar_button_gestionar).click(function () {
           horas_totales_ihs = horas_totales_ihs + parseInt($("#text_" + i_uid + "_ihs_gestionar").val());
         }
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(horas);
+      } else {
+        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(null);
       }
     }
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie/horas_totales_ie").set(horas_totales_ie);
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ihs/horas_totales_ihs").set(horas_totales_ihs);
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales_ie").set(horas_totales_ie);
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales_ihs").set(horas_totales_ihs);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales").set(horas_totales_ie + horas_totales_ihs);
     if((horas_totales_ie + horas_totales_ihs) > horas_ppto) //Chance hacer un modal? para que si son distintas (mas o menos? o cualquiera?) ofrezca actualizarlas
       alert("ADVERTENCIA: las horas totales superan las horas presupuestadas");

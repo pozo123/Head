@@ -13,7 +13,7 @@ var id_alta_exc_reqs_checkbox_permisos = "checkExcReqs";
 var id_alta_generos_tipos_checkbox_permisos = "checkGenerosTipos";
 
 $(document).ready(function() {
-
+    
     var select = document.getElementById(id_colaborador_ddl_permisos);
     var option = document.createElement('option');
     option.style = "display:none";
@@ -26,6 +26,7 @@ $(document).ready(function() {
         var option2 = document.createElement('option');
         option2.text = option2.value = inge.nombre; 
         select.appendChild(option2);
+        
 
     });
     

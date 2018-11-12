@@ -10,7 +10,7 @@ $(document).ready(function(){
   setInterval(loadDashcards, 5000)
 });
 
-var elem = document.getElementById("content");
+var elem = document.documentElement;
 
 /* View in fullscreen */
 function openFullscreen() {
@@ -66,7 +66,7 @@ function loadDashcards(){
               var reg = snapshot.val();
               if(reg.status === false && flag === true){
                   flag = false;
-                  card.className = "card border-success mb-3";
+                  card.className = "card card_dash border-success mb-3";
                   card.setAttribute("style", "max-width: 18rem;");
                   var header = document.createElement('div');
                   header.className = "card-header";
@@ -94,7 +94,7 @@ function loadDashcards(){
               }
           });
           }else{
-              card.className = "card border-danger mb-3";
+              card.className = "card card_dash border-danger mb-3 ";
               card.setAttribute("style", "max-width: 18rem;");
               var header = document.createElement('div');
               header.className = "card-header";
@@ -103,8 +103,8 @@ function loadDashcards(){
               body.className = "card-body text-danger";
               var node = document.createTextNode("No activo");
               body.appendChild(node);
-              header.appendChild(body);
               card.appendChild(header);
+              card.appendChild(body);
               var div = document.getElementById(id_card_column_dashboard);
               div.appendChild(card);
           }

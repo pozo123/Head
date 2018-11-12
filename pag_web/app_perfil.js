@@ -9,6 +9,8 @@ var id_newpassword_perfil = "newpass";
 var id_confirmpass_perfil = "confirm";
 var id_misc_perfil = "misc";
 var id_miscgroup_perfil = "misc_group";
+var id_ie_radio_perfil = "radio_ie_perfil";
+var id_ihs_radio_perfil = "radio_ihs_perfil";
 var id_presupuestosgroup_perfil = "presAsignado_form";
 var id_entradagroup_perfil = "entrada_form";
 var rama_bd_obras = "obras";
@@ -47,6 +49,13 @@ function loadPerfil(){
             firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
                 if(flag === true){
                     var ing = snapshot.val();
+                    if(ing.especialidad === 3){
+                        $('#' + id_ie_radio_perfil).removeClass("hidden");
+                        $('#' + id_ihs_radio_perfil).removeClass("hidden");
+                    } else {
+                        $('#' + id_ie_radio_perfil).addClass("hidden");
+                        $('#' + id_ihs_radio_perfil).addClass("hidden");
+                    }
                     if(ing.status === true){
                         $('#' + id_entradagroup_perfil).addClass("hidden");
                         $('#' + id_salida_button_perfil).removeClass("hidden");
@@ -199,11 +208,36 @@ $('#' + id_salida_button_perfil).click(function () {
                         var horas_registro = new Date().getTime() - regis.checkin;
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo(chamba).on('child_added',function(snapshot){
+                        var esp;
+                        if(ing.especialidad === 1)
+                            esp = "ie";
+                        else if(ing.especialidad === 2)
+                            esp = "ihs";
+                        else if(ing.especialidad === 3){
+                            if(document.getElementById(id_ie_radio_perfil).checked == true)
+                                esp = "ie";
+                            else if(document.getElementById(id_ihs_radio_perfil).checked == true)
+                                esp = "ihs";
+                        }
+                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
+                            var horas_trabajadas = snapshot.val();
+                            horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;
+                            firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
+                        });
+                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto).once("value").then(function(snapshot){
+                            var presu = snapshot.val();
+                            var horas_trabajadas_p;
+                            if(presu.horas_trabajadas === null)
+                                horas_trabajadas_p = (presu.horas_trabajadas + horas_registro)/3600000;
+                            else
+                                horas_trabajadas_p = horas_registro/3600000;
+                            firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
+                        });
+                        /*firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo(chamba).on('child_added',function(snapshot){
                             var aux = snapshot.val();
                             horas_previas = aux.horas_trabajadas;
                             firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_registro + horas_previas);
-                        });
+                        });*/
                         clicked = false;
                     }
                 });
