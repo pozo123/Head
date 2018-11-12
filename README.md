@@ -27,10 +27,14 @@ Depto. de Innovacion y Optimizacion
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Agregar atributo nickname a colaboradores
     - Alta
-    - Perfil
+    - Perfil (panel de control)
     - Dashboard
-    - Gestionar?
+    - Gestionar
     - Bibliotecas
+      - tabla
+      - editar (modal + cambiar)
+    - Reporte?
+    - Permisos?
   - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
