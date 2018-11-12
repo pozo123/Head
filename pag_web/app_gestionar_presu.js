@@ -1,4 +1,3 @@
-
 var id_obra_ddl_gestionar = "DDL_obra";
 var id_presupuestos_ddl_gestionar = "DDL_presupuesto";
 var id_activar_button_gestionar = "activar_button";
@@ -179,7 +178,7 @@ function loadColaboradoresGestionar(){
         checkbox.value = inge.uid;
         checkbox.id = "check_" + inge.uid + "_ie_gestionar";
         var label = document.createElement('label');
-        label.innerHTML = inge.nombre;//Puede ser innerText?
+        label.innerHTML = inge.nickname;//Puede ser innerText?
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ie_gestionar";
@@ -200,7 +199,7 @@ function loadColaboradoresGestionar(){
         checkbox.value = inge.uid;
         checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
         var label = document.createElement('label');
-        label.innerHTML = inge.nombre;//Puede ser innerText?
+        label.innerHTML = inge.nickname;//Puede ser innerText?
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ihs_gestionar";
