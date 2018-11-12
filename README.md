@@ -1,6 +1,9 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+- Truena:
+  - cierre maestro (registros)
+  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
 
 - ARTURO
   - Gestionar
@@ -24,7 +27,6 @@ Depto. de Innovacion y Optimizacion
   - Borrar registros con la funcionalidad de reporte?
     - darle atributo a registro de valido o prueba o algo asi
     - diferenci entre erase y delete
-  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Agregar atributo nickname a colaboradores
     - Alta
     - Perfil (panel de control)
@@ -43,18 +45,15 @@ Depto. de Innovacion y Optimizacion
   
   - Generar ppto
     - Vista previa (separar de generar)
-  - refresh en editars
-  - Reporte descargar para excel
-  - Gestionar divs para administrar horas entre inges
   - meter * s en generar ppto
 
-  - activar reqs
   - Imagenes 
     - inges
     - reqs
     - contratos
   - pagos en cada presupuesto
-  - poner funcionalidad reqs
+  - poner funcionalidad req
+    - activar reqs
   
 - Candados
   - que los valores sean int cuando int, double cuando double, y así
@@ -64,5 +63,3 @@ Depto. de Innovacion y Optimizacion
   - Pasar cargar ddls a pestañas en vez de doc ready
   - Reporte sumando/ semanal
 - Con Emmanuel
-  - Cuando se desactiva un ppto?
-  - Se puede desactivar y volver a activar?
