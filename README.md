@@ -2,6 +2,9 @@
 Depto. de Innovacion y Optimizacion
 
 - Actualizados:
+  - Cierre maestr
+  - bibliotecas
+  - perfil
   
 - Truena:
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
