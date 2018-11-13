@@ -120,6 +120,18 @@ $('#' + id_entrada_button_perfil).click(function () {
                     firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true).then(() => {
                         loadPerfil();
                     });
+                    var esp = "NA";
+                    if(ing.especialidad === 1)
+                        esp = "ie";
+                    else if(ing.especialidad === 2)
+                        esp = "ihs";
+                    else if(ing.especialidad === 3){
+                        if(document.getElementById(id_ie_radio_perfil).checked == true)
+                            esp = "ie";
+                        else if(document.getElementById(id_ihs_radio_perfil).checked == true)
+                            esp = "ihs";
+                    }
+                    firebase.database().ref(rama_bd_inges + "/" + username + "/esp_chamba").set(esp);
                     
 
                     var obra_trabajada = snapshot.val();
