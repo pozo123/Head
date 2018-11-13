@@ -2,9 +2,6 @@
 Depto. de Innovacion y Optimizacion
 
 - Actualizados:
-  - cierre maestro
-  - alta inges
-  - gestionar
   
 - Truena:
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
@@ -20,9 +17,11 @@ Depto. de Innovacion y Optimizacion
     - Alta
     - Perfil (panel de control)
     - Dashboard
+  - modal cierre maestro
   
 - DIEGO
   - queries para el nuevo dash
+  - modal cierre maestro
     
 - Primordiales
   - Respaldo!!!
