@@ -227,17 +227,29 @@ $('#' + id_guardar_button_gestionar).click(function () {
       var i_uid = horas_por_inge[i].uid;
       var esp = horas_por_inge[i].especialidad;
       if($("#check_" + i_uid + "_" + esp + "_gestionar").is(":checked")){
-        var horas = {
-          nombre: horas_por_inge[i].nombre,
-          horas: $("#text_" + i_uid + "_" + esp + "_gestionar").val()
-        }
         if(esp === "ie"){
           horas_totales_ie = horas_totales_ie + parseInt($("#text_" + i_uid + "_ie_gestionar").val());
         } else {
           horas_totales_ihs = horas_totales_ihs + parseInt($("#text_" + i_uid + "_ihs_gestionar").val());
         }
-        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(horas);
-      } else {
+          firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" + i_uid).once('value').then(function(snapshot){
+            var in = snapshot.val();
+            if(in !== null){
+              var horas = {
+                nombre: horas_por_inge[i].nombre,
+                horas: $("#text_" + i_uid + "_" + esp + "_gestionar").val(),
+                horas_trabajadas: in.horas_trabajadas,
+              } 
+            } else {
+              var horas = {
+                nombre: horas_por_inge[i].nombre,
+                horas: $("#text_" + i_uid + "_" + esp + "_gestionar").val(),
+                horas_trabajadas: 0,
+              } 
+            }
+            firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(horas);
+          });
+        } else {
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).set(null);
       }
     }
