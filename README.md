@@ -9,6 +9,8 @@ Depto. de Innovacion y Optimizacion
 - Truena:
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Horas trabajadas en inge
+  - Editar presu borra horas/precio
+  - Dash IHS/IE
 
 - ARTURO
   - Dashboard
@@ -23,7 +25,6 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
   
 - DIEGO
-  - queries para el nuevo dash
   - modal cierre maestro
     
 - Primordiales
