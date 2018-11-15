@@ -10,7 +10,9 @@ var id_confirmpass_perfil = "confirm";
 var id_misc_perfil = "misc";
 var id_miscgroup_perfil = "misc_group";
 var id_ie_radio_perfil = "radio_ie_perfil";
+var id_ie_radio_group = "radio_ie_group"
 var id_ihs_radio_perfil = "radio_ihs_perfil";
+var id_ihs_radio_group = "radio_ihs_group"
 var id_presupuestosgroup_perfil = "presAsignado_form";
 var id_entradagroup_perfil = "entrada_form";
 var rama_bd_obras = "obras";
@@ -32,6 +34,7 @@ $(document).ready(function() {
     firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
         var obra = snapshot.val();
+        console.log(obra)
         var option3 = document.createElement('option');
         option3.text = option3.value = obra.nombre; 
         select.appendChild(option3);
@@ -50,11 +53,11 @@ function loadPerfil(){
                 if(flag === true){
                     var ing = snapshot.val();
                     if(ing.especialidad === 3){
-                        $('#' + id_ie_radio_perfil).removeClass("hidden");
-                        $('#' + id_ihs_radio_perfil).removeClass("hidden");
+                        $('#' + id_ie_radio_group).removeClass("hidden");
+                        $('#' + id_ihs_radio_group).removeClass("hidden");
                     } else {
-                        $('#' + id_ie_radio_perfil).addClass("hidden");
-                        $('#' + id_ihs_radio_perfil).addClass("hidden");
+                        $('#' + id_ie_radio_group).addClass("hidden");
+                        $('#' + id_ihs_radio_group).addClass("hidden");
                     }
                     if(ing.status === true){
                         $('#' + id_entradagroup_perfil).addClass("hidden");
@@ -116,84 +119,89 @@ $('#' + id_entrada_button_perfil).click(function () {
         firebase.auth().onAuthStateChanged(user => {
             if(user) {
                 var username = user.uid;
-                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).once("value").then(function(snapshot){
-                    firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true).then(() => {
-                        loadPerfil();
-                    });
-                    var esp = "NA";
-                    if(ing.especialidad === 1)
-                        esp = "ie";
-                    else if(ing.especialidad === 2)
-                        esp = "ihs";
-                    else if(ing.especialidad === 3){
-                        if(document.getElementById(id_ie_radio_perfil).checked == true)
-                            esp = "ie";
-                        else if(document.getElementById(id_ihs_radio_perfil).checked == true)
-                            esp = "ihs";
-                    }
-                    firebase.database().ref(rama_bd_inges + "/" + username + "/esp_chamba").set(esp);
-                    
-
-                    var obra_trabajada = snapshot.val();
-                    //Si no existe registro de ese obra para este inge
-                    if(!obra_trabajada){
-                        var obra = {
-                            obra: $('#'+id_obra_ddl_perfil).val(),
-                        }
-                        var presupuesto = {
-                            presupuesto: chamba,
-                            horas_trabajadas: 0,
-                            //horas_invalidas: 0,
-                        }
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).set(obra);
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
-                    }
-                    else{
-                        firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
-                            var presupuesto_trabajado = snapshot.val();
-
-                            //Si no existe registro de ese presupuesto para este inge
-                            if(!presupuesto_trabajado){
-                                var presupuesto = {
-                                    presupuesto: chamba,
-                                    horas_trabajadas: 0,
-                                    //horas_invalidas: 0,
-                                }
-
-                                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
-                            }
-                            else{
-                                var presupuesto = {
-                                    presupuesto: chamba,
-                                    horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
-                                    //horas_invalidas: presupuesto_trabajado.horas_invalidas, 
-                                }
-                                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).update(presupuesto);
-                            }
+                firebase.database().ref(rama_bd_inges).orderByChild("uid").equalTo(username).once('child_added').then(function(snapshot){
+                    var ing = snapshot.val();
+                
+                    firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).once("value").then(function(snapshot){
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(true).then(() => {
+                            loadPerfil();
                         });
-                    }
-
-                    firebase.database().ref(rama_bd_inges + "/" + username).once("value").then(function(snapshot){
-                        var ing = snapshot.val();
-
-                        var registro = {
-                                inge: ing.nombre,
-                                checkin: new Date().getTime(),
-                                horas: 0,
-                                obra: $('#' + id_obra_ddl_perfil).val(),
-                                presupuesto: chamba,
-                                status: false,
-                                cu: 0
+                        var esp = "NA";
+                        if(ing.especialidad === 1)
+                            esp = "ie";
+                        else if(ing.especialidad === 2)
+                            esp = "ihs";
+                        else if(ing.especialidad === 3){
+                            if(document.getElementById(id_ie_radio_perfil).checked == true)
+                                esp = "ie";
+                            else if(document.getElementById(id_ihs_radio_perfil).checked == true)
+                                esp = "ihs";
                         }
-                        var ref_cu = firebase.database().ref(rama_bd_registros).push(registro);
-                        var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
-                        firebase.database().ref(rama_bd_registros + "/" + cu + "/cu").set(cu);
+                        firebase.database().ref(rama_bd_inges + "/" + username + "/esp_chamba").set(esp);
+                        
 
+                        var obra_trabajada = snapshot.val();
+                        //Si no existe registro de ese obra para este inge
+                        if(!obra_trabajada){
+                            var obra = {
+                                obra: $('#'+id_obra_ddl_perfil).val(),
+                            }
+                            var presupuesto = {
+                                presupuesto: chamba,
+                                horas_trabajadas: 0,
+                                //horas_invalidas: 0,
+                            }
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).set(obra);
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
+                        }
+                        else{
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).once("value").then(function(snapshot){
+                                var presupuesto_trabajado = snapshot.val();
+
+                                //Si no existe registro de ese presupuesto para este inge
+                                if(!presupuesto_trabajado){
+                                    var presupuesto = {
+                                        presupuesto: chamba,
+                                        horas_trabajadas: 0,
+                                        //horas_invalidas: 0,
+                                    }
+
+                                    firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).set(presupuesto);
+                                }
+                                else{
+                                    var presupuesto = {
+                                        presupuesto: chamba,
+                                        horas_trabajadas: presupuesto_trabajado.horas_trabajadas,
+                                        //horas_invalidas: presupuesto_trabajado.horas_invalidas, 
+                                    }
+                                    firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba).update(presupuesto);
+                                }
+                            });
+                        }
+
+                        firebase.database().ref(rama_bd_inges + "/" + username).once("value").then(function(snapshot){
+                            var ing = snapshot.val();
+
+                            var registro = {
+                                    inge: ing.nombre,
+                                    checkin: new Date().getTime(),
+                                    horas: 0,
+                                    obra: $('#' + id_obra_ddl_perfil).val(),
+                                    presupuesto: chamba,
+                                    status: false,
+                                    cu: 0
+                            }
+                            var ref_cu = firebase.database().ref(rama_bd_registros).push(registro);
+                            var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
+                            firebase.database().ref(rama_bd_registros + "/" + cu + "/cu").set(cu);
+
+                        });
                     });
                 });
-            } else {
             }
+            
         });
+        
     }
 
 });
