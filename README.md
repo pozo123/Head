@@ -9,7 +9,6 @@ Depto. de Innovacion y Optimizacion
 - Truena:
   - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Horas trabajadas en inge
-  - Editar presu borra horas/precio
   - Dash IHS/IE
 
 - ARTURO
