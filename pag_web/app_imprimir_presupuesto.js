@@ -44,6 +44,7 @@ function loadDDLPresupuestosImprimir(){
 
 //Agregar esta en onChange de ddlpresupuesto
 function loadDDLConsecutivosImprimir(){
+    $('#' + id_consecutivo_ddl_imprimir).empty();
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_imprimir + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_imprimir + " option:selected").val()).orderByChild('nombre').once('value').then(function(snapshot){        
         var presu = snapshot.val();
         if(presu.consec > 1){
