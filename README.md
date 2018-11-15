@@ -7,9 +7,8 @@ Depto. de Innovacion y Optimizacion
   - perfil
   
 - Truena:
-  - En imprimir limpiar campo consecutivo, ahorita se carga cada que le picas. Y quitarle el alert
   - Horas trabajadas en inge
-  - Dash IHS/IE
+  - Gestionar no está guardando bien todo el pedo
 
 - ARTURO
   - Dashboard
