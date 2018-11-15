@@ -236,7 +236,7 @@ $('#' + id_guardar_button_gestionar).click(function () {
         } else {
           horas_totales_ihs = horas_totales_ihs + parseInt($("#text_" + i_uid + "_ihs_gestionar").val());
         }
-          firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" + i_uid).once('value').then(function(snapshot){
+          firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp).orderByKey().equalTo(i_uid).once('value').then(function(snapshot){
             var in1 = snapshot.val();
             if(in1 !== null){
               var horas = {
