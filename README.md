@@ -2,6 +2,10 @@
 Depto. de Innovacion y Optimizacion
 
 - Actualizados:
+  - Dash
+  - App_presu
+  - Gestionar
+  - Perfil
   
 - Truena:
   - Horas trabajadas en inge
