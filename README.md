@@ -8,7 +8,6 @@ Depto. de Innovacion y Optimizacion
   - Gestionar no está guardando bien todo el pedo
   - Asincronía P1 y P2 en gestionar
   - Se crea misc en perfil
-  - Inicializar todas las horas con 0
 
 - ARTURO
   - Dashboard
@@ -27,6 +26,19 @@ Depto. de Innovacion y Optimizacion
     
 - Primordiales
   - Leer archivos de imagen
+    - inges
+    - reqs
+    - contratos
+  - Asignar horas
+    - Desde presu por equipo
+    - dividirlas entre miembros del equipo parejo
+    - luego gestionar, sin checkboxes, ya no dinamico
+    
+  - Mercenarios
+    - Nuevas cuentas?
+    - Por horarios?
+    - Cobrar distinto las horas?
+    - Registrar las horas por separado?
   
   - Respaldo!!!
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
@@ -37,7 +49,6 @@ Depto. de Innovacion y Optimizacion
     - darle atributo a registro de valido o prueba o algo asi
     - diferenci entre erase y delete
     
-  - Cambiar dashboard
   - Reporte por presupuesto
     - Horas programadas vs trabajadas
     - pagos
@@ -47,10 +58,7 @@ Depto. de Innovacion y Optimizacion
     - Vista previa (separar de generar)
   - meter * s en generar ppto
 
-  - Imagenes 
-    - inges
-    - reqs
-    - contratos
+
   - pagos en cada presupuesto
   - poner funcionalidad req
     - activar reqs
