@@ -9,6 +9,9 @@ Depto. de Innovacion y Optimizacion
 - Truena:
   - Horas trabajadas en inge
   - Gestionar no está guardando bien todo el pedo
+  - Asincronía P1 y P2 en gestionar
+  - Se crea misc en perfil
+  - Inicializar todas las horas con 0
 
 - ARTURO
   - Dashboard
