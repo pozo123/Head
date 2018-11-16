@@ -33,8 +33,8 @@ Depto. de Innovacion y Optimizacion
     - contratos
   - Asignar horas
     - probar app_presu
-      - "alcance" con horas (el parseInt)
-      - Alta con ie y ihs en colaboradores_asignados
+      - "alcance" con horas (el parseInt) (linea 177)
+      - Alta con ie y ihs en colaboradores_asignados (linea 1139-1166)
     - dividirlas entre miembros del equipo parejo
     - luego gestionar, sin checkboxes, ya no dinamico
     
