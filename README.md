@@ -2,9 +2,6 @@
 Depto. de Innovacion y Optimizacion
 
 - Actualizados:
-  - Cierre maestr
-  - bibliotecas
-  - perfil
   
 - Truena:
   - Horas trabajadas en inge
@@ -29,6 +26,8 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
     
 - Primordiales
+  - Leer archivos de imagen
+  
   - Respaldo!!!
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
   - Cierre maestro contemplar horas extra
