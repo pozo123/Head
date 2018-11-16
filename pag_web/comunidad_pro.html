@@ -76,6 +76,8 @@
 
         <!-- Modales para los editar-->
 
+        <!-- ya está-->
+
         <div class="modal fade" id="clienteModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -140,6 +142,7 @@
             </div>
         </div>
 
+        <!-- ya está-->
         <div class="modal fade" id="reqModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -175,6 +178,7 @@
             </div>
         </div>
 
+        <!-- ya está-->
         <div class="modal fade" id="excModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -205,7 +209,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- ya está-->
         <div class="modal fade" id="generoModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -240,7 +244,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- ya está-->
         <div class="modal fade" id="tipoModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -275,7 +279,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- ya está-->
         <div class="modal fade" id="obraModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -339,6 +343,152 @@
                 </div>
             </div>
         </div>
+        <!-- ya está-->
+        <div class="modal fade" id="ingeModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Colaborador:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreIngeEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombreIngeEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nicknameIngeEditar" class="col-form-label">Nombre corto:</label>
+                                    <input type="text" class="form-control" id="nicknameIngeEditar">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Especialidad:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="especialidadElecIngeEditar" value="">
+                                        <label class="form-check-label" for="especialidadElecIngeEditar">Electricidad</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="especialidadPlomIngeEditar" value="">
+                                        <label class="form-check-label" for="especialidadPlomIngeEditar">Plomería</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Credenciales:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="" id="credenAdminIngeEditar" value="option1">
+                                        <label class="form-check-label" for="credenAdminIngeEditar">Administrador</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="" id="credenProyectistaIngeEditar" value="option3">
+                                        <label class="form-check-label" for="credenProyectistaIngeEditar">Colaborador</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row align-items-center">
+                                    <div class="col-md-6 col-sm-12">
+                                        <button id="editarInge" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="atnModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Atn:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombreAtnEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombreAtnEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailAtnEditar" class="col-form-label">Email:</label>
+                                    <input type="text" class="form-control" id="emailAtnEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="areaAtnEditar" class="col-form-label">Área:</label>
+                                    <input type="text" class="form-control" id="areaAtnEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="celularAtnEditar" class="col-form-label">Celular:</label>
+                                    <input type="text" class="form-control" id="celularAtnEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="extensionAtnEditar" class="col-form-label">Extensión:</label>
+                                    <input type="text" class="form-control" id="extensionAtnEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarAtn" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="presuModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Presupuesto:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="nombrePresuEditar" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombrePresuEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="horasPresuEditar" class="col-form-label">Horas presupuestadas:</label>
+                                    <input type="text" class="form-control" id="horasPresuEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="precioPresuEditar" class="col-form-label">Precio: </label>
+                                    <input type="text" class="form-control" id="precioPresuEditar">
+                                </div>
+                            <div class="form-row align-items-center">
+                                <div class="col-md-6 col-sm-12">
+                                    <button id="editarPresu" type="submit" class="btn btn-outline-success btn-block">Aceptar</button>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <button data-dismiss="modal" type="button" class="btn btn-outline-secondary btn-block">Cerrar</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div class="wrapper">
@@ -376,16 +526,17 @@
                                 <div class="form-group hidden" id="misc_group">
                                     <label for="misc">¿En qué vas a trabajar?</label>
                                     <textarea class="form-control" id="misc" rows="5"></textarea>
-                                    <div class="row text-center">
-                                        <div class= "col-md-6">
-                                            <input type="radio" name="name" id="radio_ie_perfil" aria-label="">
-                                            <label>IE</label>
-                                        </div>
-                                        <div class= "col-md-6">
-                                            <input type="radio" name="name" id="radio_ihs_perfil" aria-label="">
-                                            <label>IHS</label>
-                                        </div>        
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class= "col-md-6" id = "radio_ie_group">
+                                        <input type="radio" name="name" id="radio_ie_perfil" aria-label="">
+                                        <label>IE</label>
                                     </div>
+                                    <div class= "col-md-6" id = "radio_ihs_group">
+                                        <input type="radio" name="name" id="radio_ihs_perfil" aria-label="">
+                                        <label>IHS</label>
+                                    </div>        
                                 </div>
     
                                 <button type="button" name="" id="button_registro_entrada" class="btn btn-success btn-lg btn-block">Entrada</button> 
@@ -460,187 +611,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div id="dashboard" class="tabcontent">
-                            <div class="container-fluid">
+                            <div class="col-lg-12 mx-auto">
                                 <h1>Dashboard</h1>
                                 <button type="button" class="btn btn-outline-dark btn-xs" id="fullScreen"><i class="fas fa-expand"></i></button>
-                                <button type="button" class="btn btn-outline-dark btn-xs hidden" id="notFullScreen"><i class="fas fa-expand"></i></button>
-                            </div>
-                            <br/>
-                            <div class="card-columns" id="dashCards">
-                                    <!-- Aquí se genera solo el código-->
-                            </div>
-
-                            <div class="container-fluid">
-                                <h2 class ="text-secondary" >IE/IHS</h2>
-                            </div>
-
-                            <div class="card-columns" id="dashCards_IE_IHS">
-                                <!-- Aquí se genera solo el código-->
-                                <!-- Ejemplo No Activo-->
-                                <div class= "card card_dash border-secondary mb-3" style = "max-width: 20rem;">
-                                    <div class = "row card-header text-center ">
-                                        <div class = "col-md-8">
-                                            <p style="font-size: 1.1em; color:black;">N/A</p>
-                                        </div>
-                                        <div class = "col-md-4">
-                                            <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
-                                        </div>
-                                    </div>
-                                    <div class = "card-body text-center">
-                                        <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
-                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                        <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
-                                    </div>
-                                    <div class = "row card-footer text-center">
-                                        <div class = "col-md-6">
-                                            <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                        </div>
-                                        <div class = "col-md-6">
-                                            <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                        </div>
-                                    </div>
+                                <button type="button" class="btn btn-outline-dark btn-xs hidden" id="notFullScreen"><i class="fas fa-compress"></i></button>
+                                <br/>
+                            
+                                <div class="container-fluid">
+                                    <h2 class ="text-secondary">IE/IHS</h2>
                                 </div>
-                                <!-- Ejemplo Activo-->
-                                <div class= "card card_dash border-secondary mb-3" style = "max-width: 20rem;">
-                                    <div class = "row card-header text-center">
-                                        <div class = "col-md-8">
-                                            <p style="font-size: 1.1em; color:black;">Nombre de la Obra</p>
-                                        </div>
-                                        <div class = "col-md-4">
-                                            <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
-                                        </div>
-                                    </div>
-                                    <div class = "card-body text-center">
-                                        <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
-                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                        <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
-                                    </div>
-                                    <div class = "row card-footer text-center">
-                                        <div class = "col-md-6">
-                                            <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
-                                        </div>
-                                        <div class = "col-md-6">
-                                            <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container-fluid">
-                                <h2 class ="text-success">IE</h2>
-                            </div>
+                                <div class="card-deck" id="dashCards_IE_IHS">
 
-                            <div class="card-deck" id="dashCards_IE">
-                                    <!-- Aquí se genera solo el código-->
-                                <!-- Ejemplo No Activo-->
-                                <div class= "card card_dash border-success mb-3" style = "max-width: 20rem;">
-                                    <div class = "card-header text-center ">
-                                        <div class="row">
-                                            <div class = "col-md-8">
-                                                <p style="font-size: 1.1em; color:black;">N/A</p>
-                                            </div>
-                                            <div class = "col-md-4">
-                                                <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                    <div class = "card-body text-center text-success">
-                                        <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
-                                        <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                        <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
-                                    </div>
-                                    <div class = "card-footer text-center">
-                                        <div class="row">
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                            </div>
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                    <!-- Ejemplo Activo-->
-                                    <div class= "card card_dash border-success mb-3" style = "max-width: 20rem;">
-                                        <div class = "row card-header text-center">
-                                            <div class = "col-md-8">
-                                                <p style="font-size: 1.1e;color:black;">Nombre de la Obra</p>
-                                            </div>
-                                            <div class = "col-md-4">
-                                                <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
-                                            </div>
-                                        </div>
-                                        <div class = "card-body text-center text-success">
-                                            <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
-                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                            <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
-                                        </div>
-                                        <div class = "row card-footer text-center">
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
-                                            </div>
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="container-fluid">
-                                <h2 class ="text-info">IHS</h2>
-                            </div>
+                                <div class="container-fluid">
+                                    <h2 class ="text-danger">IE</h2>
+                                </div>
+                                <div class = "card-deck" id= "dashCards_IE"></div>
 
-                            <div class="card-columns" id="dashCards_IHS">
-                                    <!-- Aquí se genera solo el código-->
-                                <!-- Ejemplo No Activo-->
-                                <div class= "card card_dash border-info mb-3" style = "max-width: 20rem;">
-                                        <div class = "row card-header text-center">
-                                            <div class = "col-md-8">
-                                                <p style="font-size: 1.1em; color:black;">N/A</p>
-                                            </div>
-                                            <div class = "col-md-4">
-                                                <p style="font-size: 0.8em;">N/A<span style="color:red"></span></p>
-                                            </div>
-                                        </div>
-                                        <div class = "card-body text-center text-info">
-                                            <h6 class = "h6" style="font-size: 1.0em;">N/A</h6>
-                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                            <h6 class = "h6" style="font-size: 1.0em; color: red">No Activo</h6>
-                                        </div>
-                                        <div class = "row card-footer text-center">
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                            </div>
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">N/A<span style="color:red"></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Ejemplo Activo-->
-                                    <div class= "card card_dash border-info mb-3" style = "max-width: 20rem;">
-                                        <div class = "row card-header text-center">
-                                            <div class = "col-md-8">
-                                                <p style="font-size: 1.1e;color:black;">Nombre de la Obra</p>
-                                            </div>
-                                            <div class = "col-md-4">
-                                                <p style="font-size: 0.8em;"> num / <span style="color:red">num</span></p>
-                                            </div>
-                                        </div>
-                                        <div class = "card-body text-center text-info">
-                                            <h6 class = "h6" style="font-size: 1.0em;">Aquí poner el presupuesto</h6>
-                                            <h6 class = "h6" style="font-size: 1.2em;">NickName</h6>
-                                            <h6 class = "h6" style="font-size: 1.0em;">Activo</h6>
-                                        </div>
-                                        <div class = "row card-footer text-center">
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;">H. Ejecutadas: <span style="color:red">num</span></p>
-                                            </div>
-                                            <div class = "col-md-6">
-                                                <p style="font-size: 0.7em;"> H. Programadas: <span style="color:red">num</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
+                                <div class="container-fluid">
+                                    <h2 class ="text-info">IHS</h2>
+                                </div>
+                                <div class = "card-deck" id="dashCards_IHS"></div>
+                            </div>       
                          </div>
 
                         <div id="presupuesto" class="tabcontent hidden">
@@ -681,8 +675,13 @@
 
                                             <div class="form-row">
                                                     <div class="col-lg-6">
-                                                        <label for="horasProgramadas">Horas Programadas:</label>
-                                                        <input class="form-control" name="" id="horasProgramadas">
+                                                        <label for="horasProgramadasIe">Horas Programadas IE:</label>
+                                                        <input class="form-control" name="" id="horasProgramadasIe">
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <label for="horasProgramadasIhs">Horas Programadas IHS:</label>
+                                                        <input class="form-control" name="" id="horasProgramadasIhs">
                                                     </div>
     
                                                     <div class="col-lg-6">
@@ -843,14 +842,13 @@
                                         Horas Presupuesto:
                                         <small id="labelHorasPpto"></small>
 
+                                        <div class="col-lg-12 text-center">
+                                            <button id="guardarHorasGestionar" type="button" class="btn btn-outline-success btn-lg btn-block">Actualizar</button>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        
-                                    </div>
+                                    <div class="col-lg-3"></div>
                                 </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <button id="guardarHorasGestionar" type="button" class="btn btn-outline-danger btn-lg btn-block">Partida número 1.x</button>
-                                </div>
+
                             </div>
                         </div>
 
@@ -899,6 +897,10 @@
                                                 <input type="text" name="" id="ingeNombre"class="form-control" placeholder="Ingresa el nombre del Ingeniero a dar de alta">
                                             </div>
                                             <div class="form-group">
+                                                <label for="ingeNickname">*Nombre corto:</label>
+                                                <input type="text" name="" id="ingeNickname"class="form-control" placeholder="Ingresa el nombre del Ingeniero a dar de alta">
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="ingeEmail">*Email:</label>
                                                 <input type="text" name="" id="ingeEmail"class="form-control" placeholder="Ingresa su correo HEAD">
                                             </div>
@@ -919,7 +921,7 @@
                                                     <label class="form-check-label" for="checkboxElectricidad">Electricidad</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="checkboxPlomeria" value="option2">
+                                                    <input class="form-check-input" type="checkbox" id="checkboxPlomeria" value="">
                                                     <label class="form-check-label" for="checkboxPlomeria">Plomería</label>
                                                 </div>
                                             </div>
@@ -929,10 +931,6 @@
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
                                                     <label class="form-check-label" for="inlineRadio1">Administrador</label>
                                                 </div>
-<!--                                                 <div class="col-auto form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                    <label class="form-check-label" for="inlineRadio2">Lider de Proyecto</label>
-                                                </div> -->
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
                                                     <label class="form-check-label" for="inlineRadio3">Colaborador</label>
@@ -1130,7 +1128,7 @@
                                                     <label class="form-check-label" for="radioEsen">Sí</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="" value="option2">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
                                                     <label class="form-check-label" for="">No</label>
                                                 </div>
                                             </div>
@@ -1139,7 +1137,7 @@
                                                     <button id="agregarReq" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
-                                                    <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
+                                                    <button type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1155,7 +1153,7 @@
                                                     <button id="agregarExclusion" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
-                                                    <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
+                                                    <button type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1191,7 +1189,7 @@
                                                     <button id="registrarTipo" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
-                                                    <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
+                                                    <button type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1211,7 +1209,7 @@
                                                     <button id="registrarGenero" type="button" class="btn btn-outline-success btn-block">Registrar</button>
                                                 </div>
                                                 <div class= "col-lg-6">
-                                                    <button id="" type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
+                                                    <button type="reset" class="btn btn-outline-danger btn-block">Borrar Todo</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1245,11 +1243,11 @@
                                         </div>
                                         <br/>
                                         <p>*Para generar reporte de un solo día coloca en "Fecha inicio de reporte" el día deseado y deja en blanco "Fecha final del reporte"</p>
-                                        <div class="form-group" id="">
+                                        <div class="form-group">
                                             <label for="reporte_DDL_ingeniero">Colaborador:</label>
                                             <select id ="reporte_DDL_ingeniero" class="form-control"></select>
                                         </div>
-                                        <div class="form-group" id="">
+                                        <div class="form-group">
                                             <label for="reporte_DDL_proyecto">Obra:</label>
                                             <select id ="reporte_DDL_proyecto" class="form-control" onChange="loadDDLPresupuestosReporte()"></select>
                                         </div>
@@ -1258,7 +1256,7 @@
                                             <select id ="reporte_DDL_presupuesto" class="form-control"></select>
                                         </div>
                                         <div class="row">
-                                            <button type="reset" name="" id="" class="btn btn-danger">Limpiar campos</button>
+                                            <button type="reset" name="" class="btn btn-danger">Limpiar campos</button>
                                             <button type="button" name="" id="button_generar_reporte" class="btn btn-primary">Generar PDF</button>
                                             <button type="button" name="" id="llenarTabla" class="btn btn-info">Ver tabla en esta página</button>                                                                           
                                         </div>     

@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged(user => {
                 var user_bd = snapshot.val();
 
                 var usuarioNombre = document.getElementById('usuarioConectado');
-                usuarioNombre.innerHTML = user_bd.nombre;
+                usuarioNombre.innerHTML = user_bd.nickname;
                 
                 if(user_bd.permisos.alta_colaborador === true)
                     $('#tabAltaColaborador').removeClass('hidden');

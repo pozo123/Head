@@ -212,10 +212,10 @@ $('#' + id_salida_button_perfil).click(function () {
         if(user) {
             var chamba; // cambié a .text pq pide el equalsTo un strings
             if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
-                chamba = $('#' + id_misc_perfil).text();
+                chamba = $('#' + id_misc_perfil).val();
             }
             else{
-                chamba = $('#' + id_presupuestos_ddl_perfil).text();
+                chamba = $('#' + id_presupuestos_ddl_perfil).val();
             }
             var username = user.uid;
             firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(false);
@@ -254,11 +254,11 @@ $('#' + id_salida_button_perfil).click(function () {
                                     horas_trabajadas_p = horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
                             });
-                            /*firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo(chamba).on('child_added',function(snapshot){
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo(chamba).on('child_added',function(snapshot){
                                 var aux = snapshot.val();
-                                horas_previas = aux.horas_trabajadas;
-                                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_registro + horas_previas);
-                            });*/
+                                horas_totales = horas_registro + aux.horas_trabajadas;
+                                firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_totales);
+                            });
                         }
                         clicked = false;
                     }
@@ -267,7 +267,7 @@ $('#' + id_salida_button_perfil).click(function () {
         } else {
         }
     });
-    location.reload();
+    //location.reload();
 });
 
 $('#' + id_cambiarpassword_button_perfil).click(function () {

@@ -259,6 +259,7 @@ $('#' + id_editar_cliente_button_bibliotecas).click(function(){
 		});
 	}
 	loadTablaClientes();
+	alert("Cambios registrados");
 });
 
 function loadTablaExclusionesYReqs(){
@@ -358,6 +359,7 @@ $('#' + id_editar_exc_button_bibliotecas).click(function(){
 		firebase.database().ref(rama_bd_exclusiones + "/" +  ek).update(exc);
 	});
 	loadTablaExclusionesYReqs();	
+	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_exc_button_bibliotecas).click(function(){
@@ -377,6 +379,7 @@ $('#' + id_editar_req_button_bibliotecas).click(function(){
 		firebase.database().ref(rama_bd_reqs + "/" +  rk).update(req);
 	});
 	loadTablaExclusionesYReqs();	
+	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_req_button_bibliotecas).click(function(){
@@ -489,6 +492,7 @@ $('#' + id_editar_genero_button_bibliotecas).click(function(){
 		});
 	}
 	loadTablaGenerosYTipos();
+	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_genero_button_bibliotecas).click(function(){
@@ -519,6 +523,7 @@ $('#' + id_editar_tipo_button_bibliotecas).click(function(){
 		});
 	}
 	loadTablaGenerosYTipos();
+	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_tipo_button_bibliotecas).click(function(){
@@ -634,6 +639,7 @@ $('#' + id_editar_obra_button_bibliotecas).click(function(){
 		});
 	}
 	loadTablaObras();
+	alert("Cambios registrados");
 });
 
 function loadTablaInges(){
@@ -745,6 +751,7 @@ $('#' + id_editar_inge_button_bibliotecas).click(function(){
 		}
 		firebase.database().ref(rama_bd_inges + "/" + ing.uid).update(inge);
 		loadTablaInges();
+		alert("Cambios registrados");
 	});
 	
 });
@@ -803,15 +810,13 @@ function editar_presupuesto(tbody, table){
 		var data = table.row($(this).parents("tr")).data();
 		if(data){
 			//console.log(data);
-			firebase.database().ref(rama_bd_obras).on('child_added',function(snapshot){
+			firebase.database().ref(rama_bd_obras).orderByKey().equalTo(data[1]).on('child_added',function(snapshot){
 				var obra = snapshot.val();
-				firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/presupuestos/" + data[0]).once('child_added').then(function(snapshot){
-					var presu = snapshot.val();
-					$('#' + id_nombre_presu_editar_bibliotecas).val(data[0]);
-					$('#' + id_precio_presu_editar_bibliotecas).val(presu.cash_presupuestado);
-					$('#' + id_horas_presu_editar_bibliotecas).val(presu.horas_programadas);
-					obra_presu = obra.nombre;
-				})
+				console.log(obra);
+				$('#' + id_nombre_presu_editar_bibliotecas).val(data[0]);
+				$('#' + id_precio_presu_editar_bibliotecas).val(data[2]);
+				$('#' + id_horas_presu_editar_bibliotecas).val(data[5]);
+				obra_presu = obra.nombre;
 			});
 		nombre_seleccionado = data[0];
 		}	
@@ -826,7 +831,7 @@ $('#' + id_editar_presu_button_bibliotecas).click(function(){
 		horas_programadas: $('#' + id_horas_presu_editar_bibliotecas).val(),
 	}
 	if(nombre_seleccionado === nom){
-		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/preupuestos/" + nombre_seleccionado).update(presu);
+		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nombre_seleccionado).update(presu);
 	} else {
 		firebase.database().ref(rama_bd_registros).orderByChild("presupuesto").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
 			var reg = snapshot.key;
@@ -858,8 +863,8 @@ $('#' + id_editar_presu_button_bibliotecas).click(function(){
 			firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nom).update(presu);
 		});
 	}
-	location.reload();
-
+	loadTablaPresupuestos();
+	alert("Cambios registrados");
 });
 
 function loadTablaAtn(){
@@ -932,6 +937,7 @@ $('#' + id_editar_atn_button_bibliotecas).click(function(){
 		firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion/" +  a).update(atn);
 	});
 	loadTablaAtn();
+	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_atn_button_bibliotecas).click(function(){
