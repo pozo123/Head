@@ -8,10 +8,8 @@ Depto. de Innovacion y Optimizacion
   - Perfil
   
 - Truena:
-  - Horas trabajadas en inge
   - Gestionar no está guardando bien todo el pedo
   - Asincronía P1 y P2 en gestionar
-  - Se crea misc en perfil
 
 - ARTURO
   - Dashboard
@@ -34,7 +32,9 @@ Depto. de Innovacion y Optimizacion
     - reqs
     - contratos
   - Asignar horas
-    - Desde presu por equipo
+    - probar app_presu
+      - "alcance" con horas (el parseInt)
+      - Alta con ie y ihs en colaboradores_asignados
     - dividirlas entre miembros del equipo parejo
     - luego gestionar, sin checkboxes, ya no dinamico
     
