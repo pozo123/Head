@@ -15,19 +15,17 @@ Depto. de Innovacion y Optimizacion
   - meter * s en generar ppto
 - DIEGO
   - modal cierre maestro
-  - editar atn no jala
-  - editar cliente no loadea la tabla
-    - gestionar horas
-    - quitar checkboxes
+  - quitar checkboxes
   -  App_presu
     - si las horas programadas están en blanco que las tome como 0 (para el precio minimo)
-  
+    
 - Primordiales
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
     - reqs
     - contratos
+  - Update uml
 
   - Mercenarios
     - Nuevas cuentas?
