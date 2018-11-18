@@ -23,6 +23,7 @@ Depto. de Innovacion y Optimizacion
     - si las horas programadas están en blanco que las tome como 0 (para el precio minimo)
   
 - Primordiales
+  - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
     - reqs
