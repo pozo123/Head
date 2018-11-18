@@ -1,7 +1,7 @@
 var id_obra_ddl_gestionar = "DDL_obra";
 var id_presupuestos_ddl_gestionar = "DDL_presupuesto";
 var id_activar_button_gestionar = "activar_button";
-var id_terminar_button_gestionar = "terminar_button"; //Cambie a terminar
+var id_terminar_button_gestionar = "terminar_button";
 var id_ocultar_button_gestionar = "ocultar_button";
 var id_horas_column_ihs_gestionar  = "horasIEColumn";
 var id_horas_column_ie_gestionar  = "horasIHSColumn";
@@ -14,11 +14,10 @@ var id_horas_ppto_label_gestionar = "labelHorasPpto";
 var horas_por_inge = [];
 var horas_ppto = 0;
 var horas_gestionadas = 0;
-//var multiples_consecutivos = false;
 
 $(document).ready(function() {
 
-    loadColaboradoresGestionar(); //Sí aqui?
+    loadColaboradoresGestionar();
 
     var select = document.getElementById(id_obra_ddl_gestionar);
     var option = document.createElement('option');
@@ -103,64 +102,74 @@ $('#' + id_ocultar_button_gestionar).click(function () {
 function loadHorasGestionar(){
   $(".row_text_ie_gestionar").val(null);
   $(".row_text_ihs_gestionar").val(null);
-  $(".row_checkbox_ie_gestionar").prop("checked", false);
-  $(".row_checkbox_ihs_gestionar").prop("checked", false);
-  $(".row_text_ie_gestionar").addClass("hidden");
-  $(".row_text_ihs_gestionar").addClass("hidden");
+  //$(".row_checkbox_ie_gestionar").prop("checked", false);
+  //$(".row_checkbox_ihs_gestionar").prop("checked", false);
+  //$(".row_text_ie_gestionar").addClass("hidden");
+  //$(".row_text_ihs_gestionar").addClass("hidden");
   
   horas_gestionadas = 0;
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/horas_programadas").once("value").then(function(snapshot){
     horas_ppto = snapshot.val();
-    $('#' + id_horas_ppto_label_gestionar).text("Horas presupuestadas: " + horas_ppto);
+    $('#' + id_horas_ppto_label_gestionar).text(horas_ppto);
   });
   
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ie").orderByKey().on("child_added",function(snapshot){
     var uid = snapshot.key;
     var ing = snapshot.val();
-    $("#check_" + uid + "_ie_gestionar").prop("checked", true);
-    $("#text_" + $("#check_" + uid + "_ie_gestionar").val() + "_ie_gestionar").removeClass("hidden");
+    //$("#check_" + uid + "_ie_gestionar").prop("checked", true);
+    //$("#text_" + $("#check_" + uid + "_ie_gestionar").val() + "_ie_gestionar").removeClass("hidden");
     $("#text_" + uid + "_ie_gestionar").val(ing.horas);
     horas_gestionadas = horas_gestionadas + parseFloat(ing.horas); //Hay que checar que no se dupiquen aquí + el on change
-    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+    $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
   });
 
   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/ihs").orderByKey().on("child_added",function(snapshot){
     var uid = snapshot.key;
     var ing = snapshot.val();
-    $("#check_" + uid + "_ihs_gestionar").prop("checked", true);
-    $("#text_" + $("#check_" + uid + "_ihs_gestionar").val() + "_ihs_gestionar").removeClass("hidden");
+    //$("#check_" + uid + "_ihs_gestionar").prop("checked", true);
+    //$("#text_" + $("#check_" + uid + "_ihs_gestionar").val() + "_ihs_gestionar").removeClass("hidden");
     $("#text_" + uid + "_ihs_gestionar").val(ing.horas);
     horas_gestionadas = horas_gestionadas + parseInt(ing.horas);  //Hay que checar que no se dupiquen aquí + el on change 
-    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+    $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
   });
 }
 
-$("#" + id_horas_column_ie_gestionar).on("change", "input.row_checkbox_ie_gestionar",function(){
-    //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
-    if($(this).is(":checked"))
-      $("#text_" + $(this).val() + "_ie_gestionar").removeClass("hidden");
-    else
-      $("#text_" + $(this).val() + "_ie_gestionar").addClass("hidden");
-});
+// $("#" + id_horas_column_ie_gestionar).on("change", "input.row_checkbox_ie_gestionar",function(){
+//     //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
+//     if($(this).is(":checked"))
+//       $("#text_" + $(this).val() + "_ie_gestionar").removeClass("hidden");
+//     else
+//       $("#text_" + $(this).val() + "_ie_gestionar").addClass("hidden");
+// });
 
-$("#" + id_horas_column_ihs_gestionar).on("change", "input.row_checkbox_ihs_gestionar",function() {
-    //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
-    if($(this).is(":checked"))
-      $("#text_" + $(this).val() + "_ihs_gestionar").removeClass("hidden");
-    else
-      $("#text_" + $(this).val() + "_ihs_gestionar").addClass("hidden");
-});
+// $("#" + id_horas_column_ihs_gestionar).on("change", "input.row_checkbox_ihs_gestionar",function() {
+//     //$("#text_" + $(this).value + "_gestionar")[($(this).is(":checked") ? "show" : "hide")]();//Value necesita ()?
+//     if($(this).is(":checked"))
+//       $("#text_" + $(this).val() + "_ihs_gestionar").removeClass("hidden");
+//     else
+//       $("#text_" + $(this).val() + "_ihs_gestionar").addClass("hidden");
+// });
 
 //No jalan
-$('.row_text_ie_gestionar').on("change",function(){
+$("#" + id_horas_column_ie_gestionar).on("change", "input.row_text_ie_gestionar",function(){
     horas_gestionadas = horas_gestionadas + $(this).val();
-    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+    $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
 
-$(".row_text_ihs_gestionar").change(function(){
+$("#" + id_horas_column_ihs_gestionar).on("change", "input.row_text_ihs_gestionar",function(){
     horas_gestionadas = horas_gestionadas + $(this).val();
-    $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+    $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
+
+// $('.row_text_ie_gestionar').on("change",function(){
+    //horas_gestionadas = horas_gestionadas + $(this).val();
+    //$('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+// });
+
+// $(".row_text_ihs_gestionar").change(function(){
+//     horas_gestionadas = horas_gestionadas + $(this).val();
+//     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
+// });
 
 function loadColaboradoresGestionar(){
   horas_por_inge = [];
@@ -172,18 +181,18 @@ function loadColaboradoresGestionar(){
       if(inge.especialidad === 1 || inge.especialidad === 3){
         var row2 = document.createElement('div');
         row2.id = "row_" + inge.uid;
-        var checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.className = "row_checkbox_ie_gestionar";
-        checkbox.value = inge.uid;
-        checkbox.id = "check_" + inge.uid + "_ie_gestionar";
+        //var checkbox = document.createElement('input');
+        //checkbox.type = "checkbox";
+        //checkbox.className = "row_checkbox_ie_gestionar";
+        //checkbox.value = inge.uid;
+        //checkbox.id = "check_" + inge.uid + "_ie_gestionar";
         var label = document.createElement('label');
         label.innerHTML = inge.nickname;//Puede ser innerText?
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ie_gestionar";
-        textfield.className = "hidden row_text_ie_gestionar";
-        row2.appendChild(checkbox);
+        textfield.className = "row_text_ie_gestionar";
+        //row2.appendChild(checkbox);
         row2.appendChild(label);
         row2.appendChild(textfield);
         var div = document.getElementById(id_horas_column_ie_gestionar);
@@ -193,18 +202,18 @@ function loadColaboradoresGestionar(){
       if(inge.especialidad === 2|| inge.especialidad === 3){
         var row1 = document.createElement('div');
         row1.id = "row_" + inge.uid;
-        var checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.className ="row_checkbox_ihs_gestionar";
-        checkbox.value = inge.uid;
-        checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
+        //var checkbox = document.createElement('input');
+        //checkbox.type = "checkbox";
+        //checkbox.className ="row_checkbox_ihs_gestionar";
+        //checkbox.value = inge.uid;
+        //checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
         var label = document.createElement('label');
         label.innerHTML = inge.nickname;//Puede ser innerText?
         var textfield = document.createElement('input');
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ihs_gestionar";
-        textfield.className = "hidden row_text_ihs_gestionar";
-        row1.appendChild(checkbox);
+        textfield.className = "row_text_ihs_gestionar";
+        //row1.appendChild(checkbox);
         row1.appendChild(label);
         row1.appendChild(textfield);
         var div = document.getElementById(id_horas_column_ihs_gestionar);
@@ -227,7 +236,7 @@ $('#' + id_guardar_button_gestionar).click(function () {
       var i_uid = horas_por_inge[i].uid;
       var esp = horas_por_inge[i].especialidad;
       var nom = horas_por_inge[i].nombre;
-      if($("#check_" + i_uid + "_" + esp + "_gestionar").is(":checked")){
+      // if($("#check_" + i_uid + "_" + esp + "_gestionar").is(":checked")){
         if(esp === "ie"){
           horas_totales_ie = horas_totales_ie + parseInt($("#text_" + i_uid + "_ie_gestionar").val());
         } else {
@@ -244,7 +253,7 @@ $('#' + id_guardar_button_gestionar).click(function () {
           if(presup.colaboradores_asignados !== null){
             firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp_selec + "/" + i_uid_selec + "/horas_trabajadas").once('value').then(function(snapshot){
               var horas_anteriores = snapshot.val();
-              console.log(horas)
+              //console.log(horas)
               if(horas_anteriores !== null){
                 var horas = {
                   nombre: nom_selec,
@@ -258,7 +267,7 @@ $('#' + id_guardar_button_gestionar).click(function () {
                   horas_trabajadas: 0,
                 } 
               }
-              console.log(horas);
+              //console.log(horas);
               firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp_selec + "/" +  i_uid_selec).set(horas);
             });
           } else {
@@ -272,13 +281,13 @@ $('#' + id_guardar_button_gestionar).click(function () {
           }
           j++;
         });
-      } else {
-        var updates = {};
-        updates['/horas/'] = 0;
-        updates['/horas_trabajadas/'] = 0;
-        updates['/horas/'] = 0;
-        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).update(updates);//{horas: 0});
-      }
+      // } else {
+      //   var updates = {};
+      //   updates['/horas/'] = 0;
+      //   updates['/horas_trabajadas/'] = 0;
+      //   updates['/horas/'] = 0;
+      //   firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/" + esp + "/" +  i_uid).update(updates);//{horas: 0});
+      // }
     }
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales_ie").set(horas_totales_ie);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/colaboradores_asignados/horas_totales_ihs").set(horas_totales_ihs);
