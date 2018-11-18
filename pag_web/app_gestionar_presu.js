@@ -160,7 +160,7 @@ $("#" + id_horas_column_ie_gestionar).on("change", "input.row_text_ie_gestionar"
 });
 
 $("#" + id_horas_column_ihs_gestionar).on("change", "input.row_text_ihs_gestionar",function(){
-    ar h = $(this).val();
+    var h = $(this).val();
     if(h === null)
         h = 0;
     horas_gestionadas = horas_gestionadas + parseFloat(h);
