@@ -17,6 +17,8 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
 
 - Primordiales
+  - poner atributo terminado en presupuesto
+    - checar todos los queries para que no solo cheque contrato sino tambien no terminado
   - Poner segundo dash
     - presupuesto por presupuesto, cargar horas programadas vs trabajadas
     - poner graficas mamalonas
