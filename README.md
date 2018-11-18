@@ -15,11 +15,11 @@ Depto. de Innovacion y Optimizacion
   - meter * s en generar ppto
 - DIEGO
   - modal cierre maestro
-  - quitar checkboxes
-  -  App_presu
-    - si las horas programadas están en blanco que las tome como 0 (para el precio minimo)
-    
+
 - Primordiales
+  - Poner segundo dash
+    - presupuesto por presupuesto, cargar horas programadas vs trabajadas
+    - poner graficas mamalonas
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
@@ -41,12 +41,6 @@ Depto. de Innovacion y Optimizacion
   - Borrar registros con la funcionalidad de reporte?
     - darle atributo a registro de valido o prueba o algo asi
     - diferenci entre erase y delete
-    
-  - Reporte por presupuesto
-    - Horas programadas vs trabajadas
-    - pagos
-    - etc
-
 
   - pagos en cada presupuesto
   - poner funcionalidad req
