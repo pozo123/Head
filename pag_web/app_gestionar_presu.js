@@ -152,12 +152,18 @@ function loadHorasGestionar(){
 
 //No jalan
 $("#" + id_horas_column_ie_gestionar).on("change", "input.row_text_ie_gestionar",function(){
-    horas_gestionadas = horas_gestionadas + parseFloat($(this).val());
+    var h = $(this).val();
+    if(h === null)
+        h = 0;
+    horas_gestionadas = horas_gestionadas + parseFloat(h);
     $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
 
 $("#" + id_horas_column_ihs_gestionar).on("change", "input.row_text_ihs_gestionar",function(){
-    horas_gestionadas = horas_gestionadas + parseFloat($(this).val());
+    ar h = $(this).val();
+    if(h === null)
+        h = 0;
+    horas_gestionadas = horas_gestionadas + parseFloat(h);
     $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
 
