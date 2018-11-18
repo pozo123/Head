@@ -152,24 +152,14 @@ function loadHorasGestionar(){
 
 //No jalan
 $("#" + id_horas_column_ie_gestionar).on("change", "input.row_text_ie_gestionar",function(){
-    horas_gestionadas = horas_gestionadas + $(this).val();
+    horas_gestionadas = horas_gestionadas + parseFloat($(this).val());
     $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
 
 $("#" + id_horas_column_ihs_gestionar).on("change", "input.row_text_ihs_gestionar",function(){
-    horas_gestionadas = horas_gestionadas + $(this).val();
+    horas_gestionadas = horas_gestionadas + parseFloat($(this).val());
     $('#' + id_horas_gestionadas_label_gestionar).text(horas_gestionadas);
 });
-
-// $('.row_text_ie_gestionar').on("change",function(){
-    //horas_gestionadas = horas_gestionadas + $(this).val();
-    //$('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
-// });
-
-// $(".row_text_ihs_gestionar").change(function(){
-//     horas_gestionadas = horas_gestionadas + $(this).val();
-//     $('#' + id_horas_gestionadas_label_gestionar).text("Horas gestionadas: " + horas_gestionadas);
-// });
 
 function loadColaboradoresGestionar(){
   horas_por_inge = [];
