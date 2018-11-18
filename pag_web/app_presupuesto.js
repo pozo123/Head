@@ -41,11 +41,11 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
 var alcance = [];
 
 $('#' + id_horas_programadas_ie_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseInt($('#' + id_horas_programadas_ie_presupuesto).val()) + parseInt($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
 $('#' + id_horas_programadas_ihs_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseInt($('#' + id_horas_programadas_ie_presupuesto).val()) + parseInt($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
 $(document).ready(function() {
@@ -158,7 +158,7 @@ function formatMoney(n, c, d, t) {
     d = d == undefined ? "." : d,
     t = t == undefined ? "," : t,
     s = n < 0 ? "-" : "",
-    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+    i = String(parseFloat(n = Math.abs(Number(n) || 0).toFixed(c))),
     j = (j = i.length) > 3 ? j % 3 : 0;
 
   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
@@ -174,7 +174,9 @@ $('#' + id_add_alcance_button_presupuesto).click(function () {
         alcance.push({
             texto: "" + $('#' + alcance_txt).val(),
             precio: "" + $('#' + id_precio_presupuesto).val(),
-            horas: "" + parseInt(parseInt($('#' + id_horas_programadas_ie_presupuesto).val()) + parseInt($('#' + id_horas_programadas_ihs_presupuesto).val())),
+            horas: "" + parseFloat(parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val())),
+            horas_ie: "" + $('#' + id_horas_programadas_ie_presupuesto).val(),
+            horas_ihs: "" + $('#' + id_horas_programadas_ihs_presupuesto).val(),
         });
     } else {
         alert("Maximo 10 descriptivos");
@@ -197,7 +199,7 @@ $('#' + id_borrar_todo_presupuesto).click(function () {
 });
 
 $('#' + id_registrar_button_presupuesto).click(function () {
-    if(!$('#' + id_nombre_presupuesto).val() || !$('#' + id_horas_programadas_ie_presupuesto).val() || !$('#' + id_precio_ihs_presupuesto).val() || $('#' + id_obra_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_genero_ddl_presupuesto + " option:selected").val() === ""){
+    if(!$('#' + id_nombre_presupuesto).val() || !$('#' + id_horas_programadas_ie_presupuesto).val() || !$('#' + id_horas_programadas_ihs_presupuesto).val() || $('#' + id_obra_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_genero_ddl_presupuesto + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
             firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
@@ -244,6 +246,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 //Genero el bloque dinamico de 1.i alcances
                 var precio_total = 0;
                 var horas_totales = 0;
+                var horas_ie_totales = 0;
+                var horas_ihs_totales = 0;
                 var alcance_pdf = [];
                 
                 for(i = 0; i < 10; i++){
@@ -277,6 +281,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 fontSize:10,
                             }];
                             precio_total = precio_total + Number(alcance[i].precio);
+                            horas_ie_totales = horas_ie_totales + Number(alcance[i].horas_ie);
+                            horas_ihs_totales = horas_ihs_totales + Number(alcance[i].horas_ihs);                            
                             horas_totales = horas_totales + Number(alcance[i].horas);
                     } else {
                         alcance_pdf[i] = [
@@ -1136,35 +1142,6 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                         var pdf_var;
                         pdf_var = data;
 
-                        var ie_json;
-                        var ihs_json;
-                        firebase.database().ref(rama_bd_inges).orderByChild(especialidad).equalTo(1).once('value').then(function(snapshot){
-                            var elec = snapshot.val();
-                            var keys = Object.keys(elec);
-                            var inge_ie;
-                            for(var i=0; i<keys.length; i++){
-                                inge_ie[keys[i]] = {
-                                    horas: $('#' + id_horas_programadas_ie_presupuesto).val()/keys.length,
-                                    horas_trabajadas: 0,
-                                    nombre: elec.keys[i].nombre,
-                                }
-                                ie_json.push(inge_ie);
-                            }
-                        });
-                        firebase.database().ref(rama_bd_inges).orderByChild(especialidad).equalTo(2).once('value').then(function(snapshot){
-                            var plom = snapshot.val();
-                            var keys = Object.keys(plom);
-                            var inge_ihs;
-                            for(var i=0; i<keys.length; i++){
-                                inge_ihs[keys[i]] = {
-                                    horas: $('#' + id_horas_programadas_ihs_presupuesto).val()/keys.length,
-                                    horas_trabajadas: 0,
-                                    nombre: elec.keys[i].nombre,
-                                }
-                                ie_json.push(inge_ihs);
-                            }
-                        });
-
                         if(p !== null){
                             var cons = {
                                 precio: $('#' + id_precio_presupuesto).val(),
@@ -1179,10 +1156,10 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 horas_programadas: horas_totales,
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
-                                    horas_programadas_ie: $('#' + id_horas_programadas_ie_presupuesto).val(),
-                                    horas_programadas_ihs: $('#' + id_horas_programadas_ihs_presupuesto).val(),
-                                    ie: ie_json,
-                                    ihs: ihs_json,
+                                    horas_programadas_ie: horas_ie_totales,
+                                    horas_programadas_ihs: horas_ihs_totales,
+                                    ie: {},
+                                    ihs: {},
                                 },
                                 cash_presupuestado: precio_total,
                                 timestamps: {
@@ -1207,6 +1184,46 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 oculto: false,
                             }
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
+                                var elec = snapshot.val();
+                                var keys = Object.keys(elec);
+                                var activos = keys.length;
+                                for(var i=0; i<keys.length; i++){
+                                    if(elec[keys[i]].permisos.perfil !== true){
+                                        activos--;
+                                    }
+                                }
+                                for(var i=0; i<keys.length; i++){
+                                    if(elec[keys[i]].permisos.perfil === true){
+                                        var inge_ie = {
+                                            horas: horas_ie_totales/activos,
+                                            horas_trabajadas: 0,
+                                            nombre: elec[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
+                                    }
+                                }
+                            });
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(2).once('value').then(function(snapshot){
+                                var plom = snapshot.val();
+                                var keys = Object.keys(plom);
+                                var activos = keys.length;
+                                for(var i=0; i<keys.length; i++){
+                                    if(plom[keys[i]].permisos.perfil !== true){
+                                        activos--;
+                                    }
+                                }
+                                for(var i=0; i<keys-length; i++){
+                                    if(plom[keys[i]].permisos.perfil === true){
+                                        var inge_ihs = {
+                                            horas: horas_ihs_totales/activos,
+                                            horas_trabajadas: 0,
+                                            nombre: plom[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
+                                    }
+                                }
+                            });
                         } else {
                             var presupuesto = {      
                                 nombre: $('#' + id_nombre_presupuesto).val(),
@@ -1214,10 +1231,10 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 horas_programadas: horas_totales,
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
-                                    horas_programadas_ie: $('#' + id_horas_programadas_ie_presupuesto).val(),
-                                    horas_programadas_ihs: $('#' + id_horas_programadas_ihs_presupuesto).val(),
-                                    ie: ie_json,
-                                    ihs: ihs_json,
+                                    horas_programadas_ie: horas_ie_totales,
+                                    horas_programadas_ihs: horas_ihs_totales,
+                                    ie: {},
+                                    ihs: {},
                                 },
                                 cash_presupuestado: precio_total,
                                 timestamps: {
@@ -1241,8 +1258,63 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 consec: 1,
                                 oculto: false,
                             }
-                            
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
+                                var elec = snapshot.val();
+                                var keys = Object.keys(elec);
+                                var activos = keys.length;
+                                for(var i=0; i<keys.length; i++){
+                                    if(elec[keys[i]].permisos.perfil !== true){
+                                        activos--;
+                                    }
+                                }
+                                for(var i=0; i<keys.length; i++){
+                                    if(elec[keys[i]].permisos.perfil === true){
+                                        var inge_ie = {
+                                            horas: horas_ie_totales/activos,
+                                            horas_trabajadas: 0,
+                                            nombre: elec[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
+                                    }
+                                }
+                            });
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(2).once('value').then(function(snapshot){
+                                var plom = snapshot.val();
+                                var keys = Object.keys(plom);
+                                //var inge_ihs = [];;
+                                var activos = keys.length;
+                                for(var i=0; i<keys.length; i++){
+                                    if(plom[keys[i]].permisos.perfil !== true){
+                                        activos--;
+                                    }
+                                }
+                                for(var i=0; i<keys.length; i++){
+                                    if(plom[keys[i]].permisos.perfil === true){
+                                        var inge_ihs = {
+                                            horas: horas_ihs_totales/activos,
+                                            horas_trabajadas: 0,
+                                            nombre: plom[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
+                                    }
+                                }
+                            });
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(3).once('value').then(function(snapshot){
+                                var gral = snapshot.val();
+                                var keys = Object.keys(gral);
+                                for(var i=0; i<keys.length; i++){
+                                    if(gral[keys[i]].permisos.perfil === true){
+                                        var inge_gral = {
+                                            horas: 0,
+                                            horas_trabajadas: 0,
+                                            nombre: gral[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
+                                        firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
+                                    }
+                                }
+                            });
                         };
                     });
                 });
