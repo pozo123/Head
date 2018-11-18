@@ -41,11 +41,17 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
 var alcance = [];
 
 $('#' + id_horas_programadas_ie_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
+    var hie = $('#' + id_horas_programadas_ie_presupuesto).val();
+    if(hie === null)
+        hie = 0;
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat(hie) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
 $('#' + id_horas_programadas_ihs_presupuesto).change(function(){
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
+    var hihs = $('#' + id_horas_programadas_ihs_presupuesto).val();
+    if(hihs === null)
+        hihs = 0;
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat(hihs))* precio_hora)));
 });
 
 $(document).ready(function() {
