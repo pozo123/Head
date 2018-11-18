@@ -2,42 +2,32 @@
 Depto. de Innovacion y Optimizacion
 
 - Actualizados:
-  - Dash
-  - App_presu
-  - Gestionar
-  - Perfil
   
 - Truena:
-  - Gestionar no está guardando bien todo el pedo
-  - Asincronía P1 y P2 en gestionar
 
 - ARTURO
-  - Dashboard
   - Gestionar
     - Bonito
-    - Boton guardar
   - Modales eliminar
-  - Nickname
-    - Alta
-    - Perfil (panel de control)
-    - Dashboard
   - modal cierre maestro
-  
+  - Generar ppto
+    - Vista previa (separar de generar)
+  - meter * s en generar ppto
 - DIEGO
   - modal cierre maestro
-    
+  - editar atn no jala
+  - editar cliente no loadea la tabla
+    - gestionar horas
+    - quitar checkboxes
+  -  App_presu
+    - si las horas programadas están en blanco que las tome como 0 (para el precio minimo)
+  
 - Primordiales
   - Leer archivos de imagen
     - inges
     - reqs
     - contratos
-  - Asignar horas
-    - probar app_presu
-      - "alcance" con horas (el parseInt) (linea 177)
-      - Alta con ie y ihs en colaboradores_asignados (linea 1139-1166)
-    - dividirlas entre miembros del equipo parejo
-    - luego gestionar, sin checkboxes, ya no dinamico
-    
+
   - Mercenarios
     - Nuevas cuentas?
     - Por horarios?
@@ -57,10 +47,6 @@ Depto. de Innovacion y Optimizacion
     - Horas programadas vs trabajadas
     - pagos
     - etc
-  
-  - Generar ppto
-    - Vista previa (separar de generar)
-  - meter * s en generar ppto
 
 
   - pagos en cada presupuesto
