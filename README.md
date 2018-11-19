@@ -21,6 +21,7 @@ Depto. de Innovacion y Optimizacion
   - agregar excel en todas las blbiotecas
   - columna terminado en biblioteca presupuesto
   - poner atributo terminado en presupuesto
+  - en editar presupuesto checar que el string sea dinero. controlar un string y quitarle todos los , y $. los puntos no hay que quitarselos.
   - dropdown checkbox en tiempos de entrega (chance no jalarlos de firebase sino delcararlos, porque son 3)
     - checar todos los queries para que no solo cheque contrato sino tambien no terminado
   - Poner segundo dash
