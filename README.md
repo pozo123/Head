@@ -21,6 +21,7 @@ Depto. de Innovacion y Optimizacion
   - agregar excel en todas las blbiotecas
   - columna terminado en biblioteca presupuesto
   - poner atributo terminado en presupuesto
+  - dropdown checkbox en tiempos de entrega (chance no jalarlos de firebase sino delcararlos, porque son 3)
     - checar todos los queries para que no solo cheque contrato sino tambien no terminado
   - Poner segundo dash
     - presupuesto por presupuesto, cargar horas programadas vs trabajadas
