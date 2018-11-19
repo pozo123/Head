@@ -17,6 +17,7 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
 
 - Primordiales
+  - Cambiar "clientes" por "despachos"
   - poner atributo terminado en presupuesto
     - checar todos los queries para que no solo cheque contrato sino tambien no terminado
   - Poner segundo dash
