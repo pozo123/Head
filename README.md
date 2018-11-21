@@ -17,6 +17,7 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
 
 - Primordiales
+  - Las horas gestionadas pueden tronar si se agrega a alguien nuevo.. 
   - Cierre maestro no actualiza horas en obras
   - En gestionar horas ponerle cuantas horas ya tiene alguien asignadas (para que no le turbo asignes a alguien) (pero checar asignadas-trabajadas)
   - Cambiar "clientes" por "despachos"
