@@ -229,7 +229,7 @@ $('#' + id_salida_button_perfil).click(function () {
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
                         var esp;
-                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo"){
+                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo){
                             if(ing.especialidad === 1)
                                 esp = "ie";
                             else if(ing.especialidad === 2)
