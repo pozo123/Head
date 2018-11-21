@@ -17,19 +17,10 @@ Depto. de Innovacion y Optimizacion
   - modal cierre maestro
 
 - Primordiales
-  - Las horas gestionadas pueden tronar si se agrega a alguien nuevo.. 
-  - Cierre maestro no actualiza horas en obras
+  - codigo para agregar esp a regs, con un boton solo para creden = 0;
   - En gestionar horas ponerle cuantas horas ya tiene alguien asignadas (para que no le turbo asignes a alguien) (pero checar asignadas-trabajadas)
-  - Cambiar "clientes" por "despachos"
   - agregar excel en todas las blbiotecas
-  - columna terminado en biblioteca presupuesto
-  - poner atributo terminado en presupuesto
-  - en editar presupuesto checar que el string sea dinero. controlar un string y quitarle todos los , y $. los puntos no hay que quitarselos.
   - dropdown checkbox en tiempos de entrega (chance no jalarlos de firebase sino delcararlos, porque son 3)
-    - checar todos los queries para que no solo cheque contrato sino tambien no terminado
-  - Poner segundo dash
-    - presupuesto por presupuesto, cargar horas programadas vs trabajadas
-    - poner graficas mamalonas
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
@@ -37,12 +28,6 @@ Depto. de Innovacion y Optimizacion
     - contratos
   - Update uml
 
-  - Mercenarios
-    - Nuevas cuentas?
-    - Por horarios?
-    - Cobrar distinto las horas?
-    - Registrar las horas por separado?
-  
   - Respaldo!!!
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
   - Cierre maestro contemplar horas extra
