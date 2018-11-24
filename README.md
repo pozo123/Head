@@ -20,7 +20,6 @@ Depto. de Innovacion y Optimizacion
   - codigo para agregar esp a regs, con un boton solo para creden = 0;
   - En gestionar horas ponerle cuantas horas ya tiene alguien asignadas (para que no le turbo asignes a alguien) (pero checar asignadas-trabajadas)
   - agregar excel en todas las blbiotecas
-  - dropdown checkbox en tiempos de entrega (chance no jalarlos de firebase sino delcararlos, porque son 3)
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
@@ -28,7 +27,7 @@ Depto. de Innovacion y Optimizacion
     - contratos
   - Update uml
 
-  - Respaldo!!!
+  - Respaldo!!! Excel?
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
   - Cierre maestro contemplar horas extra
     - modal para confirmar el cierre?
