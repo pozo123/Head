@@ -1,6 +1,17 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ OBJETIVO:
+ 
+ Diego:
+ 
+ - Dash Grid
+ 
+ 
+ Arturo:
+ 
+ - Dash Card
+
 - Actualizados:
   
 - Truena:
@@ -8,16 +19,15 @@ Depto. de Innovacion y Optimizacion
 - ARTURO
   - Gestionar
     - Bonito
-  - Modales eliminar
-  - modal cierre maestro
   - Generar ppto
     - Vista previa (separar de generar)
   - meter * s en generar ppto
+  
 - DIEGO
-  - modal cierre maestro
 
 - Primordiales
-  - codigo para agregar esp a regs, con un boton solo para creden = 0;
+  - Modal cierre maestro
+  - Eliminar en bibliotecas (modales y probar el removeValue())
   - En gestionar horas ponerle cuantas horas ya tiene alguien asignadas (para que no le turbo asignes a alguien) (pero checar asignadas-trabajadas)
   - agregar excel en todas las blbiotecas
   - En editar presu checkbox "redistribuir horas"
