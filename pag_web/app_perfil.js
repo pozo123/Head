@@ -34,13 +34,13 @@ $(document).ready(function() {
     firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
         
         var obra = snapshot.val();
-        console.log(obra)
         var option3 = document.createElement('option');
         option3.text = option3.value = obra.nombre; 
         select.appendChild(option3);
 
     });
     loadPerfil();
+    setInterval(actualizarPerfil, 5000);
     
 });
 
@@ -74,7 +74,33 @@ function loadPerfil(){
         }
     });
 } 
-
+function actualizarPerfil(){
+    user = firebase.auth().currentUser;
+    //console.log(user);
+    if(user) {
+        var username = user.uid;
+        firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+            var ing = snapshot.val();
+            if(ing.especialidad === 3){
+                $('#' + id_ie_radio_group).removeClass("hidden");
+                $('#' + id_ihs_radio_group).removeClass("hidden");
+            } else {
+                $('#' + id_ie_radio_group).addClass("hidden");
+                $('#' + id_ihs_radio_group).addClass("hidden");
+            }
+            if(ing.status === true){
+                $('#' + id_entradagroup_perfil).addClass("hidden");
+                $('#' + id_salida_button_perfil).removeClass("hidden");
+            }
+            else{
+                $('#' + id_entradagroup_perfil).removeClass("hidden");
+                $('#' + id_salida_button_perfil).addClass("hidden");
+            }
+        });
+        
+    }
+    
+} 
 
 function loadDDLPresupuestos(){
     $('#' + id_misc_perfil).val("");
@@ -136,6 +162,8 @@ $('#' + id_entrada_button_perfil).click(function () {
                                 esp = "ie";
                             else if(document.getElementById(id_ihs_radio_perfil).checked == true)
                                 esp = "ihs";
+                        } else{
+                            esp = "NA";
                         }
                         firebase.database().ref(rama_bd_inges + "/" + username + "/esp_chamba").set(esp);
                         
@@ -181,9 +209,9 @@ $('#' + id_entrada_button_perfil).click(function () {
 
                         firebase.database().ref(rama_bd_inges + "/" + username).once("value").then(function(snapshot){
                             var ing = snapshot.val();
-
                             var registro = {
                                     inge: ing.nombre,
+                                    esp: esp,
                                     checkin: new Date().getTime(),
                                     horas: 0,
                                     obra: $('#' + id_obra_ddl_perfil).val(),
@@ -198,12 +226,9 @@ $('#' + id_entrada_button_perfil).click(function () {
                         });
                     });
                 });
-            }
-            
+            } 
         });
-        
     }
-
 });
 
 $('#' + id_salida_button_perfil).click(function () {
@@ -229,7 +254,7 @@ $('#' + id_salida_button_perfil).click(function () {
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
                         var esp;
-                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo){
+                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo"){
                             if(ing.especialidad === 1)
                                 esp = "ie";
                             else if(ing.especialidad === 2)

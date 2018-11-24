@@ -192,10 +192,10 @@ function loadTablaClientes(){
             destroy: true,
 			data: datos_clientes,
 			columns: [
-				{title: "Nombre"},
-				{title: "Clave"},
-				{title: "Telefono"},
-				{title: "Direccion", width: 500},
+				{title: "Nombre",width: 150},
+				{title: "Clave",width: 70},
+				{title: "Telefono",width: 70},
+				{title: "Direccion"},
 				{defaultContent: "<button type='button' " + boton_editar_class + "data-toggle='modal' data-target='#clienteModalEditar'><i class='fas fa-edit'></i></button>"},
 			],
             language: idioma_espanol,
@@ -357,9 +357,9 @@ $('#' + id_editar_exc_button_bibliotecas).click(function(){
 	firebase.database().ref(rama_bd_exclusiones).orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
 		var ek = snapshot.key;
 		firebase.database().ref(rama_bd_exclusiones + "/" +  ek).update(exc);
+		loadTablaExclusionesYReqs();	
+		alert("Cambios registrados");
 	});
-	loadTablaExclusionesYReqs();	
-	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_exc_button_bibliotecas).click(function(){
@@ -377,9 +377,9 @@ $('#' + id_editar_req_button_bibliotecas).click(function(){
 	firebase.database().ref(rama_bd_reqs).orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
 		var rk = snapshot.key;
 		firebase.database().ref(rama_bd_reqs + "/" +  rk).update(req);
+		loadTablaExclusionesYReqs();	
+		alert("Cambios registrados");
 	});
-	loadTablaExclusionesYReqs();	
-	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_req_button_bibliotecas).click(function(){
@@ -480,6 +480,8 @@ $('#' + id_editar_genero_button_bibliotecas).click(function(){
 	}
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_generos + "/" + nom).update(genero);
+		loadTablaGenerosYTipos();
+		alert("Cambios registrados");
 	} else {
 		firebase.database().ref(rama_bd_generos).child(nombre_seleccionado).once('value').then(function(snapshot){
 			var data = snapshot.val();
@@ -490,9 +492,9 @@ $('#' + id_editar_genero_button_bibliotecas).click(function(){
 			firebase.database().ref(rama_bd_generos).update(update);
 			firebase.database().ref(rama_bd_generos + "/" + nom).update(genero);
 		});
+		loadTablaGenerosYTipos();
+		alert("Cambios registrados");
 	}
-	loadTablaGenerosYTipos();
-	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_genero_button_bibliotecas).click(function(){
@@ -511,6 +513,8 @@ $('#' + id_editar_tipo_button_bibliotecas).click(function(){
 	}
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_tipos_presupuesto + "/" + nom).update(tipo);
+		loadTablaGenerosYTipos();
+		alert("Cambios registrados");
 	} else {
 		firebase.database().ref(rama_bd_tipos_presupuesto).child(nombre_seleccionado).once('value').then(function(snapshot){
 			var data = snapshot.val();
@@ -521,9 +525,9 @@ $('#' + id_editar_tipo_button_bibliotecas).click(function(){
 			firebase.database().ref(rama_bd_tipos_presupuesto).update(update);
 			firebase.database().ref(rama_bd_tipos_presupuesto + "/" + nom).update(tipo);
 		});
+		loadTablaGenerosYTipos();
+		alert("Cambios registrados");
 	}
-	loadTablaGenerosYTipos();
-	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_tipo_button_bibliotecas).click(function(){
@@ -596,6 +600,8 @@ $('#' + id_editar_obra_button_bibliotecas).click(function(){
 	}
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_obras + "/" + nom).update(obra);
+		loadTablaObras();
+		alert("Cambios registrados");
 	} else {
 		firebase.database().ref(rama_bd_registros).orderByChild("obra").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
 			var reg = snapshot.key;
@@ -635,11 +641,10 @@ $('#' + id_editar_obra_button_bibliotecas).click(function(){
 			update[nom] = data;
 			firebase.database().ref(rama_bd_obras).update(update);
 			firebase.database().ref(rama_bd_obras + "/" + nom).update(obra);
-			console.log(obra);
 		});
+		loadTablaObras();
+		alert("Cambios registrados");
 	}
-	loadTablaObras();
-	alert("Cambios registrados");
 });
 
 function loadTablaInges(){
@@ -696,8 +701,8 @@ function editar_inge(tbody, table){
 					$("#" + id_especialidad_elec_inge_editar_checkbox_bibliotecas).prop("checked", true);
 					$("#" + id_especialidad_plom_inge_editar_checkbox_bibliotecas).prop("checked", false);
 				} else if(ing.especialidad === 2){
-					$("#" + id_especialidad_elec_inge_editar_checkbox_bibliotecas).prop("checked", true);
-					$("#" + id_especialidad_plom_inge_editar_checkbox_bibliotecas).prop("checked", false);
+					$("#" + id_especialidad_elec_inge_editar_checkbox_bibliotecas).prop("checked", false);
+					$("#" + id_especialidad_plom_inge_editar_checkbox_bibliotecas).prop("checked", true);
 				} else if(ing.especialidad === 3){
 					$("#" + id_especialidad_elec_inge_editar_checkbox_bibliotecas).prop("checked", true);
 					$("#" + id_especialidad_plom_inge_editar_checkbox_bibliotecas).prop("checked", true);
@@ -763,10 +768,15 @@ function loadTablaPresupuestos(){
 		firebase.database().ref(rama_bd_obras + "/" + obr.nombre + "/presupuestos").orderByChild("nombre").on("child_added",function(snapshot){
 			var presupuesto = snapshot.val();
 			var contrato;
+			var terminado
 			if(presupuesto.contrato === true)
-				contrato = "Activo";
+				contrato = "Contrato";
 			else
-				contrato = "No activo";
+				contrato = "No contrato";
+			if(presupuesto.terminado === true)
+				terminado = "Terminado";
+			else
+				terminado = "No terminado";
 			var atn = "";
 			for(i=0;i<snapshot.child("atencion").numChildren();i++){
 				atn = atn + snapshot.child("atencion/" +i).val().id + "\n";
@@ -780,7 +790,7 @@ function loadTablaPresupuestos(){
 				}
 				fecha_inicio = new Date(presupuesto.timestamps.startedAt).toLocaleDateString("es-ES", options_bibliotecas)
 			//alert(atn);
-			datos_presupuestos.push([presupuesto.nombre, obr.nombre, cash, presupuesto.clave, contrato, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
+			datos_presupuestos.push([presupuesto.nombre, obr.nombre, cash, presupuesto.clave, contrato, terminado, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
 			var tabla_presupuestos = $('#'+ id_datatable_presupuestos_bibliotecas).DataTable({
 				destroy: true,
 				scrollX: true,
@@ -790,7 +800,8 @@ function loadTablaPresupuestos(){
 					{title: "Obra"},
 					{title: "Precio total"},
 					{title: "Clave"},
-					{title: "Estatus"},
+					{title: "Contrato"},
+					{title: "Terminado"},
 					{title: "Horas programadas"},
 					{title: "Fecha de creacion"},
 					{title: "Fecha de activacion"},
@@ -825,13 +836,18 @@ function editar_presupuesto(tbody, table){
 
 $('#' + id_editar_presu_button_bibliotecas).click(function(){
 	var nom = $('#' + id_nombre_presu_editar_bibliotecas).val();
+	var cash_str = $('#' + id_precio_presu_editar_bibliotecas).val();
+	var cash_sin_coma = cash_str.replace(",","");
+	var cash_num = cash_sin_coma.replace("$","");
 	var presu = {
-		cash_presupuestado: $('#' + id_precio_presu_editar_bibliotecas).val(),
+		cash_presupuestado: parseFloat(cash_num),
 		nombre: nom,
 		horas_programadas: $('#' + id_horas_presu_editar_bibliotecas).val(),
 	}
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nombre_seleccionado).update(presu);
+		loadTablaPresupuestos();
+		alert("Cambios registrados");
 	} else {
 		firebase.database().ref(rama_bd_registros).orderByChild("presupuesto").equalTo(nombre_seleccionado).on('child_added',function(snapshot){
 			var reg = snapshot.key;
@@ -861,10 +877,10 @@ $('#' + id_editar_presu_button_bibliotecas).click(function(){
 			update[nom] = data;
 			firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos").update(update);
 			firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nom).update(presu);
+			loadTablaPresupuestos();
+			alert("Cambios registrados");
 		});
 	}
-	loadTablaPresupuestos();
-	alert("Cambios registrados");
 });
 
 function loadTablaAtn(){
@@ -932,12 +948,12 @@ $('#' + id_editar_atn_button_bibliotecas).click(function(){
 		celular: $('#' + id_celular_atn_editar_bibliotecas).val(),
 		extension: $('#' + id_extension_atn_editar_bibliotecas).val(),
 	}
-	firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion").orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
+	firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "/atencion").orderByChild("nombre").equalTo(nombre_seleccionado).once('child_added').then(function(snapshot){
 		var a = snapshot.key;
-		firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "atencion/" +  a).update(atn);
+		firebase.database().ref(rama_bd_clientes + "/" + cliente_atn + "/atencion/" +  a).update(atn);
+		loadTablaAtn();
+		alert("Cambios registrados");
 	});
-	loadTablaAtn();
-	alert("Cambios registrados");
 });
 
 $('#' + id_eliminar_atn_button_bibliotecas).click(function(){

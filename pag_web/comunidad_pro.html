@@ -581,7 +581,7 @@
                             <li class="tab" id="tabBibColaborador"><a href="#" onclick="openTabs('tabBibColaborador','bibColaborador')">Colaboradores</a></li>
                             <li class="tab" id="tabBibObras"><a href="#" onclick="openTabs('tabBibObras','bibObras')">Obras</a></li>
                             <li class="tab" id="tabBibPresupuestos"><a href="#" onclick="openTabs('tabBibPresupuestos','bibPresupuestos')">Presupuestos</a></li>
-                            <li class="tab" id="tabBibClientes"><a href="#" onclick="openTabs('tabBibClientes','bibClientes')">Clientes</a></li>
+                            <li class="tab" id="tabBibClientes"><a href="#" onclick="openTabs('tabBibClientes','bibClientes')">Despachos</a></li>
                             <li class="tab" id="tabBibAtencion"><a href="#" onclick="openTabs('tabBibAtencion','bibAtencion')">AT'N</a></li>
                             <li class="tab" id="tabBibReqsExcs"><a href="#" onclick="openTabs('tabBibReqsRecs','bibReqsExcs')">Requisitos/Exclusiones</a></li>
                             <li class="tab" id="tabBibTiposGens"><a href="#" onclick="openTabs('tabBibTiposGens','bibTiposGens')">Tipos de presupuesto/Géneros</a></li>
@@ -608,33 +608,32 @@
                         <span></span>
                         <span></span>
                     </button>
+
+                    <button type="button" class="btn btn-outline-dark btn-xs" id="fullScreen"><i class="fas fa-expand"></i></button>
+                    <button type="button" class="btn btn-outline-dark btn-xs hidden" id="notFullScreen"><i class="fas fa-compress"></i></button>
+                    <br/>       
                 </div>
 
                 <div class="row">
                     <div class="container-fluid">
-                        <div id="dashboard" class="tabcontent">
-                            <div class="col-lg-12 mx-auto">
-                                <h1>Dashboard</h1>
-                                <button type="button" class="btn btn-outline-dark btn-xs" id="fullScreen"><i class="fas fa-expand"></i></button>
-                                <button type="button" class="btn btn-outline-dark btn-xs hidden" id="notFullScreen"><i class="fas fa-compress"></i></button>
-                                <br/>
-                            
+                        <div id="dashboard" class="tabcontent dashboard">
+                            <div class="subDash row">
                                 <div class="container-fluid">
-                                    <h2 class ="text-secondary">IE/IHS</h2>
+                                        <h3>Dashboard</h3>
+                                    <div class="card-deck" id="dashCards"> </div>
                                 </div>
-                                <div class="card-deck" id="dashCards_IE_IHS">
+                            </div>
 
+                            <div class ="row">
+                                <div class = "container-fluid">
+                                    <h3>Gráficas de presupuestos SCORE</h3>
+                                    <div class = "card-deck" id="graphs" style= "margin-top:50px ; margin-bottom: 50px;">
+    
+                                    </div>
                                 </div>
-                                <div class="container-fluid">
-                                    <h2 class ="text-danger">IE</h2>
-                                </div>
-                                <div class = "card-deck" id= "dashCards_IE"></div>
+                            </div>
 
-                                <div class="container-fluid">
-                                    <h2 class ="text-info">IHS</h2>
-                                </div>
-                                <div class = "card-deck" id="dashCards_IHS"></div>
-                            </div>       
+
                          </div>
 
                         <div id="presupuesto" class="tabcontent hidden">
@@ -782,7 +781,7 @@
                                                         <button id="registrarPresupuesto" type="button" class="btn btn-outline-success btn-lg btn-block">Generar Presupuesto</button>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <button id="vistaPresupuesto" type="button" class="btn btn-outline-warning btn-lg btn-block">Vista Previa</button>
+                                                        <button id="vistaPreviaPresupuesto" type="button" class="btn btn-outline-warning btn-lg btn-block">Vista Previa</button>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <button id="borrarTodoPresupuesto" type="reset" class="btn btn-outline-danger btn-lg btn-block">Borrar Todo</button>
@@ -1345,7 +1344,7 @@
 
                         <div id= "bibClientes" class="tabcontent hidden">
                             <div class="container-fluid">
-                                <h1>Bibliotecas HEAD - Clientes</h1>
+                                <h1>Bibliotecas HEAD - Despachos</h1>
                                 <p>Aquí puedes revisar las bibliotecas y editar/eliminar información</p>
                                 
                                 <div class="row mt-3">
@@ -1490,8 +1489,12 @@
 
         <script src="BS-DDL-checkbox/bootstrap-dropdown-checkbox.js"></script>
 
+        <!-- Chart JS-->
 
-        
+        <script src = "Chart/Chart.bundle.js"></script>
+        <script src = "Chart/Chart.bundle.min.js"></script>
+        <script src = "Chart/utils.js"></script>
+  
         <!--DataPicker JS-->
         <script src="dataPicker/jquery.datetimepicker.full.min.js"></script>
 
@@ -1531,6 +1534,7 @@
         <script src="app_bibliotecas.js"></script>
         <script src="app_exc_reqs.js"></script>
         <script src="app_cierre_maestro.js"></script>
+        <script src = "app_graphs.js"></script>
         
 
         <!-- PdfMaker-->

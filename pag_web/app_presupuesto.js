@@ -41,17 +41,15 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
 var alcance = [];
 
 $('#' + id_horas_programadas_ie_presupuesto).change(function(){
-    var hie = $('#' + id_horas_programadas_ie_presupuesto).val();
-    if(hie === null)
-        hie = 0;
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat(hie) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
+    if($('#' + id_horas_programadas_ie_presupuesto).val() === "")
+        $('#' + id_horas_programadas_ie_presupuesto).val(0);
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
 $('#' + id_horas_programadas_ihs_presupuesto).change(function(){
-    var hihs = $('#' + id_horas_programadas_ihs_presupuesto).val();
-    if(hihs === null)
-        hihs = 0;
-    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat(hihs))* precio_hora)));
+    if($('#' + id_horas_programadas_ihs_presupuesto).val() === "")
+        $('#' + id_horas_programadas_ihs_presupuesto).val(0);
+    $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
 $(document).ready(function() {
@@ -70,7 +68,11 @@ $(document).ready(function() {
     "- Dimensionamiento de cuartos eléctricos, muros de concentración de medidores, ubicación de transformadores, planta de emergencia y multitransfer." +  "\n" +
     "- Definición de ductos verticales, eléctrica, instalaciones especiales, hidráulicos y de PCI." +  "\n" +
     "- Proyecto de salidas de iluminación, contactos, apagadores, timbre, zumbador, extractor, salidas de TV y Telefonía, en estacionamiento, bodegas, departamentos, vestíbulos departamentos, escaleras, cuartos eléctricos, de bombas y elevadores." +  "\n" +
-    "- Proyecto de salidas de CCTV y Control de Acceso."  
+    "- Proyecto de salidas de CCTV y Control de Acceso."
+
+    document.getElementById((id_horas_programadas_ie_presupuesto)).value = 0
+
+    document.getElementById((id_horas_programadas_ihs_presupuesto)).value = 0
     
 
     $( "#anticipo" ).click(function() {
@@ -1182,6 +1184,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     }
                                 },*/
                                 contrato: false,
+                                terminado: false,
                                 reqs: reqs_lista,
                                 exclusiones: exc_lista,
                                 atencion: atn_lista,
@@ -1257,6 +1260,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     }
                                 },
                                 contrato: false,
+                                terminado: false,
                                 reqs: reqs_lista,
                                 exclusiones: exc_lista,
                                 atencion: atn_lista,
