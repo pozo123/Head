@@ -28,7 +28,6 @@ Depto. de Innovacion y Optimizacion
 - Primordiales
   - Modal cierre maestro
   - Eliminar en bibliotecas (modales y probar el removeValue())
-  - En gestionar horas ponerle cuantas horas ya tiene alguien asignadas (para que no le turbo asignes a alguien) (pero checar asignadas-trabajadas)
   - agregar excel en todas las blbiotecas
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
