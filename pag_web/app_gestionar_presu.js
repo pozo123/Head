@@ -188,6 +188,22 @@ function loadColaboradoresGestionar(){
   firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
     var inge = snapshot.val();
     if(inge.permisos.perfil === true){
+      var horas_asignadas = 0;
+      firebase.database().ref(rama_bd_obras).once('value').then(function(obras_snap){
+        snapshot.forEach(function(childSnapshot){
+          childSnapshot.child("presupuestos").forEach(function(presu_snapshot){
+            var presu = presu_snapshot.val();
+            if(presu.contrato === true && presu.oculto === false && presu.terminado === false){
+              var horas_presu_ie = parseFloat(presu_snapshot.child("colaboradores_asignados/ie/" + inge.uid + "/horas").val());
+              if(horas_presu_ie > 0)
+                horas_asignadas += (horas_presu_ie - parseFloat(presu_snapshot.child("colaboradores_asignados/ie/" + inge.uid + "/horas_trabajadas").val()));
+              var horas_presu_ihs = parseFloat(presu_snapshot.child("colaboradores_asignados/ihs/" + inge.uid + "/horas").val());
+              if(horas_presu_ihs > 0)
+                horas_asignadas += (horas_presu_ihs - parseFloat(presu_snapshot.child("colaboradores_asignados/ihs/" + inge.uid + "/horas_trabajadas").val()));
+            }
+          })
+        })
+      });
       if(inge.especialidad === 1 || inge.especialidad === 3){
         var row2 = document.createElement('div');
         row2.id = "row_" + inge.uid;
@@ -202,9 +218,12 @@ function loadColaboradoresGestionar(){
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ie_gestionar";
         textfield.className = "row_text_ie_gestionar";
+        var label_horas = document.createElement('label');
+        label_horas.innerHTML = horas_asignadas;
         //row2.appendChild(checkbox);
         row2.appendChild(label);
         row2.appendChild(textfield);
+        row2.appendChild(label_horas);
         var div = document.getElementById(id_horas_column_ie_gestionar);
         div.appendChild(row2);
         horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ie"});
@@ -223,9 +242,12 @@ function loadColaboradoresGestionar(){
         textfield.type = "text";
         textfield.id = "text_" + inge.uid + "_ihs_gestionar";
         textfield.className = "row_text_ihs_gestionar";
+        var label_horas = document.createElement('label');
+        label_horas.innerHTML = horas_asignadas;
         //row1.appendChild(checkbox);
         row1.appendChild(label);
         row1.appendChild(textfield);
+        row1.appendChild(label_horas);
         var div = document.getElementById(id_horas_column_ihs_gestionar);
         div.appendChild(row1);
         horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ihs"});
