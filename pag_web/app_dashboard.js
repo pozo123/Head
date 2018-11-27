@@ -3,6 +3,7 @@ var id_card_column_dashboard = "dashCards";
 
 var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
+var rama_bd_dashgrid = "dashgrid";
 
 $(document).ready(function(){
   loadDashcards();
@@ -56,7 +57,33 @@ function loadDashcards(){
   //$('#' + id_card_column_dashboard_IE_IHS).empty();
   //$('#' + id_card_column_dashboard_IE).empty();
   $('#' + id_card_column_dashboard).empty();
-  
+
+  firebase.database().ref(rama_bd_dashgrid).once('value').then(function(snapshot){
+    var rows = snapshot.child("renglones").val();
+    var columns = snapshot.child("columnas").val();
+    
+    var grid = new Array(rows);
+    for(var i=0;i<rows;i++){
+      grid[i] = new Array(columns);
+    }
+
+    snapshot.child("colaboradores").forEach(function(colaborador_snapshot){
+      var inge_grid = colaborador_snapshot.val();
+      firebase.database().ref(rama_bd_inges).orderByKey().equalTo(colaborador_snapshot.key).once('value').then(function(inge_snapshot){
+        //Adentro de este query ya hay que hacer las cards. 
+        //Falta jalar horas de obras y de registros y todo, pero eso es igual a como estaba antes.
+        //Hay que generar las cards con las coordenadas (como en la linea 78 de este codigo)
+        // var inge = inge_snapshot.val();
+        // if(inge.status === true){
+        //   //grid[inge_grid.ren][inge_grid.col] = {nickname: inge.nickname, esp: inge.esp_chamba, status: inge.status};
+        // } else {
+
+        // }
+      });
+    });
+  });
+
+
   firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
     var flag = true;
     var inge = snapshot.val();
@@ -595,9 +622,6 @@ function loadDashcards(){
         var div = document.getElementById(id_card_column_dashboard);
         div.appendChild(card);
       }
-    }
-    
-    
+    } 
   });
 }
-//
