@@ -132,7 +132,9 @@ function loadDDLPresupuestos(){
 }
 
 $('#' + id_entrada_button_perfil).click(function () {
-    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || ($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_misc_perfil).val())){
+    var rb_ie = document.getElementById(id_ie_radio_perfil);
+    var rb_ihs = document.getElementById(id_ihs_radio_perfil);
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || (!rb_ie.classList.contains("hidden") && rb_ie.checked == false && !rb_ihs.classList.contains("hidden") && rb_ihs.checked == false) ||($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_misc_perfil).val())){
         alert("Selecciona todos los campos");
     } else {
         var chamba;
@@ -253,18 +255,8 @@ $('#' + id_salida_button_perfil).click(function () {
                         var horas_registro = new Date().getTime() - regis.checkin;
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
-                        var esp;
+                        var esp = regis.esp;
                         if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo"){
-                            if(ing.especialidad === 1)
-                                esp = "ie";
-                            else if(ing.especialidad === 2)
-                                esp = "ihs";
-                            else if(ing.especialidad === 3){
-                                if(document.getElementById(id_ie_radio_perfil).checked == true)
-                                    esp = "ie";
-                                else if(document.getElementById(id_ihs_radio_perfil).checked == true)
-                                    esp = "ihs";
-                            }
                             firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
                                 var horas_trabajadas = snapshot.val();
                                 horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;
