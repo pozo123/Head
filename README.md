@@ -17,8 +17,8 @@ Deploy:
   - modal cambio contraseña
 
 - Primordiales
-  - Alta ATN
 
+  - Arreglar load bibliotecas
   - Modal cierre maestro
   - Eliminar en bibliotecas (modales y probar el removeValue())
   - agregar excel en todas las blbiotecas
@@ -37,12 +37,15 @@ Deploy:
   - Reporte sumando/ semanal
 
 - DONE (y material para junta)
+  - GRAPHS
   - Horas asignadas pro inge en gestioanr para que no se pasen 
   - vista previa
   - Excel
    - platicar de respaldo
   - Cierre maestro y actualizar regs
+  - Dashgrid
   - cambio de contraseña
   - Actualizar version
   - Columna oculto en biblio ppto
   - Obra en graphs
+  - Alta ATN
