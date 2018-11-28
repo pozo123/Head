@@ -49,3 +49,4 @@ Deploy:
   - Columna oculto en biblio ppto
   - Obra en graphs
   - Alta ATN
+  - botones editar biblios
