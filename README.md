@@ -1,22 +1,26 @@
 # Head
 Depto. de Innovacion y Optimizacion
+Deploy:
+ - Cambiar version en comunidad.js (linea 3)
+ - lalala terminal todo
+ - deploy
+ - actualizar version en firebase/database/info_web/version
 
  OBJETIVO:
  
  Diego:
  - Dash Grid
  
- 
  Arturo:
  - Dash Card
   - Gestionar
     - Bonito
+  - modal cambio contraseña
 
 - Primordiales
   - Obra en graphs
   - Alta ATN
   - Columna oculto en biblioteca ppto
-  - Lo de version (en comunidad_pro un set interval, query, si version != lo que queramos, actualiza)
 
   - Modal cierre maestro
   - Eliminar en bibliotecas (modales y probar el removeValue())
@@ -41,3 +45,5 @@ Depto. de Innovacion y Optimizacion
   - Excel
    - platicar de respaldo
   - Cierre maestro y actualizar regs
+  - cambio de contraseña
+  - Lo de version (en comunidad_pro un set interval, query, si version != lo que queramos, actualiza)
