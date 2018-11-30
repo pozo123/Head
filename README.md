@@ -17,7 +17,9 @@ Deploy:
   - modal cambio contraseña
 
 - Primordiales
-
+  - tipos_de_ppto virgilio, cliente o misc. Cada uno mete precio/hora en precio minimio sugerido.
+  - Distintos pptos con misma clave no cambia el consecutivo
+  - Cambiar "No contrato" por "presupuesto" en bibliotecas ppto si no activo
   - Modal cierre maestro
   - Eliminar en bibliotecas (modales y probar el removeValue())
   - En editar presu checkbox "redistribuir horas"
@@ -35,16 +37,11 @@ Deploy:
     - activar reqs  
 
 - DONE (y material para junta)
-  - GRAPHS
-    - Obra en graphs
-  - Dashgrid
   - Alta ATN
 
   - Horas asignadas pro inge en gestioanr para que no se pasen 
   - vista previa
   
-  - Excel
-    - platicar de respaldo
   - botones editar biblios
   - Columna oculto en biblio ppto
 
