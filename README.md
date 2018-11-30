@@ -18,10 +18,8 @@ Deploy:
 
 - Primordiales
 
-  - Arreglar load bibliotecas
   - Modal cierre maestro
   - Eliminar en bibliotecas (modales y probar el removeValue())
-  - agregar excel en todas las blbiotecas
   - En editar presu checkbox "redistribuir horas"
   - Leer archivos de imagen
     - inges
@@ -29,24 +27,32 @@ Deploy:
     - contratos
   - Update uml
   - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
+  - cuando se cambie de página, se borre lo que se escribió en formularios.
+
+- FUTUREANDO
   - pagos en cada presupuesto
   - poner funcionalidad req
     - activar reqs  
-  - cuando se cambie de página, se borre lo que se escribió en formularios.
-  - Pasar cargar ddls a pestañas en vez de doc ready
-  - Reporte sumando/ semanal
 
 - DONE (y material para junta)
   - GRAPHS
+    - Obra en graphs
+  - Dashgrid
+  - Alta ATN
+
   - Horas asignadas pro inge en gestioanr para que no se pasen 
   - vista previa
+  
   - Excel
-   - platicar de respaldo
-  - Cierre maestro y actualizar regs
-  - Dashgrid
-  - cambio de contraseña
-  - Actualizar version
-  - Columna oculto en biblio ppto
-  - Obra en graphs
-  - Alta ATN
+    - platicar de respaldo
   - botones editar biblios
+  - Columna oculto en biblio ppto
+
+  - cambio de contraseña
+  - Cierre maestro y actualizar regs
+  - Actualizar version
+
+- JUNTA
+  - Respaldo
+  - Reportes semanales/mensuales
+  - Cierre maestro en dashcards
