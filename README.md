@@ -6,13 +6,12 @@ Deploy:
  - actualizar version en firebase/database/info_web/version
 
  OBJETIVO:
-  - Limpiar readme
-  - Plan de accion este fin
-  - Reporte ppto
+  - app_reporte_pptos.js
  
  ESTE FIN:
   - Reporte ppto
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
+  - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
  
  Diego:
  - Dash Grid
