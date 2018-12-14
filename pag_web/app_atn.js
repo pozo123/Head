@@ -7,7 +7,11 @@ var id_email_atn = "emailAtn";
 var id_extension_atn = "extensionAtn";
 var rama_bd_clientes = "clientes";
 
-var atencion = [];
+var atencion_atn = [];
+
+$('#tabAltaAtencion').click(function () {
+    loadDDLClienteAtn();
+});
 
 function loadDDLClienteAtn(){
 	var select = document.getElementById(id_cliente_ddl_atn);   
@@ -26,21 +30,32 @@ function loadDDLClienteAtn(){
 }
 
 $('#' + id_guardar_button_atn).click(function () {
-	if($('#' + id_obra_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_nombre_atn).val() === ""){
+	if($('#' + id_cliente_ddl_atn + " option:selected").val() === "" || $('#' + id_nombre_atn).val() === ""){
 		alert("Llena todos los campos esenciales");
 	} else {
-	    firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
-	        var cliente = snapshot;
-	        atencion = cliente.child("atencion");
-	        var atn = {
-	        	nombre: $('#' + id_nombre_atn).val(),
-	        	area: $('#' + id_area_atn).val(),
-	        	celular: $('#' + id_celular_atn).val(),
-	        	email: $('#' + id_email_atn).val(),
-	        	extension: $('#' + id_extension_atn).val(),
-	        }
-	        atencion.push(atn);
-	        firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).update({atencion: atn});
+        atencion_atn = [];
+	    firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_cliente_ddl_atn + " option:selected").text()).once('value').then(function(snapshot){
+            var cliente = snapshot;
+            if(cliente.child("atencion").val() !== null){
+                atencion_atn = cliente.child("atencion").val();
+                atencion_atn.push({
+                    nombre: $('#' + id_nombre_atn).val(),
+                    area: $('#' + id_area_atn).val(),
+                    celular: $('#' + id_celular_atn).val(),
+                    email: $('#' + id_email_atn).val(),
+                    extension: $('#' + id_extension_atn).val(),
+                });
+                firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_cliente_ddl_atn + " option:selected").val()).update({atencion: atencion_atn});
+            } else {
+                atencion_atn.push({
+                    nombre: $('#' + id_nombre_atn).val(),
+                    area: $('#' + id_area_atn).val(),
+                    celular: $('#' + id_celular_atn).val(),
+                    email: $('#' + id_email_atn).val(),
+                    extension: $('#' + id_extension_atn).val(),
+                });
+                firebase.database().ref(rama_bd_clientes + "/" + $('#' + id_cliente_ddl_atn + " option:selected").val() + "/atencion").set(atencion_atn);
+            }
 	    });
 	    alert("Alta exitosa");
 	}

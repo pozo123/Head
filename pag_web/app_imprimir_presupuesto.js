@@ -7,8 +7,7 @@ var rama_bd_obras = "obras";
 
 //var multiples_consecutivos = false;
 
-$(document).ready(function() {
-
+$('#tabImprimirPresupuesto').click(function(){
     var select = document.getElementById(id_obra_ddl_imprimir);
     var option = document.createElement('option');
     option.style = "display:none";
@@ -24,6 +23,24 @@ $(document).ready(function() {
 
     });    
 });
+
+/* $(document).ready(function() {
+
+    var select = document.getElementById(id_obra_ddl_imprimir);
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
+
+    firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var obra = snapshot.val();
+        var option3 = document.createElement('option');
+        option3.text = option3.value = obra.nombre; 
+        select.appendChild(option3);
+
+    });    
+}); */
 
 //Agregar esta en onChange de ddlobras
 function loadDDLPresupuestosImprimir(){

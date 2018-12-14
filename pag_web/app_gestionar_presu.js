@@ -15,7 +15,30 @@ var horas_por_inge = [];
 var horas_ppto = 0;
 var horas_gestionadas = 0;
 
-$(document).ready(function() {
+$('#tabActivar').click(function(){
+
+  loadColaboradoresGestionar();
+
+  var select = document.getElementById(id_obra_ddl_gestionar);
+  var option = document.createElement('option');
+  option.style = "display:none";
+  option.text = option.value = "";
+  select.appendChild(option);
+  //var option2 = document.createElement('option');
+  //option2.text = option2.value = "Miscelaneo";
+  //select.appendChild(option2);
+
+  firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
+      
+      var obra = snapshot.val();
+      var option3 = document.createElement('option');
+      option3.text = option3.value = obra.nombre; 
+      select.appendChild(option3);
+
+  });  
+});
+
+/* $(document).ready(function() {
 
     loadColaboradoresGestionar();
 
@@ -37,8 +60,8 @@ $(document).ready(function() {
 
     });    
 });
-
-//Camie a gestionar
+ */
+//Cambie a gestionar
 function loadDDLPresupuestosGestionar(){
     $('#' + id_presupuestos_ddl_gestionar).empty();
     var select = document.getElementById(id_presupuestos_ddl_gestionar);
@@ -190,7 +213,7 @@ function loadColaboradoresGestionar(){
     if(inge.permisos.perfil === true){
       var horas_asignadas = 0;
       firebase.database().ref(rama_bd_obras).once('value').then(function(obras_snap){
-        snapshot.forEach(function(childSnapshot){
+        obras_snap.forEach(function(childSnapshot){
           childSnapshot.child("presupuestos").forEach(function(presu_snapshot){
             var presu = presu_snapshot.val();
             if(presu.contrato === true && presu.oculto === false && presu.terminado === false){
@@ -203,55 +226,83 @@ function loadColaboradoresGestionar(){
             }
           })
         })
+        if(inge.especialidad === 1 || inge.especialidad === 3){
+          var row2 = document.createElement('div');
+          row2.id = "row_" + inge.uid;
+          row2.className = "form-row";
+          var column1 = document.createElement('div');
+          column1.className = "col-lg-4 text-center";
+          var column2 = document.createElement('div');
+          column2.className = "col-lg-4 text-center";
+          var column3 = document.createElement('div');
+          column3.className = "col-lg-4 text-center";
+          //var checkbox = document.createElement('input');
+          //checkbox.type = "checkbox";
+          //checkbox.className = "row_checkbox_ie_gestionar";
+          //checkbox.value = inge.uid;
+          //checkbox.id = "check_" + inge.uid + "_ie_gestionar";
+          var label = document.createElement('label');
+          label.innerHTML = inge.nickname;//Puede ser innerText?
+
+          var textfield = document.createElement('input');
+          textfield.type = "text";
+          textfield.id = "text_" + inge.uid + "_ie_gestionar";
+          textfield.className = "row_text_ie_gestionar form-control";
+
+          var label_horas = document.createElement('label');
+          label_horas.innerHTML = horas_asignadas.toFixed(1);
+          //row2.appendChild(checkbox);
+          column1.appendChild(label);
+          column2.appendChild(textfield);
+          column3.appendChild(label_horas);
+
+          row2.appendChild(column1);
+          row2.appendChild(column2);
+          row2.appendChild(column3);
+          var div = document.getElementById(id_horas_column_ie_gestionar);
+          div.appendChild(row2);
+          horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ie"});
+        } 
+        if(inge.especialidad === 2|| inge.especialidad === 3){
+
+          var row1 = document.createElement('div');
+          row1.id = "row_" + inge.uid;
+          row1.id = "row_" + inge.uid;
+          row1.className = "form-row text-center";
+          var column1 = document.createElement('div');
+          column1.className = "col-lg-4 text-center";
+          var column2 = document.createElement('div');
+          column2.className = "col-lg-4 text-center";
+          var column3 = document.createElement('div');
+          column3.className = "col-lg-4 text-center";
+          //var checkbox = document.createElement('input');
+          //checkbox.type = "checkbox";
+          //checkbox.className ="row_checkbox_ihs_gestionar";
+          //checkbox.value = inge.uid;
+          //checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
+          var label = document.createElement('label');
+          label.innerHTML = inge.nickname;//Puede ser innerText?
+
+          var textfield = document.createElement('input');
+          textfield.type = "text";
+          textfield.id = "text_" + inge.uid + "_ihs_gestionar";
+          textfield.className = "row_text_ihs_gestionar form-control";
+
+          var label_horas = document.createElement('label');
+          label_horas.innerHTML = horas_asignadas.toFixed(1);
+          //row1.appendChild(checkbox);
+          column1.appendChild(label);
+          column2.appendChild(textfield);
+          column3.appendChild(label_horas);
+
+          row1.appendChild(column1);
+          row1.appendChild(column2);
+          row1.appendChild(column3);
+          var div = document.getElementById(id_horas_column_ihs_gestionar);
+          div.appendChild(row1);
+          horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ihs"});
+        }
       });
-      if(inge.especialidad === 1 || inge.especialidad === 3){
-        var row2 = document.createElement('div');
-        row2.id = "row_" + inge.uid;
-        //var checkbox = document.createElement('input');
-        //checkbox.type = "checkbox";
-        //checkbox.className = "row_checkbox_ie_gestionar";
-        //checkbox.value = inge.uid;
-        //checkbox.id = "check_" + inge.uid + "_ie_gestionar";
-        var label = document.createElement('label');
-        label.innerHTML = inge.nickname;//Puede ser innerText?
-        var textfield = document.createElement('input');
-        textfield.type = "text";
-        textfield.id = "text_" + inge.uid + "_ie_gestionar";
-        textfield.className = "row_text_ie_gestionar";
-        var label_horas = document.createElement('label');
-        label_horas.innerHTML = horas_asignadas;
-        //row2.appendChild(checkbox);
-        row2.appendChild(label);
-        row2.appendChild(textfield);
-        row2.appendChild(label_horas);
-        var div = document.getElementById(id_horas_column_ie_gestionar);
-        div.appendChild(row2);
-        horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ie"});
-      } 
-      if(inge.especialidad === 2|| inge.especialidad === 3){
-        var row1 = document.createElement('div');
-        row1.id = "row_" + inge.uid;
-        //var checkbox = document.createElement('input');
-        //checkbox.type = "checkbox";
-        //checkbox.className ="row_checkbox_ihs_gestionar";
-        //checkbox.value = inge.uid;
-        //checkbox.id = "check_" + inge.uid + "_ihs_gestionar";
-        var label = document.createElement('label');
-        label.innerHTML = inge.nickname;//Puede ser innerText?
-        var textfield = document.createElement('input');
-        textfield.type = "text";
-        textfield.id = "text_" + inge.uid + "_ihs_gestionar";
-        textfield.className = "row_text_ihs_gestionar";
-        var label_horas = document.createElement('label');
-        label_horas.innerHTML = horas_asignadas;
-        //row1.appendChild(checkbox);
-        row1.appendChild(label);
-        row1.appendChild(textfield);
-        row1.appendChild(label_horas);
-        var div = document.getElementById(id_horas_column_ihs_gestionar);
-        div.appendChild(row1);
-        horas_por_inge.push({uid: inge.uid, nombre: inge.nombre, especialidad: "ihs"});
-      }
     }      
   });
 }

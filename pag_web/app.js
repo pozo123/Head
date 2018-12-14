@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 
     firebase.auth().onAuthStateChanged(user => {
@@ -12,7 +13,22 @@ $(document).ready(function() {
             $("#cerrar").addClass("hidden");
         }
     }); 
-        
+    
+
+});
+
+
+
+$("#forgot").click(function () { 
+    var auth = firebase.auth();
+    firebase.auth().useDeviceLanguage();
+    var emailAddress = document.getElementById("loginEmail").value;
+    
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+      // Email sent.
+    }).catch(function(error) {
+      // An error happened.
+    });
 });
 
 $("#loginAceptar").click(function () { 
@@ -25,7 +41,7 @@ $("#loginAceptar").click(function () {
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
-
+        //Abre modal con reset password
         window.alert("Error: " + errorMessage);
     });
 

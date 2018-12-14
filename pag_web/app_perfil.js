@@ -134,7 +134,7 @@ function loadDDLPresupuestos(){
 $('#' + id_entrada_button_perfil).click(function () {
     var rb_ie = document.getElementById(id_ie_radio_perfil);
     var rb_ihs = document.getElementById(id_ihs_radio_perfil);
-    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || (!rb_ie.classList.contains("hidden") && rb_ie.checked == false && !rb_ihs.classList.contains("hidden") && rb_ihs.checked == false) ||($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_misc_perfil).val())){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || (!rb_ie.parentNode.classList.contains("hidden") && rb_ie.checked == false && !rb_ihs.parentNode.classList.contains("hidden") && rb_ihs.checked == false) ||($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_misc_perfil).val())){
         alert("Selecciona todos los campos");
     } else {
         var chamba;
@@ -271,7 +271,7 @@ $('#' + id_salida_button_perfil).click(function () {
                                     horas_trabajadas_p = horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
                             });
-                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo(chamba).on('child_added',function(snapshot){
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().equalTo("" + chamba).on('child_added',function(snapshot){
                                 var aux = snapshot.val();
                                 horas_totales = horas_registro + aux.horas_trabajadas;
                                 firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_totales);

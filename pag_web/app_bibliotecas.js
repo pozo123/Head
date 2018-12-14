@@ -125,6 +125,7 @@ var id_presu_modal_editar_bibliotecas = "presuModalEditar";
 var id_nombre_presu_editar_bibliotecas = "nombrePresuEditar";
 var id_horas_presu_editar_bibliotecas = "horasPresuEditar";
 var id_precio_presu_editar_bibliotecas = "precioPresuEditar";
+var id_clase_ddl_presu_editar_bibliotecas = "DDL_clasePresuEditar";
 
 var id_editar_presu_button_bibliotecas = "editarPresu";
 //____FIN MODALES_____
@@ -134,7 +135,14 @@ var nombre_seleccionado;
 var boton_editar_class;
 var boton_eliminar_class;
 
-$(document).ready(function() {
+/* function sleep(miliseconds) {
+	var currentTime = new Date().getTime();
+ 
+	while (currentTime + miliseconds >= new Date().getTime()) {
+	}
+ }
+ */
+ $(document).ready(function(){
 	firebase.auth().onAuthStateChanged(user => {
 		if(user) {
 			var username = user.uid;
@@ -152,6 +160,25 @@ $(document).ready(function() {
 		}
 	})
 });
+/* 
+$(document).ready(function() {
+	firebase.auth().onAuthStateChanged(user => {
+		if(user) {
+			var username = user.uid;
+			firebase.database().ref(rama_bd_inges).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+				var ing = snapshot.val();
+				if(ing.credenciales === 0 || ing.credenciales === 1 || ing.credenciales === 2){
+					boton_editar_class = "class='editar btn btn-primary'";
+					boton_eliminar_class = "class='editar btn btn-danger'";
+				}
+				else{
+					boton_editar_class = "class='editar btn btn-primary hidden'";
+					boton_eliminar_class = "class='editar btn btn-danger hidden'";
+				}
+			});
+		}
+	})
+}); */
 // métodos para cargar las funciones cuando se den click en los tabs del panel lateral
 $('#' + id_tab_clientes_bibliotecas).click(function(){
 	loadTablaClientes();
@@ -191,6 +218,8 @@ function loadTablaClientes(){
 		var tabla_clientes = $('#'+ id_datatable_clientes_bibliotecas).DataTable({
             destroy: true,
 			data: datos_clientes,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre",width: 150},
 				{title: "Clave",width: 70},
@@ -270,6 +299,8 @@ function loadTablaExclusionesYReqs(){
 		var tabla_exclusiones = $('#'+ id_datatable_exclusiones_bibliotecas).DataTable({
             destroy: true,
 			data: datos_exclusiones,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{defaultContent: "<button type='button' " + boton_editar_class + "data-toggle='modal' data-target='#excModalEditar'><i class='fas fa-edit'></i></button> <button type='button' " + boton_eliminar_class + "><i class='fas fa-trash'></i></button>"},
@@ -287,6 +318,8 @@ function loadTablaExclusionesYReqs(){
 		var tabla_reqs = $('#'+ id_datatable_reqs_bibliotecas).DataTable({
             destroy: true,
 			data: datos_reqs,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{title: "Esencial"},
@@ -397,6 +430,8 @@ function loadTablaGenerosYTipos(){
 		var tabla_generos = $('#'+ id_datatable_generos_bibliotecas).DataTable({
             destroy: true,
 			data: datos_generos,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{title: "Codigo"},
@@ -415,6 +450,8 @@ function loadTablaGenerosYTipos(){
 		var tabla_tipos = $('#'+ id_datatable_tipos_presupuesto_bibliotecas).DataTable({
             destroy: true,
 			data: datos_tipos_presupuesto,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{title: "Codigo"},
@@ -546,6 +583,8 @@ function loadTablaObras(){
 		var tabla_obras = $('#'+ id_datatable_obras_bibliotecas).DataTable({
             destroy: true,
 			data: datos_obras,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{title: "Clave"},
@@ -664,6 +703,8 @@ function loadTablaInges(){
 		var tabla_inges = $('#'+ id_datatable_inges_bibliotecas).DataTable({
             destroy: true,
 			data: datos_inges,
+			dom: 'Bfrtip',
+			buttons: ['excel'],
 			columns: [
 				{title: "Nombre"},
 				{title: "Nombre Corto"},
@@ -768,7 +809,23 @@ function loadTablaPresupuestos(){
 		firebase.database().ref(rama_bd_obras + "/" + obr.nombre + "/presupuestos").orderByChild("nombre").on("child_added",function(snapshot){
 			var presupuesto = snapshot.val();
 			var contrato;
-			var terminado
+			var terminado;
+			var oculto;
+			var clase;
+
+			if(presupuesto.clase === "produccion")
+				clase = "Producción";
+			else if(presupuesto.clase === "miscelaneo")
+				clase = "Misceláneo";
+			else if(presupuesto.clase === "cliente")
+				clase = "Cliente";
+			else
+				clase = "NA";
+
+			if(presupuesto.oculto === true)
+				oculto = "Oculto";
+			else
+				oculto = "No oculto";
 			if(presupuesto.contrato === true)
 				contrato = "Contrato";
 			else
@@ -790,18 +847,22 @@ function loadTablaPresupuestos(){
 				}
 				fecha_inicio = new Date(presupuesto.timestamps.startedAt).toLocaleDateString("es-ES", options_bibliotecas)
 			//alert(atn);
-			datos_presupuestos.push([presupuesto.nombre, obr.nombre, cash, presupuesto.clave, contrato, terminado, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
+			datos_presupuestos.push([presupuesto.nombre, obr.nombre, clase,cash, presupuesto.clave, contrato, terminado, oculto, presupuesto.horas_programadas, fecha_inicio, fecha_act, atn]);
 			var tabla_presupuestos = $('#'+ id_datatable_presupuestos_bibliotecas).DataTable({
 				destroy: true,
 				scrollX: true,
 				data: datos_presupuestos,
+				dom: 'Bfrtip',
+				buttons: ['excel'],
 				columns: [
 					{title: "Nombre"},
 					{title: "Obra"},
+					{title: "Clase"},
 					{title: "Precio total"},
 					{title: "Clave"},
 					{title: "Contrato"},
 					{title: "Terminado"},
+					{title: "Oculto"},
 					{title: "Horas programadas"},
 					{title: "Fecha de creacion"},
 					{title: "Fecha de activacion"},
@@ -820,13 +881,31 @@ function editar_presupuesto(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
 		if(data){
-			//console.log(data);
+			$('#' + id_clase_ddl_presu_editar_bibliotecas).empty();
+
+			var select = document.getElementById(id_clase_ddl_presu_editar_bibliotecas);   
+			var option2 = document.createElement('option');
+    		option2.style = "display:none";
+    		option2.text = option2.value = "NA";
+    		select.appendChild(option2);
+			
+			firebase.database().ref(rama_bd_clase).orderByChild('nombre').on('child_added',function(snapshot){
+        
+				var clase = snapshot.val();
+				var option = document.createElement('OPTION');
+				option.text = clase.nombre; 
+				option.value = clase.codigo;
+				select.appendChild(option);
+		
+			});
+			
 			firebase.database().ref(rama_bd_obras).orderByKey().equalTo(data[1]).on('child_added',function(snapshot){
 				var obra = snapshot.val();
 				console.log(obra);
 				$('#' + id_nombre_presu_editar_bibliotecas).val(data[0]);
-				$('#' + id_precio_presu_editar_bibliotecas).val(data[2]);
-				$('#' + id_horas_presu_editar_bibliotecas).val(data[5]);
+				$('#' + id_clase_ddl_presu_editar_bibliotecas).val(data[2]);//AQUI
+				$('#' + id_precio_presu_editar_bibliotecas).val(data[3]);
+				$('#' + id_horas_presu_editar_bibliotecas).val(data[8]);
 				obra_presu = obra.nombre;
 			});
 		nombre_seleccionado = data[0];
@@ -843,6 +922,7 @@ $('#' + id_editar_presu_button_bibliotecas).click(function(){
 		cash_presupuestado: parseFloat(cash_num),
 		nombre: nom,
 		horas_programadas: $('#' + id_horas_presu_editar_bibliotecas).val(),
+		clase: $('#' + id_clase_ddl_presu_editar_bibliotecas + " option:selected").text(),
 	}
 	if(nombre_seleccionado === nom){
 		firebase.database().ref(rama_bd_obras + "/" + obra_presu + "/presupuestos/" + nombre_seleccionado).update(presu);
@@ -893,6 +973,8 @@ function loadTablaAtn(){
 			var tabla_atn = $('#'+ id_datatable_atn_bibliotecas).DataTable({
 	            destroy: true,
 				data: datos_atn,
+				dom: 'Bfrtip',
+				buttons: ['excel'],
 				columns: [
 					{title: "Nombre"},
 					{title: "Cliente"},

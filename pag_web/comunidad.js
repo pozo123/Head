@@ -1,11 +1,28 @@
-// JavaScript source code
+
+var version;
+
 $(document).ready(function() {    
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
         $(this).toggleClass('active');
     });
+    //verifyVersion();
+    firebase.database().ref("info_web").once('value',function(snapshot){
+        version = snapshot.child("version").val();
+        verifyVersion();
+    });
+    //setInterval(verifyVersion, 43200000);
 });
 
+function verifyVersion() {
+    firebase.database().ref("info_web").on('value',function(snapshot){
+        var info = snapshot;
+        var ver = info.child("version").val();
+        if(ver !== version){
+            location.reload();
+        }
+    });
+}
 
 
 function openTabs(tabLink, tabName) {
@@ -81,6 +98,11 @@ firebase.auth().onAuthStateChanged(user => {
                     $('#pageSubmenuCierre').removeClass('hidden');
                 else
                     $('#pageSubmenuCierre').addClass('hidden');
+
+                if(user_bd.credenciales === 0)
+                    $('#pageSubmenuActRegs').removeClass('hidden');
+                else
+                    $('#pageSubmenuActRegs').addClass('hidden');
                     
                 flag = false;
             }

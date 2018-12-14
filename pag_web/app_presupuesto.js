@@ -2,10 +2,12 @@ var id_nombre_presupuesto = "presupuestoNombre";
 var id_horas_programadas_ie_presupuesto = "horasProgramadasIe";
 var id_horas_programadas_ihs_presupuesto = "horasProgramadasIhs";
 var id_registrar_button_presupuesto = "registrarPresupuesto";
+var id_vistaPrevia_button_presupuesto = "vistaPreviaPresupuesto";
 var id_borrar_todo_presupuesto = "borrarTodoPresupuesto"
 var id_obra_ddl_presupuesto = "obraPresupuesto";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto";
 var id_genero_ddl_presupuesto = "DDLgenero";
+var id_clase_ddl_presupuesto = "DDLclase";
 var id_precio_presupuesto = "precioPresupuesto";
 var id_precio_sugerido_label_presupuesto = "labelCash";
 
@@ -28,6 +30,7 @@ var rama_bd_obras = "obras";
 var rama_bd_reqs = "reqs";
 var rama_bd_exclusiones = "exclusiones";
 var rama_bd_clientes = "clientes";
+var rama_bd_clase = "clase";
 
 var alcance_txt = 'alcance';
 var tiempoEntrega_txt = 'tiempoEntrega';
@@ -39,6 +42,18 @@ var precio_hora = 2000;
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
 var alcance = [];
+
+function loadPrecioHora(){
+    var clase = $('#' + id_clase_ddl_presupuesto + " option:selected").val();
+    console.log(clase);
+    if(clase === "MI"){
+        precio_hora = -550;
+    } else if(clase === "PR"){
+        precio_hora = 1000;
+    } else {
+        precio_hora = 2000;
+    }
+};
 
 $('#' + id_horas_programadas_ie_presupuesto).change(function(){
     if($('#' + id_horas_programadas_ie_presupuesto).val() === "")
@@ -52,7 +67,7 @@ $('#' + id_horas_programadas_ihs_presupuesto).change(function(){
     $('#' + id_precio_sugerido_label_presupuesto).text("*Precio mínimo sugerido: " + formatMoney(((parseFloat($('#' + id_horas_programadas_ie_presupuesto).val()) + parseFloat($('#' + id_horas_programadas_ihs_presupuesto).val()))* precio_hora)));
 });
 
-$(document).ready(function() {
+$('#tabPresupuesto').click(function() {
 
     jQuery('#' + id_fecha_nota).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -75,7 +90,7 @@ $(document).ready(function() {
     document.getElementById((id_horas_programadas_ihs_presupuesto)).value = 0
     
 
-    $( "#anticipo" ).click(function() {
+    $("#anticipo").click(function() {
         document.getElementById(id_anticipo2_rb_presupuesto).checked = true
       });
 
@@ -96,6 +111,12 @@ $(document).ready(function() {
     option7.style = "display:none";
     option7.text = option7.value = "";
     select4.appendChild(option7);
+
+    var select5 = document.getElementById(id_clase_ddl_presupuesto);   
+    var option9 = document.createElement('option');
+    option9.style = "display:none";
+    option9.text = option9.value = "";
+    select5.appendChild(option9);
     
     //El id puede que tenga que ser integer
     //var myData = [];
@@ -141,6 +162,16 @@ $(document).ready(function() {
         option8.text = genero.nombre; 
         option8.value = genero.codigo;
         select4.appendChild(option8);
+
+    });
+
+    firebase.database().ref(rama_bd_clase).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var clase = snapshot.val();
+        var option10 = document.createElement('OPTION');
+        option10.text = clase.nombre; 
+        option10.value = clase.codigo;
+        select5.appendChild(option10);
 
     });
 });
@@ -1164,8 +1195,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 horas_programadas: horas_totales,
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
-                                    horas_programadas_ie: horas_ie_totales,
-                                    horas_programadas_ihs: horas_ihs_totales,
+                                    horas_totales_ie: horas_ie_totales,
+                                    horas_totales_ihs: horas_ihs_totales,
                                     ie: {},
                                     ihs: {},
                                 },
@@ -1191,6 +1222,9 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 pagos: "vacio",
                                 consec: consecutivo,
                                 oculto: false,
+                                tipo: $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text(),
+                                genero: $('#' + id_genero_ddl_presupuesto + " option:selected").text(),
+                                clase: $('#' + id_clase_ddl_presupuesto + " option:selected").text(),
                             }
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).update(presupuesto);
                             firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
@@ -1240,8 +1274,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 horas_programadas: horas_totales,
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
-                                    horas_programadas_ie: horas_ie_totales,
-                                    horas_programadas_ihs: horas_ihs_totales,
+                                    horas_totales_ie: horas_ie_totales,
+                                    horas_totales_ihs: horas_ihs_totales,
                                     ie: {},
                                     ihs: {},
                                 },
@@ -1267,6 +1301,9 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 pagos: "vacio",
                                 consec: 1,
                                 oculto: false,
+                                tipo: $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text(),
+                                genero: $('#' + id_genero_ddl_presupuesto + " option:selected").text(),
+                                clase: $('#' + id_clase_ddl_presupuesto + " option:selected").text(),
                             }
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).set(presupuesto);
                             firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
@@ -1327,6 +1364,955 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                             });
                         };
                     });
+                });
+                
+                //_____
+                
+            });            
+        });
+    }
+
+});
+
+$('#' + id_vistaPrevia_button_presupuesto).click(function () {
+    if(!$('#' + id_nombre_presupuesto).val() || !$('#' + id_horas_programadas_ie_presupuesto).val() || !$('#' + id_horas_programadas_ihs_presupuesto).val() || $('#' + id_obra_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val() === "" || $('#' + id_genero_ddl_presupuesto + " option:selected").val() === ""){
+        alert("Llena todos los campos requeridos");
+    } else {
+            firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
+            var obra_selec = snapshot.val();
+            firebase.database().ref(rama_bd_clientes).orderByChild("nombre").equalTo(obra_selec.cliente).once('child_added').then(function(snapshot){
+                var cliente_selec = snapshot.val();
+                var codigo_obra = obra_selec.clave;
+                var codigo_cliente = cliente_selec.clave;
+                var codigo_tipo_proyecto = $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").val();
+                var codigo_genero = $('#' + id_genero_ddl_presupuesto + " option:selected").val();            
+                var anticipo;
+                var anticipo_str;
+                if(document.getElementById(id_anticipo1_rb_presupuesto).checked === true){
+                    anticipo = 0;
+                    anticipo_str = "100% contra entrega";
+                }
+                else if(document.getElementById(id_anticipo2_rb_presupuesto).checked === true){
+                    anticipo = $('#' + id_anticipo_presupuesto).val();
+                    anticipo_str = anticipo + "% anticipo, resto contra avance";
+                }
+                else if(document.getElementById(id_anticipo3_rb_presupuesto).checked === true){
+                    anticipo = 100;
+                    anticipo_str = "100% anticipo";
+                }
+
+                var reqs_lista = $('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("checked");
+                var reqs_str = "";
+                for(i=0;i<reqs_lista.length;i++){
+                    reqs_str = reqs_str + "-" + reqs_lista[i].label + "\n";
+                }
+
+                var exc_lista = $('#' + id_exclusiones_ddl_check_presupuesto).dropdownCheckbox("checked");
+                var exc_str = "";
+                for(i=0;i<exc_lista.length;i++){
+                    exc_str = exc_str + "-" + exc_lista[i].label + "\n";
+                }
+
+                var atn_lista = $('#' + id_atn_ddl_check_presupuesto).dropdownCheckbox("checked");
+                var atn_str = "";
+                for(i=0;i<atn_lista.length;i++){
+                    atn_str = atn_str + atn_lista[i].label + "\n";
+                }
+                
+                //Genero el bloque dinamico de 1.i alcances
+                var precio_total = 0;
+                var horas_totales = 0;
+                var horas_ie_totales = 0;
+                var horas_ihs_totales = 0;
+                var alcance_pdf = [];
+                
+                for(i = 0; i < 10; i++){
+                    var num = i+1;
+                    if(i<alcance.length){
+                        alcance_pdf[i] = [
+                            {  
+                                border: [true, false, true, false],
+                                text: '1.'+ num,
+                                margin: [0,5],
+                                alignment: 'center',
+                                fontSize:8,
+                                textAlign: 'center',
+                            },
+                            {  
+                                colSpan:4,
+                                border: [true, false, true, false],
+                                text: alcance[i].texto,         
+                                margin: [0,5],
+                                fontSize:8,
+                                alignment: 'justify',
+                            },
+                            '',
+                            '',
+                            '',
+                            {  
+                                border: [true, false, true, false],
+                                text:"$ "+ formatMoney(alcance[i].precio),
+                                margin: [0,5],
+                                alignment: 'center',
+                                fontSize:10,
+                            }];
+                            precio_total = precio_total + Number(alcance[i].precio);
+                            horas_ie_totales = horas_ie_totales + Number(alcance[i].horas_ie);
+                            horas_ihs_totales = horas_ihs_totales + Number(alcance[i].horas_ihs);                            
+                            horas_totales = horas_totales + Number(alcance[i].horas);
+                    } else {
+                        alcance_pdf[i] = [
+                            {  
+                                border: [true, false, true, false],
+                                margin: [0,0.001],
+                                text: "",
+                            },
+                            {  
+                                colSpan:4,
+                                border: [true, false, true, false],
+                                margin: [0,0.001],
+                                text: "",
+                            },
+                            '',
+                            '',
+                            '',
+                            {  
+                                border: [true, false, true, false],
+                                margin: [0,0.001],
+                                text: "",
+                            },
+                        ]
+                    }                   
+                }
+                
+                
+                //Querys a probar para contar cons
+                //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
+                var consecutivo;
+                var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
+
+
+                firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).once('value').then(function(snapshot){
+                    var p = snapshot.val();
+                    if(p !== null){
+                        consecutivo = p.consec + 1;
+                        var consecutivo_str = ("00" + consecutivo).slice(-3);
+                        clave_presu = clave_presu + consecutivo_str;
+                    } else {
+                        clave_presu = clave_presu + "001";
+                    }
+
+                    //________________________________________________________________________________________
+                    var tiempoEntrega = $('#' + tiempoEntrega_txt).val()
+                    var anexos = $('#' + anexos_txt).val()
+
+                    var terminosFiscales = "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "\n";
+                    var terminosBancarios = "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "\n";
+                    var fiscales = "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "\n";
+                    var bancarios = "\n" + "\n" +"\n" +"\n" +"\n" +"\n" +"\n" + "\n"; 
+                    var tituloF = "";
+                    var tituloB = "";
+                    var notaDia = "";
+                    var fecha_nota ="";
+
+                    if($('#' + id_fecha_nota).val() === ""){
+                        fecha_nota = "";
+                    } else {
+                        fecha_nota = new Date($('#' + id_fecha_nota).val());
+                        fecha_nota = fecha_nota.toLocaleDateString("es-ES",options);
+                        notaDia = "el día ";
+                    }
+
+                    if(document.getElementById('fiscales').checked === true){
+                        tituloF = "Datos de Facturación"
+                        terminosFiscales = "Nombre de la empresa:" + "\n" +
+                        "Contacto:" + "\n" +
+                        "Teléfono:" + "\n" +
+                        "Email:" + "\n" +
+                        "Dirección:" + "\n" + "\n" +
+                        "RFC:";
+
+                        fiscales = "Head Administraciones, S.A. de C.V." + "\n" + "\n"+
+                        "C.P. Luis Cortez" + "\n" +
+                        "62737900" + "\n" +
+                        "luis@headingenieria.mx" + "\n" +
+                        "Av. Constituyentes 561 Int. 101a, Col. América, Miguel Hidalgo, Ciudad de México, C.P. 11820" + "\n" +
+                        "HAD160523HH3";
+                    }
+
+                    if(document.getElementById('bancarios').checked === true){
+                        tituloB = "Datos Bancarios"
+                        terminosBancarios ="Nombre del beneficiaro:" + "\n" +
+                        "Banco:" + "\n" +
+                        "Número de cuenta:" + "\n" +
+                        "CLABE:" + "\n" +
+                        "Tipo de cuenta:" + "\n";
+                        
+                        bancarios = "Head Administraciones, S.A. de C.V." + "\n" + "\n"+ 
+                        "Banco Mifel, S.A." + "\n" +
+                        "1600279218" + "\n" +
+                        "042180016002792181" + "\n" +
+                        "Moneda Nacional" + "\n";
+                    }
+
+                    var pdfPresupuesto = {
+                        pageSize: 'LETTER',
+                    
+                        // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
+                        pageMargins: [ 40, 72, 23, 40],
+                        footer: { fontSize:8,alignment: 'center', text:'Av. Constituyentes 561 Int. 101a, Col. América, Miguel Hidalgo, Ciudad de México, C.P. 11820, Tel. 6273 7900 , email: proyectos@headingenieria.mx'},
+                        header:function(currentPage, pageCount) {
+                            return{
+                                columns: [
+                                    {
+                                        text: "NO VÁLIDO",
+                                        width: 70,
+                                        height: 50,
+                                        alignment: 'left',
+                                    },
+                                    {
+                                        text: "\n" + "página " + currentPage.toString() + " de " + pageCount +"\n" + fecha_actual.toLocaleDateString("es-ES",options) + "\n"+ "CDMX",
+                                        fontSize: 8,
+                                        alignment: 'right',   
+                                    },
+                                ],
+                                margin: [40, 20],
+                            };},
+                        content: [
+                            { table:{
+                                    widths: ['*', 120, '*', '*','*',120],
+                                    body:[
+                                        //primer segmento, barra y logo. 50%.
+                                        // segunda linea 100%
+                                        [
+                                            {
+                                                border: [false, false, false, false],
+                                                text: "Obra:",
+                                                alignment: 'center',
+                                                margin: [0,5],
+                                                fontSize: 8,
+                                            },
+                                            {
+                                                border: [false, false, false, false],
+                                                text: "DOCUMENTO NO VÁLIDO",
+                                                bold: true,
+                                                color:'red',
+                                                margin: [0,5],
+                                                fontSize:10,
+                                            },
+                                            {   
+                                                colSpan:4,
+                                                border: [false, false, false, false],
+                                                text: 'PRESUPUESTO',
+                                                color:'#2C3F5A',
+                                                bold: true,
+                                                alignment: 'center',
+                                                margin: [0,5],
+                                                fontSize: 10,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+
+                                        // Tercera línea, falta poner programación de dirección y tipo
+                                        [
+                                            {
+                                                rowSpan:5,
+                                                border: [false, false, false, false],
+                                                text: "Dirección:",
+                                                alignment: 'center',
+                                                margin: [0,5],
+                                                fontSize: 8,
+                                            },
+                                            {
+                                                rowSpan:5,
+                                                border: [false, false, false, false],
+                                                text: "Calle: " +  obra_selec.direccion.calle + ", No. " + obra_selec.direccion.numero + "\n" +
+                                                "COL. " + obra_selec.direccion.colonia + "\n" + obra_selec.direccion.delegacion + ", \n" + 
+                                                obra_selec.direccion.ciudad,
+                                                margin: [0,5],
+                                                fontSize:8,
+                                            },
+                                            {   
+                                                colSpan:4,
+                                                border: [false, false, false, false],
+                                                text: $('#' + id_nombre_presupuesto).val().toUpperCase(),
+                                                bold: true,
+                                                margin: [0,5],
+                                                fontSize: 8,
+                                                alignment: 'center',
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+
+                                        [
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2, rowSpan:2,
+                                                border: [false, false, false, false],
+                                                text: 'CLAVE: ',
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'right',
+                                            },
+                                            '',
+                                            {   colSpan:2, rowSpan:2,
+                                                border: [false, false, false, false],
+                                                text: clave_presu,
+                                                bold: true,
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'center',
+                                            },
+                                            '',
+                                        ],
+                                        [
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: 'CLIENTE: ',
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'right',
+                                            },
+                                            '',
+                                            {   colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: obra_selec.cliente,
+                                                bold: true,
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'center',
+                                            },
+                                            '',
+                                        ],
+                                        [
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: 'AT \' N: ',
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'right',
+                                            },
+                                            '',
+                                            {   colSpan:2,
+                                                border: [false, false, false, false],
+                                                text:  atn_str, // falta la programación del ATN
+                                                bold: true,
+                                                margin: [0,1],
+                                                fontSize: 8,
+                                                alignment: 'center',
+                                            },
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'Presentamos a su consideración las especificaciones, descripción, alcances y condiciones de este presupuesto por el diseño de las instalaciones abajo mencionadas a efectuarse en la obra: ' + obra_selec.nombre.toUpperCase(),
+                                                margin: [0,5],
+                                                fontSize: 8,
+                                                alignment: 'justify',
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        
+                                        // segundo bloqu2
+                                        // alcances 100%
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '1',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center'
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: 'DESCRIPCIÓN DEL PRESUPUESTO',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+
+                                        //[
+                                        //     {  
+                                        //         border: [true, true, true, true],
+                                        //         text: '1.1',
+                                        //         margin: [0,5],
+                                        //         alignment: 'center',
+                                        //         fontSize:8,
+                                        //         textAlign: 'center',
+                                        //     },
+                                        //     {  
+                                        //         colSpan:4,
+                                        //         border: [true, true, true, true],
+                                        //         text: alcance,           
+                                        //         margin: [0,5],
+                                        //         fontSize:8,
+                                        //         alignment: 'justify',
+                                        //     },
+                                        //     '',
+                                        //     '',
+                                        //     '',
+                                        //     {  
+                                        //         border: [true, true, true, true],
+                                        //         text:"$ "+ formatMoney($('#' + id_precio_presupuesto).val()),
+                                        //         margin: [0,5],
+                                        //         alignment: 'center',
+                                        //         fontSize:10,
+                                        //     },
+                                        // ],
+                                        alcance_pdf[0],alcance_pdf[1],alcance_pdf[2],alcance_pdf[3],alcance_pdf[4],alcance_pdf[5],alcance_pdf[6],alcance_pdf[7],alcance_pdf[8],alcance_pdf[9],/* alcance_pdf[10],alcance_pdf[11],alcance_pdf[12],alcance_pdf[13],alcance_pdf[14], */
+                                        [
+                                            {  
+                                                colSpan: 6,
+                                                border: [true, true, true, true],
+                                                margin: [0,2],
+                                                text: "",
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '2',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            {   colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: 'REQUERIMIENTOS ANTES DE INICIAR',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '2.1',
+                                                margin: [0,5],
+                                                alignment: 'center',
+                                                fontSize:8,
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: reqs_str,         
+                                                margin: [0,5],
+                                                fontSize:8,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                colSpan: 6,
+                                                border: [true, true, true, true],
+                                                margin: [0,2],
+                                                text: "",
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '3',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: 'EXCLUSIONES',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '3.1',
+                                                margin: [0,5],
+                                                alignment: 'center',
+                                                textAlign: 'center',
+                                                fontSize:8,
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: exc_str,          
+                                                margin: [0,5],
+                                                fontSize:8,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                colSpan: 6,
+                                                border: [true, true, true, true],
+                                                margin: [0,2],
+                                                text: "",
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '4',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            {   colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: 'ANEXOS',
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        [
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: '4.1',
+                                                margin: [0,5],
+                                                alignment: 'center',
+                                                textAlign: 'center',
+                                                fontSize:8,
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: anexos,           
+                                                margin: [0,5],
+                                                fontSize:8,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        
+                                    ],
+                                },},
+                                {text:' '},
+                                { table:{
+                                    widths: ['*', 120, '*', '*','*',120],
+                                    body:[
+                                        [
+                                            { 
+                                                border: [true, true, true, true],
+                                                text: 'IMPORTE CON LETRA',
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            {  
+                                                colSpan:5,
+                                                border: [true, true, true, true],
+                                                text: numeroALetras((precio_total*1.16).toFixed(2)),
+                                                bold: true,
+                                                margin: [0,1],
+                                                fillColor: '#dddddd',
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            '',
+                                            '',
+                                            '',
+                                        ],
+                                        
+                                        [
+                                            {  
+                                                colSpan:3,
+                                                border: [false, false, true, false],
+                                                text: '',
+                                                margin: [0,0],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2,
+                                                border: [true, true, true, false],
+                                                text: 'Subtotal',
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: "$ "+formatMoney(precio_total),
+                                                bold: true,
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            }
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:3,
+                                                border: [false, false, false, false],
+                                                text: '',
+                                                margin: [0,0],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2,
+                                                border: [true, false, true, false],
+                                                text: 'I.V.A',
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: "$ " + formatMoney(precio_total*0.16),
+                                                bold:true,
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            }
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:3,
+                                                border: [false, false, true, false],
+                                                text: '',
+                                                margin: [0,0],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            '',
+                                            {  
+                                                colSpan:2,
+                                                border: [true, false, true, true],
+                                                text: 'TOTAL',
+                                                bold:true,
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            {  
+                                                border: [true, true, true, true],
+                                                text: "$ " + formatMoney(precio_total*1.16),
+                                                bold: true,
+                                                margin: [0,0],
+                                                alignment: 'right',
+                                                fontSize: 8,
+                                            }
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: '',
+                                                margin: [0,5],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '',
+                                            {  
+                                                colSpan:4,
+                                                border: [false, false, false, false],
+                                                text: 'Condiciones Comerciales: ',
+                                                bold:true,
+                                                margin: [0,10],
+                                                alignment: 'left',
+                                                fontSize: 10,
+                                            },
+                                            '','','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: anticipo_str,
+                                                margin: [0,3],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'Precios incluyen IVA' + '\n' + 'Precios expresados en moneda nacional. ',
+                                                margin: [0,5],
+                                                bold:true,
+                                                alignment: 'left',
+                                                fontSize: 8,
+                                                color :"#6FAFB4"
+                                            },
+                                            '',
+
+                                            '','','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'TIEMPO DE ENTREGA',
+                                                bold: true,
+                                                margin: [0,5],
+                                                alignment: 'left',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'El tiempo requerido para la elaboración de los anteriores trabajos es como se indica más adelante, a partir de la fecha de recepción del anticipo y del 100% de los requerimientos solicitados.',
+                                                margin: [0,3],
+                                                alignment: 'left',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: tiempoEntrega + "\n" + "\n" +"\n",
+                                                margin: [0,5],
+                                                alignment: 'left',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'Aténtamente',
+                                                margin: [0,10],
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                                bold: true,
+                                            },
+                                            '','','','','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: '______________________________________',
+                                                margin: [0,3],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+
+                                        ],
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: 'Arq. Miguel E. Bravo Dufau' +"\n" +"\n" +"\n" +"\n",
+                                                margin: [0,3],
+                                                alignment: 'center',
+                                                fontSize: 10,
+                                            },
+                                            '','','','','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:3,
+                                                border: [false, false, false, false],
+                                                text: tituloB,
+                                                bold: true,
+                                                margin: [0,3],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },
+                                            '','',
+                                            {  
+                                                colSpan:3,
+                                                border: [false, false, false, false],
+                                                text: tituloF,
+                                                bold: true,
+                                                margin: [0,3],
+                                                alignment: 'center',
+                                                fontSize: 8,
+                                            },'','',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:1,
+                                                border: [false, false, false, false],
+                                                text: terminosBancarios,
+                                                margin: [0,2],
+                                                alignment: 'left',
+                                                fontSize: 7,
+                                            },
+                                            {  
+                                                colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: bancarios,
+                                                margin: [0,2],
+                                                alignment: 'left',
+                                                fontSize: 7,
+                                            },
+                                            '',
+                                            {  
+                                                colSpan:1,
+                                                border: [false, false, false, false],
+                                                text: terminosFiscales,
+                                                margin: [0,2],
+                                                alignment: 'left',
+                                                fontSize: 7,
+                                            },
+                                            {  
+                                                colSpan:2,
+                                                border: [false, false, false, false],
+                                                text: fiscales,
+                                                margin: [0,2],
+                                                alignment: 'left',
+                                                fontSize: 7,
+                                            },
+                                            '',
+
+                                        ],
+
+                                        [
+                                            {  
+                                                colSpan:6,
+                                                border: [false, false, false, false],
+                                                text: "Notas:" + "\n" +"\n" + "-Todas las cantidades o volumetrías fueron tomadas de acuerdo al proyecto enviado por el cliente " + notaDia + fecha_nota,
+                                                margin: [0,10],
+                                                alignment: 'left',
+                                                fontSize: 8,
+                                            },
+                                            '','','','','',
+                                        ],                                    
+                                    ]
+                                },
+                                unbreakable:true,
+                            }
+                        ],
+    /*                     pageBreakBefore: function(currentNode){
+                            if(currentNode.id === 'break' && currentNode.pageNumbers.length === 1 ){
+                                alert(currentNode.pages)
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } */          
+                    };
+
+                    const pdfDocGenerator = pdfMake.createPdf(pdfPresupuesto)
+
+                    pdfDocGenerator.open()
+
+                    pdfDocGenerator.download(clave_presu+'NO_VALIDO.pdf')
+
                 });
                 
                 //_____

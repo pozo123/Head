@@ -12,7 +12,25 @@ var id_activar_checkbox_permisos = "checkActivar";
 var id_alta_exc_reqs_checkbox_permisos = "checkExcReqs";
 var id_alta_generos_tipos_checkbox_permisos = "checkGenerosTipos";
 
-$(document).ready(function() {
+$('#tabPermisos').click(function(){
+    var select = document.getElementById(id_colaborador_ddl_permisos);
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
+
+    firebase.database().ref(rama_bd_inges).orderByChild('nombre').on('child_added',function(snapshot){
+        
+        var inge = snapshot.val();
+        var option2 = document.createElement('option');
+        option2.text = option2.value = inge.nombre; 
+        select.appendChild(option2);
+        
+
+    });   
+});
+
+/* $(document).ready(function() {
     
     var select = document.getElementById(id_colaborador_ddl_permisos);
     var option = document.createElement('option');
@@ -30,7 +48,7 @@ $(document).ready(function() {
 
     });
     
-});
+}); */
 
 //Esta hay que ponerla en el onchange del ddl inges
 function loadCheckboxesPermisos(){

@@ -15,12 +15,14 @@ $('#' + id_cerrar_button_cierre).click(function(){
                 firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(status);
 				firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
 				var username = ing.uid;
+				var stat = false;
+				firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(stat);
+
 				firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra).orderByChild("presupuesto").equalTo(regis.presupuesto).once("child_added").then(function(snapshot){
 					var aux = snapshot.val();
-					horas_previas = aux.horas_trabajadas;
-					var stat = false;
-					firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + obra_key + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_registro + horas_previas);
-					firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(stat);
+					var horas_previas = aux.horas_trabajadas;
+					var horas_nuevas = parseFloat(horas_registro) + parseFloat(horas_previas)
+					firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + obra_key + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
 				});
 				var esp;
 				if(ing.especialidad == 1)
@@ -31,7 +33,7 @@ $('#' + id_cerrar_button_cierre).click(function(){
 				esp = ing.esp_chamba;
 				else
 				esp = "NA";
-				if(esp !== "NA"){
+				if(esp !== "NA" && regis.obra != "Miscelaneo"){
 					firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
 						var horas_trabajadas = snapshot.val();
 						horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;

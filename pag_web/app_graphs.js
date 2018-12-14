@@ -93,8 +93,8 @@ function loadGraphs(){
                                 },
                                 title: {
                                     display: true,
-                                    text: presu_snapshot.child("nombre").val()
-                                }
+                                    text: [childSnapshot.child("nombre").val(),presu_snapshot.child("nombre").val()]
+                                },
                             }
                         });
                     });
