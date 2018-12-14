@@ -772,7 +772,7 @@ function loadTablaPresupuestos(){
 			if(presupuesto.contrato === true)
 				contrato = "Contrato";
 			else
-				contrato = "No contrato";
+				contrato = "Presupuesto";
 			if(presupuesto.terminado === true)
 				terminado = "Terminado";
 			else
