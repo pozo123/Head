@@ -1,9 +1,9 @@
 
 var id_obra_ddl_reportePpto = "ddlObraReportePpto";
 var id_ppto_ddl_reportePpto = "ddlPptoReportePpto";
+var id_generar_button_reportePpto = "reportePptoButton";
 
 var rama_bd_obras = "obras";
-
 
 
 $(document).ready(function(){
@@ -41,8 +41,7 @@ function loadDDLPresupuestosReportePpto(){
     
 }
 // Queries para obtener variables
-//On $('#' + id_generar_button_reportePpto).click
-function getDatos(){
+$('#' + id_generar_button_reportePpto).click(function() {
 // Datos Generales
 	var nombreObra;
 	var nombrePresu;
@@ -65,7 +64,7 @@ function getDatos(){
 	var terminado;
 
 // Progreso del PPTO.
-	var horasTrabajadasIE
+	var horasTrabajadasIE;
 	var horasTrabajadasIHS;// (usando el método de sumar con hora actual)
 
 // Análisis por colaborador
@@ -77,7 +76,6 @@ function getDatos(){
 
 // versiones
 // precio, horasProgramadasIE, horasProgramadasIHS.
-
 	
 	//Ver si los snapshots sí jalan bien, con eso de que son once value y así
 	firebase.database().ref(rama_bd_obras + $('#' + id_obra_ddl_reportePpto + " option:selected").val()).once('value').then(function{
@@ -93,23 +91,23 @@ function getDatos(){
 			tipoPresu = ppto.tipo;
 			generoPresu = ppto.genero;
 			versionPresu = ppto.consec;
-			horasProgramadasIE = ppto.colaboradores_asignados.horas_totales_ie;
-			horasProgramadasIHS = ppto.colaboradores_asignados.horas_totales_ihs;
+			horasProgramadasIE = snapshot.child("colaboradores_asignados/horas_totales_ie");
+			horasProgramadasIHS = snapshot.child("colaboradores_asignados/horas_totales_ihs");
 
 			cashPresupuestado = ppto.cash_presupuestado;
 
 			if(ppto.timestamps.startedAt === 0)
 				fechaInicio = "NA";
 			else
-				fechaInicio = new Date(ppto.timestamps.startedAt).toLocaleDateString("es-ES",options)
+				fechaInicio = new Date(snapshot.child("timestamps.startedAt")).toLocaleDateString("es-ES",options);
 			if(ppto.timestamps.activacion === 0)
 				fechaActivacion = "NA";
 			else
-				fechaActivacion = new Date(ppto.timestamps.activacion).toLocaleDateString("es-ES",options)
+				fechaActivacion = new Date(snapshot.child("timestamps.activacion")).toLocaleDateString("es-ES",options);
 			if(ppto.timestamps.finishedAt === 0)
 				fechaFinal = "NA";
 			else
-				fechaFinal = new Date(ppto.timestamps.finishedAt).toLocaleDateString("es-ES",options)
+				fechaFinal = new Date(snapshot.child("timestamps.finishedAt")).toLocaleDateString("es-ES",options);
 
 			if(ppto.contrato)
 				contrato = "Contrato";
@@ -120,9 +118,28 @@ function getDatos(){
 				terminado = "Terminado";
 			else
 				terminado = "En proceso";
-			
-				//var horasTrabajadasIE
-				//var horasTrabajadasIHS;// (usando el método de sumar con hora actual)
+
+			snapshot.child("colaboradores_asignados/ie").forEach(function(inge_snapshot){
+                horasTrabajadasIE += parseFloat(inge_snapshot.val().horas_trabajadas);
+			});
+			presu_snapshot.child("colaboradores_asignados/ihs").forEach(function(inge_snapshot){
+                horasTrabajadasIHS += parseFloat(inge_snapshot.val().horas_trabajadas);
+			});				
+
+			firebase.database().ref(rama_bd_registros).orderByChild("status").equalTo(false).on('value',function(snapshot){
+                //var regs = snapshot.val();
+                snapshot.forEach(function(childSnapshot){
+                    reg = childSnapshot.val();
+                    if(reg.presupuesto == ppto.nombre){
+                        if(reg.esp == "ie")
+                        horasTrabajadasIE += parseFloat((new Date().getTime() - reg.checkin)/3600000);
+                        else
+                        horasTrabajadasIHS += parseFloat((new Date().getTime() - reg.checkin)/3600000);
+                    }
+                });
+            }
+			//var horasTrabajadasIE
+			//var horasTrabajadasIHS;// (usando el método de sumar con hora actual)
 
 			// Análisis por colaborador
 				//var nombreInge;
@@ -136,7 +153,7 @@ function getDatos(){
 			// precio, horasProgramadasIE, horasProgramadasIHS.
 		});
 	});
-}
+});
 
 
 
