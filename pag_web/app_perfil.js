@@ -259,14 +259,14 @@ $('#' + id_salida_button_perfil).click(function () {
                         if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo"){
                             firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
                                 var horas_trabajadas = snapshot.val();
-                                horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;
+                                horas_trabajadas = horas_trabajadas + horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
                             });
                             firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto).once("value").then(function(snapshot){
                                 var presu = snapshot.val();
                                 var horas_trabajadas_p;
-                                if(presu.horas_trabajadas === null)
-                                    horas_trabajadas_p = (presu.horas_trabajadas + horas_registro)/3600000;
+                                if(presu.horas_trabajadas !== null)
+                                    horas_trabajadas_p = presu.horas_trabajadas + horas_registro/3600000;
                                 else
                                     horas_trabajadas_p = horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
