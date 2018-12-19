@@ -23,6 +23,7 @@ Deploy:
   - modal cambio contraseña
 
 - Primordiales
+  - En graphs que vayan de 0, porque si no no se ven bien las proporciones
   - horas_trabajadas no suma, solo actualiza
   - si calendarios vacios reportes de todas las fechas
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
@@ -64,3 +65,5 @@ Deploy:
 - JUNTA
   - Respaldo
   - Reportes semanales/mensuales
+  - Miscelaneo
+  - 
