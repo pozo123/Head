@@ -7,9 +7,9 @@ Deploy:
  
  DICIEMBRE:
   - Revisar que sumar horas sirva
-  - Generar ppto "miscelaneo" automáticamente cuando se da un alta de obra
-    - Dar de alta los pptos miscelaneos de las obras ya existentes
-  - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea. Cambiar la funcionalidad en tooooodas las apps :/
+  - Miscelaneo:
+     - Dar de alta los pptos miscelaneos de las obras ya existentes
+     - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea (en perfil). Cambiar la funcionalidad en toooodas las apps :/
   - Cierre maestro 5 pm? o cómo?
   - Reporte ppto (revisar error imagen)
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
