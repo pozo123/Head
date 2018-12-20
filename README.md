@@ -4,35 +4,28 @@ Deploy:
  - lalala terminal todo
  - deploy
  - actualizar version en firebase/database/info_web/version
-
- OBJETIVO:
-  - app_reporte_pptos.js
  
- ESTE FIN:
-  - Reporte ppto
+ DICIEMBRE:
+  - Revisar que sumar horas sirva
+  - Generar ppto "miscelaneo" automáticamente cuando se da un alta de obra
+    - Dar de alta los pptos miscelaneos de las obras ya existentes
+  - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea. Cambiar la funcionalidad en tooooodas las apps :/
+  - Cierre maestro 5 pm? o cómo?
+  - Reporte ppto (revisar error imagen)
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
- 
- Diego:
- - Dash Grid
- 
- Arturo:
- - Dash Card
-  - Hacer bonito
-    - Reporte
-  - modal cambio contraseña
+  - Dashcards nuevo diseño
+  - Editar ppto, no se puede editar porque pdf, se necesitaria hacer uno nuevo.
 
-- Primordiales
+ 
+ ENERO:
+  - Dashgrid
+  - modal cambio contraseña
   - En graphs que vayan de 0, porque si no no se ven bien las proporciones
-  - horas_trabajadas no suma, solo actualiza
   - si calendarios vacios reportes de todas las fechas
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
-  - Distintos pptos con misma clave no cambia el consecutivo
-    - Diferencia entre "version" y "clave". La clave es estática y para siempre, sin importar la version
-  - Modal cierre maestro
-    - Cierre maestro en dashcards
   - En editar presu checkbox "redistribuir horas"
-  - Eliminar en bibliotecas
+  - botón eliminar en bibliotecas
     - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"?
     - Obras Poner activo/No activo?
     - pptos sí
@@ -46,24 +39,11 @@ Deploy:
     - contratos
   - Update uml
     - Hacer un diagrama con esteroides, relacional entre metodos, apps y uml con clases y atributos
-  - Pista de auditoria (quien cambia que para ver que pedo si algo malo pasa)
-  - cuando se cambie de página, se borre lo que se escribió en formularios.
+
 
 - FUTUREANDO
-  - pagos en cada presupuesto
-  - poner funcionalidad req
-    - activar reqs  
-
-- DONE (y material para junta)
- - "no contrato" -> "presupuesto"
- - Cambiar el graph y dash para que sea cada mucho tiempo
- - Clase
- - Gestionar bonito
+  - Reqs (funcionalidad)
  
- - Editar ppto, no se puede editar porque pdf, se necesitaria hacer uno nuevo.
 
 - JUNTA
-  - Respaldo
-  - Reportes semanales/mensuales
-  - Miscelaneo
-  - 
+
