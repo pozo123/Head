@@ -53,7 +53,8 @@ $('#tabBibObras').click(function(){
     firebase.database().ref(rama_bd_clientes).orderByChild('nombre').on('child_added',function(snapshot){
         var clien = snapshot.val();
         var option6 = document.createElement('OPTION');
-        option6.text = option6.value = clien.nombre; 
+        option6.text = clien.nombre;
+        option6.value = clien.clave;
         select3.appendChild(option6);
     });
    
@@ -140,14 +141,98 @@ $('#' + id_registrar_button_obra).click(function () {
                             ciudad: $('#' + id_direccion_ciudad_obra).val(),
                             cp: $('#' + id_direccion_cp_obra).val()
                         },
-                        cliente: $('#' + id_cliente_ddl_obra + " option:selected").val(),
+                        cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
                         //lider: $('#' + id_lider_ddl_obra + " option:selected").val(),
                         //asignados: asignados,
                         timestamps: {
                             startedAt: new Date().getTime(),
                             finishedAt: 0,
+                        },
+                        presupuestos: {
+                            miscelaneo: {
+                                nombre: "miscelaneo",
+                                clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
+                                horas_programadas: 0,
+                                colaboradores_asignados: {
+                                    horas_totales: 0,
+                                    horas_totales_ie: 0,
+                                    horas_totales_ihs: 0,
+                                    ie: {},
+                                    ihs: {},
+                                },
+                                cash_presupuestado: 0,
+                                timestamps: {
+                                    startedAt: new Date().getTime(),
+                                    finishedAt: 0,
+                                    activacion: 0,
+                                    reqs_completados: 0
+                                },
+                                consecutivos:{
+                                    1:{
+                                        precio: 0,
+                                        pdf: "", //Metes pdf
+                                        checkin: new Date().getTime(),
+                                    }
+                                },
+                                contrato: false,
+                                terminado: false,
+                                reqs: "vacio",
+                                exclusiones: "vacio",
+                                atencion: "vacio",
+                                pagos: "vacio",
+                                consec: 1,
+                                oculto: false,
+                                tipo: "miscelaneo",
+                                genero: "miscelaneo",
+                                clase: "miscelaneo",
+                            }
                         }
                     }
+
+                    firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
+                                var elec = snapshot.val();
+                                var keys = Object.keys(elec);
+                                for(var i=0; i<keys.length; i++){
+                                    if(elec[keys[i]].permisos.perfil === true){
+                                        var inge_ie = {
+                                            horas: 0,
+                                            horas_trabajadas: 0,
+                                            nombre: elec[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
+                                    }
+                                }
+                            });
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(2).once('value').then(function(snapshot){
+                                var plom = snapshot.val();
+                                var keys = Object.keys(plom);
+                                for(var i=0; i<keys.length; i++){
+                                    if(plom[keys[i]].permisos.perfil === true){
+                                        var inge_ihs = {
+                                            horas: 0,
+                                            horas_trabajadas: 0,
+                                            nombre: plom[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
+                                    }
+                                }
+                            });
+                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(3).once('value').then(function(snapshot){
+                                var gral = snapshot.val();
+                                var keys = Object.keys(gral);
+                                for(var i=0; i<keys.length; i++){
+                                    if(gral[keys[i]].permisos.perfil === true){
+                                        var inge_gral = {
+                                            horas: 0,
+                                            horas_trabajadas: 0,
+                                            nombre: gral[keys[i]].nombre,
+                                        }
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
+                                    }
+                                }
+                            });
+
                     //asignados = [];
                     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val()).set(obra);
 
