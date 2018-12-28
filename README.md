@@ -16,6 +16,7 @@ Deploy:
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
   - Dashcards nuevo diseño
   - Editar ppto, no se puede editar porque pdf, se necesitaria hacer uno nuevo.
+  - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
  
  ENERO:
