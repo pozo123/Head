@@ -6,6 +6,7 @@ Deploy:
  - actualizar version en firebase/database/info_web/version
  
  DICIEMBRE:
+  - Cambiar horas Virgilio de 1000 a 1300
   - Revisar que sumar horas sirva
   - Miscelaneo:
      - Dar de alta los pptos miscelaneos de las obras ya existentes
