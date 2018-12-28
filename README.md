@@ -45,7 +45,7 @@ Deploy:
 
 - FUTUREANDO
   - Reqs (funcionalidad)
- 
+  - Para obra poder modificar imagen para que impriman planos? Tipo hacerle zoom a algo o cosas así. Ver qué necesidad tienen en la obra.
 
 - JUNTA
 
