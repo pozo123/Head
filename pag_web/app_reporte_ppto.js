@@ -191,6 +191,13 @@ $('#' + id_generar_button_reportePpto).click(function() {
                 type: 'bar',
                 data: barChartData,
                 options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
                     responsive: false,
                     maintainAspectRatio: false,
                     legend: {

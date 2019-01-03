@@ -120,14 +120,14 @@ var id_label_atn_eliminar_bibliotecas = "labelAtnEliminar";
 var id_editar_atn_button_bibliotecas = "editarAtn";
 var id_eliminar_atn_button_bibliotecas = "eliminarAtn";
 //_____MODAL PRESUPUESTO______
-var id_presu_modal_editar_bibliotecas = "presuModalEditar";
+/* var id_presu_modal_editar_bibliotecas = "presuModalEditar";
 
 var id_nombre_presu_editar_bibliotecas = "nombrePresuEditar";
 var id_horas_presu_editar_bibliotecas = "horasPresuEditar";
 var id_precio_presu_editar_bibliotecas = "precioPresuEditar";
 var id_clase_ddl_presu_editar_bibliotecas = "DDL_clasePresuEditar";
 
-var id_editar_presu_button_bibliotecas = "editarPresu";
+var id_editar_presu_button_bibliotecas = "editarPresu"; */
 //____FIN MODALES_____
 
 
@@ -867,16 +867,16 @@ function loadTablaPresupuestos(){
 					{title: "Fecha de creacion"},
 					{title: "Fecha de activacion"},
 					{title: "AT'N"},
-					{defaultContent: "<button type='button' " + boton_editar_class + "data-toggle='modal' data-target='#presuModalEditar'><i class='fas fa-edit'></i></button>"},
+					//{defaultContent: "<button type='button' " + boton_editar_class + "data-toggle='modal' data-target='#presuModalEditar'><i class='fas fa-edit'></i></button>"},
 				],
 	            language: idioma_espanol,
 			});
-			editar_presupuesto("#" + id_datatable_presupuestos_bibliotecas + " tbody", tabla_presupuestos);
+			//editar_presupuesto("#" + id_datatable_presupuestos_bibliotecas + " tbody", tabla_presupuestos);
 		});
 	});
 }
 
-var obra_presu;
+/* var obra_presu;
 function editar_presupuesto(tbody, table){
 	$(tbody).on("click", "button.editar",function(){
 		var data = table.row($(this).parents("tr")).data();
@@ -911,9 +911,9 @@ function editar_presupuesto(tbody, table){
 		nombre_seleccionado = data[0];
 		}	
 	});
-}
+} */
 
-$('#' + id_editar_presu_button_bibliotecas).click(function(){
+/* $('#' + id_editar_presu_button_bibliotecas).click(function(){
 	var nom = $('#' + id_nombre_presu_editar_bibliotecas).val();
 	var cash_str = $('#' + id_precio_presu_editar_bibliotecas).val();
 	var cash_sin_coma = cash_str.replace(",","");
@@ -961,7 +961,7 @@ $('#' + id_editar_presu_button_bibliotecas).click(function(){
 			alert("Cambios registrados");
 		});
 	}
-});
+}); */
 
 function loadTablaAtn(){
 	var datos_atn = [];

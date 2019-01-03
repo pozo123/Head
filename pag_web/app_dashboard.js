@@ -7,10 +7,9 @@ var rama_bd_registros = "registros";
 $(document).ready(function(){
   loadDashcards();
   setInterval(loadDashcards, 1800000);
-  firebase.database().ref(rama_bd_registros).on("child_added", function(snapshot){
+  firebase.database().ref(rama_bd_registros).on("child_changed", function(snapshot){
     loadDashcards();
-    console.log("hola");
-  });
+  }); 
 
 
 /*   $('#fullpage').fullpage({
@@ -73,7 +72,6 @@ function loadDashcards(){
   //$('#' + id_card_column_dashboard_IE_IHS).empty();
   //$('#' + id_card_column_dashboard_IE).empty();
   $('#' + id_card_column_dashboard).empty();
-  
   firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
     var flag = true;
     var inge = snapshot.val();
@@ -103,8 +101,7 @@ function loadDashcards(){
     if(inge.permisos.perfil === true){
       if(inge.status === true){
         //alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
-        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added",function(snapshot){
-          console.log('hola2')
+        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).on("child_added",function(snapshot){
           var reg = snapshot.val();
           var nombre_obra = reg.obra;
           var nombre_presu = reg.presupuesto;

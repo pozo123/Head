@@ -3,7 +3,10 @@ var checked_graph = false;
 
 $(document).ready(function(){
     loadGraphs();
-    setInterval(loadGraphs, 5000);
+    setInterval(loadGraphs, 60000);
+    firebase.database().ref(rama_bd_obras).on("child_changed",function(snapshot){
+        loadGraphs();
+    })
 });
 
 function loadGraphs(){
@@ -86,6 +89,13 @@ function loadGraphs(){
                             type: 'bar',
                             data: barChartData,
                             options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
                                 responsive: true,
                                 maintainAspectRatio: false,
                                 legend: {
