@@ -5,28 +5,32 @@ Deploy:
  - deploy
  - actualizar version en firebase/database/info_web/version
  
- DICIEMBRE:
-  - Cambiar horas Virgilio de 1000 a 1300
-  - Revisar que sumar horas sirva
-  - Miscelaneo:
-     - Dar de alta los pptos miscelaneos de las obras ya existentes
+ Hoy:
+   - Miscelaneo:
+     - Dar de alta los pptos miscelaneos de las obras ya existentes (las nuevas obras las hacen automáticos)
      - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea (en perfil). Cambiar la funcionalidad en toooodas las apps :/
-  - Cierre maestro 5 pm? o cómo?
-  - Reporte ppto (revisar error imagen)
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
-  - Dashcards nuevo diseño
-  - Editar ppto, no se puede editar porque pdf, se necesitaria hacer uno nuevo.
+  
+ 14/enero/2019
+  - Revisar si se genera el registro 0
+  - Dashboard con child_added / child_changed
+  - Cierre maestro 5 pm con cloud functions
+  - Reporte ppto (revisar error imagen)
+
+ PRODUCCION:
+  - A quien le sale y a quien no.
+  - Mover toda la db (menos clientes) a una rama "proyectos" usando export e import json.
+   - cambiar en todas las apps "rama_bd" a "proyectos/lo_de_antes"
+   
+ DICIEMBRE:
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
- 
  ENERO:
-  - Dashgrid
   - modal cambio contraseña
   - En graphs que vayan de 0, porque si no no se ven bien las proporciones
   - si calendarios vacios reportes de todas las fechas
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
-  - En editar presu checkbox "redistribuir horas"
   - botón eliminar en bibliotecas
     - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"?
     - Obras Poner activo/No activo?
@@ -44,8 +48,11 @@ Deploy:
 
 
 - FUTUREANDO
+  - Dashgrid
+  - Dashcards nuevo diseño
   - Reqs (funcionalidad)
   - Para obra poder modificar imagen para que impriman planos? Tipo hacerle zoom a algo o cosas así. Ver qué necesidad tienen en la obra.
+  - Checar que no exista otra obra con esa clave
 
 - JUNTA
 
