@@ -49,7 +49,7 @@ function loadPrecioHora(){
     if(clase === "MI"){
         precio_hora = -550;
     } else if(clase === "PR"){
-        precio_hora = 1000;
+        precio_hora = 1300;
     } else {
         precio_hora = 2000;
     }
@@ -345,7 +345,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 text: "",
                             },
                         ]
-                    }                   
+                    }
                 }
                 
                 
@@ -833,7 +833,8 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                         ],
                                         
                                     ],
-                                },},
+                                },
+                            },
                                 {text:' '},
                                 { table:{
                                     widths: ['*', 120, '*', '*','*',120],

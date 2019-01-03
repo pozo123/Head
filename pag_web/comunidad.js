@@ -78,6 +78,10 @@ firebase.auth().onAuthStateChanged(user => {
                     $('#tabReporte').removeClass('hidden');
                 else
                     $('#tabReporte').addClass('hidden');
+                if(user_bd.permisos.reporte_presupuestos === true)
+                    $('#tabReportePpto').removeClass('hidden');
+                else
+                    $('#tabReportePpto').addClass('hidden');
 
                     if(user_bd.permisos.perfil === true)
                     $('#tabPerfil').removeClass('hidden');

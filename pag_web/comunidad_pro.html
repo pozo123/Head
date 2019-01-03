@@ -585,7 +585,15 @@
                             <li class="tab" id="tabAltaTiposGens"><a href="#" onclick="openTabs('tabAltaTiposGens','altaTiposGens')">Tipos de presupuesto/Géneros</a></li>
                         </ul>
                     </li>
-                    <li class="tab" id="tabReporte"><a href="#" onclick="openTabs('tabReporte','reporte')">Reporte</a></li>
+
+                    <li>
+                        <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reportes</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu5">
+                                <li class="tab" id="tabReporte"><a href="#" onclick="openTabs('tabReporte','reporte')">Reporte de registros</a></li>
+                                <li class="tab" id="tabReportePpto"><a href="#" onclick="openTabs('tabReportePpto','reportePpto')">Reporte de presupuestos</a></li>
+                        </ul>
+                    </li>
+
                     <li class="tab"><a href="#" data-toggle="modal" data-target="#contraseñaModal">Cambiar contraseña</a></li>
                     <li class="tab" id="tabPermisos"><a href="#" onclick="openTabs('tabPermisos','permisos')">Permisos de usuario</a></li>
                     <li>
@@ -1412,6 +1420,36 @@
                             </div>
                         </div>
 
+                        <div id="reportePpto" class="tabcontent hidden">
+                            <h1>Reporte de presupuestos</h1><br/>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3"></div>
+                                    <div class="col-lg-6">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="ddlObraReportePpto">Obra:</label>
+                                                <select id="ddlObraReportePpto" class="form-control" onChange="loadDDLPresupuestosReportePpto()"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ddlPptoReportePpto">Presupuesto:</label>
+                                                <select id ="ddlPptoReportePpto" class="form-control"></select>
+                                            </div>
+                                            <div class="row">
+                                                <button type="reset" name="" class="btn btn-outline-danger btn-block">Limpiar campos</button>
+                                                <button type="button" name="" id="reportePptoButton" class="btn btn-outline-success btn-block">Generar PDF</button>                                                                        
+                                            </div>     
+                                        </form>
+                                    </div>
+                                    <div class = "col-lg-3"></div>
+                                </div>
+                                <div class="row">        
+                                    <canvas  class ="hidden" id="canvas_reporte" height="450" width="600"></canvas>
+                                    <img id="url" />
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="permisos" class="tabcontent hidden">
                             <h1>Permisos de usuario</h1>
                             <p>Otorga permisos de acceso a el usuario seleccionado</p>
@@ -1457,21 +1495,27 @@
 
                                                 <div class="form-group align-items-center">
                                                     <label class="checkbox-inline">
-                                                        <input id = "checkReporte" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede generar reportes de actividad
+                                                        <input id = "checkReporte" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede generar reportes de registros de actividad
                                                     </label>
                                                 </div>
 
-                                                    <div class="form-group align-items-center">
-                                                        <label class="checkbox-inline">
-                                                            <input id= "checkPerfil" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle"data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de registrar sus horas de trabajo y salir en el dashboard
-                                                        </label>
-                                                    </div>
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id = "checkReportePpto" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede generar reportes de registros de presupuestos
+                                                    </label>
+                                                </div>
 
-                                                    <div class="form-group align-items-center">
-                                                        <label class="checkbox-inline">
-                                                            <input id= "checkActivar" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de activar un contrato
-                                                        </label>
-                                                    </div>
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id= "checkPerfil" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle"data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de registrar sus horas de trabajo y salir en el dashboard
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id= "checkActivar" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario tiene la funcionalidad de activar un contrato
+                                                    </label>
+                                                </div>
 
                                                 <button id="guardadPermisos" type="button" class="btn btn-outline-success btn-block">Actualizar</button>
                                         </div>
@@ -1679,6 +1723,7 @@
         <script src = "app_graphs.js"></script>
         <script src = "app_actualizar_regs.js"></script>
         <script src = "app_dashgrid.js"></script>
+        <script src = "app_reporte_ppto.js"></script>
         
 
         <!-- PdfMaker-->

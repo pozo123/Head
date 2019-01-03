@@ -61,7 +61,6 @@ $('#tabBibObras').click(function(){
 });
 
 /* $(document).ready(function() {
-
     //var select = document.getElementById(id_lider_ddl_obra);
     //var select2 = document.getElementById(id_asignados_ddl_obra);
     var select3 = document.getElementById(id_cliente_ddl_obra) ;
@@ -77,7 +76,6 @@ $('#tabBibObras').click(function(){
     //select.appendChild(option);
     //select2.appendChild(option2);
     select3.appendChild(option3);
-
     
     // firebase.database().ref(rama_bd_inges).orderByChild('nombre').on('child_added',function(snapshot){
         
@@ -85,20 +83,16 @@ $('#tabBibObras').click(function(){
     //     var option4 = document.createElement('OPTION');
     //     option4.text = option4.value = inge.nombre; 
     //     select.appendChild(option4);
-
     //     var option5 = document.createElement('OPTION');
     //     option5.text = option5.value = inge.nombre; 
     //     select2.appendChild(option5);
-
     // });
-
     firebase.database().ref(rama_bd_clientes).orderByChild('nombre').on('child_added',function(snapshot){
         var clien = snapshot.val();
         var option6 = document.createElement('OPTION');
         option6.text = option6.value = clien.nombre; 
         select3.appendChild(option6);
     });
-
 }); */
 
 

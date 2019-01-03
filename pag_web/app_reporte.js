@@ -120,7 +120,10 @@ $('#' + id_tabla_button_reporte).click(function() {
             if(filtro_inges || selec_inge === registros_db[keys[i]].inge){
                 if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
                     if(fecha_i_timestamp < registros_db[keys[i]].checkin && registros_db[keys[i]].checkin < fecha_f_timestamp){
-                        datos_reporte.push([new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
+                        datos_reporte.push([
+                            registros_db[keys[i]].status,
+                            registros_db[keys[i]].cu,
+                            new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
                             "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,
                             registros_db[keys[i]].inge, 
                             registros_db[keys[i]].obra,
@@ -135,6 +138,8 @@ $('#' + id_tabla_button_reporte).click(function() {
             dom: 'Bfrtip',
             buttons: ['excel'],
             columns: [
+                {title: "clave"},
+                {title: "estatus"},              
                 {title: "Fecha"},
                 {title: "Horas trabajadas"},
                 {title: "Colaborador"},

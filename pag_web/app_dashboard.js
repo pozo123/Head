@@ -6,7 +6,11 @@ var rama_bd_registros = "registros";
 
 $(document).ready(function(){
   loadDashcards();
-  setInterval(loadDashcards, 300000);
+  setInterval(loadDashcards, 1800000);
+  firebase.database().ref(rama_bd_registros).on("child_added", function(snapshot){
+    loadDashcards();
+    console.log("hola");
+  });
 
 
 /*   $('#fullpage').fullpage({
@@ -99,7 +103,8 @@ function loadDashcards(){
     if(inge.permisos.perfil === true){
       if(inge.status === true){
         //alert(inge.nombre + " " + "ingeStatus" + " " + inge.status)
-        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).on("child_added",function(snapshot){
+        firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(inge.nombre).once("child_added",function(snapshot){
+          console.log('hola2')
           var reg = snapshot.val();
           var nombre_obra = reg.obra;
           var nombre_presu = reg.presupuesto;

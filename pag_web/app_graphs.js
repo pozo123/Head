@@ -3,7 +3,7 @@ var checked_graph = false;
 
 $(document).ready(function(){
     loadGraphs();
-    setInterval(loadGraphs, 1800000);
+    setInterval(loadGraphs, 5000);
 });
 
 function loadGraphs(){

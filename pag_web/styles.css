@@ -1,3 +1,20 @@
+#gridWrapper {
+  text-align: center;
+}
+#divDashgrid {
+  display: inline-block;
+}
+
+#dashboardWrapper {
+  background-color: green; /* for visualization purposes */
+  text-align: center;
+}
+#dashCardsWrapper {
+  background-color: red; /* for visualization purposes */
+  display: inline-block;
+}
+
+
 /* div.dataTables_wrapper {
   width: 1500px;
   margin: 0 auto;
@@ -9,6 +26,9 @@
   transition: 0.3s;
   width: 40%;
   border-radius: 5px;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
 }
 
 .card_graph {
