@@ -7,7 +7,6 @@ Deploy:
  
  Hoy:
   - Miscelaneo:
-     - Dar de alta los pptos miscelaneos de las obras ya existentes (las nuevas obras las hacen automáticos)
      - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea (en perfil). Cambiar la funcionalidad en toooodas las apps :/
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
