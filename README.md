@@ -18,7 +18,6 @@ Deploy:
  14/enero/2019
   - PAGOS
   - Revisar si se genera el registro 0
-  - Dashboard con child_added / child_changed
   - Cierre maestro 5 pm con cloud functions
   - Reporte ppto (revisar error imagen)
   - Leer archivos de imagen
