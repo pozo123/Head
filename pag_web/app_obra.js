@@ -143,8 +143,8 @@ $('#' + id_registrar_button_obra).click(function () {
                             finishedAt: 0,
                         },
                         presupuestos: {
-                            miscelaneo: {
-                                nombre: "miscelaneo",
+                            Miscelaneo: {
+                                nombre: "Miscelaneo",
                                 clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
                                 horas_programadas: 0,
                                 colaboradores_asignados: {
