@@ -12,8 +12,11 @@ Deploy:
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
+  - Mover todo a la rama proyectos
+    - cambiar todos los rama_bd  
  
  14/enero/2019
+  - PAGOS
   - Revisar si se genera el registro 0
   - Dashboard con child_added / child_changed
   - Cierre maestro 5 pm con cloud functions
