@@ -1,8 +1,8 @@
 // JavaScript source code
 var id_card_column_dashboard = "dashCards";
 
-var rama_bd_inges = "inges";
-var rama_bd_registros = "registros";
+var rama_bd_inges = "proyectos/inges";
+var rama_bd_registros = "proyectos/registros";
 
 $(document).ready(function(){
   loadDashcards();
