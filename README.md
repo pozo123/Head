@@ -12,7 +12,6 @@ Deploy:
         - dashboard (linea 112)
         - reporte (lineas 46 y 78)
         - perfil (lineas 31, 114, 141, 241 y 259(y 10, 11, 106, 116, 120, 137, 142, 242??))
-  - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
@@ -52,5 +51,8 @@ Deploy:
   - Para obra poder modificar imagen para que impriman planos? Tipo hacerle zoom a algo o cosas así. Ver qué necesidad tienen en la obra.
   - Checar que no exista otra obra con esa clave
 
-- JUNTA
+- DONE
+  - Mover todo a proyectos
+  - Ponerle un misc a todas las obras
+  - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
 
