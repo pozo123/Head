@@ -26,7 +26,7 @@ Deploy:
     - reqs
     - contratos  
   - botón eliminar en bibliotecas
-    - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"?
+    - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
     - Obras Poner activo/No activo?
     - pptos sí
     - Despachos no, o sí?
