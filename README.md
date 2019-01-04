@@ -7,13 +7,15 @@ Deploy:
  
  Hoy:
   - Miscelaneo:
-     - Cambiar obra Miscelaneo por "extras"/"otros" o lo que sea (en perfil). Cambiar la funcionalidad en toooodas las apps :/
+     - Cambiar obra Miscelaneo por "extras"/"otros" en:
+        - cierre maestro (linea 36)
+        - dashboard (linea 112)
+        - reporte (lineas 46 y 78)
+        - perfil (lineas 31, 114, 141, 241 y 259(y 10, 11, 106, 116, 120, 137, 142, 242??))
   - Guardar horas_ie y horas_ihs en consecutivos al generar nuevas versiones
   - Clave pptos: consec no depende de version, sino de que no hayan otros pptos con la misma clave en la obra
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
-  - Mover todo a la rama proyectos
-    - cambiar todos los rama_bd  
- 
+
  14/enero/2019
   - PAGOS
   - Revisar si se genera el registro 0
