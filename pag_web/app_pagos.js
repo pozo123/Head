@@ -62,5 +62,13 @@ $('#' + id_guardar_button_pagos).click(function () {
     var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_pagos + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_pagos + " option:selected").val() + "/pagos/" + cu + "/cu").set(cu);
     alert("Alta exitosa");
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_pagos + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_pagos + " option:selected").val()).once('value').then(function(snapshot){
+      var presu = snapshot.val();
+      var monto_nuevo = $('#' + id_monto_pagos).val();
+      if(presu.cash_pagado != null){
+        monto_nuevo += presu.cash_pagado;
+      }
+          firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_pagos + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_pagos + " option:selected").val() + "/cash_pagado").set(monto_nuevo);
+    });
   }
 });
