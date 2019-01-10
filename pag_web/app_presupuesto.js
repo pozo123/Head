@@ -24,13 +24,13 @@ var id_reqs_ddlcheck_presupuesto = "reqs";
 var id_exclusiones_ddl_check_presupuesto = "exc";
 var id_atn_ddl_check_presupuesto = "atn";
 
-var rama_bd_tipos_presupuesto = "tipos_presupuesto";
-var rama_bd_generos = "generos";
-var rama_bd_obras = "obras";
-var rama_bd_reqs = "reqs";
-var rama_bd_exclusiones = "exclusiones";
+var rama_bd_tipos_presupuesto = "proyectos/tipos_presupuesto";
+var rama_bd_generos = "proyectos/generos";
+var rama_bd_obras = "proyectos/obras";
+var rama_bd_reqs = "proyectos/reqs";
+var rama_bd_exclusiones = "proyectos/exclusiones";
 var rama_bd_clientes = "clientes";
-var rama_bd_clase = "clase";
+var rama_bd_clase = "proyectos/clase";
 
 var alcance_txt = 'alcance';
 var tiempoEntrega_txt = 'tiempoEntrega';
@@ -351,18 +351,32 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 
                 //Querys a probar para contar cons
                 //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
+                //AQUI Mantener las variables consecutivo y p. Agregar un query que jale el value y use eso para calcular la clave, aguas con los {}
+                //Oooo, cambiar el querry de aqui abajo por uno de value, pero aguas con donde se usa p != null que ahora en vez de p sea otro pedo...
+                //Y aguas también con la variable consecutivo
                 var consecutivo;
                 var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
 
+                var max = 0;
+                obra_selec.child("presupuestos").forEach(function(presu_snap){
+                    var presu = presu_snap.val();
+                    var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
+                    if(clave_presu === presu_c){
+                        var consec = parseInt(presu.clave.slice(-3));
+                        if(consec > max){
+                            max = consec;
+                        }
+                    }
+                });
+
+                var num_consec = max + 1;
+                var consecutivo_str = ("00" + num_consec).slice(-3);
+                clave_presu = clave_presu + consecutivo_str;
 
                 firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).once('value').then(function(snapshot){
                     var p = snapshot.val();
                     if(p !== null){
                         consecutivo = p.consec + 1;
-                        var consecutivo_str = ("00" + consecutivo).slice(-3);
-                        clave_presu = clave_presu + consecutivo_str;
-                    } else {
-                        clave_presu = clave_presu + "001";
                     }
 
                     //________________________________________________________________________________________
@@ -1181,13 +1195,16 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                     pdfDocGenerator.getDataUrl((data) => {
                         var pdf_var;
                         pdf_var = data;
-
+                        //AQUI la variable p
                         if(p !== null){
-                            var cons = {
+                            var cons = {//AQUI
                                 precio: $('#' + id_precio_presupuesto).val(),
                                 pdf: pdf_var,//Meter pdf
                                 checkin: new Date().getTime(),
+                                horas_ie: horas_ie_totales,
+                                horas_ihs: horas_ihs_totales,
                             }
+                            //AQUI la variable "consecutivo"
                             firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val() + "/consecutivos/" + consecutivo).set(cons);
                             
                             var presupuesto = {      
@@ -1221,7 +1238,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 exclusiones: exc_lista,
                                 atencion: atn_lista,
                                 pagos: "vacio",
-                                consec: consecutivo,
+                                consec: consecutivo,//AQUI la variable consecutivo
                                 oculto: false,
                                 tipo: $('#' + id_tipo_presupuesto_ddl_presupuesto + " option:selected").text(),
                                 genero: $('#' + id_genero_ddl_presupuesto + " option:selected").text(),
@@ -1287,11 +1304,13 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                     activacion: 0,
                                     reqs_completados: 0
                                 },
-                                consecutivos:{
+                                consecutivos:{//AQUI
                                     1:{
                                         precio: $('#' + id_precio_presupuesto).val(),
                                         pdf: pdf_var, //Metes pdf
                                         checkin: new Date().getTime(),
+                                        horas_ie: $('#' + id_horas_programadas_ie_presupuesto).val(),
+                                        horas_ihs: $('#' + id_horas_programadas_ihs_presupuesto).val(),
                                     }
                                 },
                                 contrato: false,
@@ -1489,18 +1508,30 @@ $('#' + id_vistaPrevia_button_presupuesto).click(function () {
                 
                 //Querys a probar para contar cons
                 //Falta programar bien codigo_tipo_proyecto (deberian ser dos fields)
+                //AQUI cambiar el query de ppto a obra entera con value. Calcular la clave de manera distinta. No se necesita guardar variable consecutivo
                 var consecutivo;
                 var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
 
+                var max = 0;
+                obra_selec.child("presupuestos").forEach(function(presu_snap){
+                    var presu = presu_snap.val();
+                    var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
+                    if(clave_presu === presu_c){
+                        var consec = parseInt(presu.clave.slice(-3));
+                        if(consec > max){
+                            max = consec;
+                        }
+                    }
+                });
+
+                var num_consec = max + 1;
+                var consecutivo_str = ("00" + num_consec).slice(-3);
+                clave_presu = clave_presu + consecutivo_str;
 
                 firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).once('value').then(function(snapshot){
                     var p = snapshot.val();
                     if(p !== null){
                         consecutivo = p.consec + 1;
-                        var consecutivo_str = ("00" + consecutivo).slice(-3);
-                        clave_presu = clave_presu + consecutivo_str;
-                    } else {
-                        clave_presu = clave_presu + "001";
                     }
 
                     //________________________________________________________________________________________
