@@ -243,6 +243,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
     } else {
             firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
             var obra_selec = snapshot.val();
+            var obra_selec_snap = snapshot;
             firebase.database().ref(rama_bd_clientes).orderByChild("nombre").equalTo(obra_selec.cliente).once('child_added').then(function(snapshot){
                 var cliente_selec = snapshot.val();
                 var codigo_obra = obra_selec.clave;
@@ -357,27 +358,30 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                 var consecutivo;
                 var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
 
-                var max = 0;
-                obra_selec.child("presupuestos").forEach(function(presu_snap){
-                    var presu = presu_snap.val();
-                    var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
-                    if(clave_presu === presu_c){
-                        var consec = parseInt(presu.clave.slice(-3));
-                        if(consec > max){
-                            max = consec;
-                        }
-                    }
-                });
-
-                var num_consec = max + 1;
-                var consecutivo_str = ("00" + num_consec).slice(-3);
-                clave_presu = clave_presu + consecutivo_str;
-
                 firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).once('value').then(function(snapshot){
                     var p = snapshot.val();
                     if(p !== null){
                         consecutivo = p.consec + 1;
+                        clave_presu = p.clave;
+                    } else {
+                        var max = 0;
+                        obra_selec_snap.child("presupuestos").forEach(function(presu_snap){
+                            var presu = presu_snap.val();
+                            var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
+                            if(clave_presu === presu_c){
+                                var consec = parseInt(presu.clave.slice(-3));
+                                if(consec > max){
+                                    max = consec;
+                                }
+                            }
+                        });
+
+                        var num_consec = max + 1;
+                        var consecutivo_str = ("00" + num_consec).slice(-3);
+                        clave_presu = clave_presu + consecutivo_str;
                     }
+
+                
 
                     //________________________________________________________________________________________
                     var tiempoEntrega = $('#' + tiempoEntrega_txt).val()
@@ -1400,6 +1404,7 @@ $('#' + id_vistaPrevia_button_presupuesto).click(function () {
     } else {
             firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val()).once('value').then(function(snapshot){
             var obra_selec = snapshot.val();
+            var obra_selec_snap = snapshot;
             firebase.database().ref(rama_bd_clientes).orderByChild("nombre").equalTo(obra_selec.cliente).once('child_added').then(function(snapshot){
                 var cliente_selec = snapshot.val();
                 var codigo_obra = obra_selec.clave;
@@ -1512,27 +1517,30 @@ $('#' + id_vistaPrevia_button_presupuesto).click(function () {
                 var consecutivo;
                 var clave_presu = codigo_obra + "/" + codigo_cliente + "/" + codigo_tipo_proyecto + codigo_genero;
 
-                var max = 0;
-                obra_selec.child("presupuestos").forEach(function(presu_snap){
-                    var presu = presu_snap.val();
-                    var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
-                    if(clave_presu === presu_c){
-                        var consec = parseInt(presu.clave.slice(-3));
-                        if(consec > max){
-                            max = consec;
-                        }
-                    }
-                });
-
-                var num_consec = max + 1;
-                var consecutivo_str = ("00" + num_consec).slice(-3);
-                clave_presu = clave_presu + consecutivo_str;
-
                 firebase.database().ref(rama_bd_obras + "/" + obra_selec.nombre + "/presupuestos/" + $('#' + id_nombre_presupuesto).val()).once('value').then(function(snapshot){
                     var p = snapshot.val();
                     if(p !== null){
                         consecutivo = p.consec + 1;
+                        clave_presu = p.clave;
+                    } else {
+                        var max = 0;
+                        obra_selec_snap.child("presupuestos").forEach(function(presu_snap){
+                            var presu = presu_snap.val();
+                            var presu_c = (presu.clave).substring(0, (presu.clave).length - 3);
+                            if(clave_presu === presu_c){
+                                var consec = parseInt(presu.clave.slice(-3));
+                                if(consec > max){
+                                    max = consec;
+                                }
+                            }
+                        });
+
+                        var num_consec = max + 1;
+                        var consecutivo_str = ("00" + num_consec).slice(-3);
+                        clave_presu = clave_presu + consecutivo_str;
                     }
+
+                    
 
                     //________________________________________________________________________________________
                     var tiempoEntrega = $('#' + tiempoEntrega_txt).val()
