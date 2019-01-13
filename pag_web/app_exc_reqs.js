@@ -5,8 +5,8 @@ var id_esencial_radio_req = "radioEsen";
 var id_agregar_button_exclusion = "agregarExclusion";
 var id_agregar_button_req = "agregarReq";
 
-var rama_bd_exclusiones = "exclusiones";
-var rama_bd_reqs = "reqs";
+var rama_bd_exclusiones = "proyectos/exclusiones";
+var rama_bd_reqs = "proyectos/reqs";
 
 $('#' + id_agregar_button_exclusion).click(function(){
 	var exc = {

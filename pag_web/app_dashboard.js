@@ -72,27 +72,6 @@ function loadDashcards(){
   //$('#' + id_card_column_dashboard_IE_IHS).empty();
   //$('#' + id_card_column_dashboard_IE).empty();
   $('#' + id_card_column_dashboard).empty();
-  /*
-  firebase.database().ref(rama_bd_dashgrid).on('value',function(snapshot){
-    var dg = snapshot.val();
-    var no_col = dg.columnas;
-    var no_ren = dg.renglones;
-    //Probablemente el grid en sí se tenga que crear aquí
-    snapshot.child("colaboradores").forEach(function(child_snap){
-      var ing = child_snap.val();
-      var col_ing = ing.col;
-      var ren_ing = ing.ren;
-      firebase.database().ref(rama_bd_inges).orderByKey().equalTo(child_snap.key).once("child_added").then(function(inge_snap){
-        var flag = true;
-        var inge = inge_snap.val();
-        var card = document.createElement('div');
-        //ETC, ya de aquí es todo lo de abajo. 
-        //Lo único que tiene que cambiar es en dónde lo metes.
-        //Cuando sea que hay un div.push o lo que sea, cambiarlo por el div adecuado usando col_ing y ren_ing.
-      });
-    });
-  });
-  */
   firebase.database().ref(rama_bd_inges).orderByChild("nombre").on("child_added",function(snapshot){
     var flag = true;
     var inge = snapshot.val();
@@ -130,7 +109,7 @@ function loadDashcards(){
           if(reg.status === false && flag === true){
             flag = false;
             //card.className = "card card_dash border-success mb-3";
-            if(reg.obra !== "Miscelaneo"){
+            if(reg.obra !== "Otros"){
               firebase.database().ref(rama_bd_obras + "/" + nombre_obra + "/presupuestos").orderByKey().equalTo(nombre_presu).once('child_added').then(function(snapshot){
                 var presu = snapshot.val();
                 

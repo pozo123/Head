@@ -1,4 +1,4 @@
-var rama_bd_obras = "obras";
+var rama_bd_obras = "proyectos/obras";
 var checked_graph = false;
 
 $(document).ready(function(){

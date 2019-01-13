@@ -7,17 +7,17 @@ var id_obra_ddl_perfil = "DDL_obraAsignado";
 var id_presupuestos_ddl_perfil = "DDL_presupuestoAsignado";
 var id_newpassword_perfil = "newpass";
 var id_confirmpass_perfil = "confirm";
-var id_misc_perfil = "misc";
-var id_miscgroup_perfil = "misc_group";
+var id_otros_perfil = "otros";
+var id_otros_group_perfil = "otros_group";
 var id_ie_radio_perfil = "radio_ie_perfil";
 var id_ie_radio_group = "radio_ie_group"
 var id_ihs_radio_perfil = "radio_ihs_perfil";
 var id_ihs_radio_group = "radio_ihs_group"
 var id_presupuestosgroup_perfil = "presAsignado_form";
 var id_entradagroup_perfil = "entrada_form";
-var rama_bd_obras = "obras";
-var rama_bd_inges = "inges";
-var rama_bd_registros = "registros";
+var rama_bd_obras = "proyectos/obras";
+var rama_bd_inges = "proyectos/inges";
+var rama_bd_registros = "proyectos/registros";
 
 
 $(document).ready(function() {
@@ -28,7 +28,7 @@ $(document).ready(function() {
     option.text = option.value = "";
     select.appendChild(option);
     var option2 = document.createElement('option');
-    option2.text = option2.value = "Miscelaneo";
+    option2.text = option2.value = "Otros";
     select.appendChild(option2);
 
     firebase.database().ref(rama_bd_obras).orderByChild('nombre').on('child_added',function(snapshot){
@@ -103,7 +103,7 @@ function actualizarPerfil(){
 } 
 
 function loadDDLPresupuestos(){
-    $('#' + id_misc_perfil).val("");
+    $('#' + id_otros_perfil).val("");
     $('#' + id_presupuestos_ddl_perfil).empty();
     var select = document.getElementById(id_presupuestos_ddl_perfil);
     var option = document.createElement('option');
@@ -111,13 +111,13 @@ function loadDDLPresupuestos(){
     option.text = option.value = "";
     select.appendChild(option);
 
-    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Otros"){
         $('#' + id_presupuestosgroup_perfil).addClass("hidden");
-        $('#' + id_miscgroup_perfil).removeClass("hidden");
+        $('#' + id_otros_group_perfil).removeClass("hidden");
     }
     else{
         $('#' + id_presupuestosgroup_perfil).removeClass("hidden");
-        $('#' + id_miscgroup_perfil).addClass("hidden");
+        $('#' + id_otros_group_perfil).addClass("hidden");
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_perfil + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
             var p = snapshot.val();
             if(p.contrato === true && p.oculto === false){
@@ -134,12 +134,12 @@ function loadDDLPresupuestos(){
 $('#' + id_entrada_button_perfil).click(function () {
     var rb_ie = document.getElementById(id_ie_radio_perfil);
     var rb_ihs = document.getElementById(id_ihs_radio_perfil);
-    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || (!rb_ie.parentNode.classList.contains("hidden") && rb_ie.checked == false && !rb_ihs.parentNode.classList.contains("hidden") && rb_ihs.checked == false) ||($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_misc_perfil).val())){
+    if($('#' + id_obra_ddl_perfil + " option:selected").val() === "" || (!rb_ie.parentNode.classList.contains("hidden") && rb_ie.checked == false && !rb_ihs.parentNode.classList.contains("hidden") && rb_ihs.checked == false) ||($('#' + id_presupuestos_ddl_perfil + " option:selected").val() === "" && !$('#' + id_otros_perfil).val())){
         alert("Selecciona todos los campos");
     } else {
         var chamba;
-        if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
-            chamba = $('#' + id_misc_perfil).val();
+        if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Otros"){
+            chamba = $('#' + id_otros_perfil).val();
         }
         else{
             chamba = $('#' + id_presupuestos_ddl_perfil).val();
@@ -238,8 +238,8 @@ $('#' + id_salida_button_perfil).click(function () {
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
             var chamba; // cambié a .text pq pide el equalsTo un strings
-            if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Miscelaneo"){
-                chamba = $('#' + id_misc_perfil).val();
+            if($('#' + id_obra_ddl_perfil + " option:selected").val() === "Otros"){
+                chamba = $('#' + id_otros_perfil).val();
             }
             else{
                 chamba = $('#' + id_presupuestos_ddl_perfil).val();
@@ -256,7 +256,7 @@ $('#' + id_salida_button_perfil).click(function () {
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
                         var esp = regis.esp;
-                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Miscelaneo" && regis.obra !== "Miscelaneo"){
+                        if($('#' + id_obra_ddl_perfil + " option:selected").val() !== "Otros" && regis.obra !== "Otros"){
                             firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
                                 var horas_trabajadas = snapshot.val();
                                 horas_trabajadas = horas_trabajadas + horas_registro/3600000;

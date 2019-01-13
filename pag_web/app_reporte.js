@@ -1,6 +1,6 @@
-var rama_bd_registros = "registros";
-var rama_bd_inges = "inges";
-var rama_bd_obras = "obras";
+var rama_bd_registros = "proyectos/registros";
+var rama_bd_inges = "proyectos/inges";
+var rama_bd_obras = "proyectos/obras";
 var id_imprime_button_reporte = "button_generar_reporte";
 var id_inge_ddl_reporte = "reporte_DDL_ingeniero";
 var id_obra_ddl_reporte = "reporte_DDL_proyecto";
@@ -43,7 +43,7 @@ $('#tabReporte').click(function() {
     option2.text = option2.value = 'Todos';
     select2.appendChild(option2);
     var option5 = document.createElement('option');
-    option5.text = option5.value = "Miscelaneo";
+    option5.text = option5.value = "Otros";
     select2.appendChild(option5);
 
     firebase.database().ref(rama_bd_inges).orderByChild('nombre').on('child_added',function(snapshot){
@@ -75,7 +75,7 @@ function loadDDLPresupuestosReporte(){
     option.text = option.value = "Todos";
     select.appendChild(option);
 
-    if($('#' + id_obra_ddl_reporte + " option:selected").val() === "Todos" || $('#' + id_obra_ddl_reporte + " option:selected").val() === "Miscelaneo"){
+    if($('#' + id_obra_ddl_reporte + " option:selected").val() === "Todos" || $('#' + id_obra_ddl_reporte + " option:selected").val() === "Otros"){
         $('#' + id_presupuestosgroup_reporte).addClass("hidden");
     }
     else{
@@ -121,8 +121,8 @@ $('#' + id_tabla_button_reporte).click(function() {
                 if(filtro_obras || ((selec_obra === registros_db[keys[i]].obra) && (filtro_presu || selec_pres === registros_db[keys[i]].presupuesto))){
                     if(fecha_i_timestamp < registros_db[keys[i]].checkin && registros_db[keys[i]].checkin < fecha_f_timestamp){
                         datos_reporte.push([
-                            registros_db[keys[i]].status,
                             registros_db[keys[i]].cu,
+                            registros_db[keys[i]].status,
                             new Date(registros_db[keys[i]].checkin).toLocaleDateString("es-ES", options),
                             "" + Math.round(10000*registros_db[keys[i]].horas/3600000)/10000,
                             registros_db[keys[i]].inge, 
@@ -132,7 +132,7 @@ $('#' + id_tabla_button_reporte).click(function() {
                 }
             }           
         }
-        tabla_clientes = $('#'+ id_datatable_reporte).DataTable({
+        tabla_registros = $('#'+ id_datatable_reporte).DataTable({
             destroy: true,
             data: datos_reporte,
             dom: 'Bfrtip',

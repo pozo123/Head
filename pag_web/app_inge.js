@@ -11,8 +11,8 @@ var id_proyectista_radio_inge = "inlineRadio3";
 //var id_obraAsignada_ddl_inge = "obraAsignada";
 var id_registrar_button_inge = "registrarIngeniero";
 var id_foto_input_inge = "foto";
-var rama_bd_inges = "inges";
-var rama_bd_obras = "obras";
+var rama_bd_inges = "proyectos/inges";
+var rama_bd_obras = "proyectos/obras";
 
 //var id_imprimir_button_inge = "imprimir";
 //var id_uid_inge = "uid";

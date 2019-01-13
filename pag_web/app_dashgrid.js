@@ -1,7 +1,7 @@
 var id_columns_dashgrid = "noColums";
 var id_rows_dashgrid = "noRows";
-var rama_bd_dashgrid = "dashgrid";
-var rama_bd_inges = "inges";
+var rama_bd_dashgrid = "proyectos/dashgrid";
+var rama_bd_inges = "proyectos/inges";
 var id_div_dashgrid = "divDashgrid";
 var id_actualizar_button_dashgrid = "actualizarDashgrid";
 var no_rows_dashgrid;

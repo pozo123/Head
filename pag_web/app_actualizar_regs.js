@@ -1,6 +1,6 @@
 var id_boton_chido = "botonChidoRegs";
-var rama_bd_registros = "registros";
-var rama_bd_inges = "inges";
+var rama_bd_registros = "proyectos/registros";
+var rama_bd_inges = "proyectos/inges";
 
 $('#' + id_boton_chido).click(function(){
     var i = 0;

@@ -1,7 +1,7 @@
 var id_colaborador_ddl_permisos = "DDLcolaborador";
 //var id_clase_checkbox_permisos = "claseCheck";
 var id_guardar_button_permisos = "guardadPermisos";
-var rama_bd_inges = "inges";
+var rama_bd_inges = "proyectos/inges";
 
 var id_alta_colaborador_checkbox_permisos = "checkColaborador";
 var id_alta_obra_checkbox_permisos = "checkObra";
@@ -12,6 +12,7 @@ var id_activar_checkbox_permisos = "checkActivar";
 var id_alta_exc_reqs_checkbox_permisos = "checkExcReqs";
 var id_alta_generos_tipos_checkbox_permisos = "checkGenerosTipos";
 var id_reporte_ppto_checkbox_permisos = "checkReportePpto";
+var id_pagos_permisos = "checkPagos";
 
 $('#tabPermisos').click(function(){
     var select = document.getElementById(id_colaborador_ddl_permisos);
@@ -98,6 +99,13 @@ function loadCheckboxesPermisos(){
             $('#' + id_alta_generos_tipos_checkbox_permisos).bootstrapToggle('on');
         else
             $('#' + id_alta_generos_tipos_checkbox_permisos).bootstrapToggle('off');
+
+        if(perms.pagos === true)
+            $('#' + id_pagos_permisos).bootstrapToggle('on');
+        else
+            $('#' + id_pagos_permisos).bootstrapToggle('off');
+
+
     });
 }
 
@@ -112,6 +120,7 @@ $('#' + id_guardar_button_permisos).click(function () {
         activar: $('#' + id_activar_checkbox_permisos).prop('checked'),
         alta_exc_reqs: $('#' + id_alta_exc_reqs_checkbox_permisos).prop('checked'),
         alta_generos_tipos: $('#' + id_alta_generos_tipos_checkbox_permisos).prop('checked'),
+        pagos: $('#' + id_pagos_permisos).prop('checked'),
     }
 
     

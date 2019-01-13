@@ -5,7 +5,7 @@ var id_terminar_button_gestionar = "terminar_button";
 var id_ocultar_button_gestionar = "ocultar_button";
 var id_horas_column_ihs_gestionar  = "horasIEColumn";
 var id_horas_column_ie_gestionar  = "horasIHSColumn";
-var rama_bd_obras = "obras";
+var rama_bd_obras = "proyectos/obras";
 var id_guardar_button_gestionar = "guardarHorasGestionar";
 
 var id_horas_gestionadas_label_gestionar = "labelHorasGestionadas";

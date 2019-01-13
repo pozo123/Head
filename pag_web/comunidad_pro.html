@@ -505,7 +505,21 @@
                 <!-- Sidebar Links -->
                 <ul class="list-unstyled components">
                     <div class="text-center">
-                        <img src="img/pp.png" alt="..." class="rounded-circle" height="150" width="150">
+                        <div class="form-group">
+                            <img id ="img_foto" src="img/pp.png" alt="..." class="rounded-circle" height="150" width="150">
+                        </div>
+                        <div class="form-group" id = "seleccionarFotoPersonal">
+                            <div class="upload-btn-wrapper">
+                                <button type="button" name="" id="" class="btn btn-outline-warning btn-lg btn-block">Selecciona imagen</button> 
+                                <input type="file" name="myfile"  id = "fotoPersonal_input" accept="image/*"/>
+                            </div>
+                        </div>
+
+                        <div class= "form-group hidden" id = "subirFotoPersonal">
+                                <div class="upload-btn-wrapper">
+                                    <button type="button" name="" id="" class="btn btn-outline-success btn-lg btn-block" onclick="subirFotoPersonal()">Sube tu imagen</button> 
+                                </div>
+                            </div>
                     </div>
                 </ul>
                 <ul class="list-unstyled components">
@@ -528,9 +542,9 @@
                                     <select id ="DDL_presupuestoAsignado" class="form-control"></select>
                                 </div>
     
-                                <div class="form-group hidden" id="misc_group">
-                                    <label for="misc">¿En qué vas a trabajar?</label>
-                                    <textarea class="form-control" id="misc" rows="5"></textarea>
+                                <div class="form-group hidden" id="otros_group">
+                                    <label for="otros">¿En qué vas a trabajar?</label>
+                                    <textarea class="form-control" id="otros" rows="5"></textarea>
                                 </div>
 
                                 <div class="row text-center">
@@ -571,6 +585,7 @@
                             <li class="tab" id="tabPresupuesto"><a href="#" onclick="openTabs('tabPresupuesto','presupuesto')">Generar Presupuesto</a></li>
                             <li class="tab" id="tabActivar"><a href="#" onclick="openTabs('tabActivar','activarPresupuesto')">Gestionar presupuestos</a></li>
                             <li class="tab" id="tabImprimirPresupuesto"><a href="#" onclick="openTabs('tabImprimirPresupuesto','imprimirPresupuesto')">Imprimir PDF de presupuesto</a></li>
+                            <li class="tab" id="tabPagos"><a href="#" onclick="openTabs('tabPagos','pagos')">Pagos de presupuestos</a></li>
                         </ul>
                     </li>
 
@@ -593,7 +608,6 @@
                                 <li class="tab" id="tabReportePpto"><a href="#" onclick="openTabs('tabReportePpto','reportePpto')">Reporte de presupuestos</a></li>
                         </ul>
                     </li>
-
                     <li class="tab"><a href="#" data-toggle="modal" data-target="#contraseñaModal">Cambiar contraseña</a></li>
                     <li class="tab" id="tabPermisos"><a href="#" onclick="openTabs('tabPermisos','permisos')">Permisos de usuario</a></li>
                     <li>
@@ -1001,12 +1015,7 @@
                                                 <label for="ingePwd">*Contraseña:</label>
                                                 <input type="password" name="" id="ingePwd"class="form-control" placeholder="Ingresa su contraseña a desear">
                                             </div>
-                                            <div class="form-group">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="foto" accept="image/*">
-                                                    <label class="custom-file-label" for="foto">Foto Personal (Opcional)</label>
-                                                </div>
-                                            </div>
+
                                             <div class="form-group">
                                                 <label>Especialidad:</label>
                                                 <div class="form-check form-check-inline">
@@ -1383,7 +1392,6 @@
                                             </div>
                                             <div class="col-lg-3 col-sm-12">
                                                 <label for="fichaFinal">Fecha final del reporte:</label>
-                                                
                                             </div>
                                             <div class="col-lg-3 col-sm-12">
                                                 <input class="form-control" type="text" id="fichaFinal" placeholder="" readonly="readonly">
@@ -1517,6 +1525,12 @@
                                                     </label>
                                                 </div>
 
+                                                <div class="form-group align-items-center">
+                                                    <label class="checkbox-inline">
+                                                        <input id= "checkPagos" class ="checkbox-permisos" type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-width="130" data-off="Deshabilitado" data-toggle="toggle" data-onstyle="success" data-offstyle="danger"> El usuario puede subir pagos
+                                                    </label>
+                                                </div>
+
                                                 <button id="guardadPermisos" type="button" class="btn btn-outline-success btn-block">Actualizar</button>
                                         </div>
                                         <div class = "col-lg-3">
@@ -1643,6 +1657,67 @@
                             </div>
                         </div>
 
+                        <div id="pagos" class="tabcontent hidden">
+                            <h1>Pagos ingresados por presupuesto</h1>
+                            <p>Página para ingresar pagos recibidos por presupuesto de la obra seleccionada</p>
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <form action="#" onsubmit="return false;">
+                                            <div class="form-group">
+                                                <label for="obrasDdlPagos">Obra:</label>
+                                                <select id="obrasDdlPagos" class="form-control" onChange="loadDDLPresupuestosPagos()"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pptoDdlPagos">Presupuesto:</label>
+                                                <select id ="pptoDdlPagos" class="form-control"></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="montoPagos">Cantidad Pagada:</label>
+                                                <input type="text" name="montoPagos" id="montoPagos"class="form-control" placeholder="Ingresa la cantidad pagada">
+                                            </div>
+                                            <div class="form-row align-items-center">
+                                                <div class="col-lg-6 col-sm-12">
+                                                    <label for="fechaPagos">Fecha donde se realizó el pago:</label>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-12">
+                                                    <input class="form-control" type="text" id="fechaPagos" placeholder="" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="form-group">
+                                                <label for="conceptoPagos">*Descripción del presupuesto:</label>
+                                                <textarea class="form-control" rows="6" id="conceptoPagos"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="pagoArchivo" accept="image/*, application/pdf" lang="es">
+                                                    <label class="custom-file-label" for="pagoArchivo">Archivo prueba del pago realizado</label>
+                                                    <span id="label_pago"> Archivo no seleccionado</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class= "col-lg-6">
+                                                    <button id="guardarPago" type="button" class="btn btn-outline-success btn-block">Guardar Pago</button>
+                                                </div>
+                                                <div class= "col-lg-6">
+                                                    <button type="reset" id = "borrarPago"class="btn btn-outline-danger btn-block">Borrar Todo</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -1693,7 +1768,7 @@
             authDomain: "ingenieriahead.firebaseapp.com",
             databaseURL: "https://ingenieriahead.firebaseio.com",
             projectId: "ingenieriahead",
-            storageBucket: "",
+            storageBucket: "ingenieriahead.appspot.com",
             messagingSenderId: "893795596481"
         };
         firebase.initializeApp(config);
@@ -1703,7 +1778,6 @@
         </script>
 
         <!--My scripts-->        
-        
         <script src="app_inge.js"></script>
         <script src="app_obra.js"></script>
         <script src="app_perfil.js"></script>
@@ -1724,6 +1798,8 @@
         <script src = "app_actualizar_regs.js"></script>
         <script src = "app_dashgrid.js"></script>
         <script src = "app_reporte_ppto.js"></script>
+        <script src = "app_pagos.js"></script>
+        //
         
 
         <!-- PdfMaker-->

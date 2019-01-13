@@ -1,7 +1,7 @@
 var id_cerrar_button_cierre = "cerrarDia";
-var rama_bd_inges = "inges";
-var rama_bd_registros = "registros";
-var rama_bd_obras = "obras";
+var rama_bd_inges = "proyectos/inges";
+var rama_bd_registros = "proyectos/registros";
+var rama_bd_obras = "proyectos/obras";
 
 $('#' + id_cerrar_button_cierre).click(function(){
 	var clicked_cierre = true;
@@ -33,7 +33,7 @@ $('#' + id_cerrar_button_cierre).click(function(){
 				esp = ing.esp_chamba;
 				else
 				esp = "NA";
-				if(esp !== "NA" && regis.obra != "Miscelaneo"){
+				if(esp !== "NA" && regis.obra != "Otros"){
 					firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
 						var horas_trabajadas = snapshot.val();
 						horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;

@@ -2,7 +2,7 @@ var id_obra_ddl_reportePpto = "ddlObraReportePpto";
 var id_ppto_ddl_reportePpto = "ddlPptoReportePpto";
 var id_generar_button_reportePpto = "reportePptoButton";
 
-var rama_bd_obras = "obras";
+var rama_bd_obras = "proyectos/obras";
 
 
 $(document).ready(function(){
@@ -67,7 +67,8 @@ $('#' + id_generar_button_reportePpto).click(function() {
 	var horasProgramadasIHS = 0;
 
 //Datos administrativos
-	var cashPresupuestado = 0;
+    var cashPresupuestado = 0;
+    var cashPagado = 0;
 	var fechaInicio;
 	var fechaActivacion;
 	var fechaFinal;
@@ -82,6 +83,8 @@ $('#' + id_generar_button_reportePpto).click(function() {
     var imagenGraf
     var dataIE = [];
     var dataIHS = [];
+    var dataPagos = [];
+    dataPagos[0] = [{text:"Fecha", style:"subheader",fillColor: '#FFFCA6',},{text:"Monto", style:"subheader",fillColor: '#FFFCA6',},{text:"Concepto", style:"subheader",fillColor: '#FFFCA6',}]
 
 // Análisis por colaborador
 	var nombreInge;
@@ -111,7 +114,26 @@ $('#' + id_generar_button_reportePpto).click(function() {
 			horasProgramadasIE = presu_snapshot.child("colaboradores_asignados/horas_totales_ie").val();
             horasProgramadasIHS = presu_snapshot.child("colaboradores_asignados/horas_totales_ihs").val();
 
+            var data_pagos = presu_snapshot.child("pagos").val();
+            console.log(data_pagos)
+            if(data_pagos != "vacio"){
+                console.log('prueba')
+                var keys_pagos = Object.keys(data_pagos);
+                var j = 1;
+    
+                for (var i = 0; i<keys_pagos.length; i++){
+                    dataPagos[j] = [
+                        data_pagos[keys_pagos[i]].fecha_dia, 
+                        "$" + formatMoney(data_pagos[keys_pagos[i]].monto),
+                        data_pagos[keys_pagos[i]].concepto,
+                        ];
+                    j = j + 1;;
+                }
+            }
+
             cashPresupuestado = ppto.cash_presupuestado;
+    
+            cashPagado = ppto.cash_pagado;
             
 
 			if(ppto.timestamps.startedAt === 0)
@@ -230,7 +252,6 @@ $('#' + id_generar_button_reportePpto).click(function() {
                             ];
                         j = j + 1;;
                     }
-                    console.log(dataIE)
                 });
 
                 firebase.database().ref(rama_bd_obras + "/" + nombreObra + "/presupuestos/" + nombrePresu + "/colaboradores_asignados/ihs").orderByKey().once('value',function(data1){
@@ -247,7 +268,6 @@ $('#' + id_generar_button_reportePpto).click(function() {
                             ];
                         j = j + 1;;
                     }
-                    console.log(dataIHS)
                 });
                 setTimeout(function(){
                     imagenGraf = window.myBar.toBase64Image();
@@ -559,11 +579,11 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                             },
                                             '',
                                         ],
-                                        // Horas programadas IE y fecha Activacion
+                                        // Cantidad Pagada y fecha Activacion
                                         [
                                             {
                                                 border: [true, false, false, false],
-                                                text: "Horas programadas IE: ",
+                                                text: "Cantidad cobrada: ",
                                                 alignment: 'center',
                                                 margin: [0,5],
                                                 fontSize: 10,
@@ -571,7 +591,7 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                             },
                                             {
                                                 border: [false, false, false, false],
-                                                text: horasProgramadasIE,
+                                                text: "$" + formatMoney(cashPagado),
                                                 alignment: 'center',
                                                 bold: true,
                                                 margin: [0,5],
@@ -600,7 +620,44 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                             },
                                             '',
                                         ],
-                                        // horas programadas IHS y fecha final
+                                        // horas programadas IH y fecha final
+                                        [
+                                            {
+                                                border: [true, false, false, false],
+                                                text: "horas programadas IE: ",
+                                                alignment: 'center',
+                                                margin: [0,5],
+                                                fontSize: 10,
+                                            },
+                                            {
+                                                border: [false, false, false, false],
+                                                text: horasProgramadasIE,
+                                                alignment: 'center',
+                                                bold: true,
+                                                margin: [0,5],
+                                                fontSize:10,
+                                                colSpan: 2,
+                                            },
+                                            '',
+                                            {
+                                                border: [false, false, false, false],
+                                                text: "Fecha de terminación: ",
+                                                alignment: 'center',
+                                                margin: [0,5],
+                                                fontSize: 10,
+                                            },
+                                            {
+                                                border: [false, false, true, false],
+                                                text: fechaFinal,
+                                                alignment: 'center',
+                                                bold: true,
+                                                margin: [0,5],
+                                                fontSize:10,
+                                                colSpan: 2,
+                                            },
+                                            '',
+                                        ],  
+                                        // horas IHS
                                         [
                                             {
                                                 border: [true, false, false, true],
@@ -608,6 +665,7 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                                 alignment: 'center',
                                                 margin: [0,5],
                                                 fontSize: 10,
+                                                fillColor: "#F0F0E7",
                                             },
                                             {
                                                 border: [false, false, false, true],
@@ -617,26 +675,29 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                                 margin: [0,5],
                                                 fontSize:10,
                                                 colSpan: 2,
+                                                fillColor: "#F0F0E7",
                                             },
                                             '',
                                             {
                                                 border: [false, false, false, true],
-                                                text: "Fecha de terminación: ",
+                                                text: "",
                                                 alignment: 'center',
                                                 margin: [0,5],
                                                 fontSize: 10,
+                                                fillColor: "#F0F0E7",
                                             },
                                             {
                                                 border: [false, false, true, true],
-                                                text: fechaFinal,
+                                                text: "",
                                                 alignment: 'center',
                                                 bold: true,
                                                 margin: [0,5],
                                                 fontSize:10,
                                                 colSpan: 2,
+                                                fillColor: "#F0F0E7",
                                             },
                                             '',
-                                        ],                        
+                                        ], 
                                     ],
                                 },
                             },
@@ -788,6 +849,37 @@ $('#' + id_generar_button_reportePpto).click(function() {
                                     headerRows: 1,
                                     widths: ['*', '*', '*'],
                                     body: dataIHS,
+                                },
+                                layout: {
+                                    fillColor: function (rowIndex, node, columnIndex) {
+                                        return (rowIndex % 2 === 0 && rowIndex != 0) ? '#F0F0E7' : null;
+                                    },
+                                    hLineWidth: function (i, node) {
+                                        return (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0;
+                                    },
+                                    vLineWidth: function (i, node) {
+                                        return (i === 0 || i === node.table.widths.length) ? 1 : 0;
+                                    },
+                                    hLineColor: function (i, node) {
+                                        return (i === 0 || i === 1 || i === node.table.body.length) ? 'black' : null;
+                                    },
+                                    vLineColor: function (i, node) {
+                                        return (i === 0 || i === node.table.widths.length) ? 'black' : null;
+                                    },
+                                },
+                            },
+                            {
+                                text: 'Pagos realizados',
+                                style: 'header',
+                                alignment: 'center',
+                                margin: [ 20, 2, 10, 20 ]
+                            },
+                            {
+                                style: 'tableStyle',
+                                table: {
+                                    headerRows: 1,
+                                    widths: ['*', '*', '*'],
+                                    body: dataPagos,
                                 },
                                 layout: {
                                     fillColor: function (rowIndex, node, columnIndex) {
