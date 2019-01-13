@@ -3,15 +3,33 @@ var rama_bd_inges = "inges";
 var rama_bd_registros = "registros";
 var rama_bd_obras = "obras";
 
-$('#' + id_cerrar_button_cierre).click(function(){
-	cierreMaestro();
+var interval;
+
+$(document).ready(function(){
+    checkTime();
+    setInterval(checkTime, 3600000);
 });
 
-function cierreDia(){
-	
+$('#' + id_cerrar_button_cierre).click(function(){
+	cierreMaestro(false);
+});
+
+function checkTime(){
+	var hora = new Date().getHours();
+	var minutos;
+	if(hora >= 16){
+		minutos = new Date().getMinutes();
+		var ms_que_faltan = (60 - minutos)*60000;
+		interval = setInterval(endDay, ms_que_faltan);
+	}
 };
 
-function cierreMaestro(){
+function endDay(){
+	cierreMaestro(true);
+	clearInterval(interval);
+}
+
+function cierreMaestro(automatico){
 	var clicked_cierre = true;
 	firebase.database().ref(rama_bd_inges).orderByChild("status").equalTo(true).on('child_added',function(snapshot){
 		var ing = snapshot.val();
@@ -57,7 +75,11 @@ function cierreMaestro(){
 						firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
 					});
 				}
-				alert("Sesion de " + ing.nombre + " cerrada.");
+				if(automatico){
+					console.log("Sesion de " + ing.nombre + " cerrada.");
+				} else {
+					alert("Sesion de " + ing.nombre + " cerrada.");
+				}
             }
 		});		
 	});
