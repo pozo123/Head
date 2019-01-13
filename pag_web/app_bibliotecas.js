@@ -16,6 +16,7 @@ var id_datatable_obras_bibliotecas = "dataTableObras";
 var id_datatable_inges_bibliotecas = "dataTableInges";
 var id_datatable_presupuestos_bibliotecas = "dataTablePresu";
 var id_datatable_atn_bibliotecas = "dataTableAtn";
+var id_datatable_pagos_bibliotecas = "dataTablePagos";//AQUI
 
 var id_tab_clientes_bibliotecas = "tabBibClientes"
 var id_tab_colaborador_bibliotecas = "tabBibColaborador"
@@ -24,6 +25,7 @@ var id_tab_presupuestos_bibliotecas = "tabBibPresupuestos"
 var id_tab_atencion_bibliotecas = "tabBibAtencion"
 var id_tab_reqsExcs_bibliotecas = "tabBibReqsExcs"
 var id_tab_tiposGens_bibliotecas = "tabBibTiposGens"
+var id_tab_pagos_bibliotecas = "tabBibPagos"//AQUI
 
 var options_bibliotecas = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
@@ -128,6 +130,16 @@ var id_precio_presu_editar_bibliotecas = "precioPresuEditar";
 var id_clase_ddl_presu_editar_bibliotecas = "DDL_clasePresuEditar";
 
 var id_editar_presu_button_bibliotecas = "editarPresu"; */
+//_____MODAL PAGOS______
+//AQUI
+var id_pagos_modal_editar_bibliotecas = "pagosModalEditar";
+
+var id_concepto_pagos_editar_bibliotecas = "conceptoPagosEditar";
+var id_monto_pagos_editar_bibliotecas = "montoPagosEditar";
+var id_imagen_pagos_editar_bibliotecas = "imagenPagosEditar";
+
+var id_editar_pagos_button_bibliotecas = "editarPagos";
+var id_descargar_pagos_button_bibliotecas = "descargarPagos";
 //____FIN MODALES_____
 
 
@@ -206,6 +218,11 @@ $('#' + id_tab_presupuestos_bibliotecas).click(function(){
 
 $('#' + id_tab_atencion_bibliotecas).click(function(){
 	loadTablaAtn();
+});
+
+//AQUI
+$('#' + id_tab_pagos_bibliotecas).click(function(){
+	loadTablaPagos();
 });
 
 // -----------------------------------------------------------------------------------
@@ -1043,6 +1060,88 @@ $('#' + id_eliminar_atn_button_bibliotecas).click(function(){
 		snapshot.getRef().removeValue();
 	});
 	location.reload();
+});
+
+//AQUI
+function loadTablaPagos(){
+	var datos_pagos = [];
+	firebase.database().ref(rama_bd_obras).orderByChild("nombre").on("child_added",function(snapshot){
+		var obr = snapshot.val();
+		firebase.database().ref(rama_bd_obras + "/" + obr.nombre + "/presupuestos").orderByChild("nombre").on("child_added",function(snapshot){
+			var presupuesto = snapshot.val();
+			firebase.database().red(rama_bd_obras + "/" + obr.nombre + "/presupuestos/" + presupuesto.nombre + "/pagos").on("child_added", function(snapshot){
+				var pago = snapshot.val();
+				var imagen;
+				if(pago.imagen.url){
+					imagen = "Sí";
+				} else {
+					imagen = "No";
+				}
+				datos_pagos.push([obr.nombre, presupuesto.nombre, pago.fecha_dia, pago.concepto, pago.monto, imagen, pago.cu]);
+
+				var tabla_pagos = $('#'+ id_datatable_pagos_bibliotecas).DataTable({
+					destroy: true,
+					scrollX: true,
+					data: datos_pagos,
+					dom: 'Bfrtip',
+					buttons: ['excel'],
+					columns: [
+						{title: "Obra"},
+						{title: "Presupuesto"},
+						{title: "Fecha"},
+						{title: "Concepto"},
+						{title: "Monto"},
+						{title: "Imagen"},
+						{title: "CU", class: "hidden"}, //AQUI, si truena borrar el hidden
+						{defaultContent: "<button type='button' " + boton_editar_class + "data-toggle='modal' data-target='#presuModalEditar'><i class='fas fa-edit'></i></button>"},
+					],
+		            language: idioma_espanol,
+				});
+				editar_pagos("#" + id_datatable_pagos_bibliotecas + " tbody", tabla_pagos);
+			});
+			
+		});
+	});
+}
+
+//AQUI
+var monto_pagos;
+var obra_pago;
+var ppto_pago;
+var cu_pago;
+function editar_pagos(tbody, table){
+	$(tbody).on("click", "button.editar",function(){
+		var data = table.row($(this).parents("tr")).data();
+		if(data){
+			console.log(data);	
+			obra_pago = data[0];
+			ppto_pago = data[1];
+			$('#' + id_concepto_pagos_editar_bibliotecas).val(data[3]);
+			$('#' + id_monto_pagos_editar_bibliotecas).val(data[4]);
+			monto_pagos = data[4];
+			cu_pago = data[6];			
+		}
+	});
+}
+//AQUI
+$('#' + id_editar_pagos_button_bibliotecas).click(function(){
+	var pago = {
+		concepto: $('#' + id_concepto_pagos_editar_bibliotecas).val(),
+		monto: $('#' + id_monto_pagos_editar_bibliotecas).val(),
+	}
+	firebase.database().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos/" + ppto_pago + "/pagos/" + cu_pago).update(pago);
+	//AQUI meter imagen
+	if($('#' + id_monto_pagos_editar_bibliotecas).val() != monto_pagos){
+		firebase.data().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos")orderByKey().equalTo(ppto_pago).once("child_added").then(function(snapshot){
+			var ppto = snapshot.val();
+			var nuevo_cash = parseFloat(ppto.cash_pagado) - parseFloat(monto_pagos) + parseFloat($('#' + id_monto_pagos_editar_bibliotecas).val());
+			firebase.database().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos/" + ppto_pago + "/cash_pagado").update(nuevo_cash);
+			loadTablaAtn();
+		});
+	} else {
+		loadTablaAtn();
+	}
+	alert("Cambios registrados");
 });
 
 var idioma_espanol = {
