@@ -4,6 +4,14 @@ var rama_bd_registros = "registros";
 var rama_bd_obras = "obras";
 
 $('#' + id_cerrar_button_cierre).click(function(){
+	cierreMaestro();
+});
+
+function cierreDia(){
+	
+};
+
+function cierreMaestro(){
 	var clicked_cierre = true;
 	firebase.database().ref(rama_bd_inges).orderByChild("status").equalTo(true).on('child_added',function(snapshot){
 		var ing = snapshot.val();
@@ -54,4 +62,4 @@ $('#' + id_cerrar_button_cierre).click(function(){
 		});		
 	});
 	clicked_cierre = false;
-});
+};
