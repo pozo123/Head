@@ -13,8 +13,8 @@ var id_direccion_cp_obra = "cpObra"; //Campo nuevo
 //var id_del_asignados_button_obra = "borrar_inges_asignados";
 //var id_asignados_lista_obra = "ListaInges";
 var id_registrar_button_obra = "registrarObra";
-var rama_bd_obras = "obras";
-var rama_bd_inges = "inges";
+var rama_bd_obras = "proyectos/obras";
+var rama_bd_inges = "proyectos/inges";
 var rama_bd_clientes = "clientes";
 
 //var asignados = [];
@@ -193,7 +193,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                             horas_trabajadas: 0,
                                             nombre: elec[keys[i]].nombre,
                                         }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
                                     }
                                 }
                             });
@@ -207,7 +207,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                             horas_trabajadas: 0,
                                             nombre: plom[keys[i]].nombre,
                                         }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
                                     }
                                 }
                             });
@@ -221,8 +221,8 @@ $('#' + id_registrar_button_obra).click(function () {
                                             horas_trabajadas: 0,
                                             nombre: gral[keys[i]].nombre,
                                         }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
+                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
                                     }
                                 }
                             });
