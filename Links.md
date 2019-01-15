@@ -1,6 +1,7 @@
 # Links
 
-https://stackoverflow.com/questions/43881990/how-to-modify-an-specific-value-in-firebase
+  - Referencias y firebase.database() en general
+    - https://stackoverflow.com/questions/43881990/how-to-modify-an-specific-value-in-firebase
 
   - PDF
     - pdfmake.org
