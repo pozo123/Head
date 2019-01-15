@@ -48,7 +48,7 @@ function cierreMaestro(automatico){
 					var aux = snapshot.val();
 					var horas_previas = aux.horas_trabajadas;
 					var horas_nuevas = parseFloat(horas_registro) + parseFloat(horas_previas)
-					firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + obra_key + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
+					firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
 				});
 				var esp;
 				if(ing.especialidad == 1)
