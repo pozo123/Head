@@ -59,7 +59,7 @@ function cierreMaestro(automatico){
 				esp = ing.esp_chamba;
 				else
 				esp = "NA";
-				if(esp !== "NA" && regis.obra != "Miscelaneo"){
+				if(esp !== "NA" && regis.obra != "Otros"){
 					firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
 						var horas_trabajadas = snapshot.val();
 						horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;
