@@ -3,6 +3,8 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+15/ene:
+  - 
  Hoy:
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
@@ -23,6 +25,7 @@ SCORE:
     - tipos/generos sí
   - Dashgrid
   - Dashcards nuevo diseño
+  - Amarillo y rojo en dashcards y graphs para cuando esten al 90% o se hayan pasado de las horas programadas
   - Update uml
   - si calendarios vacios reportes de todas las fechas
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
