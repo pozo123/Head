@@ -33,8 +33,12 @@ $('#tabDashgrid').click(function(){
 $('#' + id_columns_dashgrid).change(function(){
     if($('#' + id_columns_dashgrid).val() === "")
         $('#' + id_columns_dashgrid).val(1);
-    no_columns_dashgrid = $('#' + id_columns_dashgrid).val();
-    loadGrid(no_rows_dashgrid, no_columns_dashgrid);
+    else if((12 % $('#' + id_columns_dashgrid).val()) != 0){
+    	alert("El número de columnas debe ser divisor de 12 (1, 2, 3, 4, 6 o 12)")
+    } else{
+    	no_columns_dashgrid = $('#' + id_columns_dashgrid).val();
+   		loadGrid(no_rows_dashgrid, no_columns_dashgrid);
+    } 
 });
 
 $('#' + id_rows_dashgrid).change(function(){
