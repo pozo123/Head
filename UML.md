@@ -1,4 +1,5 @@
-- colaboradores (magico)
+- personal (magico)
+      - AFECTAN: app_personal, app_inges
   - uid (como key):
     - areas:
       - proyectos: boolean
