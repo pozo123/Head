@@ -3,6 +3,8 @@
     - areas:
       - proyectos: boolean
       - produccion: boolean
+      - compras: boolean
+      - administracion: boolean
       - ___: boolean (a llenar con cada nueva area)
     - uid: uid
     - nombre: string
