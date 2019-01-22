@@ -13,7 +13,7 @@ var id_registrar_button_inge = "registrarIngeniero";
 var id_foto_input_inge = "foto";
 var rama_bd_inges = "proyectos/inges";
 var rama_bd_obras = "proyectos/obras";
-
+var rama_bd_personal = "personal";
 //var id_imprimir_button_inge = "imprimir";
 //var id_uid_inge = "uid";
 
@@ -39,6 +39,7 @@ $('#' + id_registrar_button_inge).click(function () {
         secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
             .then(function (result) {
                 guardaDatos(result.user);
+                guardarDatosPersonalInge(result.user, $('#' + id_nombre_inge).val(), $('#' + id_nickname_inge).val());
                 secondaryApp.auth().signOut();
             });
 
@@ -56,6 +57,26 @@ $('#' + id_registrar_button_inge).click(function () {
             });*/
     }
 });
+
+function guardaDatosPersonalInge(user, nombre, nickname) {
+    var areas = {
+        proyectos: true,
+        produccion: false,
+        compras: false,
+        administracion: false,
+    }
+    
+    var persona = {
+        uid: user.uid,
+        nombre: nombre,
+        email: user.email,
+        nickname: nickname,
+        areas: areas,
+    }
+
+    firebase.database().ref(rama_bd_personal + "/" + user.uid).set(persona);
+    alert("¡Alta exitosa!")
+}
 
 function guardaDatos(user) {
     var espec;
