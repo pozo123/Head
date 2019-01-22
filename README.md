@@ -3,6 +3,13 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+ Errores:
+ app_permisos, no me deja actualizarlos.
+ presu misc no aparece en ningun lado. En perfil tiene sentido porque no està activo pero en gestionar tampoco sale.
+ Hacer que los presus misc salgan como contrato desde el principio.
+ Se genera la obra "otros"
+ no jalan los registros al generar un reporte de la obra otros
+ 
  Hoy:
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
