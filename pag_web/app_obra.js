@@ -168,7 +168,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                         checkin: new Date().getTime(),
                                     }
                                 },
-                                contrato: false,
+                                contrato: true,
                                 terminado: false,
                                 reqs: "vacio",
                                 exclusiones: "vacio",
