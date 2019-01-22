@@ -8,7 +8,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
 PRODUCCION:
   - A quien le sale y a quien no.
-  - Definir rama "magica" de colaboradores (fuera de cualquier rama, ligada al auth)
   - Para obra poder modificar imagen para que impriman planos? Tipo hacerle zoom a algo o cosas así. Ver qué necesidad tienen en la obra.
 
  
@@ -38,3 +37,4 @@ SCORE:
   - PAGOS
   - Imágenes
   - Cierre maestro automático
+  - Rama personal
