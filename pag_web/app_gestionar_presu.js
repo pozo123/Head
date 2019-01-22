@@ -8,6 +8,14 @@ var id_horas_column_ie_gestionar  = "horasIHSColumn";
 var rama_bd_obras = "proyectos/obras";
 var id_guardar_button_gestionar = "guardarHorasGestionar";
 
+var label_contrato = "gestionarContrato";
+var label_oculto = "gestionarOculto";
+var label_imagen = "gestionarImagen";
+
+var input_contratoArchivo = "archivoContrato";
+var contratoSeleccionado = "";
+var label_contratoSeleccionado = "label_contrato";
+
 var id_horas_gestionadas_label_gestionar = "labelHorasGestionadas";
 var id_horas_ppto_label_gestionar = "labelHorasPpto";
 
@@ -71,13 +79,48 @@ function loadDDLPresupuestosGestionar(){
     select.appendChild(option);
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
         var presu = snapshot.key;
-        var option2 = document.createElement('option');
-        option2.text = option2.value = presu; 
-        select.appendChild(option2);
+        //if(presu != "Miscelaneo"){
+          var option2 = document.createElement('option');
+          option2.text = option2.value = presu; 
+          select.appendChild(option2);
+        //}
     });
-
 };
 
+$("#" + id_presupuestos_ddl_gestionar).on("change",function(){
+    loadEstadoGestionar();
+});
+
+function loadEstadoGestionar(){
+  firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos").orderByChild("nombre").equalTo($('#' + id_presupuestos_ddl_gestionar + " option:selected").val()).once('child_added',function(snapshot){
+    var presu = snapshot.val();
+
+    if(presu.contrato){
+      $('#' + label_contrato).text("Contrato")
+      $('#' + label_contrato).addClass("text-success");
+      $('#' + label_contrato).removeClass("text-danger");
+    } else {
+      $('#' + label_contrato).text("No Contrato")
+      $('#' + label_contrato).removeClass("text-success");
+      $('#' + label_contrato).addClass("text-danger");
+    }
+
+    if(presu.oculto){
+      $('#' + label_oculto).text("Oculto")
+      $('#' + label_oculto).addClass("text-warning");
+      $('#' + label_oculto).removeClass("text-success");
+    } else {
+      $('#' + label_oculto).text("No Oculto")
+      $('#' + label_oculto).removeClass("text-warning");
+      $('#' + label_oculto).addClass("text-success");
+    }
+});
+}
+
+$('#' + input_contratoArchivo).on("change", function(event){
+  contratoSeleccionado = event.target.files[0];
+  $('#' + label_contratoSeleccionado).text(contratoSeleccionado.name)
+});
 
 $('#' + id_activar_button_gestionar).click(function () {
 //Chance falta un orderBy?
@@ -93,6 +136,7 @@ $('#' + id_activar_button_gestionar).click(function () {
     firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos/" + $('#' + id_presupuestos_ddl_gestionar + " option:selected").val() + "/timestamps/activacion").set(new Date().getTime());
     alert("Presupuesto activado");
   }
+  loadEstadoGestionar();
 });
 
 $('#' + id_terminar_button_gestionar).click(function () {
@@ -122,6 +166,7 @@ $('#' + id_ocultar_button_gestionar).click(function () {
             alert("Presupuesto ocultado");
         }
     });
+    loadEstadoGestionar();
   }
 });
 
