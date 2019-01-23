@@ -251,9 +251,9 @@ $('#' + id_salida_button_perfil).click(function () {
             loadPerfil();
             firebase.database().ref(rama_bd_inges).orderByChild("uid").equalTo(username).once('child_added').then(function(snapshot){
                 var ing = snapshot.val();
-                firebase.database().ref(rama_bd_registros).orderByChild("inge").equalTo(ing.nombre).on('child_added',function(snapshot){
+                firebase.database().ref(rama_bd_registros).orderByChild("status").equalTo(false).on('child_added',function(snapshot){
                     var regis = snapshot.val();
-                    if(regis.status === false && clicked === true){
+                    if(regis.inge == ing.nombre && clicked === true){
                         var horas_registro = new Date().getTime() - regis.checkin;
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/status").set(true);
                         firebase.database().ref(rama_bd_registros + "/" + regis.cu + "/horas").set(horas_registro);
