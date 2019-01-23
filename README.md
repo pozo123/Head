@@ -4,11 +4,6 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Errores:
- - app_permisos, no me deja actualizarlos -> al parecer solo en mozilla?
- - presu misc no aparece en ningun lado. En perfil tiene sentido porque no està activo pero en gestionar tampoco sale. -> en app_gestionar linea 82 quitar ese if (y cambiar los pptos misc de ahorita a que sean contratos)
- - Hacer que los presus misc salgan como contrato desde el principio. -> 171 app_obra
- - Se genera la obra "otros" -> cambié !== por != en app_perfil 261, agregué unos "option:selected" en donde faltaban
- - no jalan los registros al generar un reporte de la obra otros -> al parecer solo en mozilla tambien
  
  Hoy:
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
