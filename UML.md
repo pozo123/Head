@@ -1,5 +1,6 @@
 - personal (magico)
       - AFECTAN: app_personal, app_inges
+      - SUSCRIBEN: 
   - uid (como key):
     - areas:
       - proyectos: boolean
@@ -11,7 +12,35 @@
     - nombre: string
     - nickname: ? string
     - email: string
-    
+- produccion
+  - diversos:
+      - AFECTAN: app_diversos
+      - SUSCRIBEN: app_pagos_nomina
+      - viaticos
+      - destajos
+      - apoyo
+      - reposicion
+      - finiquito
+      - prestamos
+      - caja_chica
+  - pagos_nomina:
+      - AFECTAN: app_pagos_nomina
+      - SUSCRIBEN: 
+      - year: (ej 2019)
+            - semana: (ej semana1?)
+                  - obra: (por nombre)
+                        - trabajador: (por id)
+                              - dias (lun mar mier)
+                              - horas extra
+                              - diversos:
+                                    - *todos los diversos*
+                              - total
+  - destajistas 
+      - AFECTAN: app_destajistas
+      - SUSCRIBEN:
+      - destajista: (por nombre)
+            - year:
+                  - semana: 
 - clientes
 - proyectos
 - info_web
