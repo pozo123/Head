@@ -63,6 +63,13 @@ $('#' + id_registrar_button_cliente).click(function () {
             if(!$('#' + id_nombre_cliente).val() || !$('#' + id_clave_cliente).val() || !(typeof atencion != "undefined" && atencion != null && atencion.length != null && atencion.length > 0)){
                 alert("Llena todos los campos requeridos");
             }else{
+                atencion.push({
+                    nombre: "Producción HEAD",
+                    area: "Gerente de Producción", 
+                    celular: "5530405202",
+                    email: "vgarcia@headingenieria.mx",
+                    extension: ".",
+                });
                 var cliente = {      
                     nombre: $('#' + id_nombre_cliente).val(),
                     clave: $('#' + id_clave_cliente).val(),
