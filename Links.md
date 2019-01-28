@@ -38,3 +38,7 @@ en terminal
   - Gantt
     - https://jsganttimproved.github.io/jsgantt-improved/
     - https://github.com/jsGanttImproved/jsgantt-improved/blob/develop/Documentation.md
+    
+  - Leer excel
+    - https://stackoverflow.com/questions/40467777/how-do-i-store-excel-data-into-firebase
+    - https://github.com/FirebaseExtended/firebase-import
