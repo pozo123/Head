@@ -35,12 +35,76 @@
                   - diversos:
                      - *todos los diversos*
                   - total
-  - destajistas 
+  - destajistas: 
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
       - destajista: (por nombre)
          - year:
             - semana: 
+  - obras:
+      - AFECTAN: app_obras_prod
+      - SUSCRIBEN:
+      - obra: (por nombre)
+         - nombre
+         - cliente
+         - procesos:
+            - proceso (por nombre):
+               - nombre
+               - clave
+               - PROYECTOS:
+                  - PPTO
+                  - PAG
+               - PRODUCCION:
+                  - SUMINISTROS:
+                     - CUANT
+                     - O de C
+                     - PAG
+                  - COPEO:
+                     - PREC
+                     - COPEO
+                     - EST
+                     - PAG
+               - ADMINISTRACION:
+                  - ESTIMACIONES:
+                     - PPTO
+                     - EST
+                     - PAG
+                  - ANTICIPOS:
+                     - PPTO
+                     - PAG
+               - AVANCE:
+                  - EST
+                  - REAL
+               - PROFIT:
+                  - PROG
+                  - REAL
+         - fechas:
+            - fecha_inicio_real
+            - fecha_inicio_teorica
+            - fecha_final_real
+            - fecha_final_teorica
+         - finanzas:
+            - PROYECTOS:
+               - PPTO
+               - PAG
+            - PRODUCCION:
+               - SUMINISTROS:
+                  - CUANT
+                  - O de C
+                  - PAG
+               - COPEO:
+                  - PREC
+                  - COPEO
+                  - EST
+                  - PAG
+            - ADMINISTRACION:
+               - ESTIMACIONES:
+                  - PPTO
+                  - EST
+                  - PAG
+               - ANTICIPOS:
+                  - PPTO
+                  - PAG
 - clientes
 - proyectos
 - info_web
