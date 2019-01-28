@@ -41,7 +41,7 @@
       - destajista: (por nombre)
          - year:
             - semana: 
-  - obras:
+  - obras: (muchas en mayus porque probablemente se suban desde un excel)
       - AFECTAN: app_obras_prod
       - SUSCRIBEN:
       - obra: (por nombre)
