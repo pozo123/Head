@@ -27,20 +27,20 @@
       - AFECTAN: app_pagos_nomina
       - SUSCRIBEN: 
       - year: (ej 2019)
-            - semana: (ej semana1?)
-                  - obra: (por nombre)
-                        - trabajador: (por id)
-                              - dias (lun mar mier)
-                              - horas extra
-                              - diversos:
-                                    - *todos los diversos*
-                              - total
+         - semana: (ej semana1?)
+            - obra: (por nombre)
+               - trabajador: (por id)
+                  - dias (lun mar mier)
+                  - horas extra
+                  - diversos:
+                     - *todos los diversos*
+                  - total
   - destajistas 
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
       - destajista: (por nombre)
-            - year:
-                  - semana: 
+         - year:
+            - semana: 
 - clientes
 - proyectos
 - info_web
