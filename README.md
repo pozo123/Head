@@ -14,6 +14,7 @@ PRODUCCION:
 
  
 SCORE:
+  - En gestionar el label de "Existe documento firmado" no hace nada
   - Eliminar en bibliotecas
     - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
     - Obras Poner activo/No activo?
