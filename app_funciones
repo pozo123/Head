@@ -1,0 +1,39 @@
+
+//input un dia en ms
+//regresa un array [week, year]
+//var week = getWeek(dia_en_ms)[0];
+//var year = getWeek(dia_en_ms)[1];
+//ej getWeek(new Date(2027,0,2).getTime())
+
+function getWeek(dia) {
+  var d = new Date(dia);
+
+  var y = new Date(d).getFullYear();
+  var timestmp = new Date().setFullYear(y, 0, 1);
+  var yearFirstDay = Math.floor(timestmp / 86400000);
+  var day = Math.ceil(d / 86400000);
+  var dayOfYear = day - yearFirstDay;
+
+  var firstDay = new Date(y,0,1);
+  var offset = 4 - firstDay.getDay();
+  
+  if(offset < 0)
+  	offset = 8 + offset;
+  else
+  	offset = offset + 1;
+    
+  var week;
+  var year = y;
+  if(dayOfYear < offset){
+	year--;
+	week = getWeek(new Date(year,11,31).getTime())[0];
+  }
+  else{
+  	week = Math.floor((dayOfYear - offset)/7) + 1;
+  }
+  //document.getElementById("demo").innerHTML = week;
+  //document.getElementById("demo2").innerHTML = year;
+  //document.getElementById("demo3").innerHTML = d; 
+  
+  return [week,year];
+}
