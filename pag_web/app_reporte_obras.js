@@ -3,7 +3,7 @@ var id_button_generar_reporte_obras = "buttonGenerarRepObras"; //Botón
 var id_inges_ddlcheck_reporte_obras = "ingesRepObras"; //DropDown Checklist
 var id_obras_ddlcheck_reporte_obras = "obrasRepObras"; //DropDown Checklist
 var id_fecha_inicio_reporte_obras = "fechaInicioRepObras"; //Datepicker
-var id_fecha_final_reporte_obras = "fichaFinalRepObras"; //Datepicker
+var id_fecha_final_reporte_obras = "fechaFinalRepObras"; //Datepicker
 
 var id_ctx1_reporte_obras = "divGraph1RepObras"; //Div
 var id_ctx2_reporte_obras = "divGraph2RepObras"; //Div
