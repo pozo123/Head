@@ -62,15 +62,15 @@ $('#' + id_button_generar_reporte_colaboradores).click(function() {
     		fecha_f_timestamp = fecha_f.getTime();
     	} else {
     		//Si sólo se selecciona un día se utiliza la info de ese día en particular
-    		fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
+    		fecha_i = new Date($('#' + id_fecha_inicio_reporte_colaboradores).val());
     		fecha_i_timestamp = fecha_i.getTime();
 	        fecha_f = "";
 	        fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
     	}
     } else {
-    	fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
+    	fecha_i = new Date($('#' + id_fecha_inicio_reporte_colaboradores).val());
     	fecha_i_timestamp = fecha_i.getTime();
-        fecha_f = new Date($('#' + id_fecha_final_reporte).val());
+        fecha_f = new Date($('#' + id_fecha_final_reporte_colaboradores).val());
         fecha_f_timestamp = fecha_f.getTime() + (24*3600*1000); 
     }
 
