@@ -17,8 +17,9 @@ PRODUCCION:
  
 SCORE:
   - Reporte pptos no suma todas las horas!!! >:O 
-   - No se están guardando bien las horas. Tiene que ser en perfil. HAY QUE ARREGLAR ESE PEDO YA
+  - No se están guardando bien las horas. Tiene que ser en perfil. HAY QUE ARREGLAR ESE PEDO YA
   - En gestionar el label de "Existe documento firmado" no hace nada
+  - Tampoco se suben las fotos de contrato
   - Eliminar en bibliotecas
     - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
     - Obras Poner activo/No activo?
