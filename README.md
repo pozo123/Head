@@ -21,6 +21,7 @@ SCORE:
   - En gestionar el label de "Existe documento firmado" no hace nada
   - Tampoco se suben las fotos de contrato
   - No salen pptos misc en gestionar. Según yo ya estaba arreglado
+  - Código mágico para cambiar todos los misceláneo por Otros en registros.
   
   - Tampoco se suben las fotos de contrato
   - Eliminar en bibliotecas
