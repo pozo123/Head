@@ -1,24 +1,24 @@
-//app_reporte_colaboradores
-var id_button_generar_reporte_colaboradores = "buttonGenerarRepObras"; //Botón
-var id_inges_ddlcheck_reporte_colaboradores = "ingesRepObras"; //DropDown Checklist
-var id_obras_ddlcheck_reporte_colaboradores = "obrasRepObras"; //DropDown Checklist
-var id_fecha_inicio_reporte_colaboradores = "fechaInicioRepObras"; //Datepicker
-var id_fecha_final_reporte_colaboradores = "fichaFinalRepObras"; //Datepicker
+//app_reporte_obras
+var id_button_generar_reporte_obras = "buttonGenerarRepObras"; //Botón
+var id_inges_ddlcheck_reporte_obras = "ingesRepObras"; //DropDown Checklist
+var id_obras_ddlcheck_reporte_obras = "obrasRepObras"; //DropDown Checklist
+var id_fecha_inicio_reporte_obras = "fechaInicioRepObras"; //Datepicker
+var id_fecha_final_reporte_obras = "fichaFinalRepObras"; //Datepicker
 
-var id_ctx1_reporte_colaboradores = "divGraph1RepObras"; //Div
-var id_ctx2_reporte_colaboradores = "divGraph2RepObras"; //Div
-var id_ctxObra_reporte_colaboradores = "divGraphObraRepObras"; //Div
+var id_ctx1_reporte_obras = "divGraph1RepObras"; //Div
+var id_ctx2_reporte_obras = "divGraph2RepObras"; //Div
+var id_ctxObra_reporte_obras = "divGraphObraRepObras"; //Div
 
 var rama_bd_inges = "proyectos/inges";
 var rama_bd_obras = "proyectos/obras";
 var rama_bd_registros = "proyectos/registros";
 
-$('#tabReporteColaboradores').click(function() {
+$('#tabReporteObra').click(function() {
 	//datePickers
-	jQuery('#' + id_fecha_inicio_reporte_colaboradores).datetimepicker(
+	jQuery('#' + id_fecha_inicio_reporte_obras).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
-    jQuery('#' + id_fecha_final_reporte_colaboradores).datetimepicker(
+    jQuery('#' + id_fecha_final_reporte_obras).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'},
     );
 	//dropDownCheckBox de colabs y obras, default todos seleccionados
@@ -26,7 +26,7 @@ $('#tabReporteColaboradores').click(function() {
         var inge = snapshot.val();
         //myData.push({id: req.nombre, label: req.nombre});        
         //$('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("reset",myData);
-        $('#' + id_inges_ddlcheck_reporte_colaboradores).dropdownCheckbox("append",{
+        $('#' + id_inges_ddlcheck_reporte_obras).dropdownCheckbox("append",{
             id: inge.uid, label: inge.nombre, isChecked: true
         });
     });
@@ -35,14 +35,14 @@ $('#tabReporteColaboradores').click(function() {
         var obra = snapshot.val();
         //myData.push({id: req.nombre, label: req.nombre});        
         //$('#' + id_reqs_ddlcheck_presupuesto).dropdownCheckbox("reset",myData);
-        $('#' + id_obras_ddlcheck_reporte_colaboradores).dropdownCheckbox("append",{
+        $('#' + id_obras_ddlcheck_reporte_obras).dropdownCheckbox("append",{
             id: obra.nombre, label: obra.nombre, isChecked: true
         });
     });
 
 });
 //Botón generar en pag
-$('#' + id_button_generar_reporte_colaboradores).click(function() {
+$('#' + id_button_generar_reporte_obras).click(function() {
 	var datos = new Array();
 	var labels = new Array();
 	var labels_pptos = new Array();
@@ -53,8 +53,8 @@ $('#' + id_button_generar_reporte_colaboradores).click(function() {
     var fecha_f;
     var fecha_f_timestamp;
 
-    if($('#' + id_fecha_final_reporte_colaboradores).val() === ""){
-    	if($('#' + id_fecha_inicio_reporte_colaboradores).val() === ""){
+    if($('#' + id_fecha_final_reporte_obras).val() === ""){
+    	if($('#' + id_fecha_inicio_reporte_obras).val() === ""){
     		//Si no se selecciona ninguna fecha se hacen los reportes con todos los valores
     		fecha_i = new Date(2018,8,1);
     		fecha_i_timestamp = fecha_i.getTime();
@@ -62,20 +62,20 @@ $('#' + id_button_generar_reporte_colaboradores).click(function() {
     		fecha_f_timestamp = fecha_f.getTime();
     	} else {
     		//Si sólo se selecciona un día se utiliza la info de ese día en particular
-    		fecha_i = new Date($('#' + id_fecha_inicio_reporte_colaboradores).val());
+    		fecha_i = new Date($('#' + id_fecha_inicio_reporte_obras).val());
     		fecha_i_timestamp = fecha_i.getTime();
 	        fecha_f = "";
 	        fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
     	}
     } else {
-    	fecha_i = new Date($('#' + id_fecha_inicio_reporte_colaboradores).val());
+    	fecha_i = new Date($('#' + id_fecha_inicio_reporte_obras).val());
     	fecha_i_timestamp = fecha_i.getTime();
-        fecha_f = new Date($('#' + id_fecha_final_reporte_colaboradores).val());
+        fecha_f = new Date($('#' + id_fecha_final_reporte_obras).val());
         fecha_f_timestamp = fecha_f.getTime() + (24*3600*1000); 
     }
 
-    var inges_lista = $('#' + id_inges_ddlcheck_reporte_colaboradores).dropdownCheckbox("checked");
-    var obras_lista = $('#' + id_obras_ddlcheck_reporte_colaboradores).dropdownCheckbox("checked");
+    var inges_lista = $('#' + id_inges_ddlcheck_reporte_obras).dropdownCheckbox("checked");
+    var obras_lista = $('#' + id_obras_ddlcheck_reporte_obras).dropdownCheckbox("checked");
     
     for(i=0;i<obras_lista.length;i++){
         labels[i] = obras_lista[i].label;
@@ -151,11 +151,11 @@ $('#' + id_button_generar_reporte_colaboradores).click(function() {
 			//var ctx = document.getElementById("myChart");
 			var ctx1 = document.createElement('canvas');
 			ctx1.id = 'ctx1RepCol';
-			document.getElementById(id_ctx1_reporte_colaboradores).appendChild(ctx1);
+			document.getElementById(id_ctx1_reporte_obras).appendChild(ctx1);
 
 			var ctx2 = document.createElement('canvas');
 			ctx2.id = 'ctx2RepCol';
-			document.getElementById(id_ctx2_reporte_colaboradores).appendChild(ctx2);
+			document.getElementById(id_ctx2_reporte_obras).appendChild(ctx2);
 
 	        //Grafica de horas trabajadas en cada obra, sin contar Otros
 	        var data1 = {
@@ -183,7 +183,7 @@ $('#' + id_button_generar_reporte_colaboradores).click(function() {
 
 				var ctxObra = document.createElement('canvas');
 				ctxObra.id = 'ctxObraRepCol';
-				document.getElementById(id_ctxObra_reporte_colaboradores).appendChild(ctxObra);
+				document.getElementById(id_ctxObra_reporte_obras).appendChild(ctxObra);
 
 				var dataObra = {
 					datasets: [{
