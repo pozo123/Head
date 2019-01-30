@@ -4,7 +4,9 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Errores:
- 
+   - No se suman las horas en la salida de perfil!! Sólo se guardan las viejas.
+   - Hace falta un deploy con perfil, por eso se sigue haciendo la obra Otros
+   - Cambié reporte para que si no se selecciona nada sean todos los registros
  Hoy:
   - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
