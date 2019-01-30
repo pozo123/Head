@@ -6,6 +6,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  28/ene 
   - altas: al crear auth hacer un catch por si ya existe sólo guardar datos en el area correspondiente. 
   - Dar las altas en personal de todos.
+  - Cambiar ddchecklist por checkbuttons en reporte_obras
  
  Errores:
    - No se suman las horas en la salida de perfil!! Sólo se guardan las viejas.
