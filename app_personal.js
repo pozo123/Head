@@ -29,10 +29,10 @@ function registrarPersonal(email, password, nombre, nickname){
 
 function guardaDatosPersonal(user, nombre, nickname) {
     var areas = {
-        proyectos: false,
-        produccion: false,
-        compras: false,
-        administracion: false,
+        //proyectos: false,
+        //produccion: false,
+        //compras: false,
+        //administracion: false,
     }
     
     var persona = {
@@ -43,6 +43,6 @@ function guardaDatosPersonal(user, nombre, nickname) {
         areas: areas,
     }
 
-    firebase.database().ref(rama_bd_personal + "/" + user.uid).set(persona);
+    firebase.database().ref(rama_bd_personal + "/" + user.uid).update(persona);
     alert("¡Alta exitosa!")
 }
