@@ -3,6 +3,23 @@ var rama_bd_registros = "proyectos/registros";
 var rama_bd_inges = "proyectos/inges";
 
 $('#' + id_boton_chido).click(function(){
+    
+
+    //CAMBIAR REGISTROS "MISCELANEOS" POR "OTROS"
+    var i = 0;
+    firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
+        snapshot.forEach(function(reg_snap){
+            var reg = reg_snap.val();
+            var flag = true;
+            if(reg.obra == "Miscelaneo"){
+                console.log("Registro " + i + ": " + cu + " actualizado.")
+                //firebase.database().ref(rama_bd_registros + "/" + reg.cu + "/obra").update("Otros");
+            }
+        });
+    });
+
+    //ELIMINAR REGISTROS NUESTROS
+    /*
     var i = 0;
     firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
         snapshot.forEach(function(reg_snap){
@@ -24,5 +41,6 @@ $('#' + id_boton_chido).click(function(){
             });
         });
     });
-});
+    */
 
+});
