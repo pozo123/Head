@@ -1,8 +1,8 @@
 //app_reporte_colaboradores
 var id_button_generar_reporte_colaboradores = "buttonGenerarRepCol"; //Botón
-var id_inges_ddlcheck_reporte_colaboradores = "ingesRepCol"; //DropDown Checklist
-var id_obras_ddlcheck_reporte_colaboradores = "obrasRepCol"; //DropDown Checklist
-var id_fecha_inicio_reporte_colaboradores = "fechaInicioRepCol"; //Datepicker
+var id_inges_ddlcheck_reporte_colaboradores = "ingesRepObras"; //DropDown Checklist
+var id_obras_ddlcheck_reporte_colaboradores = "obrasRepObras"; //DropDown Checklist
+var id_fecha_inicio_reporte_colaboradores = "fechaInicioRepO"; //Datepicker
 var id_fecha_final_reporte_colaboradores = "fichaFinalRepCol"; //Datepicker
 
 var id_ctx1_reporte_colaboradores = "divGraph1RepCol"; //Div
