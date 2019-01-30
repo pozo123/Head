@@ -1,13 +1,13 @@
 //app_reporte_colaboradores
-var id_button_generar_reporte_colaboradores = "buttonGenerarRepCol"; //Botón
+var id_button_generar_reporte_colaboradores = "buttonGenerarRepObras"; //Botón
 var id_inges_ddlcheck_reporte_colaboradores = "ingesRepObras"; //DropDown Checklist
 var id_obras_ddlcheck_reporte_colaboradores = "obrasRepObras"; //DropDown Checklist
-var id_fecha_inicio_reporte_colaboradores = "fechaInicioRepO"; //Datepicker
-var id_fecha_final_reporte_colaboradores = "fichaFinalRepCol"; //Datepicker
+var id_fecha_inicio_reporte_colaboradores = "fechaInicioRepObras"; //Datepicker
+var id_fecha_final_reporte_colaboradores = "fichaFinalRepObras"; //Datepicker
 
-var id_ctx1_reporte_colaboradores = "divGraph1RepCol"; //Div
-var id_ctx2_reporte_colaboradores = "divGraph2RepCol"; //Div
-var id_ctxObra_reporte_colaboradores = "divGraphObraRepCol"; //Div
+var id_ctx1_reporte_colaboradores = "divGraph1RepObras"; //Div
+var id_ctx2_reporte_colaboradores = "divGraph2RepObras"; //Div
+var id_ctxObra_reporte_colaboradores = "divGraphObraRepObras"; //Div
 
 var rama_bd_inges = "proyectos/inges";
 var rama_bd_obras = "proyectos/obras";
