@@ -3,6 +3,11 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+ Por probar:
+ - app_inges -> catch
+ - app_actualizar_regs -> cambiar Miscelaneo por Otros
+ - app_reporte_obras -> colorsitos cool
+ 
  28/ene 
   - altas: al crear auth hacer un catch por si ya existe sólo guardar datos en el area correspondiente. 
   - Dar las altas en personal de todos.
