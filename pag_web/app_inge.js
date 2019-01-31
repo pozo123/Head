@@ -41,8 +41,18 @@ $('#' + id_registrar_button_inge).click(function () {
                 guardaDatos(result.user);
                 guardarDatosPersonalInge(result.user, $('#' + id_nombre_inge).val(), $('#' + id_nickname_inge).val());
                 secondaryApp.auth().signOut();
+            }, function(error){
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode == 'auth/email-already-in-use') {
+                    firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_inge).val()).once('value').then(function(snapshot){
+                        var pers = snapshot.val();
+                        guardaDatos(pers.uid);
+                    });
+                } else {
+                    alert(errorMessage);
+                }
             });
-
         /*Para imprimir errores, .catch en vez de .then
          * .catch(function (error) {
                 // Handle Errors here.
@@ -61,9 +71,9 @@ $('#' + id_registrar_button_inge).click(function () {
 function guardaDatosPersonalInge(user, nombre, nickname) {
     var areas = {
         proyectos: true,
-        produccion: false,
-        compras: false,
-        administracion: false,
+        //produccion: false,
+        //compras: false,
+        //administracion: false,
     }
     
     var persona = {
@@ -74,7 +84,7 @@ function guardaDatosPersonalInge(user, nombre, nickname) {
         areas: areas,
     }
 
-    firebase.database().ref(rama_bd_personal + "/" + user.uid).set(persona);
+    firebase.database().ref(rama_bd_personal + "/" + user.uid).update(persona);
     alert("¡Alta exitosa!")
 }
 
