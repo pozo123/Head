@@ -49,6 +49,7 @@ SCORE:
   
 - EMAIL
   - Todos pueden subir su foto!
+  - Cierre maestro a las 5 y de ahí una por hora.
   
 - DONE
   - Mover todo a proyectos
