@@ -44,11 +44,13 @@ function cierreMaestro(automatico){
 				var stat = false;
 				firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(stat);
 
-				firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra).orderByChild("presupuesto").equalTo(regis.presupuesto).once("child_added").then(function(snapshot){
+				firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra).orderByKey().on("child_added", function(snapshot){
 					var aux = snapshot.val();
-					var horas_previas = aux.horas_trabajadas;
-					var horas_nuevas = parseFloat(horas_registro) + parseFloat(horas_previas)
-					firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
+					if(aux.presupuesto = regis.presupuesto){
+						var horas_previas = aux.horas_trabajadas;
+						var horas_nuevas = parseFloat(horas_registro) + parseFloat(horas_previas)
+						firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
+					}
 				});
 				var esp;
 				if(ing.especialidad == 1)
@@ -62,16 +64,16 @@ function cierreMaestro(automatico){
 				if(esp !== "NA" && regis.obra != "Otros"){
 					firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
 						var horas_trabajadas = snapshot.val();
-						horas_trabajadas = (horas_trabajadas + horas_registro)/3600000;
+						horas_trabajadas = horas_trabajadas + (horas_registro)/3600000;
 						firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
 					});
 					firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto).once("value").then(function(snapshot){
 						var presu = snapshot.val();
 						var horas_trabajadas_p;
 						if(presu.horas_trabajadas === null)
-						horas_trabajadas_p = (presu.horas_trabajadas + horas_registro)/3600000;
+							horas_trabajadas_p = presu.horas_trabajadas + (horas_registro)/3600000;
 						else
-						horas_trabajadas_p = horas_registro/3600000;
+							horas_trabajadas_p = horas_registro/3600000;
 						firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
 					});
 				}
