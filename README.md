@@ -47,6 +47,9 @@ SCORE:
 
 - JUNTA
   
+- EMAIL
+  - Todos pueden subir su foto!
+  
 - DONE
   - Mover todo a proyectos
   - Ponerle un misc a todas las obras
