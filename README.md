@@ -7,6 +7,8 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_inges -> catch
  - app_actualizar_regs -> cambiar Miscelaneo por Otros
  - app_reporte_obras -> colorsitos cool
+ - app_cierre_maestro -> ya suma horas bien
+ - app_perfil -> suma horas en inge/obras
  
  28/ene 
   - altas: al crear auth hacer un catch por si ya existe sólo guardar datos en el area correspondiente. 
