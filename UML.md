@@ -35,12 +35,18 @@
                   - diversos:
                      - *todos los diversos*
                   - total
-  - destajistas: 
+  - colaboradores:
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
-      - destajista: (por nombre)
-         - year:
-            - semana: 
+      - supervisores:
+            - ?
+      - destajistas: 
+         - AFECTAN: app_destajistas
+         - SUSCRIBEN:
+         - destajista: (por nombre)
+            - year:
+               - semana: 
+                  - ?
   - obras: (muchas en mayus porque probablemente se suban desde un excel)
       - AFECTAN: app_obras_prod
       - SUSCRIBEN:
