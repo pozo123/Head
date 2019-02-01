@@ -39,7 +39,7 @@ $('#' + id_registrar_button_inge).click(function () {
         secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_inge).val(), $('#' + id_password_inge).val())
             .then(function (result) {
                 guardaDatos(result.user);
-                guardarDatosPersonalInge(result.user, $('#' + id_nombre_inge).val(), $('#' + id_nickname_inge).val());
+                guardaDatosPersonalInge(result.user, $('#' + id_nombre_inge).val(), $('#' + id_nickname_inge).val());
                 secondaryApp.auth().signOut();
             }, function(error){
                 var errorCode = error.code;
