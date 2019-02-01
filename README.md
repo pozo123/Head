@@ -4,9 +4,9 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Por probar:
- - app_inges -> catch
+ - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
+ - app_reporte_obras -> colorsitos cool (edité, ahora tiene checkboxes... creo :S)
  - app_actualizar_regs -> cambiar Miscelaneo por Otros
- - app_reporte_obras -> colorsitos cool
  - app_cierre_maestro -> ya suma horas bien
  - app_perfil -> suma horas en inge/obras
  
@@ -52,6 +52,7 @@ SCORE:
 - EMAIL
   - Todos pueden subir su foto!
   - Cierre maestro a las 5 y de ahí una por hora.
+  - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
   
 - DONE
   - Mover todo a proyectos
