@@ -18,6 +18,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
  Errores:
  - registros con horas = 0 :S
+ - Pestaña tipos/generos en bibliotecas se duplica
  
 Hoy:
 
