@@ -103,7 +103,10 @@ function loadObrasCBReporteObras(){
 			cb.setAttribute("type", "checkbox");
 			cb.name = "obra";
 			cb.value = obra.nombre;
-			cb.checked = true;
+			if(obra.nombre == "ZObra Prueba")
+				cb.checked = false;
+			else
+				cb.checked = true;
 		});
 		filtrando_obras = true;
 	} else {
