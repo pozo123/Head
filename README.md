@@ -10,7 +10,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_cierre_maestro -> ya suma horas bien (checar en los 5 lugares)
  - app_perfil -> suma horas en inge/obras (checar en los 5 lugares)
  - dashgrid modulo
-  
+ - app_areas (:
   
  Actualizar_regs:
  - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
