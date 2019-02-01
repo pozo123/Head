@@ -27,6 +27,8 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 Hoy:
 
 PRODUCCION:
+  - Tabla de converción de materiales para la cuantificación.
+     - Qué NO te da AutoCAD? Y de qué depende? Todo tiene que ser una función, hay que definir los parámetros
   - A quien le sale y a quien no.
   - Para obra poder modificar imagen para que impriman planos? Tipo hacerle zoom a algo o cosas así. Ver qué necesidad tienen en la obra.
 
