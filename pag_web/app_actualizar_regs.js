@@ -20,6 +20,20 @@ $('#' + id_boton_chido).click(function(){
     });
     */
 
+    //REGISTROS CON MAS DE 15 HORAS -> 9 HORAS
+    /*
+    var i = 0;
+    firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
+        snapshot.forEach(function(reg_snap){
+            var reg = reg_snap.val();
+            if(reg.horas/3600000 > 15){
+                i++;
+                console.log("Registro " + i + ": " + cu + " acotado.");
+                //firebase.database().ref(rama_bd_registros + "/" + reg.cu + "/horas").set(9);
+            }
+        });
+    });
+    */
 
     //RESETEAR TODAS LAS HORAS TRABAJADAS DE LOS PPTOS A 0
     /*
@@ -27,17 +41,23 @@ $('#' + id_boton_chido).click(function(){
         snapshot.forEach(function(obra_snap){
             obra_snap.child("presupuestos").forEach(function(presu_snap){//CHECA QUE SI SEA ASI
                 var presu = presu_snap.val();
-                firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales").set(0);
-                firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ie").set(0);
-                firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ihs").set(0);
-                firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas").set(0);
+                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales").set(0);
+                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales" + " = 0");
+                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ie").set(0);
+                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ie" + " = 0");
+                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ihs").set(0);
+                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ihs" + " = 0");
+                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas").set(0);
+                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas" + " = 0");
                 presu_snap.child("colaboradores_asignados/ie").forEach(function(col_snap){
                     var col = col_snap.key;
-                    firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas").set(0);               
+                    //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas").set(0);               
+                    console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas" + " = 0");
                 });
                 presu_snap.child("colaboradores_asignados/ihs").forEach(function(col_snap){
                     var col = col_snap.key;
-                    firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas").set(0);               
+                    //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas").set(0);               
+                    console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas" + " = 0");
                 });
             });
         });
@@ -65,27 +85,32 @@ $('#' + id_boton_chido).click(function(){
                         horas_trabajadas_p = presu.horas_trabajadas + regis.horas/3600000;
                     else
                         horas_trabajadas_p = regis.horas/3600000;
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales").set(horas_trabajadas_p);
+                    //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
+                    console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas" + " = " + horas_trabajadas_p);
+                    //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales").set(horas_trabajadas_p);
+                    console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales" + " = " + horas_trabajadas_p);
                 });
                 if(regis.esp != "NA"){
                     if(regis.esp == "ie"){
                     firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").once("value").then(function(snapshot){
                         var horas_trabajadas = snapshot.val();
                         horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
+                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
+                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie" + " = " + horas_trabajadas);
                     });
                     } else {  
                     firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").once("value").then(function(snapshot){
                         var horas_trabajadas = snapshot.val();
                         horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
+                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
+                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie" + " = " + horas_trabajadas);
                     });
                     }
                     firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
                         var horas_trabajadas = snapshot.val();
                         horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
+                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
+                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas" + " = " + horas_trabajadas);
                     });
                 }
                 
@@ -95,7 +120,8 @@ $('#' + id_boton_chido).click(function(){
                         var horas_trabajadas = ppto.horas_trabajadas + regis.horas;
                     else 
                         var horas_trabajadas = regis.horas;
-                    firebase.database().ref(rama_bd_inges + "/" + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas);
+                    //firebase.database().ref(rama_bd_inges + "/" + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas);
+                    console.log("Modificando: " + rama_bd_inges + "/" + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas" + " = " + horas_trabajadas);
                 });
                 
             });
