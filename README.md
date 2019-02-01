@@ -9,18 +9,17 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_actualizar_regs -> cambiar Miscelaneo por Otros y hacer todo lo de los registros
  - app_cierre_maestro -> ya suma horas bien (checar en los 5 lugares)
  - app_perfil -> suma horas en inge/obras (checar en los 5 lugares)
- 
- 28/ene 
-  - altas: al crear auth hacer un catch por si ya existe sólo guardar datos en el area correspondiente. 
-  - Dar las altas en personal de todos.
-  - Cambiar ddchecklist por checkbuttons en reporte_obras
- 
- Errores:
-   - No se suman las horas en la salida de perfil!! Sólo se guardan las viejas.
-   - Hace falta un deploy con perfil, por eso se sigue haciendo la obra Otros
+ - dashgrid modulo
+  
+  
+ Actualizar_regs:
+ - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
+ - Código mágico para cambiar todos los misceláneo por Otros en registros.
 
+ Errores:
+ - registros con horas = 0 :S
+ 
 Hoy:
-  - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
 
 PRODUCCION:
   - A quien le sale y a quien no.
@@ -28,7 +27,6 @@ PRODUCCION:
 
  
 SCORE:
-  - Código mágico para cambiar todos los misceláneo por Otros en registros.
   
   - Eliminar en bibliotecas
     - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
