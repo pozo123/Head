@@ -11,7 +11,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_perfil -> suma horas en inge/obras (checar en los 5 lugares)
  - dashgrid modulo
  - app_areas (:
-  
+ 
  Actualizar_regs:
  - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
     - poner en 0s todo
@@ -26,6 +26,13 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
 Hoy:
 
+
+KAIZEN: 
+  - Quién es responsable de llenarlo.
+    - Por secciones? Global? Que los de una sección no tengan acceso a lo otro para no chingarlo
+    - Necesito los supervisores de todas las obras
+      - Y pues saber sus responsabilidades y así
+      
 PRODUCCION:
   - Tabla de converción de materiales para la cuantificación.
      - Qué NO te da AutoCAD? Y de qué depende? Todo tiene que ser una función, hay que definir los parámetros
