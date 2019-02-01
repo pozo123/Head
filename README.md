@@ -5,7 +5,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  Por probar:
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
- - app_reporte_obras -> colorsitos cool (edité, ahora tiene checkboxes... creo :S)
+ - app_reporte_obras -> colorsitos cool (edité, ahora tiene checkboxes... creo :S) (Edit para que el cb de zobra no este activo)
  - app_actualizar_regs -> cambiar Miscelaneo por Otros y hacer todo lo de los registros
  - app_cierre_maestro -> ya suma horas bien (checar en los 5 lugares)
  - app_perfil -> suma horas en inge/obras (checar en los 5 lugares)
@@ -22,6 +22,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  Errores:
  - registros con horas = 0 :S
  - Pestaña tipos/generos en bibliotecas se duplica
+ - dropdown checkboxes se duplican cada que se le pica a la pestaña
  
 Hoy:
 
