@@ -14,7 +14,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
   
  Actualizar_regs:
  - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
+    - poner en 0s todo
+    - llenar 5 campos (inges/obra/ppto, ppto/horas_trabajadas, colaboradores/horas_totales, cols/horas_esp, cols/uid)
  - Código mágico para cambiar todos los misceláneo por Otros en registros.
+ - Cambiar registros con más de 15 horas por 9 horas
 
  Errores:
  - registros con horas = 0 :S
