@@ -39,7 +39,15 @@
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
       - supervisores:
-            - ? Es lo mismo que destajistas?
+         - AFECTAN: app_supervisores
+         - SUSCRIBEN: app_obras_prod
+         - supervisor (por nombre):
+            - nombre
+            - telefono
+            - email
+            - obras:
+               - obra (por push)
+                  - nombre
       - destajistas: 
          - AFECTAN: app_destajistas
          - SUSCRIBEN:
@@ -53,6 +61,7 @@
       - obra: (por nombre)
          - nombre
          - cliente
+         - supervisor (nombre)
          - procesos:
             - proceso (por nombre):
                - nombre
