@@ -24,6 +24,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - registros con horas = 0 :S
  - Pestaña tipos/generos en bibliotecas se duplica
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
+ - generar pdf de reporte registros no tiene el filtro de fechas de si no hay ninguna seleccionada
  
 Hoy:
  - MAU YA SE FUE!!!! Guardar su inge para los registros y todo pero que ya no salga en dash ni en gestionar ni se le generen horas gestionadas al crear pptos. Borrar su auth.
