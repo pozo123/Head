@@ -32,10 +32,33 @@ KAIZEN:
     - Por secciones? Global? Que los de una sección no tengan acceso a lo otro para no chingarlo
     - Necesito los supervisores de todas las obras
       - Y pues saber sus responsabilidades y así
+      
+    - Proyectos: 
+      - Ppto: Eric?
+      - PAG: SCORE Cross reference con Hector (para que se paguen horas reales y no horas registradas. El chiste es aplicar regla de tres de proporciones (como en reporte obras) con las horas totales pagadas por hector).
+    - Producción
+      - Suministros:
+        - Cuant: proy?
+        - O de C: ?
+        - Pag: compras?
+      - Copeo:
+        - Prec: virgilio?
+        - copeo: virgilio?
+        - est: Matricial cliente (quien?)
+        - pag: hector ?
+    - Administración:
+      - Estimaciones:
+        - ppto: MBD?
+        - ESt: Emmanuel?
+        - Pag: Emmanuel?
+      - Anticipos:
+        - ppto: MBD?
+        - pag: emmanuel?
   - Base de datos de profit:
     - Admin (20% de lo cobrado en los kaizen)
     - SCORE (lo que se cobra de proyectos por obra, está en kaisen)
     - Profit (ya sin admin ni score)
+ - Tabla de obras y procesos por obra
       
 PRODUCCION:
   - Tabla de converción de materiales para la cuantificación.
