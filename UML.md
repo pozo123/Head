@@ -111,6 +111,9 @@
                - ANTICIPOS:
                   - PPTO
                   - PAG
+            - PROFIT:
+               - PROG
+               - REAL
 - clientes
 - proyectos
 - info_web
