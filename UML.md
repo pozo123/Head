@@ -89,7 +89,7 @@
             - fecha_inicio_teorica
             - fecha_final_real
             - fecha_final_teorica
-         - finanzas:
+         - kaizen:
             - PROYECTOS:
                - PPTO
                - PAG
