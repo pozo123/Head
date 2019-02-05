@@ -39,7 +39,7 @@
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
       - supervisores:
-            - ?
+            - ? Es lo mismo que destajistas?
       - destajistas: 
          - AFECTAN: app_destajistas
          - SUSCRIBEN:
