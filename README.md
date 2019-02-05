@@ -32,6 +32,10 @@ KAIZEN:
     - Por secciones? Global? Que los de una sección no tengan acceso a lo otro para no chingarlo
     - Necesito los supervisores de todas las obras
       - Y pues saber sus responsabilidades y así
+  - Base de datos de profit:
+    - Admin (20% de lo cobrado en los kaizen)
+    - SCORE (lo que se cobra de proyectos por obra, está en kaisen)
+    - Profit (ya sin admin ni score)
       
 PRODUCCION:
   - Tabla de converción de materiales para la cuantificación.
