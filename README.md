@@ -4,6 +4,7 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Por probar:
+ - app_obra_prod
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
  - app_reporte_obras -> colorsitos cool (edité, ahora tiene checkboxes... creo :S) (Edit para que el cb de zobra no este activo)
  - app_actualizar_regs -> cambiar Miscelaneo por Otros y hacer todo lo de los registros
@@ -25,25 +26,33 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  
 Hoy:
+ - MAU YA SE FUE!!!! Guardar su inge para los registros y todo pero que ya no salga en dash ni en gestionar ni se le generen horas gestionadas al crear pptos. Borrar su auth.
 
 
 KAIZEN: 
+
+  - Costo de score, sólo depende de los pagos? La oficina es admon, cierto?
+  - Eric: Necesito que los pptos reflejen los procesos. Chance añadir un campo en el alta ppto.  
+  - Al hacer las horas pptadas de score en los kaisens meter alcance.
   - Quién es responsable de llenarlo.
+    - Todos ellos que tengan una cuenta de produccion con permisos de su responsabilidad para llenar el kaizen
+      - Permisos por columna, por obra o ambos?
+      - Chance dependiendo de tu puesto. Si eres supervisor de obra necesitas ver que obra es.
     - Por secciones? Global? Que los de una sección no tengan acceso a lo otro para no chingarlo
     - Necesito los supervisores de todas las obras
       - Y pues saber sus responsabilidades y así
-      
+    
     - Proyectos: 
-      - Ppto: Eric?
+      - Ppto: Ray + MBD (Eric?)
       - PAG: SCORE Cross reference con Hector (para que se paguen horas reales y no horas registradas. El chiste es aplicar regla de tres de proporciones (como en reporte obras) con las horas totales pagadas por hector).
     - Producción
       - Suministros:
-        - Cuant: proy?
-        - O de C: ?
-        - Pag: compras?
+        - Cuant: proy (hay inge(s) asignados desde el principio. Se puede cambiar pero es raro. Ver que pedo en como ligarlo a score)
+        - O de C: compras -> ver quien, ver si lo llenan desde la pagina o un excel y lo subimos o que onda
+        - Pag: compras -> ver quien, ver si lo llenan desde la pagina o un excel y lo subimos o que onda
       - Copeo:
-        - Prec: virgilio?
-        - copeo: virgilio?
+        - Prec: virgilio
+        - copeo: virgilio + supervisores 
         - est: Matricial cliente (quien?)
         - pag: hector ?
     - Administración:
@@ -61,6 +70,9 @@ KAIZEN:
  - Tabla de obras y procesos por obra
       
 PRODUCCION:
+  - app_obras_prod
+  - app_procesos
+  
   - Tabla de converción de materiales para la cuantificación.
      - Qué NO te da AutoCAD? Y de qué depende? Todo tiene que ser una función, hay que definir los parámetros
   - A quien le sale y a quien no.
