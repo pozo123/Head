@@ -6,9 +6,11 @@ var id_fecha_final_obra_prod = "fichaFinalObraProd";
 var id_agregar_proceso_obra_prod = "agregarProcesoObraProd";
 var id_nombre_proceso_obra_prod = "nombreProcesoObraProd";
 var id_clave_proceso_obra_prod = "claveProcesoObraProd";
+var id_supervisor_ddl_obra_prod = "supervisorDdlObraProd";
 
 var rama_bd_obras_prod = "produccion/obras";
-var rama_bd_clientes_prod = "clientes";
+var rama_bd_clientes = "clientes";
+var rama_bd_supervisores = "produccion/colaboradores/supervisores";
 
 var procesos = {};
 
@@ -33,6 +35,20 @@ $('#tabObrasProd').click(function(){
         option2.text = clien.nombre;
         option2.value = clien.clave;
         select.appendChild(option2);
+    });
+
+    var select2 = document.getElementById(id_supervisor_ddl_obra_prod) ;
+    var option3 = document.createElement('option');
+    option3.style = "display:none";
+    option3.text = option.value = "";
+    select2.appendChild(option3);
+
+    firebase.database().ref(rama_bd_supervisores).orderByChild('nombre').on('child_added',function(snapshot){
+        var supervisor = snapshot.val();
+        var option4 = document.createElement('OPTION');
+        option4.text = supervisor.nombre;
+        option4.value = supervisor.nombre;
+        select2.appendChild(option4);
     });
    
 });
@@ -89,6 +105,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                     var obra = {      
                         nombre: $('#' + id_nombre_obra_prod).val(),
                         cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
+                        supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
                         procesos: procesos,
                         fechas: {
                             fecha_inicio_real: 0,
