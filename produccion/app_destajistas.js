@@ -12,6 +12,6 @@ $('#' + id_registrar_button_destajista).click(function () {
     		nombre: $('#' + id_nombre_destajista).val(),
     		pagos: "",
     	}
-    	firebase.database().ref(rama_bd_destajista + "/" + )
+    	firebase.database().ref(rama_bd_destajista + "/" + nombre: $('#' + id_nombre_destajista).val()).set(destajista);
     }
 });
