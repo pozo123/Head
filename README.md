@@ -21,6 +21,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - Cambiar registros con más de 15 horas por 9 horas
 
  Errores:
+ - reporte ppto si hay pagos (usar ppto prueba 3)
  - registros con horas = 0 :S
  - Pestaña tipos/generos en bibliotecas se duplica
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
