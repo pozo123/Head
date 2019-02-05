@@ -154,5 +154,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                     alert("¡Alta exitosa!");
                 }
         });
+
+        firebase.database().ref(rama_bd_supervisores + "/" $('#' + id_supervisor_ddl_obra_prod + " option:selected").text() + "/obras").push($('#' + id_nombre_obra).val());
     }
 });
