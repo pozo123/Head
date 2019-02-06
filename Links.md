@@ -25,6 +25,8 @@ en terminal
 
   - dataTables
     - https://www.youtube.com/watch?v=mV6L4_Mwh3U&t=325s
+    - Para mergear las filas repetidas (una sólo celda para obra) 
+      - http://live.datatables.net/bodanole/1/edit
 
   - cambiar key (copiar y borrar)
     - https://stackoverflow.com/questions/39107274/is-it-possible-to-rename-a-key-in-the-firebase-realtime-database
