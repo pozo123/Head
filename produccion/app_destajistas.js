@@ -2,7 +2,7 @@ var id_nombre_destajista = "destajistaNombre";
 var id_id_destajista = "destajistaId";
 var id_registrar_button_destajista = "registrarDestajista";
 
-var rama_bd_destajista = "produccion/colaboradores/destajistas";
+var rama_bd_destajista = "produccion/destajistas";
 
 $('#' + id_registrar_button_destajista).click(function () {
     if(!$('#' + id_nombre_destajista).val()){
@@ -12,6 +12,6 @@ $('#' + id_registrar_button_destajista).click(function () {
     		nombre: $('#' + id_nombre_destajista).val(),
     		pagos: "",
     	}
-    	firebase.database().ref(rama_bd_destajista + "/" + nombre: $('#' + id_nombre_destajista).val()).set(destajista);
+    	firebase.database().ref(rama_bd_destajista + "/" + $('#' + id_nombre_destajista).val()).set(destajista);
     }
 });
