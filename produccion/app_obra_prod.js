@@ -1,5 +1,6 @@
 var id_nombre_obra_prod = "obraNombreProd";
 var id_cliente_ddl_obra_prod = "clienteProd";
+var id_clave_obra_prod = "claveObraProd";
 var id_registrar_button_obra_prod = "registrarObraProd";
 var id_fecha_inicio_obra_prod = "fechaInicioObraProd";
 var id_fecha_final_obra_prod = "fichaFinalObraProd";
@@ -93,9 +94,45 @@ $('#' + id_agregar_proceso_obra_prod).click(function() {
 });
 
 $('#' + id_registrar_button_obra_prod).click(function () {
-    if(!$('#' + id_nombre_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
+    if(!$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
+        procesos[$('#' + id_clave_obra_prod).val() + "MISC"] = {
+        nombre: "MISCELANEOS",
+        clave: $('#' + id_clave_obra_prod).val() + "MISC",
+        PROYECTOS: {
+            PPTO: 0,
+            PAG: 0,
+        },
+        PRODUCCION: {
+            SUMINISTROS: {
+                CUANT: 0,
+                O de C: 0,
+                PAG: 0,
+            },
+            COPEO: {
+                PREC: 0,
+                COPEO: 0,
+                EST: 0,
+                PAG: 0,
+            },
+        },
+        ADMINISTRACION: {
+            ESTIMACIONES: {
+                PPTO: 0,
+                EST: 0,
+                PAG: 0,
+            },
+            ANTICIPOS: {
+                PPTO: 0,
+                PAG: 0,
+            },
+        },
+        PROFIT: {
+            PROG: 0,
+            REAL: 0,
+        },
+    };
         firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
             var o = snapshot.val();
                 if(o !== null){
