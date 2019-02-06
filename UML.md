@@ -62,6 +62,7 @@
          - nombre
          - cliente
          - supervisor (nombre)
+         - clave
          - procesos:
             - proceso (por nombre):
                - nombre
