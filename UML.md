@@ -43,6 +43,7 @@
          - telefono
          - email
          - uid
+         - nickname
          - tipo (gerentes o supervisores. La única diferencia es que gerentes tiene obra vacío)
          - obras:
             - obra (por push)
