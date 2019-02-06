@@ -56,8 +56,8 @@
                - semana: 
                   - ?
   - obras: (muchas en mayus porque probablemente se suban desde un excel)
-      - AFECTAN: app_obras_prod
-      - SUSCRIBEN:
+      - AFECTAN: app_obras_prod app_procesos
+      - SUSCRIBEN: app_procesos
       - obra: (por nombre)
          - nombre
          - cliente
@@ -66,33 +66,40 @@
             - proceso (por nombre):
                - nombre
                - clave
-               - PROYECTOS:
-                  - PPTO
-                  - PAG
-               - PRODUCCION:
-                  - SUMINISTROS:
-                     - CUANT
-                     - O de C
-                     - PAG
-                  - COPEO:
-                     - PREC
-                     - COPEO
-                     - EST
-                     - PAG
-               - ADMINISTRACION:
-                  - ESTIMACIONES:
-                     - PPTO
-                     - EST
-                     - PAG
-                  - ANTICIPOS:
+               - subprocesos:
+                  - subproceso (por nombre):
+                     - nombre
+                     - clave
+                     - kaizen:
+                        - Todo lo de kaisen
+               - kaisen:
+                  - PROYECTOS:
                      - PPTO
                      - PAG
-               - AVANCE:
-                  - EST
-                  - REAL
-               - PROFIT:
-                  - PROG
-                  - REAL
+                  - PRODUCCION:
+                     - SUMINISTROS:
+                        - CUANT
+                        - O de C
+                        - PAG
+                     - COPEO:
+                        - PREC
+                        - COPEO
+                        - EST
+                        - PAG
+                  - ADMINISTRACION:
+                     - ESTIMACIONES:
+                        - PPTO
+                        - EST
+                        - PAG
+                     - ANTICIPOS:
+                        - PPTO
+                        - PAG
+                  - AVANCE:
+                     - EST
+                     - REAL
+                  - PROFIT:
+                     - PROG
+                     - REAL
          - fechas:
             - fecha_inicio_real
             - fecha_inicio_teorica
