@@ -36,25 +36,24 @@
                      - *todos los diversos*
                   - total
   - colaboradores:
+      - AFECTAN: app_supervisores
+      - SUSCRIBEN: app_obras_prod
+      - colaborador (por uid):
+         - nombre
+         - telefono
+         - email
+         - uid
+         - tipo (gerentes o supervisores. La única diferencia es que gerentes tiene obra vacío)
+         - obras:
+            - obra (por push)
+               - nombre
+   - destajistas: 
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
-      - supervisores:
-         - AFECTAN: app_supervisores
-         - SUSCRIBEN: app_obras_prod
-         - supervisor (por nombre):
-            - nombre
-            - telefono
-            - email
-            - obras:
-               - obra (por push)
-                  - nombre
-      - destajistas: 
-         - AFECTAN: app_destajistas
-         - SUSCRIBEN:
-         - destajista: (por nombre)
-            - year:
-               - semana: 
-                  - ?
+      - destajista: (por nombre)
+         - year:
+            - semana: 
+               - ?
   - obras: (muchas en mayus porque probablemente se suban desde un excel)
       - AFECTAN: app_obras_prod app_procesos
       - SUSCRIBEN: app_procesos
