@@ -143,6 +143,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         nombre: $('#' + id_nombre_obra_prod).val(),
                         cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
                         supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
+                        clave: $('#' + id_clave_obra_prod).val(),
                         procesos: procesos,
                         fechas: {
                             fecha_inicio_real: 0,
