@@ -3,6 +3,16 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+ actualizados/nuevos(7/2/19):
+ - app_obra_prod
+ - app_procesos
+ - app_colaboradores
+ - app_perfil
+ - app_cierre_maestro
+ 
+ actualizados/nuevos (6/2/19):
+ - app_desplegar_procesos
+ 
  Por probar:
  - app_obra_prod
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
@@ -21,26 +31,20 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - Cambiar registros con más de 15 horas por 9 horas
 
  Errores:
- - En perfil y cierre maestro si no ha registrado horas en colab_asign entonces genera el json completo
  - registros con horas = 0 :S
- - Pestaña tipos/generos en bibliotecas se duplica
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
- - generar pdf de reporte registros no tiene el filtro de fechas de si no hay ninguna seleccionada
  
 Hoy:
- - MAU YA SE FUE!!!! Guardar su inge para los registros y todo pero que ya no salga en dash ni en gestionar ni se le generen horas gestionadas al crear pptos. Borrar su auth.
-
 
 KAIZEN: 
-
+  - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
+  - Que se guarde el kaizen en obras de producción?
   - Costo de score, sólo depende de los pagos? La oficina es admon, cierto?
-  - Eric: Necesito que los pptos reflejen los procesos. Chance añadir un campo en el alta ppto.  
   - Al hacer las horas pptadas de score en los kaisens meter alcance.
   - Quién es responsable de llenarlo.
     - Todos ellos que tengan una cuenta de produccion con permisos de su responsabilidad para llenar el kaizen
-      - Permisos por columna, por obra o ambos?
-      - Chance dependiendo de tu puesto. Si eres supervisor de obra necesitas ver que obra es.
-    - Por secciones? Global? Que los de una sección no tengan acceso a lo otro para no chingarlo
+      - Permisos por obra
+      - Se llena por area
     - Necesito los supervisores de todas las obras
       - Y pues saber sus responsabilidades y así
     
@@ -65,15 +69,10 @@ KAIZEN:
       - Anticipos:
         - ppto: MBD?
         - pag: emmanuel?
-  - Base de datos de profit:
-    - Admin (20% de lo cobrado en los kaizen)
-    - SCORE (lo que se cobra de proyectos por obra, está en kaisen)
-    - Profit (ya sin admin ni score)
+ - Kaizen global
  - Tabla de obras y procesos por obra
       
 PRODUCCION:
-  - app_obras_prod
-  - app_procesos
   
   - Tabla de converción de materiales para la cuantificación.
      - Qué NO te da AutoCAD? Y de qué depende? Todo tiene que ser una función, hay que definir los parámetros
