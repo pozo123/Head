@@ -73,10 +73,7 @@
                   - fecha_final
                - subprocesos:
                   - subproceso (por nombre):
-                     - nombre
-                     - clave
-                     - kaizen:
-                        - Todo lo de kaizen
+                     - Todo igual que un proceso
                - kaizen:
                   - PROYECTOS:
                      - PPTO
