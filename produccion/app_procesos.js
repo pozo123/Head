@@ -82,6 +82,10 @@ $('#' + id_agregar_procesos).click(function() {
         	        PAG: 0,
         	    },
         	},
+            	AVANCE: {
+               	    EST: 0,
+	            REAL:0,
+        	},
         	PROFIT: {
         	    PROG: 0,
         	    REAL: 0,
