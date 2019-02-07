@@ -3,6 +3,9 @@ var id_nombre_proceso_procesos = "nombreProcesoProcesos";
 var id_clave_proceso_procesos = "claveProcesoProcesos";
 var id_agregar_procesos = "agregarProcesoProcesos";
 
+var id_fecha_inicio_procesos = "fechaInicioProcesos";
+var id_fecha_final_procesos = "fichaFinalProcesos";
+
 var id_proceso_ddl_procesos = "procesoDdlProcesos"; //para subprocesos
 
 var rama_bd_obras_prod = "produccion/obras";
@@ -46,11 +49,15 @@ $('#' + id_agregar_procesos).click(function() {
 	var proceso = {
         nombre: $('#' + id_nombre_proceso_procesos).val(),
         clave: $('#' + id_clave_proceso_procesos).val(),
-        PROYECTOS: {
-            PPTO: 0,
-            PAG: 0,
-        },
-        kaisen: {
+        fechas: { 
+            fecha_inicio: new Date($('#' + id_fecha_inicio_procesos).val().getTime(),
+            fecha_final: new Date($('#' + id_fecha_final_procesos).val().getTime(),
+        }
+        kaizen: {
+            PROYECTOS: {
+                PPTO: 0,
+                PAG: 0,
+            },
         	PRODUCCION: {
         	    SUMINISTROS: {
         	        CUANT: 0,
