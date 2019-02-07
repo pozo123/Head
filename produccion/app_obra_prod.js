@@ -90,6 +90,7 @@ $('#' + id_agregar_proceso_obra_prod).click(function() {
             PROG: 0,
             REAL: 0,
         },
+        subprocesos: "",
     };
 });
 
@@ -141,6 +142,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 PROG: 0,
                 REAL: 0,
             },
+            subprocesos: "",
         }
     };
         firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
