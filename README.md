@@ -105,7 +105,7 @@ SCORE:
 - JUNTA
   
 - EMAIL
-  - Todos pueden subir su foto!
+  - Todos pueden subir su foto! (click en seleccionar, seleccionas archivo, y luego click en SUBIR imagen)
   - Cierre maestro a las 5 y de ahí una por hora.
   - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
   
