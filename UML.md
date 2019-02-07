@@ -63,17 +63,21 @@
          - cliente
          - supervisor (nombre)
          - clave
+         - terminado 
          - procesos:
             - proceso (por nombre):
                - nombre
                - clave
+               - fechas: 
+                  - fecha_inicio
+                  - fecha_final
                - subprocesos:
                   - subproceso (por nombre):
                      - nombre
                      - clave
                      - kaizen:
                         - Todo lo de kaisen
-               - kaisen:
+               - kaizen:
                   - PROYECTOS:
                      - PPTO
                      - PAG
