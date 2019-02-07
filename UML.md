@@ -61,6 +61,7 @@
                   - diversos:
                      - *todos los diversos*
                   - total
+               - total
   - colaboradores:
       - AFECTAN: app_supervisores, app_obras_prod
       - SUSCRIBEN: app_obras_prod
