@@ -90,6 +90,7 @@ $('#' + id_agregar_procesos).click(function() {
         	    PROG: 0,
         	    REAL: 0,
         	},
+		subprocesos: "",
     	},
     	subprocesos: "",
     };
