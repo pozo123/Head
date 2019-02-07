@@ -100,38 +100,44 @@ $('#' + id_registrar_button_obra_prod).click(function () {
         procesos[$('#' + id_clave_obra_prod).val() + "MISC"] = {
         nombre: "MISCELANEOS",
         clave: $('#' + id_clave_obra_prod).val() + "MISC",
-        PROYECTOS: {
-            PPTO: 0,
-            PAG: 0,
-        },
-        PRODUCCION: {
-            SUMINISTROS: {
-                CUANT: 0,
-                O de C: 0,
-                PAG: 0,
-            },
-            COPEO: {
-                PREC: 0,
-                COPEO: 0,
-                EST: 0,
-                PAG: 0,
-            },
-        },
-        ADMINISTRACION: {
-            ESTIMACIONES: {
-                PPTO: 0,
-                EST: 0,
-                PAG: 0,
-            },
-            ANTICIPOS: {
+        fechas: {
+            fecha_inicio: "",
+            ficha_final: "",
+        }
+        kaizen:{    
+            PROYECTOS: {
                 PPTO: 0,
                 PAG: 0,
             },
-        },
-        PROFIT: {
-            PROG: 0,
-            REAL: 0,
-        },
+            PRODUCCION: {
+                SUMINISTROS: {
+                    CUANT: 0,
+                    O de C: 0,
+                    PAG: 0,
+                },
+                COPEO: {
+                    PREC: 0,
+                    COPEO: 0,
+                    EST: 0,
+                    PAG: 0,
+                },
+            },
+            ADMINISTRACION: {
+                ESTIMACIONES: {
+                    PPTO: 0,
+                    EST: 0,
+                    PAG: 0,
+                },
+                ANTICIPOS: {
+                    PPTO: 0,
+                    PAG: 0,
+                },
+            },
+            PROFIT: {
+                PROG: 0,
+                REAL: 0,
+            },
+        }
     };
         firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
             var o = snapshot.val();
@@ -144,6 +150,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
                         supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
                         clave: $('#' + id_clave_obra_prod).val(),
+                        terminado: false,
                         procesos: procesos,
                         fechas: {
                             fecha_inicio_real: 0,
