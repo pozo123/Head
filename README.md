@@ -4,6 +4,7 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  actualizados/nuevos(7/2/19):
+ - app_kaizen_global (wooooo!!!!)
  - app_obra_prod
  - app_procesos
  - app_colaboradores
