@@ -23,6 +23,15 @@
       - finiquito
       - prestamos
       - caja_chica
+  - trabajadores:
+      - trabajador(por id):
+         - rango
+         - sueldo base
+         - jefe (nombre destajista o HEAD)
+         - nombre
+         - id
+         - obra_asignada
+         - especialidad
   - pagos_nomina:
       - AFECTAN: app_pagos_nomina
       - SUSCRIBEN: 
