@@ -133,6 +133,10 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                     PAG: 0,
                 },
             },
+            AVANCE: {
+                EST: 0,
+                REAL:0,
+            },
             PROFIT: {
                 PROG: 0,
                 REAL: 0,
@@ -187,6 +191,10 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                                     PAG: 0,
                                 },
                             },
+                            AVANCE: {
+                            EST: 0,
+                            REAL:0,
+                        },
                             PROFIT: {
                                 PROG: 0,
                                 REAL: 0,
