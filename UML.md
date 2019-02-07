@@ -27,11 +27,26 @@
       - AFECTAN: app_pagos_nomina
       - SUSCRIBEN: 
       - year: (ej 2019)
-         - semana: (ej semana1?)
+         - semana: (ej 1)
             - obra: (por nombre)
                - trabajador: (por id)
-                  - dias (lun mar mier)
-                  - horas extra
+                  - dias 
+                     - lunes: 
+                        - asistencia:bool
+                        - horas_extra
+                     - martes: 
+                        - asistencia:bool
+                        - horas_extra
+                     - miercoles: 
+                        - asistencia:bool
+                        - horas_extra
+                     - jueves: 
+                        - asistencia:bool
+                        - horas_extra
+                     - viernes: 
+                        - asistencia:bool
+                        - horas_extra
+                  - horas_extra_totales
                   - diversos:
                      - *todos los diversos*
                   - total
