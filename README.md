@@ -38,6 +38,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 Hoy:
 
 KAIZEN: 
+  - definir cómo desplegar subprocesos en app_desplegar_procesos
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
   - Que se guarde el kaizen en obras de producción?
   - Costo de score, sólo depende de los pagos? La oficina es admon, cierto?
