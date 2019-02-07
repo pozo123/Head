@@ -261,7 +261,7 @@ $('#' + id_salida_button_perfil).click(function () {
                         if($('#' + id_obra_ddl_perfil + " option:selected").val() != "Otros" && regis.obra != "Otros"){
                             firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
                                 var horas_trabajadas = snapshot.val();
-                                if(!horas_trabajadas){
+                                if(horas_trabajadas != null){
                                     var colab = {
                                         horas: 0,
                                         horas_trabajadas = horas_registro/3600000,
