@@ -33,7 +33,7 @@
          - obra_asignada
          - especialidad
   - pagos_nomina:
-      - AFECTAN: app_pagos_nomina
+      - AFECTAN: app_pagos_nomina, app_asistencia
       - SUSCRIBEN: 
       - year: (ej 2019)
          - semana: (ej 1)
