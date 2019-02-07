@@ -24,12 +24,14 @@
       - prestamos
       - caja_chica
   - trabajadores:
+      - AFECTAN: app_trabajadores
+      - SUSCRIBEN: app_asistencia
       - trabajador(por id):
          - rango
          - sueldo base
          - jefe (nombre destajista o HEAD)
          - nombre
-         - id
+         - uid
          - obra_asignada
          - especialidad
   - pagos_nomina:
@@ -60,7 +62,7 @@
                      - *todos los diversos*
                   - total
   - colaboradores:
-      - AFECTAN: app_supervisores
+      - AFECTAN: app_supervisores, app_obras_prod
       - SUSCRIBEN: app_obras_prod
       - colaborador (por uid):
          - nombre
@@ -76,12 +78,13 @@
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
       - destajista: (por nombre)
+         - nombre
          - year:
             - semana: 
                - ?
   - obras: (muchas en mayus porque probablemente se suban desde un excel)
       - AFECTAN: app_obras_prod app_procesos
-      - SUSCRIBEN: app_procesos
+      - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
       - obra: (por nombre)
          - nombre
          - cliente
