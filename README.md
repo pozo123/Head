@@ -9,28 +9,14 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_obra_prod
  - app_procesos
  - app_colaboradores
- - app_perfil
- - app_cierre_maestro
  
  actualizados/nuevos (6/2/19):
  - app_desplegar_procesos
  
  Por probar:
- - app_obra_prod
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
- - app_reporte_obras -> colorsitos cool (edité, ahora tiene checkboxes... creo :S) (Edit para que el cb de zobra no este activo)
- - app_actualizar_regs -> cambiar Miscelaneo por Otros y hacer todo lo de los registros
- - app_cierre_maestro -> ya suma horas bien (checar en los 5 lugares)
- - app_perfil -> suma horas en inge/obras (checar en los 5 lugares)
- - dashgrid modulo
+ - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas (:
- 
- Actualizar_regs:
- - Sumar las horas de cada ppto (como en ACANTO) para todos los demas
-    - poner en 0s todo
-    - llenar 5 campos (inges/obra/ppto, ppto/horas_trabajadas, colaboradores/horas_totales, cols/horas_esp, cols/uid)
- - Código mágico para cambiar todos los misceláneo por Otros en registros.
- - Cambiar registros con más de 15 horas por 9 horas
 
  Errores:
  - registros con horas = 0 :S
