@@ -264,7 +264,7 @@ $('#' + id_salida_button_perfil).click(function () {
                                 if(horas_trabajadas == null){
                                     var colab = {
                                         horas: 0,
-                                        horas_trabajadas = horas_registro/3600000,
+                                        horas_trabajadas: horas_registro/3600000,
                                         nombre: regis.inge,
                                     }
                                     firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username).set(colab);
