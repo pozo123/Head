@@ -65,8 +65,10 @@ $('#' + id_boton_chido).click(function(){
         snapshot.forEach(function(inge_snap){
             inge_snap.child("obras").forEach(function(obra_snap){
                 obra_snap.forEach(function(presu_snap){
-                    //firebase.database().ref(rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas").set(0);
-                    console.log("Modificando: " + rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas");
+                    if(presu_snap.key != "obra"){
+                        //firebase.database().ref(rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas").set(0);
+                        console.log("Modificando: " + rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas");
+                    }
                 });
             });
         });
