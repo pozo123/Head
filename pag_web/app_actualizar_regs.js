@@ -8,13 +8,15 @@ $('#' + id_boton_chido).click(function(){
     /*
     //CAMBIAR REGISTROS "MISCELANEOS" POR "OTROS"
     var i = 0;
-    firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
+    firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
         snapshot.forEach(function(reg_snap){
             var reg = reg_snap.val();
             var flag = true;
             if(reg.obra == "Miscelaneo"){
-                console.log("Registro " + i + ": " + cu + " actualizado.")
-                //firebase.database().ref(rama_bd_registros + "/" + reg.cu + "/obra").update("Otros");
+                console.log("Registro " + i + ": " + reg.cu + " actualizado.");
+                i++;
+                var obj = "Otros";
+                firebase.database().ref(rama_bd_registros + "/" + reg.cu + "/obra").set(obj);
             }
         });
     });
@@ -23,7 +25,7 @@ $('#' + id_boton_chido).click(function(){
     //REGISTROS CON MAS DE 15 HORAS -> 9 HORAS
     /*
     var i = 0;
-    firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
+    firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
         snapshot.forEach(function(reg_snap){
             var reg = reg_snap.val();
             if(reg.horas/3600000 > 15){
@@ -36,17 +38,11 @@ $('#' + id_boton_chido).click(function(){
     */
 
     //RESETEAR TODAS LAS HORAS TRABAJADAS DE LOS PPTOS A 0
-    /*
+    
     firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
         snapshot.forEach(function(obra_snap){
             obra_snap.child("presupuestos").forEach(function(presu_snap){//CHECA QUE SI SEA ASI
                 var presu = presu_snap.val();
-                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales").set(0);
-                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales" + " = 0");
-                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ie").set(0);
-                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ie" + " = 0");
-                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ihs").set(0);
-                console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/horas_totales_ihs" + " = 0");
                 //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas").set(0);
                 console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas" + " = 0");
                 presu_snap.child("colaboradores_asignados/ie").forEach(function(col_snap){
@@ -62,12 +58,11 @@ $('#' + id_boton_chido).click(function(){
             });
         });
     });
-    */
+    
 
     //VOLVER A CARGAR LAS HORAS TRABAJADAS A TODOS LOS PPTOS DESDE REGISTROS
-    //5 lugares a actualizar:
+    //3 lugares a actualizar:
     //horas_trabajadas en presu
-    //horas_totales y horas_totales_esp en colaboradores_asignados
     //horas_trabajadas en el colaborador especifico en colaboradores_asignados
     //horas_trabajadas en ppto en inge
     /*
