@@ -282,13 +282,6 @@ $('#' + id_salida_button_perfil).click(function () {
                                     horas_trabajadas_p = horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
                             });
-                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().on('child_added',function(snapshot){
-                                var aux = snapshot.val();
-                                if(aux.presupuesto == chamba){
-                                    horas_totales = horas_registro + aux.horas_trabajadas;
-                                    firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_totales);
-                                }
-                            });
                         }
                         clicked = false;
                     }
