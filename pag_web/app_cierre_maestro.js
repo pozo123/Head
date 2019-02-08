@@ -44,14 +44,6 @@ function cierreMaestro(automatico){
 				var stat = false;
 				firebase.database().ref(rama_bd_inges + "/" + username + "/status").set(stat);
 
-				firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra).orderByKey().on("child_added", function(snapshot){
-					var aux = snapshot.val();
-					if(aux.presupuesto = regis.presupuesto){
-						var horas_previas = aux.horas_trabajadas;
-						var horas_nuevas = parseFloat(horas_registro) + parseFloat(horas_previas)
-						firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_nuevas);
-					}
-				});
 				var esp;
 				if(ing.especialidad == 1)
 				esp = "ie";
