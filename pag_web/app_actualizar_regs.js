@@ -38,7 +38,7 @@ $('#' + id_boton_chido).click(function(){
     */
 
     //RESETEAR TODAS LAS HORAS TRABAJADAS DE LOS PPTOS A 0
-    
+    /*
     firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
         snapshot.forEach(function(obra_snap){
             obra_snap.child("presupuestos").forEach(function(presu_snap){//CHECA QUE SI SEA ASI
@@ -58,7 +58,19 @@ $('#' + id_boton_chido).click(function(){
             });
         });
     });
+    */
     
+    //RESETAR TODAS LAS HORAS TRABAJADAS EN INGES/OBRAS/PPTO A 0
+    firebase.database().ref(rama_bd_inges).once('value').then(function(snapshot){
+        snapshot.forEach(function(inge_snap){
+            inge_snap.child("obras").forEach(function(obra_snap){
+                obra_snap.forEach(function(presu_snap){
+                    //firebase.database().ref(rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas").set(0);
+                    console.log("Modificando: " + rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas");
+                });
+            });
+        });
+    });
 
     //VOLVER A CARGAR LAS HORAS TRABAJADAS A TODOS LOS PPTOS DESDE REGISTROS
     //3 lugares a actualizar:
