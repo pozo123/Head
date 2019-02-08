@@ -1,3 +1,4 @@
+
 var id_boton_chido = "botonChidoRegs";
 var rama_bd_registros = "proyectos/registros";
 var rama_bd_inges = "proyectos/inges";
@@ -38,109 +39,150 @@ $('#' + id_boton_chido).click(function(){
     */
 
     //RESETEAR TODAS LAS HORAS TRABAJADAS DE LOS PPTOS A 0
-    /*
-    firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
+    
+/*     firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
         snapshot.forEach(function(obra_snap){
             obra_snap.child("presupuestos").forEach(function(presu_snap){//CHECA QUE SI SEA ASI
                 var presu = presu_snap.val();
-                //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas").set(0);
+                firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas").set(0);
                 console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/horas_trabajadas" + " = 0");
                 presu_snap.child("colaboradores_asignados/ie").forEach(function(col_snap){
                     var col = col_snap.key;
-                    //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas").set(0);               
+                    firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas").set(0);               
                     console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ie/" + col + "/horas_trabajadas" + " = 0");
                 });
                 presu_snap.child("colaboradores_asignados/ihs").forEach(function(col_snap){
                     var col = col_snap.key;
-                    //firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas").set(0);               
+                    firebase.database().ref(rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas").set(0);               
                     console.log("Modificando: " + rama_bd_obras + "/" + obra_snap.val().nombre + "/presupuestos/" + presu.nombre + "/colaboradores_asignados/ihs/" + col + "/horas_trabajadas" + " = 0");
                 });
             });
         });
     });
-    */
+     */
     
     //RESETAR TODAS LAS HORAS TRABAJADAS EN INGES/OBRAS/PPTO A 0
-    firebase.database().ref(rama_bd_inges).once('value').then(function(snapshot){
+/*     firebase.database().ref(rama_bd_inges).once('value').then(function(snapshot){
+
         snapshot.forEach(function(inge_snap){
             inge_snap.child("obras").forEach(function(obra_snap){
                 obra_snap.forEach(function(presu_snap){
                     if(presu_snap.key != "obra"){
-                        //firebase.database().ref(rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas").set(0);
+                        firebase.database().ref(rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas").set(0);
                         console.log("Modificando: " + rama_bd_inges + "/" + inge_snap.key + "/obras/" + obra_snap.key + "/" + presu_snap.key + "/horas_trabajadas");
                     }
                 });
             });
         });
-    });
+    });  */
 
     //VOLVER A CARGAR LAS HORAS TRABAJADAS A TODOS LOS PPTOS DESDE REGISTROS
-    //3 lugares a actualizar:
+    //1 de 2 lugares a actualizar:
     //horas_trabajadas en presu
-    //horas_trabajadas en el colaborador especifico en colaboradores_asignados
-    //horas_trabajadas en ppto en inge
-    /*
-    firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
-        snapshot.forEach(function(childSnapshot){
-            var regis = childSnapshot.val();
+    
+    /* firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
 
-            firebase.database().ref(rama_bd_inges).orderByChild("nombre").equalTo(regis.inge).once('child_added').then(function(ing_snapshot){
-                var ing = ing_snapshot.val();
-                var username = ing.uid;
-                firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto).once("value").then(function(snapshot){
-                    var presu = snapshot.val();
-                    var horas_trabajadas_p;
-                    if(presu.horas_trabajadas !== null)
-                        horas_trabajadas_p = presu.horas_trabajadas + regis.horas/3600000;
-                    else
-                        horas_trabajadas_p = regis.horas/3600000;
-                    //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
-                    console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas" + " = " + horas_trabajadas_p);
-                    //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales").set(horas_trabajadas_p);
-                    console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales" + " = " + horas_trabajadas_p);
-                });
-                if(regis.esp != "NA"){
-                    if(regis.esp == "ie"){
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").once("value").then(function(snapshot){
-                        var horas_trabajadas = snapshot.val();
-                        horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
-                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie" + " = " + horas_trabajadas);
+        var json = {};
+        snapshot.forEach(function(obra_snap){
+            var json_obra = {};
+            obra_snap.child("presupuestos").forEach(function(presu_snap){
+                json_obra[presu_snap.val().nombre] = 0;
+            });
+            json[obra_snap.val().nombre] = json_obra;
+        });
+        
+        firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
+            var count = 0;
+            snapshot.forEach(function(childSnapshot){
+                var regis = childSnapshot.val();
+                count++;
+                console.log(count);
+                console.log(regis.obra);
+                if(regis.obra != "Otros"){
+                    console.log(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas")
+                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").once('value').then(function(snapshot){
+                        
+                        console.log("hola");
+                        var horas_nuevas = 0;
+                        var horas = snapshot.val();
+                        console.log("horas de db " + horas)
+                        if(horas != null){
+                            horas_nuevas = horas + regis.horas/3600000;
+                        } else {
+                            horas_nuevas = regis.horas/3600000;
+                        }
+                        console.log("horas sumadas " + horas_nuevas)
+                        json[regis.obra][regis.presupuesto] = json[regis.obra][regis.presupuesto] + horas_nuevas;
+                        var horas_ppto = json[regis.obra][regis.presupuesto];
+                        firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_ppto);
+                        console.log(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas")
                     });
-                    } else {  
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").once("value").then(function(snapshot){
-                        var horas_trabajadas = snapshot.val();
-                        horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie").set(horas_trabajadas);
-                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/horas_totales_ie" + " = " + horas_trabajadas);
-                    });
-                    }
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").once("value").then(function(snapshot){
-                        var horas_trabajadas = snapshot.val();
-                        horas_trabajadas = horas_trabajadas + regis.horas/3600000;
-                        //firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").set(horas_trabajadas);
-                        console.log("Modificando: " + rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas" + " = " + horas_trabajadas);
-                    });
+                    
                 }
-                
-                firebase.database().ref(rama_bd_inges + "/" + regis.obra).orderByKey().equalTo(regis.presupuesto).once('child_added').then(function(snapshot){
-                    var ppto = snapshot.val();
-                    if(ppto.horas_trabajadas != null)
-                        var horas_trabajadas = ppto.horas_trabajadas + regis.horas;
-                    else 
-                        var horas_trabajadas = regis.horas;
-                    //firebase.database().ref(rama_bd_inges + "/" + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas);
-                    console.log("Modificando: " + rama_bd_inges + "/" + regis.obra + "/" + regis.presupuesto + "/horas_trabajadas" + " = " + horas_trabajadas);
-                });
-                
             });
         });
-    });
-    */
+        
+    }); */
 
-    //ELIMINAR REGISTROS NUESTROS
-    /*
-    var i = 0;
+    //2 de 2 lugares a actualizar:
+    //horas_trabajadas en el colaborador especifico en colaboradores_asignados
+/*     firebase.database().ref(rama_bd_obras).once('value').then(function(snapshot){
+
+        var json = {};
+        snapshot.forEach(function(obra_snap){
+            var json_obra = {};
+            obra_snap.child("presupuestos").forEach(function(presu_snap){
+                var json_ppto = {
+                    ie: {},
+                    ihs: {},
+                };
+                presu_snap.child("colaboradores_asignados/ie").forEach(function(snap_ie){
+                    if(snap_ie.val().nombre != null){
+                        console.log(snap_ie.val());
+                        json_ppto.ie[snap_ie.val().nombre] = 0; 
+                    }
+                });
+                presu_snap.child("colaboradores_asignados/ihs").forEach(function(snap_ihs){
+                    if(snap_ihs.val().nombre != null){
+                        json_ppto.ihs[snap_ihs.val().nombre] = 0; 
+                    }
+                });
+                json_obra[presu_snap.val().nombre] = json_ppto;
+            });
+            json[obra_snap.val().nombre] = json_obra;
+        });
+        
+        firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
+            var count = 0;
+            snapshot.forEach(function(childSnapshot){
+                var regis = childSnapshot.val();
+                if(regis.obra != "Otros"){
+                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp).orderByChild("nombre").equalTo(regis.inge).once('value').then(function(snapshot){
+                        snapshot.forEach(function(snap_inge){
+                            var username = snap_inge.key;
+                            var horas = snap_inge.val().horas_trabajadas;
+                            var horas_nuevas = 0;
+                            if(horas != null){
+                                horas_nuevas = horas + regis.horas/3600000;
+                            } else {
+                                horas_nuevas = regis.horas/3600000;
+                            }
+                            json[regis.obra][regis.presupuesto][regis.esp][regis.inge] += horas_nuevas;
+                            var horas_ppto = json[regis.obra][regis.presupuesto][regis.esp][regis.inge];
+                            firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").set(horas_ppto);
+                        })
+                    });
+                    
+                }
+            });
+        });
+        
+    });
+ */
+
+        //ELIMINAR REGISTROS NUESTROS
+        /*
+        var i = 0;
     firebase.database().ref(rama_bd_registros).on('value',function(snapshot){
         snapshot.forEach(function(reg_snap){
             var reg = reg_snap.val();
@@ -162,5 +204,5 @@ $('#' + id_boton_chido).click(function(){
         });
     });
     */
-
+   
 });
