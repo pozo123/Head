@@ -42,7 +42,6 @@
                   - categoria
                   - fechas:
                      - igual las 4 *
-                  - kaizen: *
             - kaizen: *
       - fechas:
          - fecha_inicio_real
