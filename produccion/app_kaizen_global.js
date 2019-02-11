@@ -13,17 +13,20 @@ var id_total_score_global = "totalScoreGlobal";
 var id_total_profit_global = "totalProfitGlobal";
 var id_total_total_global = "totalTotalGlobal";
 
-var rama_bd_obras_prod = "produccion/obras";
+var rama_bd_obras_magico = "obras";
 
 var css = ["gtaskblue", "gtaskred", "gtaskgreen", "gtaskyellow", "gtaskpurple", "gtaskpink"];
 
+//Pasar a tab
+//var id_tab_kaizen_global = "kaizenGlobalTab";
+//$('#' + id_tab_kaizen_global).click(function(){
 $(document).ready(function(){
 	$('#' + id_total_oficina_global).val(0);
 	$('#' + id_total_score_global).val(0);
 	$('#' + id_total_profit_global).val(0);
 	$('#' + id_total_total_global).val(0);
 	var g = new JSGantt.GanttChart(document.getElementById(id_gantt_div_global), 'month');
-	firebase.database().ref(rama_bd_obras_prod).once('value').then(function(snapshot){
+	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
 		var i = 0;
 		snapshot.forEach(function(obraSnap){
 			var obra = obraSnap.val();
@@ -38,7 +41,7 @@ $(document).ready(function(){
 				pClass: "ggroupblack",
 				pLink: "",
 				pMile: 0,
-				pRes: obra.supervisor,
+				pRes: "",//obra.supervisor,
 				pComp: obra.kaizen.AVANCE.REAL,
 				pGroup: 1, //0-> no grupo, 1-> grupo
 				pParent: 0, //id parent. 0-> este es el parent
@@ -71,7 +74,7 @@ $(document).ready(function(){
 					pClass: css[j%6],
 					pLink: "",
 					pMile: 0,
-					pRes: obra.supervisor,
+					pRes: "",//obra.supervisor,
 					pComp: proc.kaizen.AVANCE.REAL,
 					pGroup: 1, //0-> no grupo, 1-> grupo
 					pParent: id_obra, //id parent. 0-> este es el parent
@@ -101,7 +104,7 @@ $(document).ready(function(){
 							pClass: css[k%6],
 							pLink: "",
 							pMile: 0,
-							pRes: obra.supervisor,
+							pRes: "",//obra.supervisor,
 							pComp: subproc.kaizen.AVANCE.REAL,
 							pGroup: 1, //0-> no grupo, 1-> grupo
 							pParent: id_proc, //id parent. 0-> este es el parent
