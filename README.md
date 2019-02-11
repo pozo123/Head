@@ -16,7 +16,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_colaboradores
  
  Por probar:
- - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas (:
 
@@ -31,6 +30,8 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 TO DO:
  - cambiar app_presupuestos para que incluya un ddl de procesos. Que los jale de la obra mágica.
  - Cambiar app_obra para que cheque y si no existe genere la obra en mágico.
+ - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
+   - Si no existe no está creandolo en personal. Si ya existe el update de areas no se va a llamar, aguas
 
 KAIZEN: 
   - definir cómo desplegar subprocesos en app_desplegar_procesos
