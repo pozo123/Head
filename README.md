@@ -7,6 +7,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_reporte_obras -> cambiar doughnut por pie
  - app_desplegar_procesos
  - app_obra_prod
+ - app_obra
  - app_procesos
  - app_kaizen_global
  
