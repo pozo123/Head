@@ -295,7 +295,7 @@ $('#' + id_button_generar_reporte_obras).click(function() {
 			}
 
 	        window.myBar = new Chart(ctx1, {
-			    type: 'doughnut',
+			    type: 'pie',
 			    data: data1,
 			    options: {
         			title: {
@@ -335,7 +335,7 @@ $('#' + id_button_generar_reporte_obras).click(function() {
 					}
 	
 					window.myBar = new Chart(ctxObra, {
-						type: 'doughnut',
+						type: 'pie',
 						data: dataObra,
 						options: {
 							title: {
@@ -370,7 +370,7 @@ $('#' + id_button_generar_reporte_obras).click(function() {
 			}
 
 	        window.myBar = new Chart(ctx2, {
-			    type: 'doughnut',
+			    type: 'pie',
 			    data: data2,
 			    options: {
         			title: {
