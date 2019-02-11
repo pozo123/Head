@@ -10,6 +10,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_obra
  - app_procesos
  - app_kaizen_global
+ - app_presupuesto
  
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir -> Y cambiar lo de obras_prod/obras_magico)
