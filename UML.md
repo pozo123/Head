@@ -12,6 +12,10 @@
     - nombre: string
     - nickname: ? string
     - email: string
+- categorias:
+   - categoria (por nombre)
+      - nombre
+      - clave
 - obras (magico)
    - AFECTAN:
    - SUSCRIBEN:
