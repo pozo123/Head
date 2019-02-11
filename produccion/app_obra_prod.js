@@ -113,18 +113,18 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 fecha_final_real: 0,
                 fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val().getTime(),
             }
-        procesos[$('#' + id_clave_obra_prod).val() + "MISC"] = {
+        procesos[$('#' + id_clave_obra_prod).val() + "-MISC"] = {
             alcance: "MISCELANEOS",
-            clave: $('#' + id_clave_obra_prod).val() + "MISC",
+            clave: $('#' + id_clave_obra_prod).val() + "-MISC",
             adicional: false,
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
         };
-        procesos[$('#' + id_clave_obra_prod).val() + "PC00"] = {
+        procesos[$('#' + id_clave_obra_prod).val() + "-PC00"] = {
             alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-            clave: $('#' + id_clave_obra_prod).val() + "PC00",
+            clave: $('#' + id_clave_obra_prod).val() + "-PC00",
             adicional: false,
             fechas: fech,
             kaizen: kaiz,
