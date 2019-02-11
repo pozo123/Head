@@ -26,6 +26,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  Errores:
  - registros con horas = 0 :S
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
+ - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
  - cambiar app_presupuestos para que incluya un ddl de procesos. Que los jale de la obra mágica.
