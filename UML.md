@@ -24,17 +24,27 @@
          - proceso (por clave):
             - alcance
             - clave
+            - adicional: bool
             - fechas: 
-               - fecha_inicio
-               - fecha_final
+               - fecha_inicio_real
+               - fecha_inicio_teorica
+               - fecha_final_real
+               - fecha_final_teorica
             - num_subprocesos
             - subprocesos:
                - subproceso (por clave):
-                  - Todo igual que un proceso *
+                  - alcance
+                  - calve
+                  - categoria
+                  - fechas:
+                     - igual las 4 *
+                  - kaizen: *
             - kaizen: *
       - fechas:
-         - fecha_inicio
-         - fecha_final
+         - fecha_inicio_real
+         - fecha_inicio_teorica
+         - fecha_final_real
+         - fecha_final_teorica
       - kaizen: *
 - produccion
   - diversos:
