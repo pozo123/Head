@@ -16,7 +16,44 @@ var id_registrar_button_obra = "registrarObra";
 var rama_bd_obras = "proyectos/obras";
 var rama_bd_inges = "proyectos/inges";
 var rama_bd_clientes = "clientes";
+var rama_bd_obras_magico = "obras";
 
+var procesos = {};
+
+var kaiz = {
+    PROYECTOS: {
+        PPTO: 0,
+        PAG: 0,
+    },
+    PRODUCCION: {
+        SUMINISTROS: {
+            CUANT: 0,
+            O de C: 0,
+            PAG: 0,
+        },
+        COPEO: {
+            PREC: 0,
+            COPEO: 0,
+            EST: 0,
+            PAG: 0,
+        },
+    },
+    ADMINISTRACION: {
+        ESTIMACIONES: {
+            PPTO: 0,
+            EST: 0,
+            PAG: 0,
+        },
+        ANTICIPOS: {
+            PPTO: 0,
+            PAG: 0,
+        },
+    },
+    PROFIT: {
+        PROG: 0,
+        REAL: 0,
+    }
+};
 //var asignados = [];
 
 $('#tabBibObras').click(function(){
@@ -123,7 +160,45 @@ $('#' + id_registrar_button_obra).click(function () {
                 if(o !== null){
                     alert("Obra ya existente");
                 } else {
-
+                    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra).val()).once('value').then(function(snapshot){
+                        var ob = snapshot.val();
+                        if(ob == null){
+                            var fech = {
+                                fecha_inicio_real: 0,
+                                fecha_inicio_teorica: 0,
+                                fecha_final_real: 0,
+                                fecha_final_teorica: 0,
+                            }
+                            procesos[$('#' + id_clave_obra).val() + "MISC"] = {
+                                alcance: "MISCELANEOS",
+                                clave: $('#' + id_clave_obra).val() + "MISC",
+                                adicional: false,
+                                fechas: fech,
+                                kaizen: kaiz,
+                                num_subprocesos: 0,
+                                subprocesos: "",
+                            };
+                            procesos[$('#' + id_clave_obra).val() + "PC00"] = {
+                                alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+                                clave: $('#' + id_clave_obra).val() + "PC00",
+                                adicional: false,
+                                fechas: fech,
+                                kaizen: kaiz,
+                                num_subprocesos: 0,
+                                subprocesos: "",
+                            };
+                            var obra_mag = {      
+                                    nombre: $('#' + id_nombre_obra).val(),
+                                    cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
+                                    clave: $('#' + id_clave_obra).val(),
+                                    num_procesos: 0,
+                                    procesos: procesos,
+                                    fechas: fech,
+                                    kaizen: kaiz,
+                                }
+                            firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra).val()).set(obra_mag);
+                        }
+                    });
                     var obra = {      
                         nombre: $('#' + id_nombre_obra).val(),
                         clave: $('#' + id_clave_obra).val(),
