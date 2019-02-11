@@ -19,6 +19,7 @@
       - nombre
       - cliente
       - clave
+      - num_procesos
       - procesos:
          - proceso (por clave):
             - alcance
@@ -26,6 +27,7 @@
             - fechas: 
                - fecha_inicio
                - fecha_final
+            - num_subprocesos
             - subprocesos:
                - subproceso (por clave):
                   - Todo igual que un proceso *
