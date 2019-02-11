@@ -3,6 +3,11 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+ actualizados/nuevos(11/2/19):
+ - app_reporte_obras -> cambiar doughnut por pie
+ - app_desplegar_procesos
+ - app_obra_prod
+ 
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir)
  - app_kaizen_global (wooooo!!!!)
@@ -10,19 +15,21 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_procesos
  - app_colaboradores
  
- actualizados/nuevos (6/2/19):
- - app_desplegar_procesos
- 
  Por probar:
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas (:
 
+ Por definir:
+ - La clave de un procesos TIENE que ser clave de la obra + algo? O lo dejamos semi libre?
+
  Errores:
  - registros con horas = 0 :S
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
- 
-Hoy:
+
+TO DO:
+ - cambiar app_presupuestos para que incluya un ddl de procesos. Que los jale de la obra mágica.
+ - Cambiar app_obra para que cheque y si no existe genere la obra en mágico.
 
 KAIZEN: 
   - definir cómo desplegar subprocesos en app_desplegar_procesos
@@ -95,6 +102,7 @@ SCORE:
   - Todos pueden subir su foto! (click en seleccionar, seleccionas archivo, y luego click en SUBIR imagen)
   - Cierre maestro a las 5 y de ahí una por hora.
   - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
+  - Si salen igual, desde el cel
   
 - DONE
   - Mover todo a proyectos
