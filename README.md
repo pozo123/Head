@@ -8,10 +8,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_desplegar_procesos
  - app_obra_prod
  - app_procesos
+ - app_kaizen_global
  
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir)
- - app_kaizen_global (wooooo!!!!)
  - app_colaboradores
  
  Por probar:
