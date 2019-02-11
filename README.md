@@ -20,7 +20,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_areas (:
 
  Por definir:
- - La clave de un procesos TIENE que ser clave de la obra + algo? O lo dejamos semi libre?
+ - Supervisor en obra magico? O solo en prod?
 
  Errores:
  - registros con horas = 0 :S
