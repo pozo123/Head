@@ -12,6 +12,28 @@
     - nombre: string
     - nickname: ? string
     - email: string
+- obras (magico)
+   - AFECTAN:
+   - SUSCRIBEN:
+   - obra: (por nombre)
+      - nombre
+      - cliente
+      - clave
+      - procesos:
+         - proceso (por clave):
+            - alcance
+            - clave
+            - fechas: 
+               - fecha_inicio
+               - fecha_final
+            - subprocesos:
+               - subproceso (por clave):
+                  - Todo igual que un proceso *
+            - kaizen: *
+      - fechas:
+         - fecha_inicio
+         - fecha_final
+      - kaizen: *
 - produccion
   - diversos:
       - AFECTAN: app_diversos
@@ -83,60 +105,48 @@
          - year:
             - semana: 
                - ?
-  - obras: (muchas en mayus porque probablemente se suban desde un excel)
+  - obras: 
       - AFECTAN: app_obras_prod app_procesos
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
       - obra: (por nombre)
          - nombre
-         - cliente
          - supervisor (nombre)
          - clave
          - terminado 
-         - procesos:
-            - proceso (por nombre):
-               - nombre
-               - clave
-               - fechas: 
-                  - fecha_inicio
-                  - fecha_final
-               - subprocesos:
-                  - subproceso (por nombre):
-                     - Todo igual que un proceso
-               - kaizen:
-                  - PROYECTOS:
-                     - PPTO
-                     - PAG
-                  - PRODUCCION:
-                     - SUMINISTROS:
-                        - CUANT
-                        - O de C
-                        - PAG
-                     - COPEO:
-                        - PREC
-                        - COPEO
-                        - EST
-                        - PAG
-                  - ADMINISTRACION:
-                     - ESTIMACIONES:
-                        - PPTO
-                        - EST
-                        - PAG
-                     - ANTICIPOS:
-                        - PPTO
-                        - PAG
-                  - AVANCE:
-                     - EST
-                     - REAL
-                  - PROFIT:
-                     - PROG
-                     - REAL
          - fechas:
             - fecha_inicio_real
             - fecha_inicio_teorica
             - fecha_final_real
             - fecha_final_teorica
-         - kaizen:
-            * Todo lo de kaizen (INCLUYENDO avance)
 - clientes
 - proyectos
 - info_web
+
+- kaizen: (Mayúsculas en caso de que haga falta llenarlas desde un excel)
+  - PROYECTOS:
+     - PPTO
+     - PAG
+  - PRODUCCION:
+     - SUMINISTROS:
+        - CUANT
+        - O de C
+        - PAG
+     - COPEO:
+        - PREC
+        - COPEO
+        - EST
+        - PAG
+  - ADMINISTRACION:
+     - ESTIMACIONES:
+        - PPTO
+        - EST
+        - PAG
+     - ANTICIPOS:
+        - PPTO
+        - PAG
+  - AVANCE:
+     - EST
+     - REAL
+  - PROFIT:
+     - PROG
+     - REAL
