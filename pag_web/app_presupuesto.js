@@ -5,6 +5,7 @@ var id_registrar_button_presupuesto = "registrarPresupuesto";
 var id_vistaPrevia_button_presupuesto = "vistaPreviaPresupuesto";
 var id_borrar_todo_presupuesto = "borrarTodoPresupuesto"
 var id_obra_ddl_presupuesto = "obraPresupuesto";
+var id_proceso_ddl_presupuesto = "DDLproceso";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto";
 var id_genero_ddl_presupuesto = "DDLgenero";
 var id_clase_ddl_presupuesto = "DDLclase";
@@ -31,6 +32,7 @@ var rama_bd_reqs = "proyectos/reqs";
 var rama_bd_exclusiones = "proyectos/exclusiones";
 var rama_bd_clientes = "clientes";
 var rama_bd_clase = "proyectos/clase";
+var rama_bd_obras_magico = "obras";
 
 var alcance_txt = 'alcance';
 var tiempoEntrega_txt = 'tiempoEntrega';
@@ -172,6 +174,25 @@ $('#tabPresupuesto').click(function() {
         option10.text = clase.nombre; 
         option10.value = clase.codigo;
         select5.appendChild(option10);
+
+    });
+});
+
+$('#' + id_obra_ddl_presupuesto).change(function(){
+    $('#' + id_proceso_ddl_presupuesto).empty();
+    var select = document.getElementById(id_proceso_ddl_presupuesto);   
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
+
+    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").orderByChild("nombre").on('child_added',function(snapshot){
+        
+        var proc = snapshot.val();
+        var option2 = document.createElement('OPTION');
+        option2.text = proc.clave; 
+        option2.value = proc.clave;
+        select.appendChild(option2);
 
     });
 });
@@ -1215,6 +1236,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 //nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
                                 horas_programadas: horas_totales,
+                                proceso: $('#' + id_proceso_ddl_presupuesto + " option:selected").val(),
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
                                     horas_totales_ie: horas_ie_totales,
@@ -1294,6 +1316,7 @@ $('#' + id_registrar_button_presupuesto).click(function () {
                                 nombre: $('#' + id_nombre_presupuesto).val(),
                                 clave: clave_presu,
                                 horas_programadas: horas_totales,
+                                proceso: $('#' + id_proceso_ddl_presupuesto + " option:selected").val(),
                                 colaboradores_asignados: {
                                     horas_totales: horas_totales,
                                     horas_totales_ie: horas_ie_totales,
