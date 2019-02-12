@@ -145,7 +145,7 @@
   - PRODUCCION:
      - SUMINISTROS:
         - CUANT
-        - O de C
+        - OdeC
         - PAG
      - COPEO:
         - PREC
