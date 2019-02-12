@@ -149,7 +149,6 @@
      - COPEO:
         - PREC
         - COPEO
-        - EST
         - PAG
   - ADMINISTRACION:
      - ESTIMACIONES:
