@@ -4,8 +4,8 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Orden Implementacion:
- - app_colaboradores_produccion
- - app_obras_prod
+ - app_colaboradores_produccion: CHECK
+ - app_obras_prod: 
  - app_procesos
  - app_desplegar_procesos
  - app_kaizen_global
