@@ -7,6 +7,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_obra_prod
  - app_obra
  - app_procesos
+ - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
  
  actualizados/nuevos(11/2/19):
  - app_reporte_obras -> cambiar doughnut por pie
