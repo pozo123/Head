@@ -11,22 +11,18 @@ var aut;
 var username;
 
  $(document).ready(function(){
-	firebase.auth().onAuthStateChanged(user => {
-		if(user) {
-			username = user.uid;
-			firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
-				var col = snapshot.val();
-				if(col.tipo == "supervisor"){
-					aut = "supervisor";
-				}
-				else{
-					aut = "nope";
-					//Aquí mete distintos valores de aut dependiendo de quien entra.
-					//Por ejemplo "gerente", "admin", y así.
-				}
-			});
+ 	username = firebase.auth().currentUser.uid;
+	firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+		var col = snapshot.val();
+		if(col.tipo == "supervisor"){
+			aut = "supervisor";
 		}
-	})
+		else{
+			aut = "nope";
+			//Aquí mete distintos valores de aut dependiendo de quien entra.
+			//Por ejemplo "gerente", "admin", y así.
+		}
+	});
 });
 
 $('#' + id_tab_datos_kaizen).click(function(){
