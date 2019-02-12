@@ -128,7 +128,7 @@ $('#' + id_agregar_procesos).click(function() {
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
             var obra = snapshot.val();
             var num_proc = obra.num_procesos + 1;
-            cl = $('#' + id_obra_ddl_procesos + " option:selected").val() + "-C" + ("0" + num_proc).slice(-2);
+            cl = "PC" + ("0" + num_proc).slice(-2);
             var proceso = {
                 alcance: $('#' + id_alcance_proceso_procesos).val(),
                 clave: cl,
