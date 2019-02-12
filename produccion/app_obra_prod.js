@@ -24,7 +24,7 @@ var kaiz = {
     PRODUCCION: {
         SUMINISTROS: {
             CUANT: 0,
-            O de C: 0,
+            OdeC: 0,
             PAG: 0,
         },
         COPEO: {
