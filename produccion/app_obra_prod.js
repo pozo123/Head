@@ -12,7 +12,7 @@ var id_supervisor_ddl_obra_prod = "supervisorDdlObraProd";
 var rama_bd_obras_prod = "produccion/obras";
 var rama_bd_obras_magico = "obras";
 var rama_bd_clientes = "clientes";
-var rama_bd_supervisores = "produccion/colaboradores/supervisores";
+var rama_bd_colaboradores_prod = "produccion/colaboradores";
 
 var procesos = {};
 
@@ -79,12 +79,14 @@ $('#tabObrasProd').click(function(){
     option3.text = option.value = "";
     select2.appendChild(option3);
 
-    firebase.database().ref(rama_bd_supervisores).orderByChild('nombre').on('child_added',function(snapshot){
-        var supervisor = snapshot.val();
-        var option4 = document.createElement('OPTION');
-        option4.text = supervisor.nombre;
-        option4.value = supervisor.nombre;
-        select2.appendChild(option4);
+    firebase.database().ref(rama_bd_colaboradores_prod).orderByChild('nombre').on('child_added',function(snapshot){
+        var colab = snapshot.val();
+        if(colab.tipo == "supervisor"){
+            var option4 = document.createElement('OPTION');
+            option4.text = colab.nombre;
+            option4.value = colab.uid;
+            select2.appendChild(option4);
+        }
     });
    
 });
@@ -170,7 +172,10 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                     });
                 }
         });
-
-        firebase.database().ref(rama_bd_supervisores + "/" $('#' + id_supervisor_ddl_obra_prod + " option:selected").text() + "/obras").push($('#' + id_nombre_obra_prod).val());
+        var obr = {
+            nombre: $('#' + id_nombre_obra_prod).val(),
+            activa: true,
+        }
+        firebase.database().ref(rama_bd_colaboradores_prod + "/" $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
     }
 });
