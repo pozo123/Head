@@ -12,16 +12,18 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
- actualizados/nuevos(12/2/19):
+ actualizados/nuevos(12/2/19) después de llamada:
+ - app_procesos
+ - app_desplegar_procesos
+ - app_datos_kaizen
  - app_obra_prod
  - app_obra
- - app_procesos
+ 
+ actualizados/nuevos(12/2/19):
  - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
- - app_datos_kaizen
  
  actualizados/nuevos(11/2/19):
  - app_reporte_obras -> cambiar doughnut por pie
- - app_desplegar_procesos
  - app_kaizen_global
  - app_presupuesto -> ddl proceso
  
