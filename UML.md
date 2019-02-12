@@ -112,6 +112,7 @@
          - obras:
             - obra (por push)
                - nombre
+               - activa: bool
    - destajistas: 
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
