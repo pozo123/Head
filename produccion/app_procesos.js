@@ -26,7 +26,6 @@ var kaiz = {
         COPEO: {
             PREC: 0,
             COPEO: 0,
-            EST: 0,
             PAG: 0,
         },
     },
