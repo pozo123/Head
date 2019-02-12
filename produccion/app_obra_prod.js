@@ -30,7 +30,6 @@ var kaiz = {
         COPEO: {
             PREC: 0,
             COPEO: 0,
-            EST: 0,
             PAG: 0,
         },
     },
@@ -113,19 +112,28 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 fecha_final_real: 0,
                 fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val().getTime(),
             }
-        procesos[$('#' + id_clave_obra_prod).val() + "-MISC"] = {
+        procesos[$('#' + id_clave_obra_prod).val() + "-MIS"] = {
             alcance: "MISCELANEOS",
-            clave: $('#' + id_clave_obra_prod).val() + "-MISC",
+            clave: $('#' + id_clave_obra_prod).val() + "-MIS",
             adicional: false,
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
         };
-        procesos[$('#' + id_clave_obra_prod).val() + "-PC00"] = {
+        procesos[$('#' + id_clave_obra_prod).val() + "-000"] = {
             alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-            clave: $('#' + id_clave_obra_prod).val() + "-PC00",
+            clave: $('#' + id_clave_obra_prod).val() + "-000",
             adicional: false,
+            fechas: fech,
+            kaizen: kaiz,
+            num_subprocesos: 0,
+            subprocesos: "",
+        };
+        procesos[$('#' + id_clave_obra_prod).val() + "-ADI"] = {
+            alcance: "ADICIONALES",
+            clave: $('#' + id_clave_obra_prod).val() + "-ADI",
+            adicional: true,
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
