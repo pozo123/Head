@@ -1,6 +1,5 @@
 var id_obra_ddl_procesos = "obraDdlProcesos";
 var id_subproceso_checkbox_proceso = "checkboxSubproceso";
-var id_adicional_checkbox_proceso = "checkboxAdicional";
 var id_proceso_ddl_procesos = "procesoDdlProcesos";
 var id_categoria_ddl_procesos = "categoriaDdlProcesos";
 var id_alcance_proceso_procesos = "alcanceProcesoProcesos";
@@ -115,7 +114,7 @@ $('#' + id_agregar_procesos).click(function() {
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + $('#' + id_proceso_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
             var proc = snapshot.val();
             var num_sub = proc.num_subprocesos + 1;
-            cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + num_sub;
+            cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + ("0" + num_sub).slice(-2);
             var subproceso = {
                 alcance: $('#' + id_alcance_proceso_procesos).val(),
                 clave: cl,
@@ -129,10 +128,7 @@ $('#' + id_agregar_procesos).click(function() {
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
             var obra = snapshot.val();
             var num_proc = obra.num_procesos + 1;
-            var ad = "C";
-            if($("#" + id_adicional_checkbox_proceso).checked)
-                ad = "A";
-            cl = $('#' + id_obra_ddl_procesos + " option:selected").val() + "-P" + ad + "-" + num_proc;
+            cl = $('#' + id_obra_ddl_procesos + " option:selected").val() + "-C" + ("0" + num_proc).slice(-2);
             var proceso = {
                 alcance: $('#' + id_alcance_proceso_procesos).val(),
                 clave: cl,
