@@ -3,17 +3,27 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
+ Orden Implementacion:
+ - app_colaboradores_produccion
+ - app_obras_prod
+ - app_procesos
+ - app_desplegar_procesos
+ - app_kaizen_global
+ - app_datos_kaizen
+ - app_asistencia
+ 
  actualizados/nuevos(12/2/19):
  - app_obra_prod
  - app_obra
  - app_procesos
  - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
+ - app_datos_kaizen
  
  actualizados/nuevos(11/2/19):
  - app_reporte_obras -> cambiar doughnut por pie
  - app_desplegar_procesos
  - app_kaizen_global
- - app_presupuesto
+ - app_presupuesto -> ddl proceso
  
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir -> Y cambiar lo de obras_prod/obras_magico)
@@ -21,29 +31,35 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
- - app_areas (:
+ - app_areas
 
  Por definir:
  - Supervisor en obra magico? O solo en prod?
 
  Errores:
- - registros con horas = 0 :S
+ - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
- - cambiar app_presupuestos para que incluya un ddl de procesos. Que los jale de la obra mágica.
  - Cambiar app_obra para que cheque y si no existe genere la obra en mágico.
  - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
    - Si no existe no está creandolo en personal. Si ya existe el update de areas no se va a llamar, aguas
 
 KAIZEN: 
-  - definir cómo desplegar subprocesos en app_desplegar_procesos
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
-  - Que se guarde el kaizen en obras de producción?
-  - Costo de score, sólo depende de los pagos? La oficina es admon, cierto?
-  - Al hacer las horas pptadas de score en los kaisens meter alcance.
+     - O hacer un app_asignar_supervisor en el que se pueda mover todo eso
   - Quién es responsable de llenarlo.
+    - supervisores:
+      - Todas las secciones de sus obras asignadas
+    - Gerente (vir)
+      - Todas las secciones de todas las obras
+    - Admin (emmanuel, ray, MBD, Arturo y yo) 
+      - Todo de todo
+    - Compras
+      - Suministros (pagado seguro, O de C?)
+    - ... continuara
+    
     - Todos ellos que tengan una cuenta de produccion con permisos de su responsabilidad para llenar el kaizen
       - Permisos por obra
       - Se llena por area
