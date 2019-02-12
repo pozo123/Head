@@ -3,12 +3,14 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
- actualizados/nuevos(11/2/19):
- - app_reporte_obras -> cambiar doughnut por pie
- - app_desplegar_procesos
+ actualizados/nuevos(12/2/19):
  - app_obra_prod
  - app_obra
  - app_procesos
+ 
+ actualizados/nuevos(11/2/19):
+ - app_reporte_obras -> cambiar doughnut por pie
+ - app_desplegar_procesos
  - app_kaizen_global
  - app_presupuesto
  
