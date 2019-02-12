@@ -132,7 +132,7 @@ $('#' + id_agregar_procesos).click(function() {
             var proceso = {
                 alcance: $('#' + id_alcance_proceso_procesos).val(),
                 clave: cl,
-                adicional: $('#' + id_adicional_checkbox_proceso).checked,
+                adicional: false,
                 fechas: fech,
                 num_subprocesos: 0,
                 kaizen: kaiz,
