@@ -1,9 +1,6 @@
 var id_datatable_procesos = "dataDesplegarProcesos";
 var id_tab_procesos = "tabDesplegarProcesos";
-/*http://live.datatables.net/bodanole/4053/edit
-<div class="container">
-    <table id="tabDesplegarProcesos" class="display" width="100%">
-</table>*/
+//http://live.datatables.net/bodanole/4053/edit
 var nombre_seleccionado;
 
 var rama_bd_obras_magico = "obras";
@@ -19,11 +16,11 @@ function loadTablaProcesos(){
             obraSnap.child("procesos").forEach(function(childSnapshot){
                 var proc = childSnapshot.val();
                 if(proc.num_subprocesos == 0){
-                    datos_procesos.push([obraSnap.val().nombre, proc.clave, proc.alcance, "-", "-"]);
+                    datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
                 } else { 
                     childSnapshot.child("subprocesos").forEach(function(subSnap){
                         var subproceso = subSnap.val();
-                        datos_procesos.push([obraSnap.val().nombre, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
+                        datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
                     });
                 }
                 var tabla_procesos = $('#'+ id_datatable_procesos).DataTable({
