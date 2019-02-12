@@ -29,7 +29,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir -> Y cambiar lo de obras_prod/obras_magico)
- - app_colaboradores
  
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
