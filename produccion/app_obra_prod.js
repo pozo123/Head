@@ -51,7 +51,7 @@ var kaiz = {
     }
 };
 
-$('#tabObrasProd').click(function(){
+$('#tabAltaObra').click(function(){
 
     jQuery('#' + id_fecha_inicio_obra_prod).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -113,11 +113,13 @@ $('#' + id_registrar_button_obra_prod).click(function () {
     if(!$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
+
+
         var fech = {
                 fecha_inicio_real: 0,
-                fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra_prod).val().getTime(),
+                fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra_prod)).val().getTime(),
                 fecha_final_real: 0,
-                fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val().getTime(),
+                fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod)).val().getTime(),
             }
         procesos["MISC"] = {
             alcance: "MISCELANEOS",
@@ -178,6 +180,6 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             nombre: $('#' + id_nombre_obra_prod).val(),
             activa: true,
         }
-        firebase.database().ref(rama_bd_colaboradores_prod + "/" $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
+        firebase.database().ref(rama_bd_colaboradores_prod + "/"  + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
     }
 });
