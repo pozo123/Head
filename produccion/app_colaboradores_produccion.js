@@ -32,6 +32,8 @@ $('#' + id_registrar_button_colaborador).click(function () {
                     firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('value').then(function(snapshot){
                         var pers = snapshot.val();
                         guardaDatosCol(pers.uid);
+                        var tru = true;
+                        firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/produccion").set(tru);
                     });
                 } else {
                     alert(errorMessage);
