@@ -1,5 +1,5 @@
 - personal (magico)
-      - AFECTAN: app_personal, app_inges
+      - AFECTAN: app_personal, app_inges, app_colaboradores_produccion
       - SUSCRIBEN: 
   - uid (como key):
     - areas:
