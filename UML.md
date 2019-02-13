@@ -160,9 +160,6 @@
      - ANTICIPOS:
         - PPTO
         - PAG
-  - AVANCE:
-     - EST
-     - REAL
   - PROFIT:
      - PROG
      - REAL
