@@ -48,6 +48,8 @@ $('#' + id_registrar_button_inge).click(function () {
                     firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_inge).val()).once('value').then(function(snapshot){
                         var pers = snapshot.val();
                         guardaDatos(pers.uid);
+                        var tru = true;
+                        firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/proyectos").set(tru);
                     });
                 } else {
                     alert(errorMessage);
