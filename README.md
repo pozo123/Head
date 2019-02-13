@@ -13,6 +13,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_asistencia
  
  actualizados/nuevos(13/2/19):
+ - *** app_obra, app_obra_prod, app_procesos los modifiqué pero no los subí a git por si Arturo los cambió
  - app_inge
  - app_colaboradores_produccion
  - app_obra -> ppto misc ya va ligado autom a proc mis
