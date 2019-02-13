@@ -162,6 +162,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                 nombre: "Miscelaneo",
                                 clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
                                 horas_programadas: 0,
+                                proceso: $('#' + id_clave_obra).val() + "-MIS",
                                 colaboradores_asignados: {
                                     horas_totales: 0,
                                     horas_totales_ie: 0,
@@ -179,7 +180,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                 consecutivos:{
                                     1:{
                                         precio: 0,
-                                        pdf: "", //Metes pdf
+                                        pdf: "",
                                         checkin: new Date().getTime(),
                                     }
                                 },
