@@ -12,6 +12,11 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizados/nuevos(13/2/19):
+ - app_inge
+ - app_colaboradores_produccion
+ - app_obra -> ppto misc ya va ligado autom a proc mis
+ 
  actualizados/nuevos(12/2/19) después de llamada:
  - app_procesos
  - app_desplegar_procesos
@@ -30,6 +35,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  actualizados/nuevos(7/2/19):
  - app_asistencia (no final... falta probar y definir -> Y cambiar lo de obras_prod/obras_magico)
  
+ 
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas
@@ -43,9 +49,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
- - Cambiar app_obra para que cheque y si no existe genere la obra en mágico.
- - app_inges -> catch (volver a cargar app_inge, tenía una r de sobra en la línea 47)
-   - Si no existe no está creandolo en personal. Si ya existe el update de areas no se va a llamar, aguas
+ - terminar funcion loadScoreKaizen
+ - crear las obras magicas
+ - terminar de definir lo de aqui abajito
 
 KAIZEN: 
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
