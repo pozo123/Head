@@ -54,6 +54,7 @@ TO DO:
  - terminar funcion loadScoreKaizen
  - crear las obras magicas
  - terminar de definir lo de aqui abajito
+ - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
 
 KAIZEN: 
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
