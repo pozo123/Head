@@ -28,7 +28,7 @@
          - proceso (por clave):
             - alcance
             - clave
-            - adicional: bool
+            - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
             - fechas: 
                - fecha_inicio_real
                - fecha_inicio_teorica
