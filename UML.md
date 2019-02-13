@@ -40,6 +40,7 @@
                   - alcance
                   - calve
                   - categoria
+                  - kaizen: *
                   - fechas:
                      - igual las 4 *
             - kaizen: *
