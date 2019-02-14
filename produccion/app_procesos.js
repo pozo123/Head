@@ -51,7 +51,7 @@ var kaiz = {
 };
 
 
-$('#tabProcesosProd').click(function(){
+$('#tabAltaProceso').click(function(){
     $('#' + id_obra_ddl_procesos).empty();
     var select = document.getElementById(id_obra_ddl_procesos);
     var option = document.createElement('option');
