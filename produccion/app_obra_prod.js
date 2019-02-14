@@ -51,7 +51,7 @@ var kaiz = {
     }
 };
 
-$('#tabAltaObra').click(function(){
+$('#tabObrasProd').click(function(){
 
     jQuery('#' + id_fecha_inicio_obra_prod).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -113,18 +113,16 @@ $('#' + id_registrar_button_obra_prod).click(function () {
     if(!$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
-
-
         var fech = {
                 fecha_inicio_real: 0,
-                fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra_prod)).val().getTime(),
+                fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra_prod).val()).getTime(),
                 fecha_final_real: 0,
-                fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod)).val().getTime(),
+                fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val()).getTime(),
             }
         procesos["MISC"] = {
             alcance: "MISCELANEOS",
             clave: "MISC",
-            adicional: false,
+            tipo: "miscelaneo",    
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
@@ -133,7 +131,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
         procesos["PC00"] = {
             alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
             clave: "PC00",
-            adicional: false,
+            tipo: "proyecto",
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
@@ -142,7 +140,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
         procesos["ADIC"] = {
             alcance: "ADICIONALES",
             clave: "ADIC",
-            adicional: true,
+            tipo: "adicional",
             fechas: fech,
             kaizen: kaiz,
             num_subprocesos: 0,
@@ -180,6 +178,6 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             nombre: $('#' + id_nombre_obra_prod).val(),
             activa: true,
         }
-        firebase.database().ref(rama_bd_colaboradores_prod + "/"  + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
+        firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
     }
 });
