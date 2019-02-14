@@ -4,12 +4,17 @@ var id_proceso_ddl_procesos = "procesoDdlProcesos";
 var id_categoria_ddl_procesos = "categoriaDdlProcesos";
 var id_alcance_proceso_procesos = "alcanceProcesoProcesos";
 var id_fecha_inicio_procesos = "fechaInicioProcesos";
-var id_fecha_final_procesos = "fichaFinalProcesos";
+var id_fecha_final_procesos = "fechaFinalProcesos";
 
 var id_agregar_procesos = "agregarProcesoProcesos";
 
+var id_grupo_subproceso = "grupoSubproceso";
+var id_grupo_categoria = "grupoCategoria";
+
 var rama_bd_obras_magico = "obras";
 var rama_bd_categorias_procesos = "categorias";
+
+
 
 var kaiz = {
     PROYECTOS: {
@@ -94,20 +99,20 @@ $("#" + id_subproceso_checkbox_proceso).change(function(){
             option2.value = proc.clave;
             select.appendChild(option2);
         });
-        //unhide ddl proc y ddl categoria
-        //hide check adicional
+        $('#' + id_grupo_subproceso).removeClass("hidden")
+        $('#' + id_grupo_categoria).removeClass("hidden")      
     } else {
-        //unhide check adicional
-        //hide ddl proc y ddl categoria
+        $('#' + id_grupo_subproceso).addClass("hidden")
+        $('#' + id_grupo_categoria).addClass("hidden")
     }
 });
 
 $('#' + id_agregar_procesos).click(function() {
     var fech = {
         fecha_inicio_real: 0,
-        fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_procesos).val().getTime(),
+        fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_procesos).val()).getTime(),
         fecha_final_real: 0,
-        fecha_final_teorica: new Date($('#' + id_fecha_final_procesos).val().getTime(),
+        fecha_final_teorica: new Date($('#' + id_fecha_final_procesos).val()).getTime(),
     }
     var cl;
     if($("#" + id_subproceso_checkbox_proceso).checked){
@@ -121,7 +126,7 @@ $('#' + id_agregar_procesos).click(function() {
                 fechas: fech,
                 kaizen: kaiz,
             }
-            firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(proceso);
+            firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(subproceso);
             firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos").set(num_sub);
         });
     } else {
