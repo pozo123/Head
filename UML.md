@@ -163,3 +163,7 @@
   - PROFIT:
      - PROG
      - REAL
+  
+  - Para calcular AVANCE (no sale en nuestra bd pero se puede calcular al displayearla):
+      - EST = prod.copeo.pag / prod.copeo.copeo
+      - REAL = admin.est.est / admin.est.ppto
