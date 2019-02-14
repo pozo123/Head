@@ -103,28 +103,28 @@ $('#' + id_registrar_button_obra).click(function () {
                             fecha_final_real: 0,
                             fecha_final_teorica: 0,
                         }
-                        procesos[$('#' + id_clave_obra).val() + "-MIS"] = {
+                        procesos["MISC"] = {
                             alcance: "MISCELANEOS",
-                            clave: $('#' + id_clave_obra).val() + "-MIS",
-                            adicional: false,
+                            clave: "MISC",
+                            tipo: "miscelaneo",    
                             fechas: fech,
                             kaizen: kaiz,
                             num_subprocesos: 0,
                             subprocesos: "",
                         };
-                        procesos[$('#' + id_clave_obra).val() + "-000"] = {
+                        procesos["PC00"] = {
                             alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-                            clave: $('#' + id_clave_obra).val() + "-000",
-                            adicional: false,
+                            clave: "PC00",
+                            tipo: "proyecto",
                             fechas: fech,
                             kaizen: kaiz,
                             num_subprocesos: 0,
                             subprocesos: "",
                         };
-                        procesos[$('#' + id_clave_obra).val() + "-ADI"] = {
+                        procesos["ADIC"] = {
                             alcance: "ADICIONALES",
-                            clave: $('#' + id_clave_obra).val() + "-ADI",
-                            adicional: true,
+                            clave: "ADIC",
+                            tipo: "adicional",
                             fechas: fech,
                             kaizen: kaiz,
                             num_subprocesos: 0,
@@ -162,7 +162,7 @@ $('#' + id_registrar_button_obra).click(function () {
                                 nombre: "Miscelaneo",
                                 clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
                                 horas_programadas: 0,
-                                proceso: $('#' + id_clave_obra).val() + "-MIS",
+                                proceso: "MISC",
                                 colaboradores_asignados: {
                                     horas_totales: 0,
                                     horas_totales_ie: 0,
