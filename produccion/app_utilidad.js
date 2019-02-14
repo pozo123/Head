@@ -124,8 +124,8 @@ function loadProfits(){
 
 	$('#' + id_profit_cantidad_utilidad).val(precio*0.8-costos);
 	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/precio);
-	highLight(id_profit_porcentaje_utilidad);
-	highLight(id_profit_cantidad_utilidad);
+	//highLight(id_profit_porcentaje_utilidad);
+	//highLight(id_profit_cantidad_utilidad);
 }
 
 $("#" + id_copeo_utilidad).change(function(){
@@ -157,17 +157,12 @@ $("#" + id_profit_cantidad_utilidad).change(function(){
 	$('#' + id_precio_venta_utilidad).val((parseFloat($("#" + id_profit_cantidad_utilidad).val()) + costos)/0.8);
 	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($("#" + id_profit_cantidad_utilidad).val())/parseFloat($('#' + id_precio_venta_utilidad).val()));
 	highLight(id_precio_venta_utilidad);
-	//highLight(id_profit_porcentaje_utilidad);
+	highLight(id_profit_porcentaje_utilidad);
 });
 
-var interval;
-
 function highLight(id){
-	document.getElementById(id).style.background = "gray";
-	interval = setInterval(turnWhite(id), 1500);
+	document.getElementById(id).style.background = "#e6fff2";
+	console.log("Gray: " + id);
+  	setTimeout(function(){	document.getElementById(id).style.background = "white";}, 1000);
 }
 
-function turnWhite(id){
-	document.getElementById(id).style.background = "magenta";
-	clearInterval(interval);
-}
