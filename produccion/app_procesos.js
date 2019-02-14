@@ -116,10 +116,10 @@ $('#' + id_agregar_procesos).click(function() {
             var num_sub = proc.num_subprocesos + 1;
             cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + ("0" + num_sub).slice(-2);
             var subproceso = {
-                alcance: $('#' + id_alcance_proceso_procesos).val(),
                 clave: cl,
                 categoria: $('#' + id_categoria_ddl_procesos + " option:selected").text(),
                 fechas: fech,
+                kaizen: kaiz,
             }
             firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(proceso);
             firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos").set(num_sub);
@@ -128,13 +128,19 @@ $('#' + id_agregar_procesos).click(function() {
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
             var obra = snapshot.val();
             var num_proc = obra.num_procesos + 1;
+            var tipo;
+            if($('#' + id_alcance_proceso_procesos).val())
+                tipo = "adicional";
+            else
+                tipo = "continuo";
             cl = "PC" + ("0" + num_proc).slice(-2);
             var proceso = {
-                alcance: $('#' + id_alcance_proceso_procesos).val(),
+                tipo: tipo,
                 clave: cl,
                 adicional: false,
                 fechas: fech,
                 num_subprocesos: 0,
+                subprocesos: "",
                 kaizen: kaiz,
             }
             firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + cl).set(proceso);
