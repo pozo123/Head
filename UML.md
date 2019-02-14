@@ -12,6 +12,18 @@
     - nombre: string
     - nickname: ? string
     - email: string
+- centro de costos
+   - familia(nombre)
+      - cuenta (por nombre)
+         - nombre
+         - clave
+         - registros (por fecha como nomina?)
+            - registro (por uid)
+               - monto
+               - fecha
+               - concepto
+               - cantidad
+               - clave_concepto
 - categorias:
    - categoria (por nombre)
       - nombre
