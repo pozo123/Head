@@ -12,19 +12,20 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizado/nuevos(14/2/19):
+ - app_obra_prod
+ - app_obra
+ - app_procesos
+ - app_utilidad (hay que descomentar cosas)
+ 
  actualizados/nuevos(13/2/19):
- - *** app_obra, app_obra_prod, app_procesos los modifiqué pero no los subí a git por si Arturo los cambió
  - app_funciones -> la función para cargar SCORE al kaizen
  - app_inge
  - app_colaboradores_produccion
- - app_obra -> ppto misc ya va ligado autom a proc mis
  
  actualizados/nuevos(12/2/19) después de llamada:
- - app_procesos
  - app_desplegar_procesos
  - app_datos_kaizen
- - app_obra_prod
- - app_obra
  
  actualizados/nuevos(12/2/19):
  - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
@@ -51,9 +52,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
- - terminar funcion loadScoreKaizen
- - crear las obras magicas
- - terminar de definir lo de aqui abajito
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
 
 KAIZEN: 
@@ -68,30 +66,35 @@ KAIZEN:
       - Todo de todo
     - Compras
       - Suministros (pagado seguro, O de C?)
-    - ... continuara
-    
-    - Todos ellos que tengan una cuenta de produccion con permisos de su responsabilidad para llenar el kaizen
-      - Permisos por obra
-      - Se llena por area
-    - Necesito los supervisores de todas las obras
-      - Y pues saber sus responsabilidades y así
-    
+    - Nomina
+      - Copeo, pagado de todas las obras.
+        
     - Proyectos: 
-      - Ppto: Ray + MBD (Eric?)
-      - PAG: SCORE Cross reference con Hector (para que se paguen horas reales y no horas registradas. El chiste es aplicar regla de tres de proporciones (como en reporte obras) con las horas totales pagadas por hector).
+      - Ppto: Ray + MBD (Eric?) 
+        - Formato: simplemente horas.
+      - PAG: SCORE 
+        - Formato: cargado automático desde SCORE
+        - Cross reference con Hector (para que se paguen horas reales y no horas registradas. El chiste es aplicar regla de tres de proporciones (como en reporte obras) con las horas totales pagadas por hector).
+        - EDIT: ya no. En el kaizen se pagan todas las horas de SCORE, pero al salir de kaizen para el HeadMaster se le restan las trabajadas. Pueden ser simplemente en el total o prorratearlas entre las obras.
     - Producción
       - Suministros:
-        - Cuant: proy (hay inge(s) asignados desde el principio. Se puede cambiar pero es raro. Ver que pedo en como ligarlo a score)
-        - O de C: compras -> ver quien, ver si lo llenan desde la pagina o un excel y lo subimos o que onda
+        - Cuant: proy (hay inge(s) asignados desde el principio. Se puede cambiar pero es raro. Que se llene desde SCORE)
+          - Formato: unidades, precio, concepto, total...???
+        - OdeC: compras -> ver quien, ver si lo llenan desde la pagina o un excel y lo subimos o que onda
+          - Formato: concepto, total, unidades...???
         - Pag: compras -> ver quien, ver si lo llenan desde la pagina o un excel y lo subimos o que onda
+          - Formato: unidades, concepto, fechas... Todo lo que nos platicó Emmanuel.
       - Copeo:
         - Prec: virgilio
+          - Formato: ???
         - copeo: virgilio + supervisores 
-        - est: Matricial cliente (quien?)
+          - Formato: ???
         - pag: hector ?
+          - Formato: asistencias. Por día de la semana, mas horas extra y diversos. 
     - Administración:
       - Estimaciones:
         - ppto: MBD?
+          - Que el sistema te proponga una para obtener un profit deseado?
         - ESt: Emmanuel?
         - Pag: Emmanuel?
       - Anticipos:
