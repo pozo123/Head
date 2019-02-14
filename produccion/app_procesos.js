@@ -52,6 +52,15 @@ var kaiz = {
 
 
 $('#tabAltaProceso').click(function(){
+
+
+    jQuery('#' + id_fecha_inicio_procesos).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'}
+    );
+    jQuery('#' + id_fecha_final_procesos).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'},
+    );
+
     $('#' + id_obra_ddl_procesos).empty();
     var select = document.getElementById(id_obra_ddl_procesos);
     var option = document.createElement('option');
@@ -92,6 +101,7 @@ $("#" + id_subproceso_checkbox_proceso).change(function(){
         option.text = option.value = "";
         select.appendChild(option);
 
+        console.log(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos")
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos").orderByChild('nombre').on('child_added',function(snapshot){
             var proc = snapshot.val();
             var option2 = document.createElement('OPTION');
@@ -133,14 +143,9 @@ $('#' + id_agregar_procesos).click(function() {
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
             var obra = snapshot.val();
             var num_proc = obra.num_procesos + 1;
-            var tipo;
-            if($('#' + id_alcance_proceso_procesos).val())
-                tipo = "adicional";
-            else
-                tipo = "continuo";
             cl = "PC" + ("0" + num_proc).slice(-2);
             var proceso = {
-                tipo: tipo,
+                tipo: "continuo",
                 clave: cl,
                 adicional: false,
                 fechas: fech,
