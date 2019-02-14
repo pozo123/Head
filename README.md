@@ -52,6 +52,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - Centro de costos.
+   - definir UML
+   - alta cuenta
+   - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
  - meter procesos basicos a magicos
  - bloquear cliente si ya existe obra magica
