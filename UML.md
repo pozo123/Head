@@ -142,6 +142,7 @@
          - supervisor (nombre)
          - clave
          - terminado 
+         - procesos: Todo lo mismo que en magico menos kaizen (tambien con subprocesos, esos igual todo menos kaizen)
          - fechas:
             - fecha_inicio_real
             - fecha_inicio_teorica
