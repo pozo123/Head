@@ -7,3 +7,4 @@
       - en telefono, quizá solo dejar ingresar número y homologar con "-"'s.
  
   - sacar permisos de proy y meterlo a admin
+  - dropdown list para cambiar de paginas web
