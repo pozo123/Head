@@ -27,6 +27,8 @@ en terminal
     - https://www.youtube.com/watch?v=mV6L4_Mwh3U&t=325s
     - Para mergear las filas repetidas (una sólo celda para obra) 
       - http://live.datatables.net/bodanole/1/edit
+     - multilevels en pestañas
+       - https://datatables.net/extensions/buttons/examples/initialisation/collections-sub.html
 
   - cambiar key (copiar y borrar)
     - https://stackoverflow.com/questions/39107274/is-it-possible-to-rename-a-key-in-the-firebase-realtime-database
@@ -46,4 +48,4 @@ en terminal
     - https://github.com/FirebaseExtended/firebase-import
     
   - Pie charts
-    - https://www.chartjs.org/docs/latest/charts/doughnut.html
+    - https://www.chartjs.org/docs/latest/charts/doughnut.htm
