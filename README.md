@@ -5,9 +5,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  Orden Implementacion:
  - app_colaboradores_produccion: CHECK
- - app_obras_prod: 
- - app_procesos
- - app_desplegar_procesos
+ - app_obras_prod: CHECK
+ - app_procesos: CHECK
+ - app_desplegar_procesos: CHECK
  - app_kaizen_global
  - app_datos_kaizen
  - app_asistencia
