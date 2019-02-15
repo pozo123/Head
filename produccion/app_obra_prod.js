@@ -15,6 +15,7 @@ var rama_bd_clientes = "clientes";
 var rama_bd_colaboradores_prod = "produccion/colaboradores";
 
 var procesos = {};
+var procesos_sin_kaiz = {};
 var existe = false;
 
 var kaiz = {
@@ -119,6 +120,30 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 fecha_final_real: 0,
                 fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val()).getTime(),
             }
+        procesos_sin_kaiz["MISC"] = {
+            alcance: "MISCELANEOS",
+            clave: "MISC",
+            tipo: "miscelaneo",    
+            fechas: fech,
+            num_subprocesos: 0,
+            subprocesos: "",
+        };
+        procesos_sin_kaiz["PC00"] = {
+            alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+            clave: "PC00",
+            tipo: "proyecto",
+            fechas: fech,
+            num_subprocesos: 0,
+            subprocesos: "",
+        };
+        procesos_sin_kaiz["ADIC"] = {
+            alcance: "ADICIONALES",
+            clave: "ADIC",
+            tipo: "adicional",
+            fechas: fech,
+            num_subprocesos: 0,
+            subprocesos: "",
+        };
         procesos["MISC"] = {
             alcance: "MISCELANEOS",
             clave: "MISC",
@@ -164,10 +189,14 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         }
                         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).set(obra_mag);
                     }
+                    var supervisores = {};
+                    supervisores[$('#' + id_supervisor_ddl_obra_prod + " option:selected").val()] = {nombre: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(), activo: true};
                     var obra = {      
                         nombre: $('#' + id_nombre_obra_prod).val(),
                         clave: $('#' + id_clave_obra_prod).val(),
-                        supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
+                        supervisor: supervisores,
+                        num_procesos: 0,
+                        procesos: procesos_sin_kaiz,
                         terminado: false,
                         fechas: fech,
                     }
