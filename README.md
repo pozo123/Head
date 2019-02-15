@@ -12,10 +12,12 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
- actualizado/nuevos(14/2/19):
+ actualizado/nuevos(15/2/19):
  - app_obra_prod
- - app_obra
  - app_procesos
+ - app_obra
+ 
+ actualizado/nuevos(14/2/19):
  - app_utilidad (hay que descomentar cosas)
  
  actualizados/nuevos(13/2/19):
@@ -57,16 +59,13 @@ TO DO:
    - alta cuenta
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
- - meter procesos basicos a magicos
- - bloquear cliente si ya existe obra magica
  - update fechas aun si ya existen las otras, pero que se carguen en alta procesos 
- - supervisor en magico tambien. En obra_prod.supervisores que se haga un json y aqui sí activo
  - app_gestionar_supervisores
  - filtro para campos requeridos en app_procesos
  - candado para revisar que las fechas de final sean despues de las de inicio
- - Meterle procesos y subprocesos a obra_prod, solo no heredar kaizen
  - Ddl proceso en ppto solo se despliega si es para produccion.
    - Se le pone la clave de ese proceso al inicio del titulo del ppto.
+ - meter proc basicos en obras_prod
 
 KAIZEN: 
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
