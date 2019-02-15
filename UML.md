@@ -36,6 +36,7 @@
       - cliente
       - clave
       - num_procesos
+      - supervisor (nombre)
       - procesos:
          - proceso (por clave):
             - alcance
@@ -139,7 +140,9 @@
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
       - obra: (por nombre)
          - nombre
-         - supervisor (nombre)
+         - supervisores (por uid)
+            - nombre: 
+            - activo: bool
          - clave
          - terminado 
          - procesos: Todo lo mismo que en magico menos kaizen (tambien con subprocesos, esos igual todo menos kaizen)
