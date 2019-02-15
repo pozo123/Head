@@ -59,13 +59,14 @@ TO DO:
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
  - meter procesos basicos a magicos
  - bloquear cliente si ya existe obra magica
- - update fechas aun si ya existen las otras, pero que se carguen
- - en alta procesos 
+ - update fechas aun si ya existen las otras, pero que se carguen en alta procesos 
  - supervisor en magico tambien. En obra_prod.supervisores que se haga un json y aqui sí activo
  - app_gestionar_supervisores
  - filtro para campos requeridos en app_procesos
  - candado para revisar que las fechas de final sean despues de las de inicio
  - Meterle procesos y subprocesos a obra_prod, solo no heredar kaizen
+ - Ddl proceso en ppto solo se despliega si es para produccion.
+   - Se le pone la clave de ese proceso al inicio del titulo del ppto.
 
 KAIZEN: 
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
