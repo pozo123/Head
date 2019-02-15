@@ -100,9 +100,17 @@ $("#" + id_nombre_obra_prod).change(function(){
             $('#' + id_clave_obra_prod).val(obra.clave);
             document.getElementById(id_clave_obra_prod).disabled = true;
             existe = true;
+            var ddl_clientes = document.getElementById(id_cliente_ddl_obra_prod);
+            for(var i = 0; i<ddl_clientes.length;i++){
+                if(ddl_clientes[i].text == option){
+                    ddl_clientes.selectedIndex = i;
+                    ddl_clientes.disabled = true;
+                }
+            }
             //fechas
         } else {
             document.getElementById(id_clave_obra_prod).disabled = false;
+            document.getElementById(id_cliente_ddl_obra_prod).disabled = false;
             existe = false;
             //fechas
         }
@@ -180,10 +188,11 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         //Si no existe en magico, crealo
                         var obra_mag = {      
                             nombre: $('#' + id_nombre_obra_prod).val(),
-                            cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
+                            cliente: $('#' + id_cliente_ddl_obra_prod + " option:selected").text(),
                             clave: $('#' + id_clave_obra_prod).val(),
                             num_procesos: 0,
                             procesos: procesos,
+                            supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
                             fechas: fech,
                             kaizen: kaiz,
                         }
