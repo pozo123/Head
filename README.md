@@ -126,6 +126,9 @@ PRODUCCION:
 
  
 SCORE:
+  - Reporte semanal
+    - Tabla de colabs contra procesos con totales
+ 
   - meter atributo proceso en pptos
   
   - Eliminar en bibliotecas
