@@ -7,7 +7,7 @@
       - produccion: boolean
       - compras: boolean
       - administracion: boolean
-      - ___: boolean (a llenar con cada nueva area)
+      - rrhh: bool
     - uid: uid
     - nombre: string
     - nickname: ? string
