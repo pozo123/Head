@@ -72,6 +72,10 @@ TO DO:
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Poner botón regresar a index o links para navegar entre páginas
+ - Altas colaboradores:
+   - EBM, MBD y Ray en admin
+   - ABD en compras
+   - Virgilio en rrhh?
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
