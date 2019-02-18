@@ -27,7 +27,7 @@ $('#' + id_registrar_button_colaborador_compras).click(function () {
                 if (errorCode == 'auth/email-already-in-use') {
                     firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador_compras).val()).once('value').then(function(snapshot){
                         var pers = snapshot.val();
-                        guardaDatosCol(pers.uid);
+                        guardaDatosColCompras(pers.uid);
                         var tru = true;
                         firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/compras").set(tru);
                     });
