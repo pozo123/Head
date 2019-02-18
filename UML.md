@@ -1,5 +1,5 @@
 - personal (magico)
-      - AFECTAN: app_personal, app_inges, app_colaboradores_produccion
+      - AFECTAN: app_personal, app_inges, app_colaboradores_produccion/admin/rrhh/compras
       - SUSCRIBEN: 
   - uid (como key):
     - areas:
@@ -17,13 +17,19 @@
       - cuenta (por nombre)
          - nombre
          - clave
-         - registros (por fecha como nomina?)
-            - registro (por uid)
-               - monto
-               - fecha
-               - concepto
-               - cantidad
-               - clave_concepto
+         - total_cuenta
+         - registros 
+            - year (por numero)
+               - total_year
+                  - semanas
+                     - semana (por numero)
+                        - total_semana
+                        - registro (por uid)
+                           - monto
+                           - fecha
+                           - concepto
+                           - cantidad
+                           - clave_concepto
 - categorias:
    - categoria (por nombre)
       - nombre
