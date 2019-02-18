@@ -11,3 +11,4 @@
  
   - sacar permisos de proy y meterlo a admin
   - dropdown list para cambiar de paginas web
+  - reqs poner funcionalidad en proyectos
