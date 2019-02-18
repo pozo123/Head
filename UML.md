@@ -96,28 +96,26 @@
       - SUSCRIBEN: 
       - year: (ej 2019)
          - semana: (ej 1)
+            - terminada: bool
             - obra: (por nombre)
                - trabajador: (por id)
                   - dias 
                      - lunes: 
                         - asistencia:bool
-                        - horas_extra
                      - martes: 
                         - asistencia:bool
-                        - horas_extra
                      - miercoles: 
                         - asistencia:bool
-                        - horas_extra
                      - jueves: 
                         - asistencia:bool
-                        - horas_extra
                      - viernes: 
                         - asistencia:bool
-                        - horas_extra
-                  - horas_extra_totales
+                  - horas_extra
+                  - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
+                  - subtotal (sueldo base * asistencias + horas extra * costo_he)
                   - diversos:
                      - *todos los diversos*
-                  - total
+                  - total (subtotal + diversos + impuestos)
                - total
   - colaboradores:
       - AFECTAN: app_supervisores, app_obras_prod
