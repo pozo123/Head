@@ -19,6 +19,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_obra
  - app_colaboradores_produccion
  - app_presupuesto
+ - app_colaboradores_admin/rrhh/compras
  
  actualizado/nuevos(14/2/19):
  - app_utilidad (hay que descomentar cosas)
