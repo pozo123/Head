@@ -46,6 +46,14 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
  Por definir:
  - Supervisor en obra magico? O solo en prod?
+ - Centro de costos (Emmanuel la tiene super complicada :S)
+ - eliminar en bibliotecas score
+ - Hector
+    - Asistencias (trabajadores)
+    - Diversos
+    - Supervisores
+    - Pagos nomina (que jale la info de asistencias para el prorrateo)
+    - Archivo pagadora
 
  Errores:
  - registros con horas 0 (creo que ya se resolvió)
@@ -54,7 +62,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
 TO DO:
  - Centro de costos.
-   - definir UML
    - alta cuenta
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
@@ -131,11 +138,10 @@ SCORE:
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
   - modal cambio contraseña
   - Checar que no exista otra obra con esa clave
-
-- JUNTA
   
 - EMAIL
   - Todos pueden subir su foto! (click en seleccionar, seleccionas archivo, y luego click en SUBIR imagen)
   - Cierre maestro a las 5 y de ahí una por hora.
   - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
   - Si salen igual, desde el cel
+  - A supervisores: ya hay sistema y así funciona
