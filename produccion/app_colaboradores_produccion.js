@@ -72,6 +72,7 @@ function guardaDatosCol(user) {
             nickname: $('#' + id_nickname_colaborador).val(),
             tipo: "supervisor",
             obras: "",//Chance las llenamos
+            telefono: $('#' + id_telefono_colaborador).val(),
         }
     } else {
         colaborador = {
@@ -80,7 +81,8 @@ function guardaDatosCol(user) {
             email: user.email,
             nickname: $('#' + id_nickname_colaborador).val(),
             tipo: "gerente",
-            obras: "NA",
+            obras: "",
+            telefono: $('#' + id_telefono_colaborador).val(),
         }
     }
 
