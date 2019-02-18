@@ -117,7 +117,7 @@ $("#" + id_nombre_obra_prod).change(function(){
 
 
 $('#' + id_registrar_button_obra_prod).click(function () {
-    if(!$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
+    if($('#' + id_fecha_inicio_obra_prod).val() === "" || $('#' + id_fecha_final_obra_prod).val() === "" || !$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
         var fech = {
@@ -208,7 +208,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         fechas: fech,
                     }
                     firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).set(obra);
-                    alert("Alta Exitosa");
+                    alert("Alta exitosa");
                 }
         });
         var obr = {
