@@ -67,6 +67,7 @@ TO DO:
    - Se le pone la clave de ese proceso al inicio del titulo del ppto.
  - meter proc basicos en obras_prod
  - arreglar las apps de permisos de usuario y de inicio de sesion
+ - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
 
 KAIZEN: 
   - Le ponemos un ddcheckbox para obras asignadas en alta colaborador?
