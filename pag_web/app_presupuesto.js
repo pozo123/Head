@@ -71,6 +71,11 @@ $('#' + id_horas_programadas_ihs_presupuesto).change(function(){
 
 $('#tabPresupuesto').click(function() {
 
+    $('#' + id_clase_ddl_presupuesto).empty();
+    $('#' + id_genero_ddl_presupuesto).empty();
+    $('#' + id_tipo_presupuesto_ddl_presupuesto).empty();
+    $('#' + id_obra_ddl_presupuesto).empty();
+
     jQuery('#' + id_fecha_nota).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
@@ -178,23 +183,28 @@ $('#tabPresupuesto').click(function() {
     });
 });
 
-$('#' + id_obra_ddl_presupuesto).change(function(){
+$('#' + id_clase_ddl_presupuesto).change(function(){
     $('#' + id_proceso_ddl_presupuesto).empty();
-    var select = document.getElementById(id_proceso_ddl_presupuesto);   
-    var option = document.createElement('option');
-    option.style = "display:none";
-    option.text = option.value = "";
-    select.appendChild(option);
+    if($('#' + id_clase_ddl_presupuesto + " option:selected").val() == "produccion"){
+        $('#' + id_proceso_ddl_presupuesto).removeClass("hidden")
+        var select = document.getElementById(id_proceso_ddl_presupuesto);   
+        var option = document.createElement('option');
+        option.style = "display:none";
+        option.text = option.value = "";
+        select.appendChild(option);
 
-    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").orderByChild("nombre").on('child_added',function(snapshot){
-        
-        var proc = snapshot.val();
-        var option2 = document.createElement('OPTION');
-        option2.text = proc.clave; 
-        option2.value = proc.clave;
-        select.appendChild(option2);
+        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").orderByChild("nombre").on('child_added',function(snapshot){
+            
+            var proc = snapshot.val();
+            var option2 = document.createElement('OPTION');
+            option2.text = proc.clave; 
+            option2.value = proc.clave;
+            select.appendChild(option2);
 
-    });
+        });
+    } else { 
+        $('#' + id_proceso_ddl_presupuesto).addClass("hidden")
+    }
 });
 
 function loadAtn(){
