@@ -13,7 +13,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
- Había error en: (18/2/19 pero en la tarde :P
+ Había error en: (18/2/19 pero en la tarde :P)
  - app_colaboradores_rrhh
  - app_colaboradores_compras
  - app_colaboradores_admin
@@ -65,8 +65,7 @@ TO DO:
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
  - app_gestionar_supervisores
- - Ddl proceso en ppto solo se despliega si es para produccion.
-   - Se le pone la clave de ese proceso al inicio del titulo del ppto.
+ - Ddl proceso en ppto
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Poner botón regresar a index o links para navegar entre páginas
