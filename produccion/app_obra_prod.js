@@ -220,7 +220,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 nombre: $('#' + id_nombre_obra_prod).val(),
                 activa: true,
             }
-            firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
+            firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras/" + $('#' + id_nombre_obra_prod).val()).set(obr);
         }
     }
 });
