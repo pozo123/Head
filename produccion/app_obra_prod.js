@@ -208,6 +208,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                         fechas: fech,
                     }
                     firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).set(obra);
+                    alert("Alta Exitosa");
                 }
         });
         var obr = {
