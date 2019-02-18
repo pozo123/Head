@@ -120,101 +120,107 @@ $('#' + id_registrar_button_obra_prod).click(function () {
     if($('#' + id_fecha_inicio_obra_prod).val() === "" || $('#' + id_fecha_final_obra_prod).val() === "" || !$('#' + id_nombre_obra_prod).val() || !$('#' + id_clave_obra_prod).val() || $('#' + id_cliente_ddl_obra_prod + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
-        var fech = {
-                fecha_inicio_real: 0,
-                fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra_prod).val()).getTime(),
-                fecha_final_real: 0,
-                fecha_final_teorica: new Date($('#' + id_fecha_final_obra_prod).val()).getTime(),
-            }
-        procesos_sin_kaiz["MISC"] = {
-            alcance: "MISCELANEOS",
-            clave: "MISC",
-            tipo: "miscelaneo",    
-            fechas: fech,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        procesos_sin_kaiz["PC00"] = {
-            alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-            clave: "PC00",
-            tipo: "proyecto",
-            fechas: fech,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        procesos_sin_kaiz["ADIC"] = {
-            alcance: "ADICIONALES",
-            clave: "ADIC",
-            tipo: "adicional",
-            fechas: fech,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        procesos["MISC"] = {
-            alcance: "MISCELANEOS",
-            clave: "MISC",
-            tipo: "miscelaneo",    
-            fechas: fech,
-            kaizen: kaiz,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        procesos["PC00"] = {
-            alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-            clave: "PC00",
-            tipo: "proyecto",
-            fechas: fech,
-            kaizen: kaiz,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        procesos["ADIC"] = {
-            alcance: "ADICIONALES",
-            clave: "ADIC",
-            tipo: "adicional",
-            fechas: fech,
-            kaizen: kaiz,
-            num_subprocesos: 0,
-            subprocesos: "",
-        };
-        firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
-            var o = snapshot.val();
-                if(o !== null){
-                    alert("Obra ya existente");
-                } else {
-                    if(!existe){
-                        //Si no existe en magico, crealo
-                        var obra_mag = {      
-                            nombre: $('#' + id_nombre_obra_prod).val(),
-                            cliente: $('#' + id_cliente_ddl_obra_prod + " option:selected").text(),
-                            clave: $('#' + id_clave_obra_prod).val(),
-                            num_procesos: 0,
-                            procesos: procesos,
-                            supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
-                            fechas: fech,
-                            kaizen: kaiz,
-                        }
-                        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).set(obra_mag);
-                    }
-                    var supervisores = {};
-                    supervisores[$('#' + id_supervisor_ddl_obra_prod + " option:selected").val()] = {nombre: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(), activo: true};
-                    var obra = {      
-                        nombre: $('#' + id_nombre_obra_prod).val(),
-                        clave: $('#' + id_clave_obra_prod).val(),
-                        supervisor: supervisores,
-                        num_procesos: 0,
-                        procesos: procesos_sin_kaiz,
-                        terminado: false,
-                        fechas: fech,
-                    }
-                    firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).set(obra);
-                    alert("Alta exitosa");
+        var f_i = new Date($('#' + id_fecha_inicio_obra_prod).val()).getTime();
+        var f_f = new Date($('#' + id_fecha_final_obra_prod).val()).getTime();
+        if(f_f < f_i){
+            alert("La fecha final debe ser después de la fecha inicial");
+        } else {
+            var fech = {
+                    fecha_inicio_real: 0,
+                    fecha_inicio_teorica: f_i,
+                    fecha_final_real: 0,
+                    fecha_final_teorica: f_f,
                 }
-        });
-        var obr = {
-            nombre: $('#' + id_nombre_obra_prod).val(),
-            activa: true,
+            procesos_sin_kaiz["MISC"] = {
+                alcance: "MISCELANEOS",
+                clave: "MISC",
+                tipo: "miscelaneo",    
+                fechas: fech,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            procesos_sin_kaiz["PC00"] = {
+                alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+                clave: "PC00",
+                tipo: "proyecto",
+                fechas: fech,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            procesos_sin_kaiz["ADIC"] = {
+                alcance: "ADICIONALES",
+                clave: "ADIC",
+                tipo: "adicional",
+                fechas: fech,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            procesos["MISC"] = {
+                alcance: "MISCELANEOS",
+                clave: "MISC",
+                tipo: "miscelaneo",    
+                fechas: fech,
+                kaizen: kaiz,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            procesos["PC00"] = {
+                alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+                clave: "PC00",
+                tipo: "proyecto",
+                fechas: fech,
+                kaizen: kaiz,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            procesos["ADIC"] = {
+                alcance: "ADICIONALES",
+                clave: "ADIC",
+                tipo: "adicional",
+                fechas: fech,
+                kaizen: kaiz,
+                num_subprocesos: 0,
+                subprocesos: "",
+            };
+            firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
+                var o = snapshot.val();
+                    if(o !== null){
+                        alert("Obra ya existente");
+                    } else {
+                        if(!existe){
+                            //Si no existe en magico, crealo
+                            var obra_mag = {      
+                                nombre: $('#' + id_nombre_obra_prod).val(),
+                                cliente: $('#' + id_cliente_ddl_obra_prod + " option:selected").text(),
+                                clave: $('#' + id_clave_obra_prod).val(),
+                                num_procesos: 0,
+                                procesos: procesos,
+                                supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
+                                fechas: fech,
+                                kaizen: kaiz,
+                            }
+                            firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).set(obra_mag);
+                        }
+                        var supervisores = {};
+                        supervisores[$('#' + id_supervisor_ddl_obra_prod + " option:selected").val()] = {nombre: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(), activo: true};
+                        var obra = {      
+                            nombre: $('#' + id_nombre_obra_prod).val(),
+                            clave: $('#' + id_clave_obra_prod).val(),
+                            supervisor: supervisores,
+                            num_procesos: 0,
+                            procesos: procesos_sin_kaiz,
+                            terminado: false,
+                            fechas: fech,
+                        }
+                        firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_nombre_obra_prod).val()).set(obra);
+                        alert("Alta exitosa");
+                    }
+            });
+            var obr = {
+                nombre: $('#' + id_nombre_obra_prod).val(),
+                activa: true,
+            }
+            firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
         }
-        firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisor_ddl_obra_prod + " option:selected").val() + "/obras").push(obr);
     }
 });
