@@ -83,12 +83,10 @@ $('#tabObrasProd').click(function(){
 
     firebase.database().ref(rama_bd_colaboradores_prod).orderByChild('nombre').on('child_added',function(snapshot){
         var colab = snapshot.val();
-        if(colab.tipo == "supervisor"){
-            var option4 = document.createElement('OPTION');
-            option4.text = colab.nombre;
-            option4.value = colab.uid;
-            select2.appendChild(option4);
-        }
+        var option4 = document.createElement('OPTION');
+        option4.text = colab.nombre;
+        option4.value = colab.uid;
+        select2.appendChild(option4);
     });
    
 });
