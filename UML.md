@@ -140,7 +140,7 @@
          - nickname
          - tipo (gerentes o supervisores. La única diferencia es que gerentes tiene obra vacío)
          - obras:
-            - obra (por push)
+            - obra (por nombre)
                - nombre
                - activa: bool
    - destajistas: 
