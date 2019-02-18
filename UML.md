@@ -18,6 +18,8 @@
          - nombre
          - clave
          - total_cuenta
+         - areas:
+            - *todas las áreas que tienen acceso a esta cuenta, en bool
          - registros 
             - year (por numero)
                - total_year
