@@ -18,6 +18,7 @@
          - nombre
          - clave
          - total_cuenta
+         - forma_pago
          - areas:
             - *todas las áreas que tienen acceso a esta cuenta, en bool
          - registros 
