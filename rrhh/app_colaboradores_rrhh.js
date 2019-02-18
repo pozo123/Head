@@ -19,7 +19,7 @@ $('#' + id_registrar_button_colaborador_rrhh).click(function () {
         secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_rrhh).val(), $('#' + id_password_colaborador_rrhh).val())
             .then(function (result) {
                 guardaDatosColRRHH(result.user);
-                guardaDatosPersonalRRHH(result.user, $('#' + id_nombre_colaborador).val(), $('#' + id_nickname_colaborador).val());
+                guardaDatosPersonalRRHH(result.user, $('#' + id_nombre_colaborador_rrhh).val(), $('#' + id_nickname_colaborador_rrhh).val());
                 secondaryApp.auth().signOut();
             }, function(error){
                 var errorCode = error.code;
