@@ -100,7 +100,7 @@ $("#" + id_nombre_obra_prod).change(function(){
             existe = true;
             var ddl_clientes = document.getElementById(id_cliente_ddl_obra_prod);
             for(var i = 0; i<ddl_clientes.length;i++){
-                if(ddl_clientes[i].text == option){
+                if(ddl_clientes[i].text == obra.cliente){
                     ddl_clientes.selectedIndex = i;
                     ddl_clientes.disabled = true;
                 }
