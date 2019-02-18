@@ -91,7 +91,20 @@
          - uid
          - obra_asignada
          - especialidad
-  - pagos_nomina:
+         - activo
+         - nomina
+            - semana: (ej 1)
+               - lunes: obra (nombre, "falta" si ninguna)
+               - martes: obra (nombre, "falta" si ninguna)
+               - miercoles: obra (nombre, "falta" si ninguna)
+               - jueves: obra (nombre, "falta" si ninguna)
+               - viernes: obra (nombre, "falta" si ninguna)
+               - horas_extra
+               - diversos
+                  - *todos los diversos*
+               - impuestos
+               - total
+  - pagos_nomina: 
       - AFECTAN: app_pagos_nomina, app_asistencia
       - SUSCRIBEN: 
       - year: (ej 2019)
@@ -100,17 +113,13 @@
             - obra: (por nombre)
                - trabajador: (por id)
                   - dias 
-                     - lunes: 
-                        - asistencia:bool
-                     - martes: 
-                        - asistencia:bool
-                     - miercoles: 
-                        - asistencia:bool
-                     - jueves: 
-                        - asistencia:bool
-                     - viernes: 
-                        - asistencia:bool
+                     - lunes: bool
+                     - martes: bool
+                     - miercoles: bool
+                     - jueves: bool
+                     - viernes: bool
                   - horas_extra
+                  - // De aquí en adelante chance no hace falta calcularlo aquí, que se guarde en trabajador los totales y el prorrateo se va a kaizen.
                   - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
                   - subtotal (sueldo base * asistencias + horas extra * costo_he)
                   - diversos:
