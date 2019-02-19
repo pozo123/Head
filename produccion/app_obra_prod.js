@@ -3,7 +3,7 @@ var id_cliente_ddl_obra_prod = "clienteProd";
 var id_clave_obra_prod = "claveObraProd";
 var id_registrar_button_obra_prod = "registrarObraProd";
 var id_fecha_inicio_obra_prod = "fechaInicioObraProd";
-var id_fecha_final_obra_prod = "fichaFinalObraProd";
+var id_fecha_final_obra_prod = "fechaFinalObraProd";
 //var id_agregar_proceso_obra_prod = "agregarProcesoObraProd";
 //var id_alcance_proceso_obra_prod = "alcanceProcesoObraProd";
 //var id_clave_proceso_obra_prod = "claveProcesoObraProd";
@@ -98,7 +98,7 @@ $("#" + id_nombre_obra_prod).change(function(){
             $('#' + id_clave_obra_prod).val(obra.clave);
             $('#' + id_cliente_ddl_obra_prod).val("");
             document.getElementById(id_clave_obra_prod).disabled = true;
-            ocument.getElementById(id_cliente_ddl_obra_prod).disabled = true;
+            document.getElementById(id_cliente_ddl_obra_prod).disabled = true;
             existe = true;
             var ddl_clientes = document.getElementById(id_cliente_ddl_obra_prod);
             for(var i = 0; i<ddl_clientes.length;i++){
