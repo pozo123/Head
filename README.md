@@ -13,6 +13,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizados/nuevos (19/2/19)
+ - app_gestionar_supervisores
+ 
  Había error en: (18/2/19 pero en la tarde :P)
  - app_colaboradores_rrhh
  - app_colaboradores_compras
@@ -44,7 +47,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_areas
 
  Por definir:
- - Supervisor en obra magico? O solo en prod?
  - Centro de costos (Emmanuel la tiene super complicada :S)
  - eliminar en bibliotecas score
  - Hector
@@ -64,7 +66,6 @@ TO DO:
    - alta cuenta
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
- - app_gestionar_supervisores
  - Ddl proceso en ppto
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
