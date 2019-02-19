@@ -52,7 +52,7 @@ var kaiz = {
     }
 };
 
-$('#tabObrasProd').click(function(){
+$('#tabAltaObra').click(function(){
 
     jQuery('#' + id_fecha_inicio_obra_prod).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -187,6 +187,8 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                     if(o !== null){
                         alert("Obra ya existente");
                     } else {
+                        var supervisores = {};
+                        supervisores[$('#' + id_supervisor_ddl_obra_prod + " option:selected").val()] = {nombre: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(), activo: true};
                         if(!existe){
                             //Si no existe en magico, crealo
                             var obra_mag = {      
@@ -195,14 +197,12 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                                 clave: $('#' + id_clave_obra_prod).val(),
                                 num_procesos: 0,
                                 procesos: procesos,
-                                supervisor: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(),
+                                supervisor: supervisores,
                                 fechas: fech,
                                 kaizen: kaiz,
                             }
                             firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).set(obra_mag);
                         }
-                        var supervisores = {};
-                        supervisores[$('#' + id_supervisor_ddl_obra_prod + " option:selected").val()] = {nombre: $('#' + id_supervisor_ddl_obra_prod + " option:selected").text(), activo: true};
                         var obra = {      
                             nombre: $('#' + id_nombre_obra_prod).val(),
                             clave: $('#' + id_clave_obra_prod).val(),
