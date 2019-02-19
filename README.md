@@ -17,12 +17,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_gestionar_supervisores
  - app_asistencia
  
- Había error en: (18/2/19 pero en la tarde :P)
- - app_colaboradores_rrhh
- - app_colaboradores_compras
- - app_colaboradores_admin
- - app_obras_prod
- 
  actualizado/nuevos(14/2/19):
  - app_utilidad (hay que descomentar cosas)
  
@@ -69,6 +63,7 @@ TO DO:
  - Poner botón regresar a index o links para navegar entre páginas
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia
  - Altas colaboradores:
+  - SIGUE TRONANDO ):
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
