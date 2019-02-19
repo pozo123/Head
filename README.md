@@ -14,6 +14,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_asistencia
  
  actualizados/nuevos (19/2/19)
+ - app_desplegar_procesos
  - app_gestionar_supervisores
  - app_asistencia
  
