@@ -15,6 +15,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
+ - app_asistencia
  
  Había error en: (18/2/19 pero en la tarde :P)
  - app_colaboradores_rrhh
@@ -36,11 +37,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
  
  actualizados/nuevos(11/2/19):
- - app_kaizen_global
- 
- actualizados/nuevos(7/2/19):
- - app_asistencia (no final... falta probar y definir -> Y cambiar lo de obras_prod/obras_magico)
- 
+ - app_kaizen_global 
  
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
@@ -70,6 +67,7 @@ TO DO:
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Poner botón regresar a index o links para navegar entre páginas
+ - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia
  - Altas colaboradores:
    - EBM, MBD y Ray en admin
    - ABD en compras
