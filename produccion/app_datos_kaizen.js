@@ -1,6 +1,11 @@
+/*https://code.jquery.com/jquery-3.3.1.js
+https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
+https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js
+https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
 var id_datatable_datos_kaizen = "dataTableDatosKaizen";
 var id_obra_ddl_datos_kaizen = "obraDdlDatosKaizen";
 var id_tab_datos_kaizen = "tabDatosKaizen";
+var id_reset_button = "resetDatosKaizen";
 
 var id_actualizar_button_datos_kaizen = "actualizarButtonDatosKaizen";
 
@@ -16,11 +21,10 @@ var username;
 		var col = snapshot.val();
 		if(col.tipo == "supervisor"){
 			aut = "supervisor";
-		}
-		else{
+		} else if(col.tipo == "gerente"){
+			aut = "gerente";
+		} else {
 			aut = "nope";
-			//Aquí mete distintos valores de aut dependiendo de quien entra.
-			//Por ejemplo "gerente", "admin", y así.
 		}
 	});
 });
@@ -31,56 +35,44 @@ $('#' + id_tab_datos_kaizen).click(function(){
     option.style = "display:none";
     option.text = option.value = "";
     select.appendChild(option);
-
-	var datos_kaizen = [];
-	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
-		snapshot.forEach(function(obraSnap){
-			var obra = obraSnap.val();
-			if(aut == "supervisor"){
-				//ASINCRONIA ):
-				firebase.database().ref(rama_bd_colaboradores_prod + "/" + username + "/obras").orderByChild("nombre").equalTo(obra.nombre).once('child_added').then(function(snap){
-					var aut_obra = snap.val();
-					if(aut_obra.activa == true){
-        				var option2 = document.createElement('option');
-        				option2.text = option2.value = obra.nombre; 
-        				select.appendChild(option2);
-
-						
-					}
-				});
-			}
-		});
-		var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
-	 		destroy: true,
-	 		data: datos_procesos,
-	 		dom: 'Bfrtip',
-	 		buttons: ['excel'],
-	 		columns: [
-	 		    {title: "PROCESO"},
-	 		    {title: "PROY/PPTO"},
-	 		    {title: "PROY/PAG"},
-	 		    {title: "PROD/SUM/CUANT"},
-	 		    {title: "PROD/SUM/OdeC"},
-	 		    {title: "PROD/SUM/PAG"},
-	 		    {title: "PROD/COPEO/PREC"},
-	 		    {title: "PROD/COPEO/COPEO"},
-	 		    {title: "PROD/COPEO/PAG"},
-	 		    {title: "ADMIN/EST/PPTO"},
-	 		    {title: "ADMIN/EST/EST"},
-	 		    {title: "ADMIN/EST/PAG"},
-	 		    {title: "ADMIN/ANT/PPTO"},
-	 		    {title: "ADMIN/ANT/PAG"},
-		   	],
-		   	language: idioma_espanol,
-		});            
-	});
+    if(aut == "supervisor"){
+	    firebase.database().ref(rama_bd_colaboradores_prod + "/" + username).once('value').then(function(snapshot){
+	    	var col = snapshot.val();
+	    	snapshot.child('obras').forEach(function(childSnap){
+	    		var obra = childSnap.val();
+	    		if(obra.activa){
+	    			var option2 = document.createElement('option');
+	        		option2.text = option2.value = obra.nombre; 
+	        		select.appendChild(option2);
+	    		}
+	    	});
+	    });
+    } else if(aut == "gerente"){
+    	firebase.databas().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+    		snapshot.forEach(function(obraSnap){
+    			var obra = obraSnap.val();
+    			var option2 = document.createElement('option');
+	        	option2.text = option2.value = obra.nombre; 
+	        	select.appendChild(option2);
+    		});
+    	});
+    }
 });
 
 $("#" + id_obra_ddl_datos_kaizen).change(function(){
+	loadTableKaizen();
+});
+
+$('#' + id_reset_button).click(loadTableKaizen());
+
+function loadTableKaizen(){
+	datos_kaizen = [];
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_datos_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 		snapshot.forEach(function(childSnap){
 			childSnap.child("procesos").forEach(function(procSnap){
 				var proc = procSnap.val();
+				var avance_est;
+				var avance_real;
 
 				var textfield1 = document.createElement('input');
 				textfield1.type = "text";
@@ -109,18 +101,30 @@ $("#" + id_obra_ddl_datos_kaizen).change(function(){
 				var textfield7 = document.createElement('input');
 				textfield7.type = "text";
 				textfield7.id = proc.clave + "_copeo_copeo";
+				textfield7.change(function(){
+					avance_est = "%" + (100*parseFloat($('#' + proc.clave + "_copeo_pag").val())/parseFloat($('#' + proc.clave + "_copeo_copeo").val()));
+				});
 
 				var textfield8 = document.createElement('input');
 				textfield8.type = "text";
 				textfield8.id = proc.clave + "_copeo_pag";
+				textfield8.change(function(){
+					avance_est = "%" + (100*parseFloat($('#' + proc.clave + "_copeo_pag").val())/parseFloat($('#' + proc.clave + "_copeo_copeo").val()));
+				});
 
 				var textfield9 = document.createElement('input');
 				textfield9.type = "text";
 				textfield9.id = proc.clave + "_est_ppto";
+				textfield9.change(function(){
+					avance_real = "%" + (100*parseFloat($('#' + proc.clave + "_est_est").val())/parseFloat($('#' + proc.clave + "_est_ppto").val()));
+				});
 
 				var textfield10 = document.createElement('input');
 				textfield10.type = "text";
 				textfield10.id = proc.clave + "_est_est";
+				textfield10.change(function(){
+					avance_real = "%" + (100*parseFloat($('#' + proc.clave + "_est_est").val())/parseFloat($('#' + proc.clave + "_est_ppto").val()));
+				});
 
 				var textfield11 = document.createElement('input');
 				textfield11.type = "text";
@@ -134,6 +138,8 @@ $("#" + id_obra_ddl_datos_kaizen).change(function(){
 				textfield13.type = "text";
 				textfield13.id = proc.clave + "_ant_pag";
 
+
+
 				datos_kaizen.push([ 
 					proc.clave,
 					//Ver si sí se pueden declarar así o si hay que darle el valor antes
@@ -146,6 +152,8 @@ $("#" + id_obra_ddl_datos_kaizen).change(function(){
 					$('#' + proc.clave + "_copeo_prec").val(proc.PRODUCCION.COPEO.PREC),
 					$('#' + proc.clave + "_copeo_copeo").val(proc.PRODUCCION.COPEO.COPEO),
 					$('#' + proc.clave + "_copeo_pag").val(proc.PRODUCCION.COPEO.PAG),
+					avance_est,
+					avance_real,
 					$('#' + proc.clave + "_est_ppto").val(proc.ADMINISTRACION.ESTIMACIONES.PPTO),
 					$('#' + proc.clave + "_est_est").val(proc.ADMINISTRACION.ESTIMACIONES.EST),
 					$('#' + proc.clave + "_est_pag").val(proc.ADMINISTRACION.ESTIMACIONES.PAG),
@@ -153,10 +161,68 @@ $("#" + id_obra_ddl_datos_kaizen).change(function(){
 					$('#' + proc.clave + "_ant_pag").val(proc.ADMINISTRACION.ANTICIPOS.PAG),
 				]);
 						
+				var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
+			 		destroy: true,
+			 		data: datos_kaizen,
+			 		dom: 'Bfrtip',
+			 		buttons: ['colvis','excel'],
+			 		columns: [
+			 		/*<thead>
+			            <tr>
+			                <th rowspan="2" colspan="1">nombre_obra</th>
+			                <th rowspan="2" colspan="1">PROYECTOS</th>
+			                <th colspan="6">PRODUCCION</th>
+			                <th rowspan="2" colspan="2">AVANCE</th>
+			                <th colspan="6">ADMINISTRACION</th>
+			                <th rowspan="2" colspan="2">PROFIT</th>
+			            </tr>
+			            <tr>
+			                <th colspan="3">SUMINISTROS</th>
+			                <th colspan="3">COPEO</th>
+			                <th colspan="3">ESTIMACIONES</th>
+			                <th colspan="3">ANTICIPOS</th>
+			            </tr>
+			            <tr>
+			                <th>PROCESO</th>
+			                <th>SCORE</th>
+			                <th>CUANT</th>
+			                <th>OdeC</th>
+			                <th>PAG</th>
+			                <th>PREC</th>
+			                <th>COPEO</th>
+			                <th>PAG</th>
+			                <th>EST</th>
+			                <th>REAL</th>
+			                <th>PPTO</th>
+			                <th>EST</th>
+			                <th>PAG</th>
+			                <th>PPTO</th>
+			                <th>PAG</th>
+			            </tr>
+			        </thead>*/
+			 		    {title: "PROCESO"},
+			 		    {title: "PROY/PPTO"},
+			 		    {title: "PROY/PAG"},
+			 		    {title: "PROD/SUM/CUANT"},
+			 		    {title: "PROD/SUM/OdeC"},
+			 		    {title: "PROD/SUM/PAG"},
+			 		    {title: "PROD/COPEO/PREC"},
+			 		    {title: "PROD/COPEO/COPEO"},
+			 		    {title: "PROD/COPEO/PAG"},
+			 		    {title: "AVANCE/EST"},
+			 		    {title: "AVANCE/REAL"},
+			 		    {title: "ADMIN/EST/PPTO"},
+			 		    {title: "ADMIN/EST/EST"},
+			 		    {title: "ADMIN/EST/PAG"},
+			 		    {title: "ADMIN/ANT/PPTO"},
+			 		    {title: "ADMIN/ANT/PAG"},
+				   	],
+				   	language: idioma_espanol,
+				});            
 			});
 		})
 	});
-});
+};
 
 $('#' + id_actualizar_button_datos_kaizen).click(function(){
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_datos_kaizen + " option:selected").val()).once('value').then(function(snapshot){
@@ -177,7 +243,7 @@ $('#' + id_actualizar_button_datos_kaizen).click(function(){
 					cop = CparseFloat($('#' + proc.clave + "_copeo_copeo").val());
 				}
 				var admin_prog = (parseFloat($('#' + proc.clave + "_est_ppto").val()) + parseFloat($('#' + proc.clave + "_ant_ppto").val()))*.8; 
-				profit_prog = admin_prog - cop - sum - parseFloat($('#' + proc.clave + "_proy_ppto").val());
+				profit_prog = admin_prog - cop - sum - parseFloat($('#' + proc.clave + "_proy_ppto").val())*1.3;
 				var admin = (parseFloat($('#' + proc.clave + "_est_pag").val()) + parseFloat($('#' + proc.clave + "_ant_pag").val()))*.8;
 				var costos = parseFloat($('#' + proc.clave + "_proy_pag").val())*1.3 + parseFloat($('#' + proc.clave + "_sum_pag").val()) + parseFloat($('#' + proc.clave + "_copeo_pag").val());
 				var profit_real = admin - costos;
