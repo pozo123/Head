@@ -46,7 +46,7 @@
       - clave
       - num_procesos
       - supervisor 
-         - supervisor (por nombre)
+         - supervisor (por id)
             - nombre
             - activo: bool
       - procesos:
