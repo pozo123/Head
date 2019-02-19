@@ -71,6 +71,12 @@ TO DO:
    - Virgilio en rrhh?
  - Subprocesos los mete como un proceso?? Y en adic no hay que ponerle categoría
  - Y que ya no tengan "adicional: false", hay que borrarselo a varias obras (menos a acanto, marina y neo)
+ - Meter adicionales de
+   - Acanto
+   - Unico
+   - via
+   - west park
+   - zentral
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
