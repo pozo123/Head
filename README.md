@@ -70,14 +70,14 @@ TO DO:
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
- - Subprocesos los mete como un proceso?? Y en adic no hay que ponerle categoría
- - Y que ya no tengan "adicional: false", hay que borrarselo a varias obras (menos a acanto, marina y neo)
  - Meter adicionales de
    - Acanto
    - Unico
    - via
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
+ - Que no salga el proc ADIC en desplegar procesos
+ - Ni ningun proceso que tenga subprocesos (?)
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
