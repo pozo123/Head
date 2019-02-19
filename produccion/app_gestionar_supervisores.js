@@ -4,6 +4,7 @@ var id_div_obra_supervisores = "divObraSupervisores";
 var id_div_supervisor_supervisores = "divSupervisorSupervisores";
 
 var rama_bd_obras_prod = "produccion/obras";
+var rama_bd_obra_magico = "obras";
 var rama_bd_supervisores = "produccion/colaboradores";
 
 $('#tabGestionarSup').click(function(){
@@ -53,7 +54,8 @@ $('#' + id_obras_ddl_supervisores).change(function(){
 			button.click(function(){
 				var fal = false;
 				firebase.database().ref(rama_bd_supervisores + "/" + this.id + "/obras/" + obra.nombre + "/activa").set(fal);
-				firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/supervisor/" + this.id + "/activo").set(fal);
+                firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/supervisor/" + this.id + "/activo").set(fal);
+                firebase.database().ref(rama_bd_obra_magico + "/" + obra.nombre + "/supervisor/" + this.id + "/activo").set(fal);
 			});
 			row.appendChild(label);
 			row.appendChild(button);
@@ -89,7 +91,8 @@ $('#' + id_obras_ddl_supervisores).change(function(){
     		nombre: $('#supParaObraDdl option:selected').text(),
     		activo: true,
     	}
-    	firebase.database().ref(rama_bd_obras_prod + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
+        firebase.database().ref(rama_bd_obras_prod + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
+        firebase.database().ref(rama_bd_obra_magico + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
     });
 
     div.appendChild(select);
@@ -112,7 +115,8 @@ $('#' + id_supervisores_ddl_supervisores).change(function() {
 			button.click(function(){
 				var fal = false;
 				firebase.database().ref(rama_bd_supervisores + "/" + supervisor.uid + "/obras/" + this.id + "/activa").set(fal);
-				firebase.database().ref(rama_bd_obras_prod + "/" + this.id + "/supervisor/" + supervisor.uid + "/activo").set(fal);
+                firebase.database().ref(rama_bd_obras_prod + "/" + this.id + "/supervisor/" + supervisor.uid + "/activo").set(fal);
+                firebase.database().ref(rama_bd_obra_magico + "/" + this.id + "/supervisor/" + supervisor.uid + "/activo").set(fal);
 			});
 			row.appendChild(label);
 			row.appendChild(button);
@@ -147,7 +151,8 @@ $('#' + id_supervisores_ddl_supervisores).change(function() {
     		nombre: $('#' + id_supervisores_ddl_supervisores +' option:selected').text(),
     		activo: true,
     	}
-    	firebase.database().ref(rama_bd_obras_prod + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
+        firebase.database().ref(rama_bd_obras_prod + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
+        firebase.database().ref(rama_bd_obra_magico + "/" + nombre_obra + "/supervisor/" + sup_uid).set(sup);
     });
 
     div.appendChild(select);
