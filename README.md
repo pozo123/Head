@@ -63,6 +63,7 @@ TO DO:
  - Poner botón regresar a index o links para navegar entre páginas
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia
  - Jalar fechas a magico en obras prod
+ - Editar horas kaizen  (procesos y obras)
  - Altas colaboradores:
   - SIGUE TRONANDO ):
    - EBM, MBD y Ray en admin
