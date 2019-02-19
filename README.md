@@ -70,6 +70,7 @@ TO DO:
    - ABD en compras
    - Virgilio en rrhh?
  - Subprocesos los mete como un proceso?? Y en adic no hay que ponerle categoría
+ - Y que ya no tengan "adicional: false", hay que borrarselo a varias obras (menos a acanto, marina y neo)
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
