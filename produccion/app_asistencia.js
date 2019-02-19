@@ -1,17 +1,27 @@
 //https://datatables.net/examples/api/add_row.html
 //AQUI
 
+/*https://code.jquery.com/jquery-3.3.1.js
+https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
+https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js
+https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
+
 var id_semana_ddl_asistencia = "semanaDdlAsistencia";
 var id_year_ddl_asistencia = "yearDdlAsistencia";
 var id_obra_ddl_asistencia = "obraDdlAsistencia";
 
-//var id_lista_div_asistencia = "divAsistencia";
+var id_datatable_asistencia = "dataTableAsistencia";
+
+var id_lista_div_asistencia = "divAsistencia";
 
 var id_tab_asistencia = "tabAsistencia";
 
 var rama_bd_pagos_nomina = "produccion/pagos_nomina";
 var rama_bd_obras_prod = "produccion/obras";
 var rama_bd_trabajadores = "produccion/trabajadores";
+
+var nuevo;
+var trabajadores = [];
 
 $('#' + id_tab_asistencia).click(function(){
 	//getWeek() definido en app_funciones
@@ -45,97 +55,250 @@ $('#' + id_tab_asistencia).click(function(){
         option4.value = obra.nombre;
         select3.appendChild(option4);
     });
+
+    nuevo = document.createElement('div');
+    nuevo.id = "nuevo_trabajador";
+    document.getElementById(id_lista_div_asistencia).appendChild(nuevo);
 });
 
 $("#" + id_obra_ddl_asistencia).change(function(){
-    var datos_asistencia = [];
-    firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
-		var procesos = [""];
-		var i = 1;
-		snapshot.child("procesos").forEach(function(childSnapshot){
-			procesos[i] = childSnapshot.val().clave;
-		});
+    var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
+    firebase.database.ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/terminada").once('value').then(function(snapshot){
+        var terminada = snapshot.val();//Revisar si jala porque chance json porque value
+        if(terminada){
+            //Cargar tabla con datos
+            var datos_asistencia = [];
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $("#" + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(snapshot){
+                snapshot.forEach(function(trabSnap){
+                    firebase.database().ref(rama_bd_trabajadores + "/" + trabSnap.key).once('child_added').then(function(childSnap){
+                        var trabajador = childSnap.val();
+                        //No se si el child de aqui abajo jale por lo de child_added/value AQUI
+                        var nom = trabajador.nomina.child(semana);
+                        datos_asistencia.push([trabajador.uid, trabajador.nombre, trabajador.jefe, trabajador.especialidad, nom.jueves.obra, nom.jueves.proceso, nom.viernes.obra, nom.viernes.proceso, nom.lunes.obra, nom.lunes.proceso, nom.martes.obra, nom.martes.proceso, nom.miercoles.obra, nom.miercoles.proceso, trabajador.sueldo_base,nom.horas_extra, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
+                    });
+                });
+                var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
+                    destroy: true,
+                    data: datos_procesos,
+                    dom: 'Bfrtip',
+                    buttons: ['excel', 'colvis'],
+                    columns: [
+                        {title: "ID",width: 70},
+                        {title: "NOMBRE",width: 150},
+                        {title: "EMPLEADOR",width: 70},
+                        {title: "ESP",width: 70},
+                        {title: "JUEVES",width: 70},
+                        {title: "PROCESO", width: 70},
+                        {title: "VIERNES",width: 70},
+                        {title: "PROCESO", width: 70},
+                        {title: "LUNES",width: 70},
+                        {title: "PROCESO", width: 70},
+                        {title: "MARTES",width: 70},
+                        {title: "PROCESO", width: 70},
+                        {title: "MIERCOLES",width: 70},
+                        {title: "PROCESO", width: 70},
+                        {title: "SUELDO BASE",width: 70},
+                        {title: "HORAS EXTRA",width: 70},
+                        //{title: "DIVERSOS",width: 70},//hay que desplegarlos separados
+                        {title: "IMPUESTOS",width: 70},
+                        {title: "TOTAL",width: 70},
+                    ],
+                    language: idioma_espanol,
+                }); 
+            });
+        } else {
+            //Cargar matriz (no necesariamente tabla) con ddls y textfield
+            firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
+        		var procesos = [];
+        		var count_proc = 0;
+        		snapshot.child("procesos").forEach(function(childSnapshot){
+        			procesos[count_proc] = childSnapshot.val().clave;
+                    count_proc++;
+        		});
+                //Carga todos los trabajadores con esta obra asignada
+                firebase.database().ref(rama_bd_trabajadores).orderByChild("obra_asignada").equalTo($("#" + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(snapshot){
+                    //A cada uno créale ddls y un textfield
+                    //Si ya hay registro de actividad el ddl se bloquea
+                    snapshot.forEach(function(childSnapshot){
+                        var trabajador = childSnapshot.val();
+                        cargaRenglon(trabajador,count_proc,procesos,semana);
+                    });
+                });
+                //Crea 2 textfields para añadir trabajadores que no tengan la obra registrada
+                var t_id = document.createElement('input');
+                t_id.change(function(){
+                    firebase.database().ref(rama_bd_trabajadores + "/" + t_id.val()).once('value').then(function(snapshot){
+                        var trabajador = snapshot.val();
+                        if(trabajador != null){
+                            cargaRenglon(trabajador,count_proc,procesos,semana);
+                            t_id.empty();
+                        } else {
+                            alert("No existe un trabajador con esa ID");
+                        }
+                    });
+                });
+                nuevo.appendChild(t_id);
+                var t_nombre = document.createElement('input');
+                t_nombre.change(function(){
+                    firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo(t_nombre.val()).once('value').then(function(snapshot){
+                        var trabajador = snapshot.val();
+                        if(trabajador != null){
+                            cargaRenglon(trabajador,count_proc,procesos,semana);
+                            t_nombre.empty();
+                        } else {
+                            alert("No existe un trabajador con ese nombre");
+                        }
+                    });
+                });
+                nuevo.appendChild(t_nombre);
 
-    	firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_asistencia + " option:selected").val() + "/" + $('#' + id_semana_ddl_asistencia + " option:selected").val() + "/" + obra.nombre).once("value").then(function(snapshot){
-    		if(snapshot.val().total != null){
-	   	     	snapshot.forEach(function(trabajadorSnap){
-	   	     		var trabajador = trabajadorSnap.val();
-	   	     		var ddl_proc = document.createElement('select');
-	   	     		//----JUEVES----
-					var check_ju = document.createElement('input');
-        			check_ju.type = "checkbox";
-        			//checkbox_lunes.className = "checkbox_lunes";
-        			check_ju.value = 0.2;
-        			check_ju.id = "check_" + trabajador.uid + "_jueves";
-        			if(trabajador.jueves.asistencia)
-    					$("#check_" + trabajador.uid + "_jueves").prop("checked", true);
-    				//----VIERNES----
-					var check_vi = document.createElement('input');
-        			check_vi.type = "checkbox";
-        			//checkbox_lunes.className = "checkbox_lunes";
-        			check_vi.value = 0.2;
-        			check_vi.id = "check_" + trabajador.uid + "_viernes";
-        			if(trabajador.viernes.asistencia)
-    					$("#check_" + trabajador.uid + "_viernes").prop("checked", true);
-    				//----LUNES----
-					var check_lu = document.createElement('input');
-        			check_lu.type = "checkbox";
-        			//checkbox_lunes.className = "checkbox_lunes";
-        			check_lu.value = 0.2;
-        			check_lu.id = "check_" + trabajador.uid + "_lunes";
-        			if(trabajador.lunes.asistencia)
-    					$("#check_" + trabajador.uid + "_lunes").prop("checked", true);
-    				//----MARTES----
-					var check_ma = document.createElement('input');
-        			check_ma.type = "checkbox";
-        			//checkbox_lunes.className = "checkbox_lunes";
-        			check_ma.value = 0.2;
-        			check_ma.id = "check_" + trabajador.uid + "_martes";
-        			if(trabajador.martes.asistencia)
-    					$("#check_" + trabajador.uid + "_martes").prop("checked", true);
-    				//----MIERCOLES----
-					var check_mi = document.createElement('input');
-        			check_mi.type = "checkbox";
-        			//checkbox_lunes.className = "checkbox_lunes";
-        			check_mi.value = 0.2;
-        			check_mi.id = "check_" + trabajador.uid + "_miercoles";
-        			if(trabajador.miercoles.asistencia)
-    					$("#check_" + trabajador.uid + "_miercoles").prop("checked", true);
-
-	   	     		//faltan horas extra y diversos ¡(>_<)¡ AQUI
-	   	         	datos_asistencia.push([trabajador.uid, trabajador.nombre, trabajador.jefe, trabajador.especialidad, ddl_proc, check_ju, check_vi, check_lu, check_ma, check_mi]);
-	   	         	var tabla_procesos = $('#'+ id_datatable_procesos).DataTable({
-	   	            	destroy: true,
-	   	            	data: datos_procesos,
-	   	            	dom: 'Bfrtip',
-	   	            	buttons: ['excel'],
-	   	            	columns: [
-	   	            	    {title: "ID",width: 150},
-	   	            	    {title: "NOMBRE",width: 70},
-	   	            	    {title: "EMPLEADOR",width: 70},
-	   	            	    {title: "ESP",width: 70},
-	   	            	    {title: "PROCESO",width: 70},
-	   	            	    {title: "JUEVES",width: 70},
-	   	            	    {title: "VIERNES",width: 70},
-	   	            	    {title: "LUNES",width: 70},
-	   	            	    {title: "MARTES",width: 70},
-	   	            	    {title: "MIERCOLES",width: 70},
-
-	   	            	],
-	   	            	language: idioma_espanol,
-	   	         	});            
-		        });
-    		} else {
-    		firebase.database().ref(rama_bd_trabajadores).orderByChild("obra_asignada").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(trabajadorSnap){
-
-    			});
-    		}
-    	});
+                //PARA LOS BOTONES USA EL ARREGLO DE TRABAJADORES EN EL QUE ESTAN SUS IDs
+                //Button registrar
+                    //Pon asistencias en trabajadores y en nomina
+                //Button terminar
+                    //Sumar horas en todas direcciones
+                        //en trabajadores
+                        //en nomina
+                        //en kaizen
+                    //Revisar y anotar faltas
+                    //Reasignar obras
+            });
+        }
     });
+    //Aquí sólo asistencia y horas_extra
+    //En otra app meter diversos
+    //En otra app meter totales pagados (post-pagadora)
 });
 
+//Jala trabajador de rama_bd_trabajadores, procesos es el array con los procesos de la obra, count_proc es el lenght de procesos, y semana es un int
+function cargaRenglon(trabajador, count_proc, procesos, semana){
+    var nom = trabajador.nomina.child(semana);//Ver si sí jala AQUI
+    var row = document.createElement('div');
+    //----JUEVES----
+    var ddl_ju = document.createElement('select');
+    ddl_ju.id = "chamba_" + trabajador.uid + "_ju";
+    if(nom.jueves.asistencia.val()){
+        var option = document.createElement('option');
+        option.text = nom.jueves.proceso;
+        option.value = .2;
+        ddl_ju.appendChild(option);
+        ddl_ju.disabled = true;
+    } else {
+        var option = document.createElement('option');
+        option.text = "Falta";
+        option.value = 0;
+        ddl_ju.appendChild(option);
+        for(i=0;i<count_proc;i++){
+            var option2 = document.createElement('OPTION');
+            option2.text = procesos[i];
+            option2.value = 0.2;
+            ddl_ju.appendChild(option2);
+        }
+    }
+    row.appendChild(ddl_ju);
+    //----VIERNES----
+    var ddl_vi = document.createElement('select');
+    ddl_vi.id = "chamba_" + trabajador.uid + "_vi";
+    if(nom.viernes.asistencia.val()){
+        var option = document.createElement('option');
+        option.text = nom.viernes.proceso;
+        option.value = .2;
+        ddl_vi.appendChild(option);
+        ddl_vi.disabled = true;
+    } else {
+        var option = document.createElement('option');
+        option.text = "Falta";
+        option.value = 0;
+        ddl_vi.appendChild(option);
+        for(i=0;i<count_proc;i++){
+            var option2 = document.createElement('OPTION');
+            option2.text = procesos[i];
+            option2.value = 0.2;
+            ddl_vi.appendChild(option2);
+        }
+    }
+    row.appendChild(ddl_vi);
+    //----LUNES----
+    var ddl_lu = document.createElement('select');
+    ddl_lu.id = "chamba_" + trabajador.uid + "_lu";
+    if(nom.lunes.asistencia.val()){
+        var option = document.createElement('option');
+        option.text = nom.lunes.proceso;
+        option.value = .2;
+        ddl_lu.appendChild(option);
+        ddl_lu.disabled = true;
+    } else {
+        var option = document.createElement('option');
+        option.text = "Falta";
+        option.value = 0;
+        ddl_lu.appendChild(option);
+        for(i=0;i<count_proc;i++){
+            var option2 = document.createElement('OPTION');
+            option2.text = procesos[i];
+            option2.value = 0.2;
+            ddl_lu.appendChild(option2);
+        }
+    }
+    row.appendChild(ddl_lu);
+    //----MARTES----
+    var ddl_ma = document.createElement('select');
+    ddl_ma.id = "chamba_" + trabajador.uid + "_ma";
+    if(nom.martes.asistencia.val()){
+        var option = document.createElement('option');
+        option.text = nom.martes.proceso;
+        option.value = .2;
+        ddl_ma.appendChild(option);
+        ddl_ma.disabled = true;
+    } else {
+        var option = document.createElement('option');
+        option.text = "Falta";
+        option.value = 0;
+        ddl_ma.appendChild(option);
+        for(i=0;i<count_proc;i++){
+            var option2 = document.createElement('OPTION');
+            option2.text = procesos[i];
+            option2.value = 0.2;
+            ddl_ma.appendChild(option2);
+        }
+    }
+    row.appendChild(ddl_ma);
+    //----MIERCOLES----
+    var ddl_mi = document.createElement('select');
+    ddl_mi.id = "chamba_" + trabajador.uid + "_mi";
+    if(nom.miercoles.asistencia.val()){
+        var option = document.createElement('option');
+        option.text = nom.miercoles.proceso;
+        option.value = .2;
+        ddl_mi.appendChild(option);
+        ddl_mi.disabled = true;
+    } else {
+        var option = document.createElement('option');
+        option.text = "Falta";
+        option.value = 0;
+        ddl_mi.appendChild(option);
+        for(i=0;i<count_proc;i++){
+            var option2 = document.createElement('OPTION');
+            option2.text = procesos[i];
+            option2.value = 0.2;
+            ddl_mi.appendChild(option2);
+        }
+    }
+    row.appendChild(ddl_mi);
+    //----HORAS EXTRA----
+    var horas_extra = document.createElement('input');
+    horas_extra.type = "text";
+    horas_extra.id = "he_" + trabajador.uid;
+    horas_extra.value = nom.horas_extra.val();
+    row.appendChild(horas_extra);
+
+    trabajadores[trabajadores.length] = trabajador.uid;
+
+    document.getElementById(id_lista_div_asistencia).insertBefore(row, nuevo);
+}
+
 function addNewWey(dt){
-    var tabla_procesos = $('#'+ id_datatable_procesos).DataTable();
+    var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable();
     tabla_procesos.row.add([
     	trabajador.uid, 
     	trabajador.nombre, 
@@ -149,112 +312,28 @@ function addNewWey(dt){
     	check_mi
     ]).draw( false );
 }
-/* Creando los elementos dinámicamente
-$("#" + id_obra_ddl_asistencia).change(function(){
-	var div = document.getElementById(id_lista_div_asistencia);
-	div.empty();
-	//Ver cómo hacerle para que los títulos queden bien con los elementos
-	var row_titles = document.createElement('div');
-	var label_titles = document.createElement('label');
-	label_titles.innerHTML = "ID";
-	row_titles.appendChild(label_titles);
-	var label_titles2 = document.createElement('label');
-	label_titles2.innerHTML = "NOMBRE";
-	row_titles.appendChild(label_titles2);
-	var label_titles3 = document.createElement('label');
-	label_titles3.innerHTML = "JUEVES";
-	row_titles.appendChild(label_titles3);
-	var label_titles4 = document.createElement('label');
-	label_titles4.innerHTML = "VIERNES";
-	row_titles.appendChild(label_titles4);
-	var label_titles5 = document.createElement('label');
-	label_titles5.innerHTML = "LUNES";
-	row_titles.appendChild(label_titles5);
-	var label_titles6 = document.createElement('label');
-	label_titles6.innerHTML = "MARTES";
-	row_titles.appendChild(label_titles6);
-	var label_titles7 = document.createElement('label');
-	label_titles7.innerHTML = "MIERCOLES";
-	row_titles.appendChild(label_titles7);
 
-	div.appendChild(row_titles);
-
-	//Todo esto en un if(snapshot == null) en obras.child(semana). Si no, lo cargas de lo que haya guardado
-	firebase.database().ref(rama_bd_trabajadores).orderByChild("obra_asignada").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnapshot){
-			var trabajador = childSnapshot.val();
-			var row = document.createElement('div');
-			row.id = "row_" + trabajador.uid;
-			var label = document.createElement('label');
-        	label.innerHTML = trabajador.uid;
-        	row.appendChild(label);
-        	var label2 = document.createElement('label');
-        	label2.innerHTML = trabajador.nombre;
-        	row.appendChild(label2);
-
-        	//----- jueves -----
-        	var checkbox_jueves = document.createElement('input');
-        	checkbox_jueves.type = "checkbox";
-        	//checkbox_lunes.className = "checkbox_lunes";
-        	checkbox_jueves.value = 0.2;
-        	checkbox_jueves.id = "check_" + trabajador.uid + "_jueves";
-        	div.appendChild(checkbox_jueves);
-
-        	var horas_extra_jueves = document.createElement('input');
-        	horas_extra_jueves.type = "text";
-        	horas_extra_jueves.id = "horas_extra_" + trabajador.uid + "_jueves";
-        	div.appendChild(horas_extra_jueves);
-        	//----- viernes -----
-        	var checkbox_viernes = document.createElement('input');
-        	checkbox_viernes.type = "checkbox";
-        	//checkbox_lunes.className = "checkbox_lunes";
-        	checkbox_viernes.value = 0.2;
-        	checkbox_viernes.id = "check_" + trabajador.uid + "_viernes";
-        	div.appendChild(checkbox_viernes);
-
-        	var horas_extra_viernes = document.createElement('input');
-        	horas_extra_viernes.type = "text";
-        	horas_extra_viernes.id = "horas_extra_" + trabajador.uid + "_viernes";
-        	div.appendChild(horas_extra_viernes);
-        	//----- lunes -----
-        	var checkbox_lunes = document.createElement('input');
-        	checkbox_lunes.type = "checkbox";
-        	//checkbox_lunes.className = "checkbox_lunes";
-        	checkbox_lunes.value = 0.2;
-        	checkbox_lunes.id = "check_" + trabajador.uid + "_lunes";
-        	div.appendChild(checkbox_lunes);
-
-        	var horas_extra_lunes = document.createElement('input');
-        	horas_extra_lunes.type = "text";
-        	horas_extra_lunes.id = "horas_extra_" + trabajador.uid + "_lunes";
-        	div.appendChild(horas_extra_lunes);
-        	//----- martes -----
-        	var checkbox_martes = document.createElement('input');
-        	checkbox_martes.type = "checkbox";
-        	//checkbox_lunes.className = "checkbox_lunes";
-        	checkbox_martes.value = 0.2;
-        	checkbox_martes.id = "check_" + trabajador.uid + "_martes";
-        	div.appendChild(checkbox_martes);
-
-        	var horas_extra_martes = document.createElement('input');
-        	horas_extra_martes.type = "text";
-        	horas_extra_martes.id = "horas_extra_" + trabajador.uid + "_martes";
-        	div.appendChild(horas_extra_martes);
-        	//----- miercoles -----
-        	var checkbox_miercoles = document.createElement('input');
-        	checkbox_miercoles.type = "checkbox";
-        	//checkbox_lunes.className = "checkbox_lunes";
-        	checkbox_miercoles.value = 0.2;
-        	checkbox_miercoles.id = "check_" + trabajador.uid + "_miercoles";
-        	div.appendChild(checkbox_miercoles);
-
-        	var horas_extra_miercoles = document.createElement('input');
-        	horas_extra_miercoles.type = "text";
-        	horas_extra_miercoles.id = "horas_extra_" + trabajador.uid + "_miercoles";
-        	div.appendChild(horas_extra_miercoles);
-
-        	div.appendChild(row);
-		});
-	});
-});
-*/
+var idioma_espanol = {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+}
