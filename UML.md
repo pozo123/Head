@@ -156,7 +156,7 @@
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
       - obra: (por nombre)
          - nombre
-         - supervisores
+         - supervisor
             - supervisor (por uid)
                - nombre: 
                - activo: bool
