@@ -62,6 +62,7 @@ TO DO:
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Poner botón regresar a index o links para navegar entre páginas
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia
+ - Jalar fechas a magico en obras prod
  - Altas colaboradores:
   - SIGUE TRONANDO ):
    - EBM, MBD y Ray en admin
