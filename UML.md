@@ -45,7 +45,10 @@
       - cliente
       - clave
       - num_procesos
-      - supervisor (nombre)
+      - supervisor 
+         - supervisor (por nombre)
+            - nombre
+            - activo: bool
       - procesos:
          - proceso (por clave):
             - alcance
