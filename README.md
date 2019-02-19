@@ -65,10 +65,11 @@ TO DO:
  - Jalar fechas a magico en obras prod
  - Editar horas kaizen  (procesos y obras)
  - Altas colaboradores:
-  - SIGUE TRONANDO ):
+   - SIGUE TRONANDO ):
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
+ - Subprocesos los mete como un proceso?? Y en adic no hay que ponerle categoría
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
