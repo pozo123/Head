@@ -76,7 +76,7 @@ TO DO:
    - Unico
    - via
    - west park
-   - zentral
+   - zentral (todos los proc, hay que arreglar lo de "suministros")
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
