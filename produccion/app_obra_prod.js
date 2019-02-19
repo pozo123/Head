@@ -92,16 +92,19 @@ $('#tabAltaObra').click(function(){
 });
 
 $("#" + id_nombre_obra_prod).change(function(){
-    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).once('child_added').then(function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_prod).val()).once('value').then(function(snapshot){
         var obra = snapshot.val();
         if(obra != null){
             $('#' + id_clave_obra_prod).val(obra.clave);
+            $('#' + id_cliente_ddl_obra_prod).val("");
             document.getElementById(id_clave_obra_prod).disabled = true;
+            ocument.getElementById(id_cliente_ddl_obra_prod).disabled = true;
             existe = true;
             var ddl_clientes = document.getElementById(id_cliente_ddl_obra_prod);
             for(var i = 0; i<ddl_clientes.length;i++){
                 if(ddl_clientes[i].text == obra.cliente){
                     ddl_clientes.selectedIndex = i;
+                    console.log(ddl_clientes)
                     ddl_clientes.disabled = true;
                 }
             }
