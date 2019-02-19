@@ -91,7 +91,7 @@
       - SUSCRIBEN: app_asistencia
       - trabajador(por id):
          - rango
-         - sueldo base
+         - sueldo_base
          - jefe (nombre destajista o HEAD)
          - nombre
          - uid
@@ -100,11 +100,26 @@
          - activo
          - nomina
             - semana: (ej 1)
-               - lunes: obra (nombre, "falta" si ninguna)
-               - martes: obra (nombre, "falta" si ninguna)
-               - miercoles: obra (nombre, "falta" si ninguna)
-               - jueves: obra (nombre, "falta" si ninguna)
-               - viernes: obra (nombre, "falta" si ninguna)
+               - lunes: 
+                  - obra (nombre)
+                  - proceso (clave)
+                  - asistencia (bool)
+               - martes:
+                  - obra (nombre)
+                  - proceso (clave)
+                  - asistencia (bool)
+               - miercoles:
+                  - obra (nombre)
+                  - proceso (clave)
+                  - asistencia (bool)
+               - jueves:
+                  - obra (nombre)
+                  - proceso (clave)
+                  - asistencia (bool)
+               - viernes:
+                  - obra (nombre)
+                  - proceso (clave)
+                  - asistencia (bool)
                - horas_extra
                - diversos
                   - *todos los diversos*
@@ -118,12 +133,23 @@
             - terminada: bool
             - obra: (por nombre)
                - trabajador: (por id)
+                  - nombre
                   - dias 
-                     - lunes: bool
-                     - martes: bool
-                     - miercoles: bool
-                     - jueves: bool
-                     - viernes: bool
+                     - lunes:
+                        - asistencia: bool
+                        - proceso: (clave) "NA" si asistencia es false
+                     - martes:
+                        - asistencia: bool
+                        - proceso: (clave) "NA" si asistencia es false
+                     - miercoles:
+                        - asistencia: bool
+                        - proceso: (clave) "NA" si asistencia es false
+                     - jueves:
+                        - asistencia: bool
+                        - proceso: (clave) "NA" si asistencia es false
+                     - viernes:
+                        - asistencia: bool
+                        - proceso: (clave) "NA" si asistencia es false
                   - horas_extra
                   - // De aquí en adelante chance no hace falta calcularlo aquí, que se guarde en trabajador los totales y el prorrateo se va a kaizen.
                   - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
