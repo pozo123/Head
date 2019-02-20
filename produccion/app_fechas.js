@@ -7,9 +7,10 @@ var id_actualizar_button_fechas = "fechasButton";
 var rama_bd_obras_magico = "obras";
 var rama_bd_obras_prod = "produccion/obras";
 
+var f_i_obra_anterior = 0;
+var f_f_obra_anterior = 0;
+
 $('#tabFechas').click(function(){
-
-
     jQuery('#' + id_fecha_inicio_fechas).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
@@ -52,8 +53,10 @@ $("#" + id_obra_ddl_fechas).change(function(){
     });
     firebase.database().ref(rama_bd_obras_magico + "/" + obra + "/fechas").once('value').then(function(function){
 	    var fechas = snapshot.val();
-	    $("#" + id_fecha_inicio_fechas).datepicker("setDate", new Date(fechas.fecha_inicio_teorica));
-	    $("#" + id_fecha_final_fechas).datepicker("setDate", new Date(fechas.fecha_final_teorica));
+        f_i_obra_anterior = fechas.fecha_inicio_teorica;
+        f_f_obra_anterior = fechas.fecha_final_teorica;
+	    $("#" + id_fecha_inicio_fechas).datepicker("setDate", new Date(f_i_obra_anterior));
+	    $("#" + id_fecha_final_fechas).datepicker("setDate", new Date(f_f_obra_anterior));
     });
 });
 
@@ -81,6 +84,18 @@ $('#' + id_actualizar_button_fechas).click(function(){
 		firebase.database().ref(rama_bd_obras_magico + "/" obra + "/procesos/" + proc + "/fechas/fecha_final_teorica").set(f_f);
 		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/" + proc + "/fechas/fecha_inicio_teorica").set(f_i);
 		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/" + proc + "/fechas/fecha_final_teorica").set(f_f);
+		if(f_i < f_i_obra_anterior){
+		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+		}
+		if(f_f > f_f_obra_anterior){
+		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+		}
 	}
 });
 
