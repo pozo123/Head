@@ -180,7 +180,7 @@ $('#' + id_agregar_procesos).click(function() {
                     firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/num_procesos").set(num_proc);
                     if(f_f > obra.fechas.fecha_final_teorica){
                         firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
-                        firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/fechas/fecha_final_teorica" + cl).set(f_f);
+                        firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
                     }
                 });
             }
