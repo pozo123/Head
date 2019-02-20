@@ -13,8 +13,12 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
- actualizados/nuevos (19/2/19)
+ actualizados/nuevos(20/2/19):
+ - app_procesos
  - app_desplegar_procesos
+ - app_datos_kaizen
+ 
+ actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
  - app_asistencia
  
@@ -24,9 +28,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  actualizados/nuevos(13/2/19):
  - app_funciones -> la función para cargar SCORE al kaizen
  - app_inge
- 
- actualizados/nuevos(12/2/19) después de llamada:
- - app_datos_kaizen
  
  actualizados/nuevos(12/2/19):
  - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
