@@ -6,9 +6,14 @@ https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
 https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js
 https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
 
+//Aquí sólo asistencia y horas_extra
+    //En otra app meter diversos
+    //En otra app meter totales pagados (post-pagadora)
 var id_semana_ddl_asistencia = "semanaDdlAsistencia";
 var id_year_ddl_asistencia = "yearDdlAsistencia";
 var id_obra_ddl_asistencia = "obraDdlAsistencia";
+var id_guardar_button_asistencia = "guardarButtonAsistencia";
+var id_terminar_button_asistencia = "terminarButtonAsistencia";
 
 var id_datatable_asistencia = "dataTableAsistencia";
 
@@ -74,7 +79,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     firebase.database().ref(rama_bd_trabajadores + "/" + trabSnap.key).once('child_added').then(function(childSnap){
                         var trabajador = childSnap.val();
                         //No se si el child de aqui abajo jale por lo de child_added/value AQUI
-                        var nom = trabajador.nomina.child(semana);
+                        var nom = trabajador.nomina.child(year).child(semana);
                         datos_asistencia.push([trabajador.uid, trabajador.nombre, trabajador.jefe, trabajador.especialidad, nom.jueves.obra, nom.jueves.proceso, nom.viernes.obra, nom.viernes.proceso, nom.lunes.obra, nom.lunes.proceso, nom.martes.obra, nom.martes.proceso, nom.miercoles.obra, nom.miercoles.proceso, trabajador.sueldo_base,nom.horas_extra, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
                     });
                 });
@@ -122,7 +127,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     //Si ya hay registro de actividad el ddl se bloquea
                     snapshot.forEach(function(childSnapshot){
                         var trabajador = childSnapshot.val();
-                        cargaRenglon(trabajador,count_proc,procesos,semana);
+                        cargaRenglon(trabajador,count_proc,procesos,semana,year);
                     });
                 });
                 //Crea 2 textfields para añadir trabajadores que no tengan la obra registrada
@@ -131,7 +136,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     firebase.database().ref(rama_bd_trabajadores + "/" + t_id.val()).once('value').then(function(snapshot){
                         var trabajador = snapshot.val();
                         if(trabajador != null){
-                            cargaRenglon(trabajador,count_proc,procesos,semana);
+                            cargaRenglon(trabajador,count_proc,procesos,semana,year);
                             t_id.empty();
                         } else {
                             alert("No existe un trabajador con esa ID");
@@ -144,7 +149,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo(t_nombre.val()).once('value').then(function(snapshot){
                         var trabajador = snapshot.val();
                         if(trabajador != null){
-                            cargaRenglon(trabajador,count_proc,procesos,semana);
+                            cargaRenglon(trabajador,count_proc,procesos,semana,year);
                             t_nombre.empty();
                         } else {
                             alert("No existe un trabajador con ese nombre");
@@ -152,38 +157,33 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     });
                 });
                 nuevo.appendChild(t_nombre);
-
-                //PARA LOS BOTONES USA EL ARREGLO DE TRABAJADORES EN EL QUE ESTAN SUS IDs
-                //Button registrar
-                    //Pon asistencias en trabajadores y en nomina
-                //Button terminar
-                    //Sumar horas en todas direcciones
-                        //en trabajadores
-                        //en nomina
-                        //en kaizen
-                    //Revisar y anotar faltas
-                    //Reasignar obras
             });
         }
     });
-    //Aquí sólo asistencia y horas_extra
-    //En otra app meter diversos
-    //En otra app meter totales pagados (post-pagadora)
 });
 
-//Jala trabajador de rama_bd_trabajadores, procesos es el array con los procesos de la obra, count_proc es el lenght de procesos, y semana es un int
-function cargaRenglon(trabajador, count_proc, procesos, semana){
-    var nom = trabajador.nomina.child(semana);//Ver si sí jala AQUI
+//Jala trabajador de rama_bd_trabajadores, procesos es el array con los procesos de la obra, count_proc es el length de procesos, y semana es un int
+function cargaRenglon(trabajador, count_proc, procesos, semana, year){
+    var nom = trabajador.nomina..child(year).child(semana);//Ver si sí jala AQUI
     var row = document.createElement('div');
     //----JUEVES----
     var ddl_ju = document.createElement('select');
+    var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
     ddl_ju.id = "chamba_" + trabajador.uid + "_ju";
     if(nom.jueves.asistencia.val()){
-        var option = document.createElement('option');
-        option.text = nom.jueves.proceso;
-        option.value = .2;
-        ddl_ju.appendChild(option);
-        ddl_ju.disabled = true;
+        if(nom.jueves.obra.val() == obra){
+            var option = document.createElement('option');
+            option.text = nom.jueves.proceso;
+            option.value = .2;
+            ddl_ju.appendChild(option);
+            ddl_ju.disabled = true;
+        } else {
+            var option = document.createElement('option');
+            option.text = "Otra obra";
+            option.value = 0;
+            ddl_ju.appendChild(option);
+            ddl_ju.disabled = true;
+        }
     } else {
         var option = document.createElement('option');
         option.text = "Falta";
@@ -201,11 +201,19 @@ function cargaRenglon(trabajador, count_proc, procesos, semana){
     var ddl_vi = document.createElement('select');
     ddl_vi.id = "chamba_" + trabajador.uid + "_vi";
     if(nom.viernes.asistencia.val()){
-        var option = document.createElement('option');
-        option.text = nom.viernes.proceso;
-        option.value = .2;
-        ddl_vi.appendChild(option);
-        ddl_vi.disabled = true;
+        if(nom.viernes.obra.val() == obra){
+            var option = document.createElement('option');
+            option.text = nom.viernes.proceso;
+            option.value = .2;
+            ddl_vi.appendChild(option);
+            ddl_vi.disabled = true;
+        } else {
+            var option = document.createElement('option');
+            option.text = "Otra obra";
+            option.value = 0;
+            ddl_vi.appendChild(option);
+            ddl_vi.disabled = true;
+        }
     } else {
         var option = document.createElement('option');
         option.text = "Falta";
@@ -223,11 +231,19 @@ function cargaRenglon(trabajador, count_proc, procesos, semana){
     var ddl_lu = document.createElement('select');
     ddl_lu.id = "chamba_" + trabajador.uid + "_lu";
     if(nom.lunes.asistencia.val()){
-        var option = document.createElement('option');
-        option.text = nom.lunes.proceso;
-        option.value = .2;
-        ddl_lu.appendChild(option);
-        ddl_lu.disabled = true;
+        if(nom.lunes.obra.val() == obra){
+            var option = document.createElement('option');
+            option.text = nom.lunes.proceso;
+            option.value = .2;
+            ddl_lu.appendChild(option);
+            ddl_lu.disabled = true;
+        } else {
+            var option = document.createElement('option');
+            option.text = "Otra obra";
+            option.value = 0;
+            ddl_lu.appendChild(option);
+            ddl_lu.disabled = true;
+        }
     } else {
         var option = document.createElement('option');
         option.text = "Falta";
@@ -245,11 +261,19 @@ function cargaRenglon(trabajador, count_proc, procesos, semana){
     var ddl_ma = document.createElement('select');
     ddl_ma.id = "chamba_" + trabajador.uid + "_ma";
     if(nom.martes.asistencia.val()){
-        var option = document.createElement('option');
-        option.text = nom.martes.proceso;
-        option.value = .2;
-        ddl_ma.appendChild(option);
-        ddl_ma.disabled = true;
+        if(nom.martes.obra.val() == obra){
+            var option = document.createElement('option');
+            option.text = nom.martes.proceso;
+            option.value = .2;
+            ddl_ma.appendChild(option);
+            ddl_ma.disabled = true;
+        } else {
+            var option = document.createElement('option');
+            option.text = "Otra obra";
+            option.value = 0;
+            ddl_ma.appendChild(option);
+            ddl_ma.disabled = true;
+        }
     } else {
         var option = document.createElement('option');
         option.text = "Falta";
@@ -267,11 +291,19 @@ function cargaRenglon(trabajador, count_proc, procesos, semana){
     var ddl_mi = document.createElement('select');
     ddl_mi.id = "chamba_" + trabajador.uid + "_mi";
     if(nom.miercoles.asistencia.val()){
-        var option = document.createElement('option');
-        option.text = nom.miercoles.proceso;
-        option.value = .2;
-        ddl_mi.appendChild(option);
-        ddl_mi.disabled = true;
+        if(nom.miercoles.obra.val() == obra){
+            var option = document.createElement('option');
+            option.text = nom.miercoles.proceso;
+            option.value = .2;
+            ddl_mi.appendChild(option);
+            ddl_mi.disabled = true;
+        } else {
+            var option = document.createElement('option');
+            option.text = "Otra obra";
+            option.value = 0;
+            ddl_mi.appendChild(option);
+            ddl_mi.disabled = true;
+        }
     } else {
         var option = document.createElement('option');
         option.text = "Falta";
@@ -297,7 +329,61 @@ function cargaRenglon(trabajador, count_proc, procesos, semana){
     document.getElementById(id_lista_div_asistencia).insertBefore(row, nuevo);
 }
 
-function addNewWey(dt){
+$('#' + id_guardar_button_asistencia).click(function(){
+    var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
+    var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
+    for(i=0;i<trabajadores.length;i++){
+        var uid = trabajadores[i];
+        updateDia(uid,"jueves",semana,year);
+        updateDia(uid,"viernes",semana,year);
+        updateDia(uid,"lunes",semana,year);
+        updateDia(uid,"martes",semana,year);
+        updateDia(uid,"miercoles",semana,year); 
+        var he = $('#he_' + uid).val(); 
+        firebase.database().ref(rama_bd_trabajadores + "/" + uid + "/nomina/" + year + "/" + semana + "/horas_extra").set(he);
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + uid + "/horas_extra").set(he);   
+    }
+});
+
+function updateDia(uid,dia,semana,year){
+    var dia_corto = dia.substring(0,2);
+    var proceso = $("#chamba_" + trabajador.uid + "_" + dia_corto + " option:selected").val();
+        var asis;
+        if(proceso == "Falta" || proceso == "Otra obra"){
+            asis = {
+                asistencia: false,
+                proceso: "NA",
+            }
+        } else {
+            asis = {
+                asistencia: true,
+                proceso: proceso,
+            }
+            var asis_tra = {
+                obra: obra,
+                proceso: proceso,
+                asistencia: true,
+            }
+            firebase.database().ref(rama_bd_trabajadores + "/" + uid + "/nomina/" + year + "/" + semana + "/" + dia).set(asis_tra);
+        }
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + uid + "/dias/" + dia).set(asis);   
+}
+
+$('#' + id_terminar_button_asistencia).click(function(){
+//PARA LOS BOTONES USA EL ARREGLO DE TRABAJADORES EN EL QUE ESTAN SUS IDs
+//Button terminar
+    //Sumar horas en todas direcciones
+        //en trabajadores
+        //en nomina
+        //en kaizen
+    //Revisar y anotar faltas
+    //Reasignar obras
+    //Actualizar obra/terminada = true
+});
+
+
+/*function addNewWey(dt){
     var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable();
     tabla_procesos.row.add([
     	trabajador.uid, 
@@ -311,7 +397,7 @@ function addNewWey(dt){
     	check_ma, 
     	check_mi
     ]).draw( false );
-}
+}*/
 
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
