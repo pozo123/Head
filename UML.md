@@ -99,32 +99,33 @@
          - especialidad
          - activo
          - nomina
-            - semana: (ej 1)
-               - lunes: 
-                  - obra (nombre)
-                  - proceso (clave)
-                  - asistencia (bool)
-               - martes:
-                  - obra (nombre)
-                  - proceso (clave)
-                  - asistencia (bool)
-               - miercoles:
-                  - obra (nombre)
-                  - proceso (clave)
-                  - asistencia (bool)
-               - jueves:
-                  - obra (nombre)
-                  - proceso (clave)
-                  - asistencia (bool)
-               - viernes:
-                  - obra (nombre)
-                  - proceso (clave)
-                  - asistencia (bool)
-               - horas_extra
-               - diversos
-                  - *todos los diversos*
-               - impuestos
-               - total
+            - year: (ej 2019)
+               - semana: (ej 1)
+                  - lunes: 
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
+                  - martes:
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
+                  - miercoles:
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
+                   - jueves:
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
+                  - viernes:
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
+                  - horas_extra
+                  - diversos
+                     - *todos los diversos*
+                  - impuestos
+                  - total
   - pagos_nomina: 
       - AFECTAN: app_pagos_nomina, app_asistencia
       - SUSCRIBEN: 
