@@ -60,10 +60,11 @@ TO DO:
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
  - Ddl proceso en ppto
+ - Revisar reporte_obras
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Poner botón regresar a index o links para navegar entre páginas
- - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia
+ - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
  - Jalar fechas a magico en obras prod
  - Editar horas kaizen  (procesos y obras)
  - Altas colaboradores:
@@ -77,8 +78,7 @@ TO DO:
    - via
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
- - Que no salga el proc ADIC en desplegar procesos
- - Ni ningun proceso que tenga subprocesos (?)
+ - app_fechas (tanto para obra como para procesos) datepicker("setDate")
 
 KAIZEN: 
   - Quién es responsable de llenarlo.
