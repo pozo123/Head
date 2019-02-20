@@ -53,3 +53,6 @@ en terminal
   - datepicker
     - Bloquear que fecha final sea después de la inicial
       - https://eonasdan.github.io/bootstrap-datetimepicker/#linked-pickers
+      
+  - filtrar valores de un query (para hacerlo más ligero)
+    - https://firebase.google.com/docs/database/web/lists-of-data#filtering_data
