@@ -56,3 +56,6 @@ en terminal
       
   - filtrar valores de un query (para hacerlo más ligero)
     - https://firebase.google.com/docs/database/web/lists-of-data#filtering_data
+
+  - Detah Listeners
+    - https://firebase.google.com/docs/database/web/lists-of-data#detach_listeners
