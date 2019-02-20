@@ -78,8 +78,7 @@ TO DO:
    - via
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
- - app_fechas (tanto para obra como para procesos) datepicker("setDate")
-
+ - app_fechas (tanto para obra como para procesos) $("#" + id).datepicker("setDate", new Date(obra.fechas.fecha_inicio_teorica));
 KAIZEN: 
   - Quién es responsable de llenarlo.
     - supervisores:
