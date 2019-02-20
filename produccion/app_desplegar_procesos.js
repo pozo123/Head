@@ -18,7 +18,9 @@ function loadTablaProcesos(){
             obraSnap.child("procesos").forEach(function(childSnapshot){
                 var proc = childSnapshot.val();
                 if(proc.num_subprocesos == 0){
-                    datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
+                    if(proc.tipo != "adicional"){
+                        datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
+                    }
                 } else { 
                     childSnapshot.child("subprocesos").forEach(function(subSnap){
                         var subproceso = subSnap.val();
