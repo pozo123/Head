@@ -108,16 +108,22 @@ $("#" + id_subproceso_checkbox_proceso).change(function(){
             option2.value = proc.clave;
             select.appendChild(option2);
         });
-        $('#' + id_grupo_subproceso).removeClass("hidden")
-        $('#' + id_grupo_categoria).removeClass("hidden")      
+        $('#' + id_grupo_subproceso).removeClass("hidden");
     } else {
-        $('#' + id_grupo_subproceso).addClass("hidden")
-        $('#' + id_grupo_categoria).addClass("hidden")
+        $('#' + id_grupo_subproceso).addClass("hidden");
+    }
+});
+
+$('#' + id_subproceso_checkbox_proceso).change(function(){
+    if($('#' + id_proceso_ddl_procesos + " option:selected").val() == "ADIC"){
+        $('#' + id_grupo_categoria).addClass("hidden");
+    } else {
+        $('#' + id_grupo_categoria).removeClass("hidden");
     }
 });
 
 $('#' + id_agregar_procesos).click(function() {
-    if($('#' + id_fecha_inicio_procesos).val() === "" || $('#' + id_fecha_final_procesos).val() === "" || ($("#" + id_subproceso_checkbox_proceso).checked && ($('#' + id_categoria_ddl_procesos + " option:selected").val() === "" || $('#' + id_proceso_ddl_procesos + " option:selected").val() === "")) || $('#' + id_obra_ddl_procesos + " option:selected").val() === ""){
+    if($('#' + id_fecha_inicio_procesos).val() === "" || $('#' + id_fecha_final_procesos).val() === "" || (($("#" + id_subproceso_checkbox_proceso).checked == true) && ($('#' + id_categoria_ddl_procesos + " option:selected").val() === "" || $('#' + id_proceso_ddl_procesos + " option:selected").val() === "")) || $('#' + id_obra_ddl_procesos + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
         var f_i = new Date($('#' + id_fecha_inicio_procesos).val()).getTime();
@@ -132,11 +138,15 @@ $('#' + id_agregar_procesos).click(function() {
                 fecha_final_teorica: f_f,
             }
             var cl;
-            if($("#" + id_subproceso_checkbox_proceso).checked){
+            if($("#" + id_subproceso_checkbox_proceso).checked == true){
                 firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + $('#' + id_proceso_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
                     var proc = snapshot.val();
                     var num_sub = proc.num_subprocesos + 1;
-                    cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + ("0" + num_sub).slice(-2);
+                    if($('#' + id_proceso_ddl_procesos + " option:selected").text() == "ADIC"){
+                        cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + ("0" + num_sub).slice(-2);
+                    } else {
+                        cl = proc.clave + "-A" + ("0" + num_sub).slice(-2);
+                    }
                     var subproceso = {
                         clave: cl,
                         categoria: $('#' + id_categoria_ddl_procesos + " option:selected").text(),
@@ -158,7 +168,6 @@ $('#' + id_agregar_procesos).click(function() {
                     var proceso = {
                         tipo: "continuo",
                         clave: cl,
-                        adicional: false,
                         fechas: fech,
                         num_subprocesos: 0,
                         subprocesos: "",
