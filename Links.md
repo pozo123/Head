@@ -49,3 +49,7 @@ en terminal
     
   - Pie charts
     - https://www.chartjs.org/docs/latest/charts/doughnut.htm
+    
+  - datepicker
+    - Bloquear que fecha final sea después de la inicial
+      - https://eonasdan.github.io/bootstrap-datetimepicker/#linked-pickers
