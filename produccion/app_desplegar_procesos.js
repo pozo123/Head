@@ -13,36 +13,37 @@ $('.' + class_tab_procesos).click(function(){
 function loadTablaProcesos(){
     var datos_procesos = [];
     firebase.database().ref(rama_bd_obras_magico).once("value").then(function(snapshot){
-        console.log("2")
         snapshot.forEach(function(obraSnap){
-            obraSnap.child("procesos").forEach(function(childSnapshot){
-                var proc = childSnapshot.val();
-                if(proc.num_subprocesos == 0){
-                    if(proc.tipo != "adicional"){
-                        datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
+            if(obraSnap.val().nombre != "ZObra Prueba"){
+                obraSnap.child("procesos").forEach(function(childSnapshot){
+                    var proc = childSnapshot.val();
+                    if(proc.num_subprocesos == 0){
+                        if(proc.tipo != "adicional"){
+                            datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
+                        }
+                    } else { 
+                        childSnapshot.child("subprocesos").forEach(function(subSnap){
+                            var subproceso = subSnap.val();
+                            datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
+                        });
                     }
-                } else { 
-                    childSnapshot.child("subprocesos").forEach(function(subSnap){
-                        var subproceso = subSnap.val();
-                        datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
+                    var tabla_procesos = $('.' + class_table_datatable_procesos).DataTable({
+                        destroy: true,
+                        data: datos_procesos,
+                        dom: 'Bfrtip',
+                        buttons: ['excel'],
+                        columns: [
+                            {title: "Clave-Obra",name: "Obra",width: 70},
+                            {title: "Proceso",width: 70},
+                            {title: "Alcance",width: 250},
+                            {title: "Subproceso"},
+                            {title: "Alcance"},
+                        ],
+                        rowsGroup: [0,1,2],
+                        language: idioma_espanol,
                     });
-                }
-                var tabla_procesos = $('.' + class_table_datatable_procesos).DataTable({
-                    destroy: true,
-                    data: datos_procesos,
-                    dom: 'Bfrtip',
-                    buttons: ['excel'],
-                    columns: [
-                        {title: "Clave-Obra",name: "Obra",width: 70},
-                        {title: "Proceso",width: 70},
-                        {title: "Alcance",width: 250},
-                        {title: "Subproceso"},
-                        {title: "Alcance"},
-                    ],
-                    rowsGroup: [0,1,2],
-                    language: idioma_espanol,
-                });
-            });            
+                }); 
+            }           
         });
     });
 }
