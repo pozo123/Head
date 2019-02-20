@@ -101,7 +101,7 @@ $("#" + id_subproceso_checkbox_proceso).change(function(){
         option.text = option.value = "";
         select.appendChild(option);
 
-        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos").orderByChild('nombre').on('child_added',function(snapshot){
+        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos").orderByKey().on('child_added',function(snapshot){
             var proc = snapshot.val();
             var option2 = document.createElement('OPTION');
             option2.text = proc.clave;
