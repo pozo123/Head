@@ -25,8 +25,8 @@
             - cuenta (por nombre)
                - nombre
                - clave
-               - total_cuenta (si no es hoja es suma)
-               - ppto_cuenta (si no es hoja es suma)
+               - total_cuenta (si no es hoja es suma) PERO se puede haber tenido registros antes de dejar de ser hoja, asi que la suma no necesariamente es SOLO la suma de las hojas. Al hacer hojas crear una cuenta "otros" en la que se carguen los valores anteriores?
+               - ppto_cuenta (si no es hoja es suma) PERO se puede haber tenido registros antes de dejar de ser hoja, asi que la suma no necesariamente es SOLO la suma de las hojas. Al hacer hojas crear una cuenta "otros" en la que se carguen los valores anteriores?
                - forma_pago (GR, MIX, NA o (se me olvidó la ultima)) (si no es hoja es suma (O sea si solo un tipo en hojas ese, si hay mas entonces MIX))
                - formato_fecha ("diario", "semanal", "quincenal", "mensual", "anual") (Hay que definir con lo del formato)
                - areas: (si no es hoja es suma)
