@@ -13,12 +13,15 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizados/nuevos(21/2/19):
+ - app_kaizen_global
+ - app_fechas
+ 
  actualizados/nuevos(20/2/19):
  - app_procesos
  - app_desplegar_procesos
  - app_datos_kaizen (Siempre no la edité pero no me acuerdo cuando había sido la última actualización)
  - app_asistencia
- - app_fechas
  
  actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
