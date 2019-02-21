@@ -81,6 +81,7 @@ TO DO:
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
  - App_procesos sí muestre procesos con sub, sólo en adic no.
+ - nombre en procesos ):
  
 KAIZEN: 
   - Quién es responsable de llenarlo.
