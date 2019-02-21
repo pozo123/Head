@@ -1,146 +1,177 @@
-//https://github.com/jsGanttImproved/jsgantt-improved/blob/develop/Documentation.md
+var id_gantt_div_global = "kaizenGlobalDiv";
+var id_total_venta_global = "totalVentaGlobal";
+var id_total_profit_real_global = "totalProfitRealGlobal";
+var id_total_profit_ppto_global = "totalProfitPptoGlobal";
 
-//<link href="jsgantt.css" rel="stylesheet" type="text/css"/>
-//<script src="jsgantt.js" type="text/javascript"></script>
-
-//<div style="position:relative" class="gantt" id="kaizenGlobalDiv"></div>
-
-//Por revisar:
-// formato fechas pStart y pEnd
 var rama_bd_obras_magico = "obras";
-var id_gantt_div_global = "kaizenGlobalDiv"
+
 var css = ["gtaskblue", "gtaskred", "gtaskgreen", "gtaskyellow", "gtaskpurple", "gtaskpink"];
 
-//Pasar a tab
-//var id_tab_kaizen_global = "kaizenGlobalTab";
-//$('#' + id_tab_kaizen_global).click(function(){
 $(document).ready(function(){
-	var g = new JSGantt.GanttChart(document.getElementById(id_gantt_div_global), 'day');
-    g.setOptions({
-        vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
-        vQuarterColWidth: 36,
-        vDateTaskDisplayFormat: 'day dd month yyyy', // Shown in tool tip box
-        vDayMajorDateDisplayFormat: 'mon yyyy - Week ww',// Set format to dates in the "Major" header of the "Day" view
-        vWeekMinorDateDisplayFormat: 'dd mon', // Set format to display dates in the "Minor" header of the "Week" view
-        vLang: 'en',
-        vShowTaskInfoLink: 1, // Show link in tool tip (0/1)
-        vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily
-        vAdditionalHeaders: { // Add data columns to your table
-            category: {
-              title: 'Category'
-            },
-            sector: {
-              title: 'Sector'
-            }
-          },
-        vUseSingleCell: 10000, // Set the threshold cell per table row (Helps performance for large data.
-        vFormatArr: ['Day', 'Week', 'Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers,
-    });
-	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
-        var i = 1;
-		snapshot.forEach(function(obraSnap){
-			var obra = obraSnap.val();
-			g.AddTaskItemObject({
-				pID: i,
-				pName: obra.nombre,
-				pStart: obra.fechas.fecha_inicio_teorica,
-				pEnd: obra.fechas.fecha_final_teorica,
-				pPlanStart: "",//fecha_inicio_real? o al reves?
-				pPlanEnd: "",//fecha_final_real? o al reves?
-				pClass: "ggroupblack",
-				pLink: "",
-				pMile: 0,
-				pRes: "",//obra.supervisor,
-				pComp: "",//obra.kaizen.AVANCE.REAL,
-				pGroup: 1, //0-> no grupo, 1-> grupo
-				pParent: 0, //id parent. 0-> este es el parent
-				pOpen: 0,
-				pDepend: "", //Para flechitas si hay dependencia entre procesos
-				pCaption: "",
-				//AQUI Costo, score, of y profit con valores prog.... no? Cómo lo hacemos?
-				/*pCost: costo_obra,
-				SCORE: obra.kaizen.PROYECTOS.PPTO,
-				OF: costo_obra*0.2,
-				PROFIT: obra.kaizen.PROFIT.PROG,*/
-            });
-            console.log("Obra: " + obra.nombre + " id: " + i);
-			var j = 0;
-            var id_obra = i;
-			obraSnap.child("procesos").forEach(function(childSnapshot){
-				i++;
-                var proc = childSnapshot.val();
-                console.log(proc);
-				//var costo_proc = parseFloat(proc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(proc.ADMINISTRACION.ANTICIPOS.PPTO);
-				g.AddTaskItemObject({
-					pID: i,
-					pName: proc.clave,
-					pStart: proc.fechas.fecha_inicio,
-					pEnd: proc.fechas.fecha_final,
-					pPlanStart: "",//fecha_inicio_real? o al reves?
-					pPlanEnd: "",//fecha_final_real? o al reves?
-					pClass: css[j%6],
-					pLink: "",
-					pMile: 0,
-					pRes: "",//obra.supervisor,
-					pComp: "",//proc.kaizen.AVANCE.REAL,
-					pGroup: 1, //0-> no grupo, 1-> grupo
-					pParent: id_obra, //id parent. 0-> este es el parent
-					pOpen: 0,
-					pDepend: "", //Para flechitas si hay dependencia entre procesos
-					pCaption: "",
-					//AQUI Costo, score, of y profit con valores prog.... no? Cómo lo hacemos?
-					pCost: "",//costo_proc,
-					SCORE: proc.kaizen.PROYECTOS.PPTO,
-					OF: "",//costo_proc*0.2,
-					PROFIT: proc.kaizen.PROFIT.PROG,
-                });
-                console.log("proc: " + proc.clave + " id: " + i);
-                if(proc.subprocesos != ""){
-                    var k = 0;
-                    var id_proc = i;
-                    childSnapshot.child("subprocesos").forEach(function(subProcSnap){
-                        i++;
-                        var subproc = subProcSnap.val();
-                        //var costo_subproc = parseFloat(subproc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(subproc.ADMINISTRACION.ANTICIPOS.PPTO);
-                        g.AddTaskItemObject({
-                            pID: i,
-                            pName: subproc.clave,
-                            pStart: subproc.fechas.fecha_inicio,
-                            pEnd: subproc.fechas.fecha_final,
-                            pPlanStart: "",//fecha_inicio_real? o al reves?
-                            pPlanEnd: "",//fecha_final_real? o al reves?
-                            pClass: css[k%6],
-                            pLink: "",
-                            pMile: 0,
-                            pRes: "",//obra.supervisor,
-                            pComp: "",//subproc.kaizen.AVANCE.REAL,
-                            pGroup: 1, //0-> no grupo, 1-> grupo
-                            pParent: id_proc, //id parent. 0-> este es el parent
-                            pOpen: 0,
-                            pDepend: "", //Para flechitas si hay dependencia entre procesos
-                            pCaption: "",
-                            //AQUI Costo, score, of y profit con valores prog.... no? Cómo lo hacemos?
-                            pCost: "",//costo_subproc,
-                            SCORE: subproc.kaizen.PROYECTOS.PPTO,
-                            OF: "",//costo_subproc*0.2,
-                            PROFIT: subproc.kaizen.PROFIT.PROG,
-                        });
-                        k++;
-                    });
-                }
-                j++;
-
+ 	var username = firebase.auth().currentUser.uid;
+ 	var aut;
+ 	var display_obras = [];
+	firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+		var col = snapshot.val();
+		if(col.tipo == "supervisor"){
+			snapshot.child("obras").forEach(function(childSnap){
+				obra = childSnap.val();
+				if(obra.activa == true){
+					display_obras[display_obras.length] = obra.nombre;
+				}
+				aut = "supervisor";
 			});
-			i++;
-        });
-        g.Draw();
-	})
-	//g.setShowRes(0);
-	//g.setShowDur(0);
-	//g.setShowComp(0);
-	//g.setShowStartDate(0);
-	//g.setShowEndDate(0);
-	//g.setAdditionalHeaders({ SCORE: { title: 'SCORE' } });//checar si sintaxis sí es así
-	//g.setAdditionalHeaders({ OF: { title: 'OF' } });//checar si sintaxis sí es así
-	//g.setAdditionalHeaders({ PROFIT: { title: 'PROFIT' } });//checar si sintaxis sí es así
+		} else if(col.tipo == "gerente"){
+			aut = "gerente";
+		} else {
+			aut = "nope";
+			alert("Usuario sin autorización");
+		}
+
+		var g = new JSGantt.GanttChart(document.getElementById(id_gantt_div_global), 'day');
+	    g.setOptions({
+	        vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
+	        vQuarterColWidth: 36,
+	        vDateTaskDisplayFormat: 'day dd month yyyy', // Shown in tool tip box
+	        vDayMajorDateDisplayFormat: 'mon yyyy - Week ww',// Set format to dates in the "Major" header of the "Day" view
+	        vWeekMinorDateDisplayFormat: 'dd mon', // Set format to display dates in the "Minor" header of the "Week" view
+	        vLang: 'es',//'en'
+	        vShowTaskInfoLink: 1, // Show link in tool tip (0/1)
+	        vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily
+	        vAdditionalHeaders: { // Add data columns to your table
+	            category: {
+	              title: 'Category'
+	            },
+	            sector: {
+	              title: 'Sector'
+	            }
+	          },
+	        vUseSingleCell: 10000, // Set the threshold cell per table row (Helps performance for large data.
+	        vFormatArr: ['Day', 'Week', 'Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers,
+	    });
+		firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+	        var i = 1;
+	        var total_venta = 0;
+	        var total_profit_real = 0;
+	        var total_profit_ppto = 0;
+			snapshot.forEach(function(obraSnap){
+				var obra = obraSnap.val();
+				var autorizar = false;
+				if(aut == "supervisor"){
+					var i_d=0;
+					while(i_d<display_obras.length && autorizar == false){
+						if(display_obras[i_d].val() == obra.nombre){
+							autorizar = true;
+						}
+						i_d++;
+					}
+				}
+				if(aut == "gerente" || autorizar == true){
+					var comp = parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+					var cost = parseFloat(obra.kaizen.ESTIMACIONES.ESTIMACIONES.PPTO) + parseFloat(obra.kaizen.ESTIMACIONES.ANTICIPOS.PPTO);
+					var f_i = new Date(obra.fechas.fecha_inicio_teorica);
+					var f_f = new Date(obra.fechas.fecha_final_teorica);
+					g.AddTaskItemObject({
+						pID: i,
+						pName: obra.nombre,
+						pStart: f_i.toISOString().substring(0, 10),
+						pEnd: f_f.toISOString().substring(0, 10),
+						pPlanStart: "",//fecha_inicio_real? o al reves?
+						pPlanEnd: "",//fecha_final_real? o al reves?
+						pClass: "ggroupblack",
+						pLink: "",
+						pMile: 0,
+						pRes: "",//Supervisor obra (hay que entrar a rama_bd_obras_prod y concatenarlos todos en un string)
+						pComp: comp, 
+						pGroup: 1, //0-> no grupo, 1-> grupo
+						pParent: 0, //id parent. 0-> este es el parent
+						pOpen: 0,
+						pDepend: "", //Para flechitas si hay dependencia entre procesos
+						pCaption: "",
+						pCost: cost,
+		            });
+		            //console.log("Obra: " + obra.nombre + " id: " + i);
+		            total_venta = total_venta + cost;
+		            total_profit_ppto = total_profit_ppto + parseFloat(obra.kaizen.PROFIT.PPTO);
+		            total_profit_real = total_profit_real + parseFloat(obra.kaizen.PROFIT.REAL);
+					var j = 0;
+		            var id_obra = i;
+					obraSnap.child("procesos").forEach(function(childSnapshot){
+						i++;
+		                var proc = childSnapshot.val();
+						var comp_proc = parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+						var cost_proc = parseFloat(proc.kaizen.ESTIMACIONES.ESTIMACIONES.PPTO) + parseFloat(proc.kaizen.ESTIMACIONES.ANTICIPOS.PPTO);
+		                //console.log(proc);
+						//var costo_proc = parseFloat(proc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(proc.ADMINISTRACION.ANTICIPOS.PPTO);
+						var f_i_p = new Date(proc.fechas.fecha_inicio);
+						var f_f_p = new Date(proc.fechas.fecha_final);
+						g.AddTaskItemObject({
+							pID: i,
+							pName: proc.clave,
+							pStart: f_i_p.toISOString().substring(0, 10),
+							pEnd: f_f_p.toISOString().substring(0, 10),
+							pPlanStart: "",//fecha_inicio_real? o al reves?
+							pPlanEnd: "",//fecha_final_real? o al reves?
+							pClass: css[j%6],
+							pLink: "",
+							pMile: 0,
+							pRes: "",//supervisor obra,
+							pComp: comp_proc,
+							pGroup: 1, //0-> no grupo, 1-> grupo
+							pParent: id_obra, //id parent. 0-> este es el parent
+							pOpen: 0,
+							pDepend: "", //Para flechitas si hay dependencia entre procesos
+							pCaption: "",
+							pCost: cost_proc,
+		                });
+		                //console.log("proc: " + proc.clave + " id: " + i);
+		                if(proc.subprocesos != ""){
+		                    var k = 0;
+		                    var id_proc = i;
+		                    childSnapshot.child("subprocesos").forEach(function(subProcSnap){
+		                        i++;
+		                        var subproc = subProcSnap.val();
+		                        var comp_subp = parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+								var cost_subp = parseFloat(subproc.kaizen.ESTIMACIONES.ESTIMACIONES.PPTO) + parseFloat(subproc.kaizen.ESTIMACIONES.ANTICIPOS.PPTO);
+		                		//var costo_subproc = parseFloat(subproc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(subproc.ADMINISTRACION.ANTICIPOS.PPTO);
+		                        f_i_s = new Date(subproc.fechas.fecha_inicio);
+		                        f_f_s = new Date(subproc.fechas.fecha_final);
+		                        g.AddTaskItemObject({
+		                            pID: i,
+		                            pName: subproc.clave,
+									pStart: f_i_s.toISOString().substring(0, 10),
+									pEnd: f_f_s.toISOString().substring(0, 10),
+		                            pPlanStart: "",//fecha_inicio_real? o al reves?
+		                            pPlanEnd: "",//fecha_final_real? o al reves?
+		                            pClass: css[k%6],
+		                            pLink: "",
+		                            pMile: 0,
+		                            pRes: "",//obra.supervisor,
+		                            pComp: comp_subp,
+		                            pGroup: 1, //0-> no grupo, 1-> grupo
+		                            pParent: id_proc, //id parent. 0-> este es el parent
+		                            pOpen: 0,
+		                            pDepend: "", //Para flechitas si hay dependencia entre procesos
+		                            pCaption: "",
+		                            pCost: cost_subp,
+		                        });
+		                        k++;
+		                    });
+		                }
+		                j++;
+					});
+					i++;
+				}
+	        });
+	        g.Draw();
+	        $('#' + id_total_profit_real_global).val(total_profit_real);
+	        $('#' + id_total_profit_ppto_global).val(total_profit_ppto);
+		});
+		//g.setShowRes(0);
+		g.setShowDur(0);
+		//g.setShowComp(0);
+		//g.setShowStartDate(0);
+		//g.setShowEndDate(0);
+		//g.setAdditionalHeaders({ SCORE: { title: 'SCORE' } });//checar si sintaxis sí es así
+	});
 });
