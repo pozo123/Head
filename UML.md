@@ -16,7 +16,7 @@
    - centro de costos
       - familia(nombre)
          - nombre
-         - clave
+         - clave (definir!)
          - years
             - 2019: total (en float)
             - 2020: total (en float)
@@ -25,14 +25,16 @@
             - cuenta (por nombre)
                - nombre
                - clave
-               - total_cuenta (si no es hoja es suma) PERO se puede haber tenido registros antes de dejar de ser hoja, asi que la suma no necesariamente es SOLO la suma de las hojas. Al hacer hojas crear una cuenta "otros" en la que se carguen los valores anteriores?
-               - ppto_cuenta (si no es hoja es suma) PERO se puede haber tenido registros antes de dejar de ser hoja, asi que la suma no necesariamente es SOLO la suma de las hojas. Al hacer hojas crear una cuenta "otros" en la que se carguen los valores anteriores?
+               - total_cuenta (si no es hoja es suma)
+               - ppto_cuenta (si no es hoja es suma)
                - forma_pago (GR, MIX, NA o (se me olvidó la ultima)) (si no es hoja es suma (O sea si solo un tipo en hojas ese, si hay mas entonces MIX))
                - formato_fecha ("diario", "semanal", "quincenal", "mensual", "anual") (Hay que definir con lo del formato)
-               - areas: (si no es hoja es suma)
+               - areas_lectura: (si no es hoja es suma)
+                  - *todas las áreas que tienen acceso a esta cuenta, en bool
+               - areas_edicion: (si no es hoja es suma)
                   - *todas las áreas que tienen acceso a esta cuenta, en bool
                - children: "" si es hoja, si es nodo repite el formato json
-               - registros (si no es hoja SI puede existir, por si alguna vez fue hoja y se le agregaron cuentas)
+               - registros (si no es hoja NO puede existir, Hay que redistribuirlos a las hojas)
                   - year (por numero)
                      - total_year
                      - semanas ???? O mensual? o que dependa del formato?? Hay que definir
@@ -42,9 +44,16 @@
                               - monto
                               - timestamps
                                  - ingreso (cuando se hace el registro)
+                                    - user: (username de quien lo hace)
+                                    - fecha (timestamp)
                                  - fecha (de cuando es el valor)
+                                 - modificaciones:
+                                    - por push
+                                       - user: uid
+                                       - fecha: timestamp
                               - concepto
-                              - cantidad
+                              - cantidad //para compras? :/
+                              - clave_concepto //para compras? :/
 - categorias:
    - categoria (por nombre)
       - nombre
@@ -63,6 +72,7 @@
             - activo: bool
       - procesos:
          - proceso (por clave):
+            - nombre
             - alcance
             - clave
             - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
