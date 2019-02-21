@@ -75,27 +75,32 @@ $('#' + id_actualizar_button_fechas).click(function(){
 	var f_i = new Date($('#' + id_fecha_inicio_fechas).val()).getTime();
 	var f_f = new Date($('#' + id_fecha_final_fechas).val()).getTime();
 	if(proc == ""){
-		firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
-		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+        firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+        firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+        firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+        firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+
+        firebase.database().ref(rama_bd_obras_magico + "/" obra + "/procesos/MISC/fechas/fecha_inicio_teorica").set(f_i);
+        firebase.database().ref(rama_bd_obras_magico + "/" obra + "/procesos/MISC/fechas/fecha_final_teorica").set(f_f);
+        firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/MISC/fechas/fecha_inicio_teorica").set(f_i);
+        firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/MISC/fechas/fecha_final_teorica").set(f_f);
+
 	} else { 
 		firebase.database().ref(rama_bd_obras_magico + "/" obra + "/procesos/" + proc + "/fechas/fecha_inicio_teorica").set(f_i);
 		firebase.database().ref(rama_bd_obras_magico + "/" obra + "/procesos/" + proc + "/fechas/fecha_final_teorica").set(f_f);
 		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/" + proc + "/fechas/fecha_inicio_teorica").set(f_i);
 		firebase.database().ref(rama_bd_obras_prod + "/" obra + "/procesos/" + proc + "/fechas/fecha_final_teorica").set(f_f);
-		if(f_i < f_i_obra_anterior){
-		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
-		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
-		}
-		if(f_f > f_f_obra_anterior){
-		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		    firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
-		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
-		    firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
-		}
+        if(f_i < f_i_obra_anterior){
+            firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+            firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+            firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+            firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+        }
+        if(f_f > f_f_obra_anterior){
+            firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+            firebase.database().ref(rama_bd_obras_magico + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+            firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_inicio_teorica").set(f_i);
+            firebase.database().ref(rama_bd_obras_prod + "/" obra + "/fechas/fecha_final_teorica").set(f_f);
+        }
 	}
 });
-
