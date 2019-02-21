@@ -82,6 +82,7 @@ TO DO:
    - zentral (todos los proc, hay que arreglar lo de "suministros")
  - App_procesos sí muestre procesos con sub, sólo en adic no.
  - nombre en procesos ):
+ - Meter el calculo de utilidad como pestaña en prod (ya se los presumí a algunos supervisores)
  
 KAIZEN: 
   - Quién es responsable de llenarlo.
