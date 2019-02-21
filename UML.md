@@ -12,38 +12,39 @@
     - nombre: string
     - nickname: ? string
     - email: string
-- centro de costos
-   - familia(nombre)
-      - nombre
-      - clave
-      - years
-         - 2019: total (en float)
-         - 2020: total (en float)
-         - etc
-      - children:
-         - cuenta (por nombre)
-            - nombre
-            - clave
-            - total_cuenta (si no es hoja es suma)
-            - ppto_cuenta (si no es hoja es suma)
-            - forma_pago (GR, MIX, NA o (se me olvidó la ultima)) (si no es hoja es suma (O sea si solo un tipo en hojas ese, si hay mas entonces MIX))
-            - formato_fecha ("diario", "semanal", "quincenal", "mensual", "anual") (Hay que definir con lo del formato)
-            - areas: (si no es hoja es suma)
-               - *todas las áreas que tienen acceso a esta cuenta, en bool
-            - children: "" si es hoja, si es nodo repite el formato json
-            - registros (si no es hoja SI puede existir, por si alguna vez fue hoja y se le agregaron cuentas)
-               - year (por numero)
-                  - total_year
-                  - semanas ???? O mensual? o que dependa del formato?? Hay que definir
-                     - semana (por numero)???
-                        - total_semana???
-                        - registro (por uid)
-                           - monto
-                           - timestamps
-                              - ingreso (cuando se hace el registro)
-                              - fecha (de cuando es el valor)
-                           - concepto
-                           - cantidad
+- administracion:
+   - centro de costos
+      - familia(nombre)
+         - nombre
+         - clave
+         - years
+            - 2019: total (en float)
+            - 2020: total (en float)
+            - etc
+         - children:
+            - cuenta (por nombre)
+               - nombre
+               - clave
+               - total_cuenta (si no es hoja es suma)
+               - ppto_cuenta (si no es hoja es suma)
+               - forma_pago (GR, MIX, NA o (se me olvidó la ultima)) (si no es hoja es suma (O sea si solo un tipo en hojas ese, si hay mas entonces MIX))
+               - formato_fecha ("diario", "semanal", "quincenal", "mensual", "anual") (Hay que definir con lo del formato)
+               - areas: (si no es hoja es suma)
+                  - *todas las áreas que tienen acceso a esta cuenta, en bool
+               - children: "" si es hoja, si es nodo repite el formato json
+               - registros (si no es hoja SI puede existir, por si alguna vez fue hoja y se le agregaron cuentas)
+                  - year (por numero)
+                     - total_year
+                     - semanas ???? O mensual? o que dependa del formato?? Hay que definir
+                        - semana (por numero)???
+                           - total_semana???
+                           - registro (por uid)
+                              - monto
+                              - timestamps
+                                 - ingreso (cuando se hace el registro)
+                                 - fecha (de cuando es el valor)
+                              - concepto
+                              - cantidad
 - categorias:
    - categoria (por nombre)
       - nombre
