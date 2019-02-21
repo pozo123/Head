@@ -16,6 +16,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  actualizados/nuevos(21/2/19):
  - app_kaizen_global
  - app_fechas
+ - app_cuenta_cc (#rifadísimo)
  
  actualizados/nuevos(20/2/19):
  - app_procesos -> Urge por lo de las fechas!!! No se actualizan bien las horas ):
