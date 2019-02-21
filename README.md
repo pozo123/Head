@@ -19,7 +19,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  actualizados/nuevos(20/2/19):
  - app_procesos -> Urge por lo de las fechas!!! No se actualizan bien las horas ):
- - app_desplegar_procesos
+ - app_desplegar_procesos -> Adic y formato tabla
  - app_datos_kaizen (Siempre no la edité pero no me acuerdo cuando había sido la última actualización)
  - app_asistencia
  
