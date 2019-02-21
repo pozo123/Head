@@ -14,6 +14,8 @@
     - email: string
 - centro de costos
    - familia(nombre)
+      - nombre
+      - clave
       - years
          - 2019: total (en float)
          - 2020: total (en float)
