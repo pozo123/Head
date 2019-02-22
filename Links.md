@@ -59,3 +59,7 @@ en terminal
 
   - Detah Listeners
     - https://firebase.google.com/docs/database/web/lists-of-data#detach_listeners
+    
+  - Mouseover
+    - https://stackoverflow.com/questions/29485224/displaying-text-using-onmouseover-javascript-html
+    - https://www.w3schools.com/js/tryit.asp?filename=tryjs_events_onmouse
