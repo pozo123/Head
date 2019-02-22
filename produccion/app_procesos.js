@@ -114,7 +114,7 @@ $("#" + id_subproceso_checkbox_proceso).change(function(){
     }
 });
 
-$('#' + id_subproceso_checkbox_proceso).change(function(){
+$('#' + id_proceso_ddl_procesos).change(function(){
     if($('#' + id_proceso_ddl_procesos + " option:selected").val() == "ADIC"){
         $('#' + id_grupo_categoria).addClass("hidden");
     } else {
@@ -138,14 +138,18 @@ $('#' + id_agregar_procesos).click(function() {
                 fecha_final_teorica: f_f,
             }
             var cl;
-            if($("#" + id_subproceso_checkbox_proceso).checked == true){
-                firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + $('#' + id_proceso_ddl_procesos + " option:selected").text()).once('child_added').then(function(snapshot){
+            // forma de checkar si un checkbox está listo
+            if($("#" + id_subproceso_checkbox_proceso).is(":checked")){
+                firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + $('#' + id_proceso_ddl_procesos + " option:selected").val()).once('value').then(function(snapshot){
+                    console.log(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + $('#' + id_proceso_ddl_procesos + " option:selected").val())
+                    console.log(snapshot)
+                    console.log(snapshot.val())
                     var proc = snapshot.val();
                     var num_sub = proc.num_subprocesos + 1;
-                    if($('#' + id_proceso_ddl_procesos + " option:selected").text() == "ADIC"){
+                    if($('#' + id_proceso_ddl_procesos + " option:selected").val() != "ADIC"){
                         cl = proc.clave + "-" + $('#' + id_categoria_ddl_procesos + " option:selected").val() + ("0" + num_sub).slice(-2);
                     } else {
-                        cl = proc.clave + "-A" + ("0" + num_sub).slice(-2);
+                        cl = proc.clave + "-" + ("00" + num_sub).slice(-3);
                     }
                     var subproceso = {
                         clave: cl,
@@ -185,5 +189,6 @@ $('#' + id_agregar_procesos).click(function() {
                 });
             }
         }
+        alert("alta exitosa!")
     }
 });
