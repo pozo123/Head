@@ -26,7 +26,7 @@ $('#tabUtilidad').click(function(){
         var obra = snapshot.val();
         var option2 = document.createElement('OPTION');
         option2.text = obra.nombre;
-        option2.value = obra.clave;
+        option2.value = obra.nombre;
         select.appendChild(option2);
     });
 });
@@ -38,7 +38,7 @@ $("#" + id_obra_ddl_utilidad).change(function(){
     option.text = option.value = "Global";
     select.appendChild(option);
 
-    firebase.database().ref(rama_bd_obras_magico + $('#' + id_obra_ddl_utilidad + " option:selected").val() +"/procesos").orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_utilidad + " option:selected").val() +"/procesos").orderByChild('nombre').on('child_added',function(snapshot){
         var proc = snapshot.val();
         var option2 = document.createElement('OPTION');
         option2.text = proc.clave;
@@ -57,7 +57,7 @@ function loadValuesObra(){
     			costos_suministros = obra.kaizen.PRODUCCION.SUMINISTROS.CUANT;
     		var costos_copeo = obra.kaizen.PRODUCCION.COPEO.COPEO;
     		if(costos_copeo == 0)
-    			costos_copeo = obra.kaizen.PRODUCCION.SUMINISTROS.PREC;
+    			costos_copeo = obra.kaizen.PRODUCCION.COPEO.PREC;
     		var costos_proyectos = obra.kaizen.PROYECTOS.PPTO;
     		var costos = costos_proyectos + costos_copeo + costos_suministros;
     		$('#' + id_suministros_utilidad).val(costos_suministros);
@@ -86,7 +86,7 @@ function loadValuesProceso(){
 	    			costos_suministros = obra.kaizen.PRODUCCION.SUMINISTROS.CUANT;
 	    		var costos_copeo = obra.kaizen.PRODUCCION.COPEO.COPEO;
 	    		if(costos_copeo == 0)
-	    			costos_copeo = obra.kaizen.PRODUCCION.SUMINISTROS.PREC;
+	    			costos_copeo = obra.kaizen.PRODUCCION.COPEO.PREC;
 	    		var costos_proyectos = obra.kaizen.PROYECTOS.PPTO;
 	    		var costos = costos_proyectos + costos_copeo + costos_suministros;
 	    		$('#' + id_suministros_utilidad).val(costos_suministros);
@@ -109,7 +109,7 @@ function loadValuesProceso(){
 	    			costos_suministros = proc.kaizen.PRODUCCION.SUMINISTROS.CUANT;
 	    		var costos_copeo = proc.kaizen.PRODUCCION.COPEO.COPEO;
 	    		if(costos_copeo == 0)
-	    			costos_copeo = proc.kaizen.PRODUCCION.SUMINISTROS.PREC;
+	    			costos_copeo = proc.kaizen.PRODUCCION.COPEO.PREC;
 	    		var costos_proyectos = proc.kaizen.PROYECTOS.PPTO;
 	    		var costos = costos_proyectos + costos_copeo + costos_suministros;
 	    		$('#' + id_suministros_utilidad).val(costos_suministros);
