@@ -9,50 +9,28 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_obras_prod: CHECK
  - app_procesos: CHECK
  - app_desplegar_procesos: CHECK
- - app_kaizen_global
+ - app_kaizen_global: CHECK
  - app_datos_kaizen
  - app_asistencia
  
  actualizados/nuevos(21/2/19):
- - app_kaizen_global
- - app_fechas
  - app_cuenta_cc (#rifadísimo)
  
  actualizados/nuevos(20/2/19):
- - app_procesos -> Urge por lo de las fechas!!! No se actualizan bien las horas ):
- - app_desplegar_procesos -> Adic y formato tabla
  - app_datos_kaizen (Siempre no la edité pero no me acuerdo cuando había sido la última actualización)
  - app_asistencia
- 
+
  actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
- 
- actualizado/nuevos(14/2/19):
- - app_utilidad (hay que descomentar cosas)
- 
- actualizados/nuevos(13/2/19):
- - app_funciones -> la función para cargar SCORE al kaizen
- - app_inge
- 
- actualizados/nuevos(12/2/19):
- - app_cierre_maestro -> Creo que encontré el pedo de los registros = 0;
- 
- actualizados/nuevos(11/2/19):
- - app_kaizen_global 
- 
+   
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas
-
+ - loadScoreKaizen (en app_funciones)
+ 
  Por definir:
- - Centro de costos (Emmanuel la tiene super complicada :S)
+ - Centro de costos (lo de semanas o quincenas)
  - eliminar en bibliotecas score
- - Hector
-    - Asistencias (trabajadores)
-    - Diversos
-    - Supervisores
-    - Pagos nomina (que jale la info de asistencias para el prorrateo)
-    - Archivo pagadora
 
  Errores:
  - registros con horas 0 (creo que ya se resolvió)
@@ -60,11 +38,12 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - alta_trabajadores
+ - colvis en desplegar_procesos
  - Centro de costos.
    - alta cuenta
    - añadir al desplegar
  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
- - Ddl proceso en ppto
  - Revisar reporte_obras
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
@@ -81,10 +60,6 @@ TO DO:
    - via
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
- - App_procesos sí muestre procesos con sub, sólo en adic no.
- - Meter fechas en un app mas chida de editar procesos. Ahí metes el nombre!
-   - nombre en procesos ):
- - Meter el calculo de utilidad como pestaña en prod (ya se los presumí a algunos supervisores)
  
 KAIZEN: 
   - Quién es responsable de llenarlo.
