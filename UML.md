@@ -84,6 +84,7 @@
             - num_subprocesos
             - subprocesos:
                - subproceso (por clave):
+                  - nombre
                   - alcance
                   - calve
                   - categoria
