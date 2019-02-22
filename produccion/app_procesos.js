@@ -5,6 +5,7 @@ var id_categoria_ddl_procesos = "categoriaDdlProcesos";
 var id_alcance_proceso_procesos = "alcanceProcesoProcesos";
 var id_fecha_inicio_procesos = "fechaInicioProcesos";
 var id_fecha_final_procesos = "fechaFinalProcesos";
+var id_nombre_procesos = "nombreProcesos";
 
 var id_agregar_procesos = "agregarProcesoProcesos";
 
@@ -152,6 +153,7 @@ $('#' + id_agregar_procesos).click(function() {
                         cl = proc.clave + "-" + ("00" + num_sub).slice(-3);
                     }
                     var subproceso = {
+                        nombre: $('#' + id_nombre_procesos).val();
                         clave: cl,
                         categoria: $('#' + id_categoria_ddl_procesos + " option:selected").text(),
                         fechas: fech,
@@ -170,6 +172,7 @@ $('#' + id_agregar_procesos).click(function() {
                     var num_proc = obra.num_procesos + 1;
                     cl = "PC" + ("0" + num_proc).slice(-2);
                     var proceso = {
+                        nombre: $('#' + id_nombre_procesos).val();
                         tipo: "continuo",
                         clave: cl,
                         fechas: fech,
