@@ -127,12 +127,11 @@ function loadValuesProceso(){
 };
 
 $('#' + id_button_load_utilidad).click(function(){
-	alert("Funcionalidad en programación");
-	/*if($('#' + id_proceso_ddl_utilidad + " option:selected").val() == "Global"){
+	if($('#' + id_proceso_ddl_utilidad + " option:selected").val() == "Global"){
 		loadValuesObra();
 	} else {
 		loadValuesProceso();
-	}*/
+	}
 });
 
 function loadProfits(){
