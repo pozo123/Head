@@ -6,6 +6,7 @@ var id_vistaPrevia_button_presupuesto = "vistaPreviaPresupuesto";
 var id_borrar_todo_presupuesto = "borrarTodoPresupuesto"
 var id_obra_ddl_presupuesto = "obraPresupuesto";
 var id_proceso_ddl_presupuesto = "DDLproceso";
+var id_group_proceso = "groupProceso";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto";
 var id_genero_ddl_presupuesto = "DDLgenero";
 var id_clase_ddl_presupuesto = "DDLclase";
@@ -185,8 +186,8 @@ $('#tabPresupuesto').click(function() {
 
 $('#' + id_clase_ddl_presupuesto).change(function(){
     $('#' + id_proceso_ddl_presupuesto).empty();
-    if($('#' + id_clase_ddl_presupuesto + " option:selected").val() == "produccion"){
-        $('#' + id_proceso_ddl_presupuesto).removeClass("hidden")
+    if($('#' + id_clase_ddl_presupuesto + " option:selected").text() == "produccion"){
+        $('#' + id_group_proceso).removeClass("hidden")
         var select = document.getElementById(id_proceso_ddl_presupuesto);   
         var option = document.createElement('option');
         option.style = "display:none";
@@ -194,8 +195,8 @@ $('#' + id_clase_ddl_presupuesto).change(function(){
         select.appendChild(option);
 
         firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").orderByChild("nombre").on('child_added',function(snapshot){
-            
             var proc = snapshot.val();
+            console.log(proc)
             var option2 = document.createElement('OPTION');
             option2.text = proc.clave; 
             option2.value = proc.clave;
@@ -203,7 +204,7 @@ $('#' + id_clase_ddl_presupuesto).change(function(){
 
         });
     } else { 
-        $('#' + id_proceso_ddl_presupuesto).addClass("hidden")
+        $('#' + id_group_proceso).addClass("hidden")
     }
 });
 
