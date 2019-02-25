@@ -24,26 +24,27 @@ $(document).ready(function(){
 					aut = "gerente";
 					drawKG();
 				} else {
-
+					firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+						var col = snapshot.val();
+						console.log("0");
+						if(col.tipo == "supervisor"){
+							snapshot.child("obras").forEach(function(childSnap){
+								obra = childSnap.val();
+								if(obra.activa == true){
+									display_obras[display_obras.length] = obra.nombre;
+								}
+								aut = "supervisor";
+								drawKG();
+							});
+						} else if(col.tipo == "gerente"){
+							aut = "gerente";
+							drawKG();
+						} else {
+							aut = "nope";
+							alert("Usuario sin autorización");
+						}
+					});
 				}
-				firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
-					var col = snapshot.val();
-					console.log("0");
-					if(col.tipo == "supervisor"){
-						snapshot.child("obras").forEach(function(childSnap){
-							obra = childSnap.val();
-							if(obra.activa == true){
-								display_obras[display_obras.length] = obra.nombre;
-							}
-							aut = "supervisor";
-						});
-					} else if(col.tipo == "gerente"){
-						aut = "gerente";
-					} else {
-						aut = "nope";
-						alert("Usuario sin autorización");
-					}
-				});
 			});
 		}
 	});
