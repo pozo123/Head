@@ -1,7 +1,9 @@
 var id_gantt_div_global = "kaizenGlobalDiv";
 var id_total_venta_global = "totalVentaGlobal";
-var id_total_profit_real_global = "totalProfitRealGlobal";
-var id_total_profit_ppto_global = "totalProfitPptoGlobal";
+var id_total_profit_real_bruto_global = "totalProfitRealGlobal";
+var id_total_profit_ppto_bruto_global = "totalProfitPptoGlobal";
+var id_total_profit_real_neto_global = "totalProfitNetoRealGlobal";
+var id_total_profit_ppto_neto_global = "totalProfitNetoPptoGlobal";
 
 var rama_bd_obras_magico = "obras";
 var rama_bd_colaboradores_prod = "produccion/colaboradores";
@@ -73,8 +75,10 @@ function drawKG(){
 	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
 		var i = 1;
 		var total_venta = 0;
-		var total_profit_real = 0;
-		var total_profit_ppto = 0;
+		var total_profit_real_bruto = 0;
+		var total_profit_real_neto = 0;
+		var total_profit_ppto_bruto = 0;
+		var total_profit_ppto_neto = 0;
 		snapshot.forEach(function(obraSnap){
 			var obra = obraSnap.val();
 			console.log(obra);
@@ -115,8 +119,10 @@ function drawKG(){
 				console.log("3");
 				//console.log("Obra: " + obra.nombre + " id: " + i);
 				total_venta = total_venta + cost;
-				total_profit_ppto = total_profit_ppto + parseFloat(obra.kaizen.PROFIT.PPTO);
-				total_profit_real = total_profit_real + parseFloat(obra.kaizen.PROFIT.REAL);
+				total_profit_ppto_bruto = total_profit_ppto_bruto + parseFloat(obra.kaizen.PROFIT.PPTO.BRUTO);
+				total_profit_ppto_neto = total_profit_ppto_neto + parseFloat(obra.kaizen.PROFIT.PPTO.NETO);
+				total_profit_real_bruto = total_profit_real_bruto + parseFloat(obra.kaizen.PROFIT.REAL.BRUTO);
+				total_profit_real_neto = total_profit_real_neto + parseFloat(obra.kaizen.PROFIT.REAL.NETO);
 				var j = 0;
 				var id_obra = i;
 				obraSnap.child("procesos").forEach(function(childSnapshot){
@@ -188,8 +194,10 @@ function drawKG(){
 			}
 		});
 		g.Draw();
-		$('#' + id_total_profit_real_global).val(total_profit_real);
-		$('#' + id_total_profit_ppto_global).val(total_profit_ppto);
+		$('#' + id_total_profit_ppto_bruto_global).val(total_profit_ppto_bruto);
+		$('#' + id_total_profit_ppto_neto_global).val(total_profit_ppto_neto);
+		$('#' + id_total_profit_real_bruto_global).val(total_profit_real_bruto);
+		$('#' + id_total_profit_real_neto_global).val(total_profit_real_neto);
 	});
 	//g.setShowRes(0);
 	g.setShowDur(0);
