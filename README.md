@@ -20,6 +20,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_kaizen_global
  - app_datos_kaizen
  - app_asistencia
+ - app_actualizar_registros
  
  actualizados/nuevos(21/2/19):
  - app_cuenta_cc (#rifadísimo)
@@ -68,8 +69,9 @@ TO DO:
    - zentral (todos los proc, hay que arreglar lo de "suministros")
  - Cambiar Kaiz, agregar bruto y neto a los profit
    - Hacer un actualizar registros para meter esos datos en todos lados que haya kaiz
- - Meter "parados" en cada obra (Y en asistencia y pagos_nomina)
- - profit_semanal en cada obra
+ - app_agregar_json
+ - app_agregar_atributo (que sea a un foreach)
+ - Botón respaldo (aunque baje sólo el json)
  
 KAIZEN: 
   - Quién es responsable de llenarlo.
