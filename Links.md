@@ -57,9 +57,12 @@ en terminal
   - filtrar valores de un query (para hacerlo más ligero)
     - https://firebase.google.com/docs/database/web/lists-of-data#filtering_data
 
-  - Detah Listeners
+  - Detach Listeners
     - https://firebase.google.com/docs/database/web/lists-of-data#detach_listeners
     
   - Mouseover
     - https://stackoverflow.com/questions/29485224/displaying-text-using-onmouseover-javascript-html
     - https://www.w3schools.com/js/tryit.asp?filename=tryjs_events_onmouse
+
+  - Editar en la tabla
+    - https://editor.datatables.net/examples/inline-editing/simple.html
