@@ -17,7 +17,6 @@ $(document).ready(function(){
 	firebase.auth().onAuthStateChanged(function(user){
 		if(user){
 			username = user.uid;
-			console.log(username)
 			firebase.database().ref(rama_bd_personal).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
 				var pers = snapshot.val();
 				if(pers.areas.administracion == true){
@@ -26,7 +25,6 @@ $(document).ready(function(){
 				} else {
 					firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
 						var col = snapshot.val();
-						console.log("0");
 						if(col.tipo == "supervisor"){
 							snapshot.child("obras").forEach(function(childSnap){
 								obra = childSnap.val();
@@ -72,7 +70,6 @@ function drawKG(){
 		vUseSingleCell: 10000, // Set the threshold cell per table row (Helps performance for large data.
 		vFormatArr: ['Day', 'Week', 'Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers,
 	});
-	console.log("2");
 	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
 		var i = 1;
 		var total_venta = 0;
@@ -82,7 +79,6 @@ function drawKG(){
 		var total_profit_ppto_neto = 0;
 		snapshot.forEach(function(obraSnap){
 			var obra = obraSnap.val();
-			console.log(obra);
 			var autorizar = false;
 			if(aut == "supervisor"){
 				var i_d=0;
@@ -117,8 +113,6 @@ function drawKG(){
 					pCaption: "",
 					pCost: cost,
 				});
-				console.log("3");
-				//console.log("Obra: " + obra.nombre + " id: " + i);
 				total_venta = total_venta + cost;
 				total_profit_ppto_bruto = total_profit_ppto_bruto + parseFloat(obra.kaizen.PROFIT.PPTO.BRUTO);
 				total_profit_ppto_neto = total_profit_ppto_neto + parseFloat(obra.kaizen.PROFIT.PPTO.NETO);
@@ -131,8 +125,6 @@ function drawKG(){
 					var proc = childSnapshot.val();
 					var comp_proc = parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
 					var cost_proc = parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(proc.kaizen.ADMINISTRACION.ANTICIPOS.PPTO);
-					//console.log(proc);
-					//var costo_proc = parseFloat(proc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(proc.ADMINISTRACION.ANTICIPOS.PPTO);
 					var f_i_p = new Date(proc.fechas.fecha_inicio_teorica);
 					var f_f_p = new Date(proc.fechas.fecha_final_teorica);
 					g.AddTaskItemObject({
@@ -154,9 +146,7 @@ function drawKG(){
 						pCaption: "",
 						pCost: cost_proc,
 					});
-					//console.log("proc: " + proc.clave + " id: " + i);
 					if(proc.subprocesos != ""){
-						console.log("4");
 						var k = 0;
 						var id_proc = i;
 						childSnapshot.child("subprocesos").forEach(function(subProcSnap){
