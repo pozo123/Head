@@ -16,15 +16,30 @@ var aut;
 var username;
 
  $(document).ready(function(){
- 	username = firebase.auth().currentUser.uid;
-	firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
-		var col = snapshot.val();
-		if(col.tipo == "supervisor"){
-			aut = "supervisor";
-		} else if(col.tipo == "gerente"){
-			aut = "gerente";
-		} else {
-			aut = "nope";
+
+    firebase.auth().onAuthStateChanged(function(user){
+		if(user){
+            username = user.uid;
+
+			firebase.database().ref(rama_bd_personal).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+				var pers = snapshot.val();
+				if(pers.areas.administracion == true){
+					aut = "gerente";
+				} else {
+					firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+						var col = snapshot.val();
+                        if(col.tipo == "supervisor"){
+                            aut = "supervisor";
+                        } else if(col.tipo == "gerente"){
+                            aut = "gerente";
+                        } else {
+                            aut = "nope";
+                            alert("Usuario sin autorización");
+                        }
+					});
+                }
+                console.log(aut)
+			});
 		}
 	});
 });
@@ -48,7 +63,7 @@ $('#' + id_tab_datos_kaizen).click(function(){
 	    	});
 	    });
     } else if(aut == "gerente"){
-    	firebase.databas().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+    	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
     		snapshot.forEach(function(obraSnap){
     			var obra = obraSnap.val();
     			var option2 = document.createElement('option');
@@ -165,7 +180,7 @@ function loadTableKaizen(){
 			 		destroy: true,
 			 		data: datos_kaizen,
 			 		dom: 'Bfrtip',
-			 		buttons: ['colvis','excel'],
+			 		buttons: ['excel'],
 			 		columns: [
 			 		/*<thead>
 			            <tr>
