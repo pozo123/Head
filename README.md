@@ -43,6 +43,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - En el Gantt meter numero de semana para fechas
  - alta_trabajadores
  - colvis en desplegar_procesos
  - Centro de costos.
