@@ -60,12 +60,7 @@ TO DO:
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
- - Meter adicionales de
-   - Acanto
-   - Unico
-   - via
-   - west park
-   - zentral (todos los proc, hay que arreglar lo de "suministros")
+ - zentral (todos los proc, hay que arreglar lo de "suministros")
  - Hacer un actualizar registros para meter profit bruto y neto a todos los kaiz
  - app_agregar_json
  - app_agregar_atributo (que sea a un foreach)
