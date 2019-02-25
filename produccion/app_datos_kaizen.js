@@ -276,8 +276,14 @@ $('#' + id_actualizar_button_datos_kaizen).click(function(){
 				        },
 				    },
 				    PROFIT: {
-				        PROG: profit_prog,
-				        REAL: profit_real,
+				        PROG: {
+				        	BRUTO: profit_prog,
+				        	NETO: profit_prog * 0.6,
+				        },
+				        REAL: {
+				        	BRUTO: profit_real,
+				        	NETO: profit_real * 0.6,
+				        },
 				    }
 				};
 
