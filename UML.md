@@ -66,6 +66,8 @@
       - cliente
       - clave
       - num_procesos
+      - utilidad_semanal
+      - trabajadores_parados: ($)
       - supervisor 
          - supervisor (por id)
             - nombre
@@ -214,6 +216,7 @@
                - nombre: 
                - activo: bool
          - clave
+         - trabajadores_parados: ($)
          - terminado 
          - procesos: Todo lo mismo que en magico menos kaizen (tambien con subprocesos, esos igual todo menos kaizen)
          - fechas:
@@ -247,8 +250,12 @@
         - PPTO
         - PAG
   - PROFIT:
-     - PROG
-     - REAL
+     - PROG:
+        - BRUTO
+        - NETO
+     - REAL:
+        - BRUTO
+        - NETO
   
   - Para calcular AVANCE (no sale en nuestra bd pero se puede calcular al displayearla):
       - EST = prod.copeo.pag / prod.copeo.copeo
