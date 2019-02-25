@@ -4,7 +4,7 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Orden Implementacion:
- - app_colaboradores_produccion: CHECK
+ - app_colaboradores_produccion: NOPE
  - app_cuenta_cc: 
  - app_obras_prod: CHECK
  - app_procesos: CHECK
@@ -57,7 +57,7 @@ TO DO:
  - Poner botón regresar a index o links para navegar entre páginas
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
  - Altas colaboradores:
-   - SIGUE TRONANDO ):
+   - SIGUE TRONANDO ): Jala un udefined, creo que porque value en vez de child_added
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
