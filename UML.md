@@ -67,7 +67,7 @@
       - clave
       - num_procesos
       - utilidad_semanal
-      - trabajadores_parados: ($)
+      - PPR: ($)(Personal de producción de reserva)
       - supervisor 
          - supervisor (por id)
             - nombre
@@ -216,7 +216,7 @@
                - nombre: 
                - activo: bool
          - clave
-         - trabajadores_parados: ($)
+         - PPR: ($)(Personal de producción de reserva)
          - terminado 
          - procesos: Todo lo mismo que en magico menos kaizen (tambien con subprocesos, esos igual todo menos kaizen)
          - fechas:
