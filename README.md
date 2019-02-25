@@ -13,12 +13,16 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizados/nuevos(25/2/19):
+ - app_obra_prod
+ - app_procesos
+ - app_obra (proy)
+ - app_kaizen_global
+ - app_datos_kaizen
+ - app_asistencia
+ 
  actualizados/nuevos(21/2/19):
  - app_cuenta_cc (#rifadísimo)
- 
- actualizados/nuevos(20/2/19):
- - app_datos_kaizen (Siempre no la edité pero no me acuerdo cuando había sido la última actualización)
- - app_asistencia
 
  actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
@@ -29,7 +33,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - loadScoreKaizen (en app_funciones)
  
  Por definir:
- - Centro de costos (lo de semanas o quincenas)
+ - Centro de costos 
+    - (lo de semanas o quincenas) 
+    - Claves
  - eliminar en bibliotecas score
 
  Errores:
@@ -60,6 +66,10 @@ TO DO:
    - via
    - west park
    - zentral (todos los proc, hay que arreglar lo de "suministros")
+ - Cambiar Kaiz, agregar bruto y neto a los profit
+   - Hacer un actualizar registros para meter esos datos en todos lados que haya kaiz
+ - Meter "parados" en cada obra (Y en asistencia y pagos_nomina)
+ - profit_semanal en cada obra
  
 KAIZEN: 
   - Quién es responsable de llenarlo.
