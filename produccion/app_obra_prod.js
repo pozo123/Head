@@ -47,8 +47,14 @@ var kaiz = {
         },
     },
     PROFIT: {
-        PROG: 0,
-        REAL: 0,
+        PROG: {
+            BRUTO: 0,
+            NETO: 0,
+        },
+        REAL: {
+            BRUTO: 0,
+            NETO: 0,
+        },
     }
 };
 
@@ -199,6 +205,8 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                                 cliente: $('#' + id_cliente_ddl_obra_prod + " option:selected").text(),
                                 clave: $('#' + id_clave_obra_prod).val(),
                                 num_procesos: 0,
+                                trabajadores_parados: 0,
+                                utilidad_semanal: 0,
                                 procesos: procesos,
                                 supervisor: supervisores,
                                 fechas: fech,
@@ -210,6 +218,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                             nombre: $('#' + id_nombre_obra_prod).val(),
                             clave: $('#' + id_clave_obra_prod).val(),
                             supervisor: supervisores,
+                            trabajadores_parados: 0,
                             num_procesos: 0,
                             procesos: procesos_sin_kaiz,
                             terminado: false,
