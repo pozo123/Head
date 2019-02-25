@@ -44,8 +44,14 @@ var kaiz = {
         },
     },
     PROFIT: {
-        PROG: 0,
-        REAL: 0,
+        PROG: {
+            BRUTO: 0,
+            NETO: 0,
+        },
+        REAL: {
+            BRUTO: 0,
+            NETO: 0,
+        },
     }
 };
 
