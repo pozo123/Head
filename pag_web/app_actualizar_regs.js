@@ -7,6 +7,39 @@ var rama_bd_obras = "proyectos/obras";
 $('#' + id_boton_chido).click(function(){
     
     /*
+    //AGREGAR PROFIT BRUTO Y NETO A TODAS LAS OBRAS, PROCESO Y SUBPROCESOS
+    var profit_kaiz = {
+        PROG: {
+            BRUTO: 0,
+            NETO: 0,
+        },
+        REAL: {
+            BRUTO: 0,
+            NETO: 0,
+        },
+    };
+    firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+        snapshot.forEach(function(obra_snap){
+            var obra = obra_snap.val();
+            console.log(rama_bd_obras + "/" + obra.nombre + "/kaizen/PROFIT");
+            //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/kaizen/PROFIT").set(profit_kaiz);
+            obra_snap.child("procesos").forEach(function(proc_snap){
+                var proc = proc_snap.val();
+                console.log(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT");
+                //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT").set(profit_kaiz);
+                if(proc.num_subprocesos > 0){
+                    proc_snap.child("subprocesos").forEach(function(sub_snap){
+                        var subp = sub_snap.val();
+                        console.log(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT");
+                        //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT").set(profit_kaiz);
+                    });
+                }
+            });
+        });
+    });
+    */
+
+    /*
     //CAMBIAR REGISTROS "MISCELANEOS" POR "OTROS"
     var i = 0;
     firebase.database().ref(rama_bd_registros).once('value').then(function(snapshot){
