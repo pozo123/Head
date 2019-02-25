@@ -163,8 +163,9 @@ $("#" + id_obra_ddl_asistencia).change(function(){
 });
 
 //Jala trabajador de rama_bd_trabajadores, procesos es el array con los procesos de la obra, count_proc es el length de procesos, y semana es un int
+//Chance hay que ponerles diferentes nomvres a los option de cada dia
 function cargaRenglon(trabajador, count_proc, procesos, semana, year){
-    var nom = trabajador.nomina..child(year).child(semana);//Ver si sí jala AQUI
+    var nom = trabajador.nomina.child(year).child(semana);//Ver si sí jala AQUI
     var row = document.createElement('div');
     //----JUEVES----
     var ddl_ju = document.createElement('select');
@@ -188,6 +189,10 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
         var option = document.createElement('option');
         option.text = "Falta";
         option.value = 0;
+        ddl_ju.appendChild(option);
+        var option3 = document.createElement('option');
+        option3.text = "Parado";
+        option3.value = 0.2;
         ddl_ju.appendChild(option);
         for(i=0;i<count_proc;i++){
             var option2 = document.createElement('OPTION');
@@ -219,6 +224,10 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
         option.text = "Falta";
         option.value = 0;
         ddl_vi.appendChild(option);
+        var option3 = document.createElement('option');
+        option3.text = "Parado";
+        option3.value = 0.2;
+        ddl_vi.appendChild(option);
         for(i=0;i<count_proc;i++){
             var option2 = document.createElement('OPTION');
             option2.text = procesos[i];
@@ -248,6 +257,10 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
         var option = document.createElement('option');
         option.text = "Falta";
         option.value = 0;
+        ddl_lu.appendChild(option);
+        var option3 = document.createElement('option');
+        option3.text = "Parado";
+        option3.value = 0.2;
         ddl_lu.appendChild(option);
         for(i=0;i<count_proc;i++){
             var option2 = document.createElement('OPTION');
@@ -279,6 +292,10 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
         option.text = "Falta";
         option.value = 0;
         ddl_ma.appendChild(option);
+        var option3 = document.createElement('option');
+        option3.text = "Parado";
+        option3.value = 0.2;
+        ddl_ma.appendChild(option);
         for(i=0;i<count_proc;i++){
             var option2 = document.createElement('OPTION');
             option2.text = procesos[i];
@@ -308,6 +325,10 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
         var option = document.createElement('option');
         option.text = "Falta";
         option.value = 0;
+        ddl_mi.appendChild(option);
+        var option3 = document.createElement('option');
+        option3.text = "Parado";
+        option3.value = 0.2;
         ddl_mi.appendChild(option);
         for(i=0;i<count_proc;i++){
             var option2 = document.createElement('OPTION');
