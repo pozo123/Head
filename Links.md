@@ -66,3 +66,7 @@ en terminal
 
   - Editar en la tabla
     - https://editor.datatables.net/examples/inline-editing/simple.html
+    
+  - Column Visibility en datatables
+    - https://datatables.net/extensions/buttons/
+    - https://datatables.net/reference/button/colvis
