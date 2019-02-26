@@ -15,9 +15,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  actualizados/nuevos(26/2/19):
  - app_kaizen_global
+ - app_desplegar_procesos
  
  actualizados/nuevos(25/2/19):
- - app_desplegar_procesos
  - app_obra_prod
  - app_procesos
  - app_obra (proy)
@@ -47,13 +47,15 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
- - En el Gantt meter numero de semana para fechas
  - alta_trabajadores
+   - Conseguir datos
+   - Pasarlos a CSV
+   - Usar código cool para pasarlos a JSON (online si es no nested, https://github.com/chamkank/hone si lo es)
+   - Subir el json
  - colvis en desplegar_procesos
  - Centro de costos.
    - alta cuenta
    - añadir al desplegar
- - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
  - Revisar reporte_obras
  - arreglar las apps de permisos de usuario y de inicio de sesion
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
@@ -136,6 +138,8 @@ SCORE:
   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
   - modal cambio contraseña
   - Checar que no exista otra obra con esa clave
+  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
+
   
 - EMAIL
   - Todos pueden subir su foto! (click en seleccionar, seleccionas archivo, y luego click en SUBIR imagen)
