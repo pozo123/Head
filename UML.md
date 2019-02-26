@@ -118,11 +118,18 @@
          - rango
          - sueldo_base
          - jefe (nombre destajista o HEAD)
-         - nombre
+         - nombre:
+            - primer_nombre
+            - apellido_paterno
+            - apellido_materno
          - uid
+         - direccion
+         - timestamps:
+            - ingreso: (el último)
+            - ingresos: push de todos los que ha tenido
          - obra_asignada
          - especialidad
-         - activo
+         - activo: bool
          - nomina
             - year: (ej 2019)
                - semana: (ej 1)
