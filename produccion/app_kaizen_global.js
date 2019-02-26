@@ -60,11 +60,11 @@ function drawKG(){
 		vShowTaskInfoLink: 1, // Show link in tool tip (0/1)
 		vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily
 		vAdditionalHeaders: { // Add data columns to your table
-			category: {
-				title: 'Category'
+			inicio: {
+				title: 'Inicio (sem)'
 			},
-			sector: {
-				title: 'Sector'
+			final: {
+				title: 'Final (sem)'
 			}
 		},
 		vUseSingleCell: 10000, // Set the threshold cell per table row (Helps performance for large data.
@@ -94,6 +94,13 @@ function drawKG(){
 				var cost = parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(obra.kaizen.ADMINISTRACION.ANTICIPOS.PPTO);
 				var f_i = new Date(obra.fechas.fecha_inicio_teorica);
 				var f_f = new Date(obra.fechas.fecha_final_teorica);
+				var sup = "";
+				obraSnap.child("supervisor").forEach(function(supSnap){
+					var superv = supSnap.val();
+					if(superv.activo == true){
+						sup = sup + superv.nombre + ". ";
+					}
+				});
 				g.AddTaskItemObject({
 					pID: i,
 					pName: obra.nombre,
@@ -104,7 +111,7 @@ function drawKG(){
 					pClass: "ggroupblack",
 					pLink: "",
 					pMile: 0,
-					pRes: "",//Supervisor obra (hay que entrar a rama_bd_obras_prod y concatenarlos todos en un string)
+					pRes: sup,//Supervisor obra (hay que entrar a rama_bd_obras_prod y concatenarlos todos en un string)
 					pComp: comp, 
 					pGroup: 1, //0-> no grupo, 1-> grupo
 					pParent: 0, //id parent. 0-> este es el parent
@@ -112,6 +119,8 @@ function drawKG(){
 					pDepend: "", //Para flechitas si hay dependencia entre procesos
 					pCaption: "",
 					pCost: cost,
+					inicio: getWeek(f_i.getTime())[0],
+					final: getWeek(f_f.getTime())[0],
 				});
 				total_venta = total_venta + cost;
 				total_profit_ppto_bruto = total_profit_ppto_bruto + parseFloat(obra.kaizen.PROFIT.PPTO.BRUTO);
@@ -137,7 +146,7 @@ function drawKG(){
 						pClass: css[j%6],
 						pLink: "",
 						pMile: 0,
-						pRes: "",//supervisor obra,
+						pRes: sup,//supervisor obra,
 						pComp: comp_proc,
 						pGroup: 1, //0-> no grupo, 1-> grupo
 						pParent: id_obra, //id parent. 0-> este es el parent
@@ -167,7 +176,7 @@ function drawKG(){
 								pClass: css[(6-k)%6],
 								pLink: "",
 								pMile: 0,
-								pRes: "",//obra.supervisor,
+								pRes: sup,//obra.supervisor,
 								pComp: comp_subp,
 								pGroup: 1, //0-> no grupo, 1-> grupo
 								pParent: id_proc, //id parent. 0-> este es el parent
@@ -193,8 +202,9 @@ function drawKG(){
 	//g.setShowRes(0);
 	g.setShowDur(0);
 	//g.setShowComp(0);
-	//g.setShowStartDate(0);
-	//g.setShowEndDate(0);
-	//g.setAdditionalHeaders({ SCORE: { title: 'SCORE' } });//checar si sintaxis sí es así
+	g.setShowStartDate(0);
+	g.setShowEndDate(0);
+	g.setAdditionalHeaders({ inicio: { title: 'Inicio (sem)' } });//checar si sintaxis sí es así
+	g.setAdditionalHeaders({ final: { title: 'Final (sem)' } });//checar si sintaxis sí es así
 
 }
