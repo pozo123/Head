@@ -69,6 +69,8 @@ en terminal
     - https://editor.datatables.net/examples/inline-editing/simple.html
     - https://vitalets.github.io/x-editable/index.html
     - https://www.jqueryscript.net/tags.php?/editable%20table/
+    - https://www.jqueryscript.net/table/inplace-editing-table-simpletablecelleditor.html
+       - Creo que este ultimo (:
     
   - Column Visibility en datatables
     - https://datatables.net/extensions/buttons/
