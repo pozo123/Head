@@ -46,6 +46,7 @@ en terminal
   - Leer excel
     - https://stackoverflow.com/questions/40467777/how-do-i-store-excel-data-into-firebase
     - https://github.com/FirebaseExtended/firebase-import
+    - https://github.com/chamkank/hone -> A json nested
     
   - Pie charts
     - https://www.chartjs.org/docs/latest/charts/doughnut.htm
