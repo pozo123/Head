@@ -42,6 +42,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
+ - colaboradores con cu existente :/
 
 TO DO:
  - En el Gantt meter numero de semana para fechas
