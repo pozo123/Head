@@ -48,6 +48,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - alert al click en editar proceso
  - hitos en gantt
  - editable en gantt
  - alta_trabajadores
