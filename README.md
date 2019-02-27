@@ -13,6 +13,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ actualizados/nuevos(27/2/19(:
+ - app_procesos (decía calve en vez de clave, los subprocesos no jalan bien por eso :/)
+ 
  actualizados/nuevos(26/2/19):
  - app_atributo
  - app_kaizen_global
@@ -48,6 +51,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - 
  - alert al click en editar proceso
  - hitos en gantt
  - editable en gantt
