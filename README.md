@@ -12,14 +12,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_kaizen_global: CHECK
  - app_datos_kaizen
  - app_asistencia
- 
- actualizados/nuevos(27/2/19(:
- - app_procesos (decía calve en vez de clave, los subprocesos no jalan bien por eso :/)
- 
+  
  actualizados/nuevos(26/2/19):
  - app_atributo
  - app_kaizen_global
- - app_desplegar_procesos
  
  actualizados/nuevos(25/2/19):
  - app_obra_prod
@@ -51,12 +47,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
- - Hacer el alcance textarea en vez de textfield en alta y editar procesos
  - Gantt no jala fechas reales, inicios futuros los pone como hoy
  - No suma los profit totales
  - definir clave subproceso (numero del consecutivo por clase o por proceso?)
  - en alta y en editar addClass("hidden") a los campos en el click tab
- - alert al click en editar proceso
  - hitos en gantt
  - editable en gantt
  - alta_trabajadores
