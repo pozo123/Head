@@ -51,6 +51,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - Gantt no jala fechas reales, creo que por asincronia ):
  - definir clave subproceso (numero del consecutivo por clase o por proceso?)
  - en alta y en editar addClass("hidden") a los campos en el click tab
  - alert al click en editar proceso
