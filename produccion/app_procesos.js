@@ -94,7 +94,7 @@ $('#tabAltaProceso').click(function(){
         var cat = snapshot.val();
         var option4 = document.createElement('OPTION');
         option4.text = cat.nombre;
-        option4.value = cat.calve;
+        option4.value = cat.clave;
         select2.appendChild(option4);
     });
 });
