@@ -51,7 +51,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
- - 
+ - en alta y en editar addClass("hidden") a los campos en el click tab
  - alert al click en editar proceso
  - hitos en gantt
  - editable en gantt
