@@ -49,6 +49,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
 TO DO:
  - hitos en gantt
+ - editable en gantt
  - alta_trabajadores
    - Conseguir datos
    - Pasarlos a CSV
