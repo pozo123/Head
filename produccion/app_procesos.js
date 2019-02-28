@@ -59,7 +59,8 @@ var kaiz = {
 
 
 $('#tabAltaProceso').click(function(){
-
+    $('#' + id_grupo_subproceso).addClass("hidden");
+    $('#' + id_categoria_ddl_procesos).addClass("hidden");
 
     jQuery('#' + id_fecha_inicio_procesos).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -97,6 +98,27 @@ $('#tabAltaProceso').click(function(){
         option4.value = cat.clave;
         select2.appendChild(option4);
     });
+});
+
+$('#' id_obra_ddl_procesos).change(function(){
+    $('#' + id_grupo_subproceso).addClass("hidden");
+    $('#' + id_categoria_ddl_procesos).addClass("hidden");
+    if($("#" + id_subproceso_checkbox_proceso).is(":checked"){
+        $('#' + id_proceso_ddl_procesos).empty();
+        var select = document.getElementById(id_proceso_ddl_procesos);
+        var option = document.createElement('option');
+        option.style = "display:none";
+        option.text = option.value = "";
+        select.appendChild(option);
+
+        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos").orderByKey().on('child_added',function(snapshot){
+            var proc = snapshot.val();
+            var option2 = document.createElement('OPTION');
+            option2.text = proc.clave;
+            option2.value = proc.clave;
+            select.appendChild(option2);
+        });
+    }
 });
 
 $("#" + id_subproceso_checkbox_proceso).change(function(){
