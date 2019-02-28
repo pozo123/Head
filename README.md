@@ -41,6 +41,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - poner textfield de precio hora score en desplegar-kaizen 
  - Gantt no jala fechas reales, inicios futuros los pone como hoy
  - No suma los profit totales
  - definir clave subproceso (numero del consecutivo por clase o por proceso?)
