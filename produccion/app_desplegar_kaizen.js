@@ -1,6 +1,7 @@
 var id_obras_ddl_desplegar_kaizen = "obrasDdlDesplegarKaizen";
 var id_datatable_desplegar_kaizen = "dataTableDesplegarKaizen";
 var id_precio_score_desplegar_kaizen = "precioScoreDesplegarKaizen";//Nuevo!
+var id_actualizar_button_kaizen = "actualizarKaizenButton";
 var rama_bd_personal = "personal";
 var rama_bd_colaboradores_prod = "produccion/colaboradores";
 
@@ -365,3 +366,12 @@ function calculaProfit(tipo, pointer_kaiz/*, cambio*/){
 		$('#' + proc + "_PROFIT_PAG"/*_BRUTO*/).innerHTML = new_profit;//Checar que sí
 	}
 }
+
+$('#' + id_actualizar_button_kaizen).click(function(){
+	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos:");
+	console.log(json_kaizen);
+	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen:");
+	console.log(json_kaizen_obra);
+	//firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos").update(json_kaizen);
+	//firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen").update(json_kaizen_obra);
+});
