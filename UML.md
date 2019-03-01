@@ -34,6 +34,7 @@
                - areas_edicion: (si no es hoja es suma)
                   - *todas las áreas que tienen acceso a esta cuenta, en bool
                - children: "" si es hoja, si es nodo repite el formato json
+               - REGISTROS EN RAMA APARTE
                - registros (si no es hoja NO puede existir, Hay que redistribuirlos a las hojas)
                   - year (por numero)
                      - total_year
