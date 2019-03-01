@@ -98,14 +98,14 @@ function drawKG(){
 				obraSnap.child("supervisor").forEach(function(supSnap){
 					var superv = supSnap.val();
 					if(superv.activo == true){
-						sup = sup + superv.nombre + ". ";
+						sup = sup + superv.nickname + ". ";
 					}
 				});
 				g.AddTaskItemObject({
 					pID: i,
 					pName: obra.nombre,
-					pStart: f_i.toISOString().substring(0, 10),
-					pEnd: f_f.toISOString().substring(0, 10),
+					pStart: f_i.toISOString().substring(0, 10), //fechas[i].f_i.toISOString().substring(0,10),
+					pEnd: f_f.toISOString().substring(0, 10), //fechas[i].f_f.toISOString().substring(0,10),
 					pPlanStart: "",//fecha_inicio_real? o al reves?
 					pPlanEnd: "",//fecha_final_real? o al reves?
 					pClass: "ggroupblack",
@@ -139,8 +139,8 @@ function drawKG(){
 					g.AddTaskItemObject({
 						pID: i,
 						pName: proc.clave,
-						pStart: f_i_p.toISOString().substring(0, 10),
-						pEnd: f_f_p.toISOString().substring(0, 10),
+						pStart: f_i_p.toISOString().substring(0, 10),//fechas[i].f_i_p.toISOString().substring(0,10),
+						pEnd: f_f_p.toISOString().substring(0, 10),//fechas[i].f_f_p.toISOString().substring(0,10),
 						pPlanStart: "",//fecha_inicio_real? o al reves?
 						pPlanEnd: "",//fecha_final_real? o al reves?
 						pClass: css[j%6],
@@ -169,8 +169,8 @@ function drawKG(){
 							g.AddTaskItemObject({
 								pID: i,
 								pName: subproc.clave,
-								pStart: f_i_s.toISOString().substring(0, 10),
-								pEnd: f_f_s.toISOString().substring(0, 10),
+								pStart: f_i_s.toISOString().substring(0, 10),//fechas[i].f_i_s.toISOString().substring(0,10),
+								pEnd: f_f_s.toISOString().substring(0, 10),//fechas[i].f_f_s.toISOString().substring(0,10),
 								pPlanStart: "",//fecha_inicio_real? o al reves?
 								pPlanEnd: "",//fecha_final_real? o al reves?
 								pClass: css[(6-k)%6],
