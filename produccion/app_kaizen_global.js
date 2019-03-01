@@ -98,7 +98,7 @@ function drawKG(){
 				obraSnap.child("supervisor").forEach(function(supSnap){
 					var superv = supSnap.val();
 					if(superv.activo == true){
-						sup = sup + superv.nickname + ". ";
+						sup = sup + superv.nombre + ". ";
 					}
 				});
 				g.AddTaskItemObject({
