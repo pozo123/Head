@@ -41,6 +41,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - Definir generar ppto con Erick
  - Gestionar SCORE en prod-> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
  - poner textfield de precio hora score en desplegar-kaizen 
  - Gantt no jala fechas reales, inicios futuros los pone como hoy
