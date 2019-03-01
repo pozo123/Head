@@ -8,6 +8,7 @@ var rama_bd_colaboradores_prod = "produccion/colaboradores";
 var json_kaizen = {};
 var json_kaizen_obra = {};
 var editable = "editMe";
+var obra_clave;
 
 $(document).ready(function(){
 	var select = document.getElementById(id_obras_ddl_desplegar_kaizen);
@@ -70,84 +71,94 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 		}
 	});
 	$('#' + id_datatable_desplegar_kaizen).on("cell:edited", function (element, oldValue, newValue) {  
-        var id_elem = element.element.id;
-        console.log(element.element.id);
-        var pointer = json_kaizen;
-        var path = id_elem.split("_");
-        var clave_elem;
-        var pointer_kaiz;
-        var pointer_obra = json_kaizen_obra;
-        if(path[0] == "sub"){
-        	//Meter código para guardar en json y poner en la tabla el newValue si es subproceso
-        	//Necesito conocer la clave del proceso papá 
-        	clave_elem = path[0] + path[1];
-        	var clave_proc = path[1].split("-")[0];
-        	var pointer_proc = json_kaizen[clave_proc]["kaizen"];
-        	pointer = pointer[clave_proc]["subprocesos"][path[1]]["kaizen"];
-        	pointer_kaiz = pointer[clave_proc]["subprocesos"][path[1]]["kaizen"];
-        	for(i=2;i<path.length-1;i++){
-        		pointer_proc = pointer_proc[path[i]];
-        		pointer_obra = pointer_obra[path[i]];
-	            pointer = pointer[path[i]];
-	        }
-	        pointer_proc[path[path.length - 1]] = parsefloat(pointer_proc[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(element.newValue);
-	        $('#' + clave_proc + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = parsefloat($('#' + clave_proc + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(element.newValue);
-        } else {
-        	clave_elem = path[0];
-	        pointer = pointer[path[0]];
-	        pointer = pointer["kaizen"];
-	        pointer_kaiz = pointer["kaizen"];
-	        for(i=1;i<path.length-1;i++){
-	        	pointer_obra = pointer_obra[path[i]];
-	            pointer = pointer[path[i]];
-	        }
-        }
-        console.log("NUEVO:");
-        console.log(json_kaizen);
-        if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
-        	element.innerHTML = parseFloat(newValue) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
-        	pointer[path[path.length - 1]] = parseFloat(element.newValue) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
-        } else {
-	        pointer[path[path.length - 1]] = element.newValue;
-			element.innerHTML = newValue;
-        }
-        pointer_obra[path[path.length - 1]] = parsefloat(pointer_obra[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(element.newValue);
-        $('#' + obra_clave + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = parsefloat($('#' + obra_clave + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(element.newValue);
-
-        if(id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
-			var av_p = 0;
-			if(parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["COPEO"]) != 0){
-				av_p = 100 * parseFloat(proc.kaizen.PRODUCCION.COPEO.PAG) / parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO);
+		if(isNaN(parseFloat(element.newValue))){
+			console.log(element.oldValue);
+			document.getElementById(element.element.id).innerHTML = element.oldValue;
+			alert("El valor ingresado debe ser un numero");
+		} else { 
+			var nV = element.newValue;
+			var id_elem = element.element.id;
+			var pointer = json_kaizen;
+			var path = id_elem.split("_");
+			var clave_elem;
+			var pointer_kaiz = json_kaizen;
+			var pointer_obra = json_kaizen_obra;
+			
+			if(path[0] == "sub"){
+				//Meter código para guardar en json y poner en la tabla el newValue si es subproceso
+				//Necesito conocer la clave del proceso papá 
+				clave_elem = path[0] + "_" + path[1];
+				if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
+					nV = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
+					console.log("Nv: " + nV)
+					document.getElementById(id_elem).innerHTML = parseFloat(nV);
+				}
+				var clave_proc = path[1].split("-")[0];
+				var pointer_proc = json_kaizen[clave_proc]["kaizen"];
+				pointer = pointer[clave_proc]["subprocesos"][path[1]]["kaizen"];
+				pointer_kaiz = pointer_kaiz[clave_proc]["subprocesos"][path[1]]["kaizen"];
+				for(i=2;i<path.length-1;i++){
+					pointer_proc = pointer_proc[path[i]];
+					pointer_obra = pointer_obra[path[i]];
+					pointer = pointer[path[i]];
+				}
+				pointer_proc[path[path.length - 1]] = parseFloat(pointer_proc[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(nV);
+				document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML = parseFloat(document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(nV);
+			} else {
+				clave_elem = path[0];
+				if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
+					nV = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
+					console.log("Nv: " + nV)
+					document.getElementById(id_elem).innerHTML = parseFloat(nV);
+				}
+				pointer = pointer[path[0]];
+				pointer = pointer["kaizen"];
+				pointer_kaiz = pointer_kaiz[path[0]]["kaizen"];
+				for(i=1;i<path.length-1;i++){
+					pointer_obra = pointer_obra[path[i]];
+					pointer = pointer[path[i]];
+				}
 			}
-			$('#' + clave_elem + '_avance_prog').innerHTML = "%" + av_p;//Revisar si sí se actualiza
-        } else if(id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_EST" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO"){
-        	var av_r = 0;
-        	if(parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PPTO"]) != 0){
-        	 	av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)
-        	}
-        	$('#' + clave_elem + '_avance_real').innerHTML = "%" + av_r;//Revisar si sí se actualiza
-        }
-        if(id_elem == clave_elem + "_PROYECTOS_PPTO" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_CUANT" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_OdeC" || id_elem == clave_elem + "_PRODUCCION_COPEO_PREC" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PPTO"){
-        	calculaProfit("prog", pointer_kaiz);//, "datos");
-        } else if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PAG"){
-        	calculaProfit("real", pointer_kaiz);//, "datos");
-        }
-        /*
+			pointer[path[path.length - 1]] = nV;
+			pointer_obra[path[path.length - 1]] = parseFloat(pointer_obra[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(nV);
+			document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = parseFloat(document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(nV);
+			
+			if(id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
+				var av_p = 0;
+				if(parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["COPEO"]) != 0){
+					av_p = 100 * parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["PAG"]) / parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["COPEO"]);
+				}
+				document.getElementById(clave_elem + '_avance_prog').innerHTML = (av_p).toFixed(2) + "%";
+			} else if(id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_EST" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO"){
+				var av_r = 0;
+				if(parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PPTO"]) != 0){
+					av_r = 100 * parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["EST"]) / parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PPTO"])
+				}
+				document.getElementById(clave_elem + '_avance_real').innerHTML = (av_r).toFixed(2) + "%"
+			}
+			if(id_elem == clave_elem + "_PROYECTOS_PPTO" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_CUANT" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_OdeC" || id_elem == clave_elem + "_PRODUCCION_COPEO_PREC" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PPTO"){
+				console.log("1");
+				calculaProfit("prog", pointer_kaiz, clave_elem);//, "datos");
+			} else if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PAG"){
+				console.log("2");
+				calculaProfit("real", pointer_kaiz, clave_elem);//, "datos");
+			}
+			/*
 	        pointer = pointer[path[0]];
 	        pointer = pointer["kaizen"];
 	        for(i=1;i<path.length-1;i++){
-	            pointer = pointer[path[i]];
+				pointer = pointer[path[i]];
 	        }
 	        console.log("NUEVO:");
 	        console.log(json_kaizen);
 	        if(id_elem == path[0] + "_PROYECTOS_PAG" || id_elem == path[0] + "_PROYECTOS_PPTO"){
-	        	element.innerHTML = parseFloat(newValue) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
-	        	pointer[path[path.length - 1]] = parseFloat(element.newValue) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
+				element.innerHTML = parseFloat(newValue) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
+	        	pointer[path[path.length - 1]] = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
 	        } else {
-		        pointer[path[path.length - 1]] = element.newValue;
+				pointer[path[path.length - 1]] = nV;
 				element.innerHTML = newValue;
 	        }
-
+			
 	        if(id_elem == path[0] + "_PRODUCCION_COPEO_PAG" || id_elem == path[0] + "_PRODUCCION_COPEO_COPEO"){
 				var av_p = 0;
 				if(parseFloat(json_kaizen[path[0]]["kaizen"]["PRODUCCION"]["COPEO"]["COPEO"]) != 0){
@@ -155,21 +166,22 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				}
 				$('#' + path[0] + '_avance_prog').innerHTML = "%" + av_p;//Revisar si sí se actualiza
 	        } else if(id_elem == path[0] + "_ADMINISTRACION_ESTIMACIONES_EST" || id_elem == path[0] + "_ADMINISTRACION_ESTIMACIONES_PPTO"){
-	        	var av_r = 0;
+				var av_r = 0;
 	        	if(parseFloat(json_kaizen[path[0]]["kaizen"]["ADMINISTRACION"]["ESTIMACIONES"]["PPTO"]) != 0){
-	        	 	av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)
+					av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)
 	        	}
 	        	$('#' + path[0] + '_avance_real').innerHTML = "%" + av_r;//Revisar si sí se actualiza
 	        }
 	        if(id_elem == path[0] + "_PROYECTOS_PPTO" || id_elem == path[0] + "_PRODUCCION_SUMINISTROS_CUANT" || id_elem == path[0] + "_PRODUCCION_SUMINISTROS_OdeC" || id_elem == path[0] + "_PRODUCCION_COPEO_PREC" || id_elem == path[0] + "_PRODUCCION_COPEO_COPEO" || id_elem == path[0] + "_ADMINISTRACION_ESTIMACIONES_PPTO" || id_elem == path[0] + "_ADMINISTRACION_ANTICIPOS_PPTO"){
-	        	calculaProfit("prog", path[0]);//, "datos");
+				calculaProfit("prog", path[0]);//, "datos");
 	        } else if(id_elem == path[0] + "_PROYECTOS_PAG" || id_elem == path[0] + "_PRODUCCION_SUMINISTROS_PAG" || id_elem == path[0] + "_PRODUCCION_COPEO_PAG" || id_elem == path[0] + "_ADMINISTRACION_ESTIMACIONES_PAG" || id_elem == path[0] + "_ADMINISTRACION_ANTICIPOS_PAG"){
-	        	calculaProfit("real", path[0]);//, "datos");
+				calculaProfit("real", path[0]);//, "datos");
 	        }/* else if(id_elem == path[0] + "_PROFIT_PROG"){
-	        	calculaProfit("prog", path[0], "profit");
+				calculaProfit("prog", path[0], "profit");
 	        } else if(id_elem == path[0] + "_PROFIT_PAG"){
-	        	calculaProfit("real", path[0], "profit");
+				calculaProfit("real", path[0], "profit");
 	        }*/
+		}
 	});
 	//editor.constructor(tableId, tableCellEditorParams)
 	//editor.SetEditable(element, cellEditorParams)
@@ -180,7 +192,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val()).once('value').then(function(snapshot){
         json_kaizen = snapshot.val().procesos;
         json_kaizen_obra = snapshot.val().kaizen;
-        console.log(json_kaizen);
+		obra_clave = snapshot.val().clave;
 		var table = document.getElementById(id_datatable_desplegar_kaizen);
 		snapshot.child("procesos").forEach(function(childSnap){
 			var proc = childSnap.val();
@@ -190,8 +202,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				createRow(proc,table,"procPadre");
 				childSnap.child("subprocesos").forEach(function(grandChildSnap){
 					var subproc = grandChildSnap.val();
-					//Hay que ver cómo hacer que con estos el editable sea diferente. 
-					//createRow(subproc,table,"subproc");
+					createRow(subproc,table,"subproc");
 				});
 			}
 		});
@@ -210,7 +221,7 @@ function createRow(proc,table,tipo){
 			editClass = "";
 			var titulo = document.createElement('td');
 			titulo.innerHTML = "TOTAL";
-			titulo.colspan = 2;
+			titulo.colSpan = 2;
 			row.appendChild(titulo);
 		} else {
 			var proc_clave = document.createElement('td');
@@ -275,7 +286,7 @@ function createRow(proc,table,tipo){
 		if(parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO) != 0){
 			av_p = 100 * parseFloat(proc.kaizen.PRODUCCION.COPEO.PAG) / parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO);
 		}
-		avance_prog.innerHTML = "%" + av_p;
+		avance_prog.innerHTML = (av_p).toFixed(2) + "%";
 		row.appendChild(avance_prog);
 		var avance_real = document.createElement('td');
 		avance_real.id = cl + "_avance_real";
@@ -283,7 +294,7 @@ function createRow(proc,table,tipo){
 		if(parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) != 0){
 			av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO);
 		}
-		avance_real.innerHTML = "%" + av_r;
+		avance_real.innerHTML = (av_r).toFixed(2) + "%";
 		row.appendChild(avance_real);
 		var admin_estim_ppto = document.createElement('td');
 		admin_estim_ppto.id = cl + "_ADMINISTRACION_ESTIMACIONES_PPTO";
@@ -323,7 +334,8 @@ function createRow(proc,table,tipo){
 		table.appendChild(row);
 }
 
-function calculaProfit(tipo, pointer_kaiz/*, cambio*/){
+function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
+	console.log("3")
 	if(tipo == "prog"){
 		var proy = parseFloat(pointer_kaiz["PROYECTOS"]["PPTO"]);
 		var cop;
@@ -349,7 +361,7 @@ function calculaProfit(tipo, pointer_kaiz/*, cambio*/){
 		var new_profit_neto = new_profit * 0.6;
 		pointer_kaiz["PROFIT"]["PROG"]/*["BRUTO"]*/ = new_profit;
 		//pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;//BRUTO
-		$('#' + proc + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = new_profit;//Checar que sí
+		document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
 		/*} else if(cambio == "profit"){
 			var new_venta = costos/(0.8-parseFloat(pointer_kaiz["PROFIT"]["PROG"]["BRUTO"])/100);
 			var new_venta_ant = new_venta * venta_anticipo / venta;
@@ -363,7 +375,7 @@ function calculaProfit(tipo, pointer_kaiz/*, cambio*/){
 		var venta = parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PAG"]) + parseFloat(pointer_kaiz["ADMINISTRACION"]["ANTICIPOS"]["PAG"]);
 		var new_profit = venta * 0.8 - proy - sum - cop;
 		pointer_kaiz["PROFIT"]["REAL"]/*["BRUTO"]*/ = new_profit;
-		$('#' + proc + "_PROFIT_PAG"/*_BRUTO*/).innerHTML = new_profit;//Checar que sí
+		document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
 	}
 }
 
@@ -375,3 +387,7 @@ $('#' + id_actualizar_button_kaizen).click(function(){
 	//firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos").update(json_kaizen);
 	//firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen").update(json_kaizen_obra);
 });
+//FALTA
+//PROFIT y AVANCE de OBRA y procPadre
+//precio
+//Falta matar todos los td dentro del tr al cambiar en ddl
