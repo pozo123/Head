@@ -100,10 +100,10 @@ $('#tabAltaProceso').click(function(){
     });
 });
 
-$('#' id_obra_ddl_procesos).change(function(){
+$('#' + id_obra_ddl_procesos).change(function(){
     $('#' + id_grupo_subproceso).addClass("hidden");
     $('#' + id_categoria_ddl_procesos).addClass("hidden");
-    if($("#" + id_subproceso_checkbox_proceso).is(":checked"){
+    if($("#" + id_subproceso_checkbox_proceso).is(":checked")){
         $('#' + id_proceso_ddl_procesos).empty();
         var select = document.getElementById(id_proceso_ddl_procesos);
         var option = document.createElement('option');
