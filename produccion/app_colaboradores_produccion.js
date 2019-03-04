@@ -16,29 +16,72 @@ $(document).ready(function(){
     $("#" + id_supervisor_rb_colaborador).prop("checked", true);
 });
 
+$("#" + id_email_colaborador).change(function(){
+    firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
+        var existe = false;
+        var nombre = "";
+        var nickname = "";
+        snapshot.forEach(function(child_snap){
+            var pers = child_snap.val();
+            if(pers.email == $("#" + id_email_colaborador).val()){
+                existe = true;
+                nombre = pers.nombre;
+                nickname = pers.nickname;
+            }
+        });
+        if(existe){
+            $('#' + id_nombre_colaborador).val(nombre);
+            $('#' + id_nickname_colaborador).val(nickname);
+            document.getElementById(id_nombre_colaborador).disabled = true;
+            document.getElementById(id_nickname_colaborador).disabled = true;
+            document.getElementById(id_password_colaborador).disabled = true;
+        } else {
+            if(document.getElementById(id_nombre_colaborador).disabled == true){
+                $('#' + id_nombre_colaborador).val("");
+                $('#' + id_nickname_colaborador).val("");
+            }
+            document.getElementById(id_nombre_colaborador).disabled = false;
+            document.getElementById(id_nickname_colaborador).disabled = false;
+            document.getElementById(id_password_colaborador).disabled = false;
+        }
+    });
+});
+
 $('#' + id_registrar_button_colaborador).click(function () {
-    if(!$('#' + id_nombre_colaborador).val() || !$('#' + id_email_colaborador).val() || !$('#' + id_password_colaborador).val() || !$('#' + id_nickname_colaborador).val()){
+    if(!$('#' + id_nombre_colaborador).val() || !$('#' + id_email_colaborador).val() || (document.getElementById(id_password_colaborador).disabled == false && !$('#' + id_password_colaborador).val()) || !$('#' + id_nickname_colaborador).val()){
         alert("Llena todos los campos requeridos");
     } else {
-        secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador).val(), $('#' + id_password_colaborador).val())
-            .then(function (result) {
-                guardaDatosCol(result.user);
-                guardaDatosPersonalProd(result.user, $('#' + id_nombre_colaborador).val(), $('#' + id_nickname_colaborador).val());
-                secondaryApp.auth().signOut();
-            }, function(error){
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode == 'auth/email-already-in-use') {
-                    firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('value').then(function(snapshot){
-                        var pers = snapshot.val();
-                        guardaDatosCol(pers);
-                        var tru = true;
-                        firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/produccion").set(tru);
-                    });
-                } else {
-                    alert(errorMessage);
-                }
+        if(existe){
+            firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('value').then(function(snapshot){
+                var pers = snapshot.val();
+                guardaDatosCol(pers);
+                var tru = true;
+                firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/produccion").set(tru);
             });
+        } else {
+            secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador).val(), $('#' + id_password_colaborador).val())
+                .then(function (result) {
+                    guardaDatosCol(result.user);
+                    guardaDatosPersonalProd(result.user, $('#' + id_nombre_colaborador).val(), $('#' + id_nickname_colaborador).val());
+                    secondaryApp.auth().signOut();
+                }
+                /*, function(error){
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorCode == 'auth/email-already-in-use') {
+                        firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('value').then(function(snapshot){
+                            var pers = snapshot.val();
+                            guardaDatosCol(pers);
+                            var tru = true;
+                            firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/produccion").set(tru);
+                        });
+                    } else {
+                        alert(errorMessage);
+                    }
+                }
+                */
+            );
+        }
     }
 });
 
