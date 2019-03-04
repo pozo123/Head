@@ -43,6 +43,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - utilidad_semanal
  - si copeo/odec = -1 jala el valor de prec/cuant
  - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - dar de alta los subprocesos de via
