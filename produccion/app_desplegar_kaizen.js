@@ -163,11 +163,11 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
     //FALTA
     //Revisar BRUTOs
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val()).once('value').then(function(snapshot){
-        json_kaizen = snapshot.val().procesos;
+		json_kaizen = snapshot.val().procesos;
         json_kaizen_obra = snapshot.val().kaizen;
 		obra_clave = snapshot.val().clave;
 		var table = document.getElementById(id_datatable_desplegar_kaizen);
-		if(num_procesos == 0){
+		if(snapshot.val().num_procesos == 0){
 			createRow(snapshot.val(),table,"obraSimple");
 		} else {
 			snapshot.child("procesos").forEach(function(childSnap){
