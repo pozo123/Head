@@ -372,7 +372,7 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 		var venta = parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PAG"]) + parseFloat(pointer_kaiz["ADMINISTRACION"]["ANTICIPOS"]["PAG"]);
 		var new_profit = venta * 0.8 - proy - sum - cop;
 		pointer_kaiz["PROFIT"]["REAL"]/*["BRUTO"]*/ = new_profit;
-		document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
+		document.getElementById(clave_elem + "_PROFIT_REAL"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
 	}
 }
 
