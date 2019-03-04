@@ -60,7 +60,7 @@ var kaiz = {
 
 $('#tabAltaProceso').click(function(){
     $('#' + id_grupo_subproceso).addClass("hidden");
-    $('#' + id_categoria_ddl_procesos).addClass("hidden");
+    $('#' + id_grupo_categoria).addClass("hidden");
 
     jQuery('#' + id_fecha_inicio_procesos).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
@@ -102,7 +102,9 @@ $('#tabAltaProceso').click(function(){
 
 $('#' + id_obra_ddl_procesos).change(function(){
     $('#' + id_grupo_subproceso).addClass("hidden");
-    $('#' + id_categoria_ddl_procesos).addClass("hidden");
+    $('#' + id_grupo_categoria).addClass("hidden");
+    $("#" + id_subproceso_checkbox_proceso).prop('checked', false);
+    /*
     if($("#" + id_subproceso_checkbox_proceso).is(":checked")){
         $('#' + id_proceso_ddl_procesos).empty();
         var select = document.getElementById(id_proceso_ddl_procesos);
@@ -118,7 +120,7 @@ $('#' + id_obra_ddl_procesos).change(function(){
             option2.value = proc.clave;
             select.appendChild(option2);
         });
-    }
+    }*/
 });
 
 $("#" + id_subproceso_checkbox_proceso).change(function(){
