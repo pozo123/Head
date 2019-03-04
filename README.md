@@ -39,6 +39,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - eliminar en bibliotecas score
 
  Errores:
+ - En alta procesos el ddl categoria nunca se desoculta
  - No se actualiza el valor de profit real en desplegar kaizen
  - en desplegar kaizen dice avances pero debe ser anticipios
  - Gantt no saca inicio (sem) pero sí final (sem)
@@ -50,6 +51,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - dar de alta los subprocesos de via
  - Que el profit prog se calcule como suma de los de arriba y no en totales
  - Botón reducir subprocesos a procesos
  - Definir generar ppto con Erick
