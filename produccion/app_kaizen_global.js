@@ -90,7 +90,7 @@ function drawKG(){
 				}
 			}
 			if(aut == "gerente" || autorizar == true){
-				var comp = parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+				var comp = (100 * parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)).toFixed(2); 
 				var cost = parseFloat(obra.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(obra.kaizen.ADMINISTRACION.ANTICIPOS.PPTO);
 				var f_i = new Date(obra.fechas.fecha_inicio_teorica);
 				var f_f = new Date(obra.fechas.fecha_final_teorica);
@@ -132,7 +132,7 @@ function drawKG(){
 				obraSnap.child("procesos").forEach(function(childSnapshot){
 					i++;
 					var proc = childSnapshot.val();
-					var comp_proc = parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+					var comp_proc = (100 *parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)).toFixed(2); 
 					var cost_proc = parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(proc.kaizen.ADMINISTRACION.ANTICIPOS.PPTO);
 					var f_i_p = new Date(proc.fechas.fecha_inicio_teorica);
 					var f_f_p = new Date(proc.fechas.fecha_final_teorica);
@@ -161,7 +161,7 @@ function drawKG(){
 						childSnapshot.child("subprocesos").forEach(function(subProcSnap){
 							i++;
 							var subproc = subProcSnap.val();
-							var comp_subp = parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO); 
+							var comp_subp = (100 * parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO)).toFixed(2); 
 							var cost_subp = parseFloat(subproc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(subproc.kaizen.ADMINISTRACION.ANTICIPOS.PPTO);
 							//var costo_subproc = parseFloat(subproc.ADMINISTRACION.ESTIMACIONES.PPTO) + parseFloat(subproc.ADMINISTRACION.ANTICIPOS.PPTO);
 							f_i_s = new Date(subproc.fechas.fecha_inicio_teorica);
