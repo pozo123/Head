@@ -27,9 +27,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas
  - loadScoreKaizen (en app_funciones)
- - desplegar_kaizen
-    - profit como suma y no como formula
-    - profit real html
  
  Por definir:
  - Centro de costos 
@@ -38,17 +35,15 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - claves subprocesos
 
  Errores:
- - En alta procesos el ddl categoria nunca se desoculta
- - en desplegar kaizen dice avances pero debe ser anticipios
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros
  - No se están sumando horas en "horas_trabajadas" en el ppto :/
  - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
- - colaboradores con cu existente :/
 
 TO DO:
+ - si copeo/odec = -1 jala el valor de prec/cuant
  - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - dar de alta los subprocesos de via
  - Botón reducir subprocesos a procesos
@@ -76,7 +71,6 @@ TO DO:
  - Poner botón regresar a index o links para navegar entre páginas
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
  - Altas colaboradores:
-   - SIGUE TRONANDO ): Jala un udefined, creo que porque value en vez de child_added
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
