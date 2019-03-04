@@ -35,6 +35,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - eliminar en bibliotecas score
 
  Errores:
+ - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros
  - No se están sumando horas en "horas_trabajadas" en el ppto :/
  - registros con horas 0 (creo que ya se resolvió)
