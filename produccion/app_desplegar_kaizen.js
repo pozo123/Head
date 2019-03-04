@@ -190,7 +190,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 //proc es algo que tiene kaizen
 function createRow(proc,table,tipo){
 		var editClass;
-		var profitProgClass = " profit_prog";
+		var profitProgClass = "";
 		var cl = proc.clave;
 		var row = document.createElement('tr');
 		row.className = "row_data";
@@ -200,7 +200,6 @@ function createRow(proc,table,tipo){
 			titulo.innerHTML = "TOTAL";
 			titulo.colSpan = 2;
 			row.appendChild(titulo);
-			profitProgClass = "";
 			if(tipo == "obra"){
 				editClass = "";
 			} else {
@@ -213,6 +212,7 @@ function createRow(proc,table,tipo){
 			var proc_nombre = document.createElement('td');
 			proc_nombre.innerHTML = proc.nombre;
 			row.appendChild(proc_nombre);
+			profitProgClass = " profit_prog";
 			if(tipo == "procSimple"){
 				editClass = editable;
 			} else if(tipo == "procPadre"){
