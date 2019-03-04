@@ -51,6 +51,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - dar de alta los subprocesos de via
  - Que el profit prog se calcule como suma de los de arriba y no en totales
  - Botón reducir subprocesos a procesos
