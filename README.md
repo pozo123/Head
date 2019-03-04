@@ -31,16 +31,18 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - app_areas
  - loadScoreKaizen (en app_funciones)
+ - desplegar_kaizen
+    - profit como suma y no como formula
+    - profit real html
  
  Por definir:
  - Centro de costos 
-    - (lo de semanas o quincenas) 
     - Claves
  - eliminar en bibliotecas score
+ - claves subprocesos
 
  Errores:
  - En alta procesos el ddl categoria nunca se desoculta
- - No se actualiza el valor de profit real en desplegar kaizen
  - en desplegar kaizen dice avances pero debe ser anticipios
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros
@@ -53,7 +55,6 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 TO DO:
  - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - dar de alta los subprocesos de via
- - Que el profit prog se calcule como suma de los de arriba y no en totales
  - Botón reducir subprocesos a procesos
  - Definir generar ppto con Erick
  - Gestionar SCORE en prod-> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
