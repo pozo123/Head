@@ -145,7 +145,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 					calculaProfit("prog", pointer_kaiz_padre, clave_proc);
 				}
 				calculaProfit("prog", pointer_kaiz, clave_elem);//, "datos");
-				calculaProfit("prog", json_kaizen_obra, obra_clave);//, "datos");
+				calculaProfitProgGlobal(json_kaizen_obra,obra_clave)
 			} else if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PAG"){
 				console.log("2");
 				if(sub){
@@ -190,6 +190,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 //proc es algo que tiene kaizen
 function createRow(proc,table,tipo){
 		var editClass;
+		var profitProgClass = " profit_prog";
 		var cl = proc.clave;
 		var row = document.createElement('tr');
 		row.className = "row_data";
@@ -199,6 +200,7 @@ function createRow(proc,table,tipo){
 			titulo.innerHTML = "TOTAL";
 			titulo.colSpan = 2;
 			row.appendChild(titulo);
+			profitProgClass = "";
 			if(tipo == "obra"){
 				editClass = "";
 			} else {
@@ -307,7 +309,7 @@ function createRow(proc,table,tipo){
 		var profit_prog = document.createElement('td');
 		profit_prog.id = cl + "_PROFIT_PROG";//_BRUTO";
 		profit_prog.innerHTML = proc.kaizen.PROFIT.PROG;//.BRUTO;
-		profit_prog.className = "celda " + editClass;
+		profit_prog.className = "celda " + editClass + profitProgClass;
 		row.appendChild(profit_prog);
 		var profit_real = document.createElement('td');
 		profit_real.id = cl + "_PROFIT_REAL";//_BRUTO";
@@ -315,6 +317,18 @@ function createRow(proc,table,tipo){
 		profit_real.className =  "celda";
 		row.appendChild(profit_real);
 		table.appendChild(row);
+}
+
+function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
+	var sum = 0;
+	$('.profit_prog').each(function(){
+	    sum += parseFloat(this.innerHTML);
+	});
+	var new_profit = sum;
+	var new_profit_neto = new_profit * 0.6;
+	pointer_kaiz["PROFIT"]["PROG"]/*["BRUTO"]*/ = new_profit;
+	//pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;//BRUTO
+	document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
 }
 
 function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
