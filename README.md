@@ -35,6 +35,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - eliminar en bibliotecas score
 
  Errores:
+ - en desplegar procesos dice avances pero debe ser anticipios
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros
  - No se están sumando horas en "horas_trabajadas" en el ppto :/
@@ -44,6 +45,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - colaboradores con cu existente :/
 
 TO DO:
+ - Botón reducir subprocesos a procesos
  - Definir generar ppto con Erick
  - Gestionar SCORE en prod-> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
  - poner textfield de precio hora score en desplegar-kaizen 
