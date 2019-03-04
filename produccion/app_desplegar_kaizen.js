@@ -307,13 +307,13 @@ function createRow(proc,table,tipo){
 		admin_anticipos_pag.className = "celda " + editClass;
 		row.appendChild(admin_anticipos_pag);
 		var profit_prog = document.createElement('td');
-		profit_prog.id = cl + "_PROFIT_PROG";//_BRUTO";
-		profit_prog.innerHTML = proc.kaizen.PROFIT.PROG;//.BRUTO;
+		profit_prog.id = cl + "_PROFIT_PROG_BRUTO";
+		profit_prog.innerHTML = proc.kaizen.PROFIT.PROG.BRUTO;
 		profit_prog.className = "celda " + editClass + profitProgClass;
 		row.appendChild(profit_prog);
 		var profit_real = document.createElement('td');
-		profit_real.id = cl + "_PROFIT_REAL";//_BRUTO";
-		profit_real.innerHTML = proc.kaizen.PROFIT.REAL;//.BRUTO;
+		profit_real.id = cl + "_PROFIT_REAL_BRUTO";
+		profit_real.innerHTML = proc.kaizen.PROFIT.REAL.BRUTO;
 		profit_real.className =  "celda";
 		row.appendChild(profit_real);
 		table.appendChild(row);
@@ -326,9 +326,9 @@ function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
 	});
 	var new_profit = sum;
 	var new_profit_neto = new_profit * 0.6;
-	pointer_kaiz["PROFIT"]["PROG"]/*["BRUTO"]*/ = new_profit;
-	//pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;//BRUTO
-	document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
+	pointer_kaiz["PROFIT"]["PROG"]["BRUTO"] = new_profit;
+	pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;
+	document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = (new_profit).toFixed(2);
 }
 
 function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
@@ -356,9 +356,9 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 		//if(cambio == "datos");{
 		var new_profit = venta * 0.8 - costos;
 		var new_profit_neto = new_profit * 0.6;
-		pointer_kaiz["PROFIT"]["PROG"]/*["BRUTO"]*/ = new_profit;
-		//pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;//BRUTO
-		document.getElementById(clave_elem + "_PROFIT_PROG"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
+		pointer_kaiz["PROFIT"]["PROG"]["BRUTO"] = new_profit;
+		pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;
+		document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = (new_profit).toFixed(2);
 		/*} else if(cambio == "profit"){
 			var new_venta = costos/(0.8-parseFloat(pointer_kaiz["PROFIT"]["PROG"]["BRUTO"])/100);
 			var new_venta_ant = new_venta * venta_anticipo / venta;
@@ -371,8 +371,8 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 		var cop = parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["PAG"]);
 		var venta = parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PAG"]) + parseFloat(pointer_kaiz["ADMINISTRACION"]["ANTICIPOS"]["PAG"]);
 		var new_profit = venta * 0.8 - proy - sum - cop;
-		pointer_kaiz["PROFIT"]["REAL"]/*["BRUTO"]*/ = new_profit;
-		document.getElementById(clave_elem + "_PROFIT_REAL"/*_BRUTO*/).innerHTML = (new_profit).toFixed(2);
+		pointer_kaiz["PROFIT"]["REAL"]["BRUTO"] = new_profit;
+		document.getElementById(clave_elem + "_PROFIT_REAL_BRUTO").innerHTML = (new_profit).toFixed(2);
 	}
 }
 
