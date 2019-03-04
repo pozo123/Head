@@ -142,6 +142,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
                 }
             procesos_sin_kaiz["MISC"] = {
                 alcance: "MISCELANEOS",
+                nombre: "MISCELANEOS",
                 clave: "MISC",
                 tipo: "miscelaneo",    
                 fechas: fech,
@@ -150,6 +151,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             };
             procesos_sin_kaiz["PC00"] = {
                 alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+                nombre: "ALCANCE",
                 clave: "PC00",
                 tipo: "proyecto",
                 fechas: fech,
@@ -158,6 +160,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             };
             procesos_sin_kaiz["ADIC"] = {
                 alcance: "ADICIONALES",
+                nombre: "ADICIONALES",
                 clave: "ADIC",
                 tipo: "adicional",
                 fechas: fech,
@@ -166,6 +169,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             };
             procesos["MISC"] = {
                 alcance: "MISCELANEOS",
+                nombre: "MISCELANEOS",
                 clave: "MISC",
                 tipo: "miscelaneo",    
                 fechas: fech,
@@ -175,6 +179,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             };
             procesos["PC00"] = {
                 alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
+                nombre: "PREPROYECTO",
                 clave: "PC00",
                 tipo: "proyecto",
                 fechas: fech,
@@ -184,6 +189,7 @@ $('#' + id_registrar_button_obra_prod).click(function () {
             };
             procesos["ADIC"] = {
                 alcance: "ADICIONALES",
+                nombre: "ADICIONALES",
                 clave: "ADIC",
                 tipo: "adicional",
                 fechas: fech,
