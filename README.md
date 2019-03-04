@@ -35,6 +35,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - eliminar en bibliotecas score
 
  Errores:
+ - No se están sumando horas en "horas_trabajadas" en el ppto :/
  - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
