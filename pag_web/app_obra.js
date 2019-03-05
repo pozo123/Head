@@ -23,12 +23,12 @@ var kaiz = {
     PRODUCCION: {
         SUMINISTROS: {
             CUANT: 0,
-            OdeC: 0,
+            OdeC: -1,
             PAG: 0,
         },
         COPEO: {
             PREC: 0,
-            COPEO: 0,
+            COPEO: -1,
             PAG: 0,
         },
     },
