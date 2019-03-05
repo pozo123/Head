@@ -131,10 +131,10 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = parseFloat(document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(nV);
 			
 			if(id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
-				calculaAvance("prog",pointer_kaiz,clave_elem);
-				calculaAvance("prog",json_kaizen_obra,obra_clave);
+				calculaAvance("pag",pointer_kaiz,clave_elem);
+				calculaAvance("pag",json_kaizen_obra,obra_clave);
 				if(sub){
-					calculaAvance("prog",pointer_kaiz_padre,clave_proc);
+					calculaAvance("pag",pointer_kaiz_padre,clave_proc);
 				}
 			} else if(id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_EST" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO"){
 				calculaAvance("real",pointer_kaiz,clave_elem);	
@@ -283,15 +283,15 @@ function createRow(proc,table,tipo){
 	prod_cop_pag.innerHTML = proc.kaizen.PRODUCCION.COPEO.PAG;
 	prod_cop_pag.className = "celda " + editClass;
 	row.appendChild(prod_cop_pag);
-	var avance_prog = document.createElement('td');
-	avance_prog.id = cl + "_avance_prog";
-	avance_prog.className = "celda";
+	var avance_pag = document.createElement('td');
+	avance_pag.id = cl + "_avance_pag";
+	avance_pag.className = "celda";
 	var av_p = 0;
 	if(parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO) != 0){
 		av_p = 100 * parseFloat(proc.kaizen.PRODUCCION.COPEO.PAG) / parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO);
 	}
-	avance_prog.innerHTML = (av_p).toFixed(2) + "%";
-	row.appendChild(avance_prog);
+	avance_pag.innerHTML = (av_p).toFixed(2) + "%";
+	row.appendChild(avance_pag);
 	var avance_real = document.createElement('td');
 	avance_real.id = cl + "_avance_real";
 	avance_real.className = "celda";
@@ -329,7 +329,7 @@ function createRow(proc,table,tipo){
 	var profit_prog = document.createElement('td');
 	profit_prog.id = cl + "_PROFIT_PROG_BRUTO";
 	profit_prog.innerHTML = proc.kaizen.PROFIT.PROG.BRUTO;
-	profit_prog.className = "celda " + editClass + profitProgClass;
+	profit_prog.className = "celda " + profitProgClass;
 	row.appendChild(profit_prog);
 	var profit_real = document.createElement('td');
 	profit_real.id = cl + "_PROFIT_REAL_BRUTO";
@@ -401,12 +401,12 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 }
 
 function calculaAvance(tipo, pointer_kaiz, clave_elem){
-	if(tipo == "prog"){
+	if(tipo == "pag"){
 		var av_p = 0;
 		if(parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["COPEO"]) != 0){
 			av_p = 100 * parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["PAG"]) / parseFloat(pointer_kaiz["PRODUCCION"]["COPEO"]["COPEO"]);
 		}
-		document.getElementById(clave_elem + '_avance_prog').innerHTML = (av_p).toFixed(2) + "%";
+		document.getElementById(clave_elem + '_avance_pag').innerHTML = (av_p).toFixed(2) + "%";
 	} else if(tipo == "real"){
 		var av_r = 0;
 		if(parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PPTO"]) != 0){
