@@ -16,9 +16,10 @@ $(document).ready(function(){
     $("#" + id_supervisor_rb_colaborador).prop("checked", true);
 });
 
+var existe = false;
 $("#" + id_email_colaborador).change(function(){
+    existe = false;
     firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
-        var existe = false;
         var nombre = "";
         var nickname = "";
         snapshot.forEach(function(child_snap){
@@ -52,7 +53,7 @@ $('#' + id_registrar_button_colaborador).click(function () {
         alert("Llena todos los campos requeridos");
     } else {
         if(existe){
-            firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('value').then(function(snapshot){
+            firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador).val()).once('child_added').then(function(snapshot){
                 var pers = snapshot.val();
                 guardaDatosCol(pers);
                 var tru = true;
@@ -107,6 +108,7 @@ function guardaDatosPersonalProd(user, nombre, nickname) {
 
 function guardaDatosCol(user) {
     var colaborador;
+    console.log(user)
     if($('#' + id_supervisor_rb_colaborador).is(':checked')){
         colaborador = {
             uid: user.uid,
