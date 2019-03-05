@@ -16,6 +16,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  actualizados/nuevos(5/3/19):
  - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
  - app_presupuesto -> que el ddl jale subprocesos también
+ - app_colaboradores_rrhh
+ - app_colaboradores_admin
+ - app_colaboradores_compras
  
  actualizados/nuevos(26/2/19):
  - app_atributo
