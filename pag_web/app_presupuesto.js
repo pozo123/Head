@@ -6,7 +6,6 @@ var id_vistaPrevia_button_presupuesto = "vistaPreviaPresupuesto";
 var id_borrar_todo_presupuesto = "borrarTodoPresupuesto"
 var id_obra_ddl_presupuesto = "obraPresupuesto";
 var id_proceso_ddl_presupuesto = "DDLproceso";
-var id_group_proceso = "groupProceso";
 var id_tipo_presupuesto_ddl_presupuesto = "DDLtipoPresupuesto";
 var id_genero_ddl_presupuesto = "DDLgenero";
 var id_clase_ddl_presupuesto = "DDLclase";
@@ -186,25 +185,36 @@ $('#tabPresupuesto').click(function() {
 
 $('#' + id_clase_ddl_presupuesto).change(function(){
     $('#' + id_proceso_ddl_presupuesto).empty();
-    if($('#' + id_clase_ddl_presupuesto + " option:selected").text() == "produccion"){
-        $('#' + id_group_proceso).removeClass("hidden")
+    if($('#' + id_clase_ddl_presupuesto + " option:selected").val() == "produccion"){
+        $('#' + id_proceso_ddl_presupuesto).removeClass("hidden")
         var select = document.getElementById(id_proceso_ddl_presupuesto);   
         var option = document.createElement('option');
         option.style = "display:none";
         option.text = option.value = "";
         select.appendChild(option);
 
-        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").orderByChild("nombre").on('child_added',function(snapshot){
-            var proc = snapshot.val();
-            console.log(proc)
-            var option2 = document.createElement('OPTION');
-            option2.text = proc.clave; 
-            option2.value = proc.clave;
-            select.appendChild(option2);
+        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_presupuesto + " option:selected").val() + "/procesos").once('value').then(function(snapshot){
+            snapshot.forEach(function(procSnap){
+                var proc = procSnap.val();
+                if(proc.num_subprocesos == 0){
+                    var option2 = document.createElement('OPTION');
+                    option2.text = proc.clave + " (" + proc.nombre + ")"; 
+                    option2.value = proc.clave;
+                    select.appendChild(option2);
+                } else {
+                    childSnap.child("subprocesos").forEach(function(subprocSnap){
+                        var subproc = subprocSnap.val();
+                        var option3 = document.createElement('OPTION');
+                        option3.text = subproc.clave + " (" + subproc.nombre + ")";
+                        option3.value = subproc.clave;
+                        select.appendChild(option3);
+                    });
+                }
+            })
 
         });
     } else { 
-        $('#' + id_group_proceso).addClass("hidden")
+        $('#' + id_proceso_ddl_presupuesto).addClass("hidden")
     }
 });
 
