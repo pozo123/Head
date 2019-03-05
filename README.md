@@ -88,8 +88,6 @@ TO DO:
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
- - zentral (todos los proc, hay que arreglar lo de "suministros")
- - Hacer un actualizar registros para meter profit bruto y neto a todos los kaiz
  - app_agregar_json
  - Botón respaldo (aunque baje sólo el json)
     
@@ -121,3 +119,4 @@ SCORE:
   - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
   - Si salen igual, desde el cel
   - A supervisores: ya hay sistema y así funciona
+  
