@@ -11,6 +11,7 @@ var json_kaizen = {};
 var json_kaizen_obra = {};
 var editable = "editMe";
 var obra_clave;
+var duracion_obra;
 var table;
 
 $(document).ready(function(){
@@ -166,6 +167,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
     //FALTA
     //Revisar BRUTOs
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val()).once('value').then(function(snapshot){
+		duracion_obra = parseFloat(snapshot.val().fechas.fecha_final_teorica) - parseFloat(snapshot.val().fechas.fecha_inicio_teorica);
 		json_kaizen = snapshot.val().procesos;
         json_kaizen_obra = snapshot.val().kaizen;
 		obra_clave = snapshot.val().clave;
@@ -437,10 +439,12 @@ $('#' + id_colapsar_subprocesos_button_kaizen).on('click', function(){
 });
 
 $('#' + id_actualizar_button_kaizen).click(function(){
+	var utilidad_semanal = parseFloat(json_kaizen_obra["PROFIT"]["PROG"]["BRUTO"]) / (duracion_obra/604800000)
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos:");
 	console.log(json_kaizen);
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen:");
 	console.log(json_kaizen_obra);
+	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/utilidad_semanal").update(utilidad_semanal);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos").update(json_kaizen);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen").update(json_kaizen_obra);
 	alert("Operación exitosa");
