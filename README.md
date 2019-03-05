@@ -12,6 +12,8 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_kaizen_global: CHECK
  - app_datos_kaizen
  - app_asistencia
+ actualizados/nuevos(5/3/19):
+ - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal
  
  actualizados/nuevos(26/2/19):
  - app_atributo
@@ -43,18 +45,16 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
- - utilidad_semanal
+ - Manual de usuario, por sección y global.
+ - Alta obra jerárquica. Que se pueda hacer desde score pero con ddl en nombre y clave, no en otro lado.
+   - Alta obra mágica en admon, los demás con ddl y bloqueando cosas como en app_obra_prod.
  - si copeo/odec = -1 jala el valor de prec/cuant
  - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - dar de alta los subprocesos de via
- - Botón reducir subprocesos a procesos
  - Definir generar ppto con Erick
  - Gestionar SCORE en prod-> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
- - poner textfield de precio hora score en desplegar-kaizen 
  - Gantt no jala fechas reales, inicios futuros los pone como hoy
- - No suma los profit totales
  - definir clave subproceso (numero del consecutivo por clase o por proceso?)
- - en alta y en editar addClass("hidden") a los campos en el click tab
  - hitos en gantt
  - editable en gantt
  - alta_trabajadores
