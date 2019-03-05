@@ -45,6 +45,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - Quitar editable en profit (y en todas las columnas que no debe de poder prod)
  - Manual de usuario, por sección y global.
  - Alta obra jerárquica. Que se pueda hacer desde score pero con ddl en nombre y clave, no en otro lado.
    - Alta obra mágica en admon, los demás con ddl y bloqueando cosas como en app_obra_prod.
