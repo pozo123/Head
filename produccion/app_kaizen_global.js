@@ -1,9 +1,9 @@
 var id_gantt_div_global = "kaizenGlobalDiv";
 var id_total_venta_global = "totalVentaGlobal";
 var id_total_profit_real_bruto_global = "totalProfitRealGlobal";
-var id_total_profit_ppto_bruto_global = "totalProfitPptoGlobal";
+var id_total_profit_prog_bruto_global = "totalProfitProgGlobal";
 var id_total_profit_real_neto_global = "totalProfitNetoRealGlobal";
-var id_total_profit_ppto_neto_global = "totalProfitNetoPptoGlobal";
+var id_total_profit_prog_neto_global = "totalProfitNetoProgGlobal";
 
 var rama_bd_obras_magico = "obras";
 var rama_bd_colaboradores_prod = "produccion/colaboradores";
@@ -75,15 +75,15 @@ function drawKG(){
 		var total_venta = 0;
 		var total_profit_real_bruto = 0;
 		var total_profit_real_neto = 0;
-		var total_profit_ppto_bruto = 0;
-		var total_profit_ppto_neto = 0;
+		var total_profit_prog_bruto = 0;
+		var total_profit_prog_neto = 0;
 		snapshot.forEach(function(obraSnap){
 			var obra = obraSnap.val();
 			var autorizar = false;
 			if(aut == "supervisor"){
 				var i_d=0;
 				while(i_d<display_obras.length && autorizar == false){
-					if(display_obras[i_d].val() == obra.nombre){
+					if(display_obras[i_d] == obra.nombre){
 						autorizar = true;
 					}
 					i_d++;
@@ -123,8 +123,8 @@ function drawKG(){
 					final: getWeek(f_f.getTime())[0],
 				});
 				total_venta = total_venta + cost;
-				total_profit_ppto_bruto = total_profit_ppto_bruto + parseFloat(obra.kaizen.PROFIT.PPTO.BRUTO);
-				total_profit_ppto_neto = total_profit_ppto_neto + parseFloat(obra.kaizen.PROFIT.PPTO.NETO);
+				total_profit_prog_bruto = total_profit_prog_bruto + parseFloat(obra.kaizen.PROFIT.PROG.BRUTO);
+				total_profit_prog_neto = total_profit_prog_neto + parseFloat(obra.kaizen.PROFIT.PROG.NETO);
 				total_profit_real_bruto = total_profit_real_bruto + parseFloat(obra.kaizen.PROFIT.REAL.BRUTO);
 				total_profit_real_neto = total_profit_real_neto + parseFloat(obra.kaizen.PROFIT.REAL.NETO);
 				var j = 0;
@@ -169,8 +169,8 @@ function drawKG(){
 							g.AddTaskItemObject({
 								pID: i,
 								pName: subproc.clave,
-								pStart: f_i_s.toISOString().substring(0, 10),//fechas[i].f_i_s.toISOString().substring(0,10),
-								pEnd: f_f_s.toISOString().substring(0, 10),//fechas[i].f_f_s.toISOString().substring(0,10),
+								start_date: f_i_s.toISOString().substring(0, 10),//fechas[i].f_i_s.toISOString().substring(0,10),
+								end_date: f_f_s.toISOString().substring(0, 10),//fechas[i].f_f_s.toISOString().substring(0,10),
 								pPlanStart: "",//fecha_inicio_real? o al reves?
 								pPlanEnd: "",//fecha_final_real? o al reves?
 								pClass: css[(6-k)%6],
@@ -194,10 +194,10 @@ function drawKG(){
 			}
 		});
 		g.Draw();
-		$('#' + id_total_profit_ppto_bruto_global).val(total_profit_ppto_bruto);
-		$('#' + id_total_profit_ppto_neto_global).val(total_profit_ppto_neto);
-		$('#' + id_total_profit_real_bruto_global).val(total_profit_real_bruto);
-		$('#' + id_total_profit_real_neto_global).val(total_profit_real_neto);
+		$('#' + id_total_profit_prog_bruto_global).text("$" + formatMoney(total_profit_prog_bruto));
+		$('#' + id_total_profit_prog_neto_global).text(total_profit_prog_neto);
+		$('#' + id_total_profit_real_bruto_global).text(value =total_profit_real_bruto);
+		$('#' + id_total_profit_real_neto_global).text(total_profit_real_neto);
 	});
 	//g.setShowRes(0);
 	g.setShowDur(0);
