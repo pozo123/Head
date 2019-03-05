@@ -12,29 +12,58 @@ var rama_bd_personal = "personal";
 $(document).ready(function(){
 });
 
+var existe = false;
+$("#" + id_email_colaborador_compras).change(function(){
+    existe = false;
+    firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
+        var nombre = "";
+        var nickname = "";
+        snapshot.forEach(function(child_snap){
+            var pers = child_snap.val();
+            if(pers.email == $("#" + id_email_colaborador_compras).val()){
+                existe = true;
+                nombre = pers.nombre;
+                nickname = pers.nickname;
+            }
+        });
+        if(existe){
+            $('#' + id_nombre_colaborador_compras).val(nombre);
+            $('#' + id_nickname_colaborador_compras).val(nickname);
+            document.getElementById(id_nombre_colaborador_compras).disabled = true;
+            document.getElementById(id_nickname_colaborador_compras).disabled = true;
+            document.getElementById(id_password_colaborador_compras).disabled = true;
+        } else {
+            if(document.getElementById(id_nombre_colaborador_compras).disabled == true){
+                $('#' + id_nombre_colaborador_compras).val("");
+                $('#' + id_nickname_colaborador_compras).val("");
+            }
+            document.getElementById(id_nombre_colaborador_compras).disabled = false;
+            document.getElementById(id_nickname_colaborador_compras).disabled = false;
+            document.getElementById(id_password_colaborador_compras).disabled = false;
+        }
+    });
+});
+
 $('#' + id_registrar_button_colaborador_compras).click(function () {
-    if(!$('#' + id_nombre_colaborador_compras).val() || !$('#' + id_email_colaborador_compras).val() || !$('#' + id_password_colaborador_compras).val() || !$('#' + id_nickname_colaborador_compras).val()){
+    if(!$('#' + id_nombre_colaborador_compras).val() || !$('#' + id_email_colaborador_compras).val() || (document.getElementById(id_password_colaborador_compras).disabled == false && !$('#' + id_password_colaborador_compras).val()) || !$('#' + id_nickname_colaborador_compras).val()){
         alert("Llena todos los campos requeridos");
     } else {
-        secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_compras).val(), $('#' + id_password_colaborador_compras).val())
-            .then(function (result) {
-                guardaDatosColCompras(result.user);
-                guardaDatosPersonalCompras(result.user, $('#' + id_nombre_colaborador_compras).val(), $('#' + id_nickname_colaborador_compras).val());
-                secondaryApp.auth().signOut();
-            }, function(error){
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode == 'auth/email-already-in-use') {
-                    firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador_compras).val()).once('value').then(function(snapshot){
-                        var pers = snapshot.val();
-                        guardaDatosColCompras(pers);
-                        var tru = true;
-                        firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/compras").set(tru);
-                    });
-                } else {
-                    alert(errorMessage);
-                }
+        if(existe){
+            firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador_compras).val()).once('child_added').then(function(snapshot){
+                var pers = snapshot.val();
+                guardaDatosColCompras(pers);
+                var tru = true;
+                firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/compras").set(tru);
             });
+        } else {
+            secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_compras).val(), $('#' + id_password_colaborador_compras).val())
+                .then(function (result) {
+                    guardaDatosColCompras(result.user);
+                    guardaDatosPersonalCompras(result.user, $('#' + id_nombre_colaborador_compras).val(), $('#' + id_nickname_colaborador_compras).val());
+                    secondaryApp.auth().signOut();
+                }
+            );
+        }
     }
 });
 
