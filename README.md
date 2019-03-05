@@ -45,15 +45,20 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
- - Quitar editable en profit (y en todas las columnas que no debe de poder prod)
+ - Produccion
+ - Desplegar Kaizen
+   - Estilo:
+     - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
+   - Funcionalidad:
+     - si copeo/odec = -1 jala el valor de prec/cuant
+     - dar de alta los subprocesos de via
+   
+ - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Manual de usuario, por sección y global.
  - Alta obra jerárquica. Que se pueda hacer desde score pero con ddl en nombre y clave, no en otro lado.
    - Alta obra mágica en admon, los demás con ddl y bloqueando cosas como en app_obra_prod.
- - si copeo/odec = -1 jala el valor de prec/cuant
- - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
- - dar de alta los subprocesos de via
  - Definir generar ppto con Erick
- - Gestionar SCORE en prod-> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
+ - Gestionar SCORE en prod -> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
  - Gantt no jala fechas reales, inicios futuros los pone como hoy
  - definir clave subproceso (numero del consecutivo por clase o por proceso?)
  - hitos en gantt
