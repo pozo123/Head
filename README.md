@@ -48,6 +48,7 @@ TO DO:
  - Produccion
  - Desplegar Kaizen
    - Estilo:
+     - cambiar avance "prog" por "pag"
      - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
    - Funcionalidad:
      - si copeo/odec = -1 jala el valor de prec/cuant
