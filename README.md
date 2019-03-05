@@ -50,6 +50,7 @@ TO DO:
  - Desplegar Kaizen
    - Estilo:
      - cambiar avance "prog" por "pag"
+     - avance.pag > avance.real
      - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
    - Funcionalidad:
      - si copeo/odec = -1 jala el valor de prec/cuant
