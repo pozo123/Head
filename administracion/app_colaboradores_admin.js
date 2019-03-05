@@ -54,7 +54,7 @@ $('#' + id_registrar_button_colaborador_admin).click(function () {
                 var pers = snapshot.val();
                 guardaDatosColAdmin(pers);
                 var tru = true;
-                firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/admin").set(tru);
+                firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/administracion").set(tru);
             });
         } else {
             secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_admin).val(), $('#' + id_password_colaborador_admin).val())
