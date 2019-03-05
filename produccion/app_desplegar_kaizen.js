@@ -2,6 +2,8 @@ var id_obras_ddl_desplegar_kaizen = "obrasDdlDesplegarKaizen";
 var id_datatable_desplegar_kaizen = "dataTableDesplegarKaizen";
 var id_precio_score_desplegar_kaizen = "precioScoreDesplegarKaizen";//Nuevo!
 var id_actualizar_button_kaizen = "actualizarKaizenButton";
+var id_desplegar_subprocesos_button_kaizen = "desplegarSubprocesosKaizen";
+var id_colapsar_subprocesos_button_kaizen = "colapsarSubprocesosKaizen";
 var rama_bd_personal = "personal";
 var rama_bd_colaboradores_prod = "produccion/colaboradores";
 
@@ -9,6 +11,7 @@ var json_kaizen = {};
 var json_kaizen_obra = {};
 var editable = "editMe";
 var obra_clave;
+var table;
 
 $(document).ready(function(){
 	var select = document.getElementById(id_obras_ddl_desplegar_kaizen);
@@ -166,7 +169,8 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 		json_kaizen = snapshot.val().procesos;
         json_kaizen_obra = snapshot.val().kaizen;
 		obra_clave = snapshot.val().clave;
-		var table = document.getElementById(id_datatable_desplegar_kaizen);
+		table = document.getElementById(id_datatable_desplegar_kaizen);
+		var existen_subprocesos = false;
 		if(snapshot.val().num_procesos == 0){
 			createRow(snapshot.val(),table,"obraSimple");
 		} else {
@@ -175,6 +179,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				if(proc.num_subprocesos == 0){
 					createRow(proc,table,"procSimple");
 				} else {
+					existen_subprocesos = true;
 					createRow(proc,table,"procPadre");
 					childSnap.child("subprocesos").forEach(function(grandChildSnap){
 						var subproc = grandChildSnap.val();
@@ -184,139 +189,156 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			});
 			createRow(snapshot.val(),table,"obra");
 		}
+
+		if(existen_subprocesos == true){
+			$('#' + id_colapsar_subprocesos_button_kaizen).removeClass('hidden');
+			$('#' + id_desplegar_subprocesos_button_kaizen).removeClass('hidden');
+		} else {
+			$('#' + id_colapsar_subprocesos_button_kaizen).addClass('hidden');
+			$('#' + id_desplegar_subprocesos_button_kaizen).addClass('hidden');
+		}
 	});
 });
 
 //proc es algo que tiene kaizen
 function createRow(proc,table,tipo){
-		var editClass;
-		var profitProgClass = "";
-		var cl = proc.clave;
-		var row = document.createElement('tr');
-		row.className = "row_data";
-		row.id = "row_" + cl;
-		if(tipo == "obra" || tipo == "obraSimple"){
-			var titulo = document.createElement('td');
-			titulo.innerHTML = "TOTAL";
-			titulo.colSpan = 2;
-			row.appendChild(titulo);
-			if(tipo == "obra"){
-				editClass = "";
-			} else {
-				editClass = editable;
-			}
+	//Chance hace falta declarar table con jquery
+	// https://datatables.net/reference/type/row-selector ROWS
+	// https://datatables.net/reference/api/row().child() child Rows
+	var editClass;
+	var profitProgClass = "";
+	var cl = proc.clave;
+	var row = document.createElement('tr');
+	row.className = "row_data";
+	row.id = "row_" + cl;
+	var parent_row_id = "";
+	if(tipo == "obra" || tipo == "obraSimple"){
+		var titulo = document.createElement('td');
+		titulo.innerHTML = "TOTAL";
+		titulo.colSpan = 2;
+		row.appendChild(titulo);
+		if(tipo == "obra"){
+			editClass = "";
 		} else {
-			var proc_clave = document.createElement('td');
-			proc_clave.innerHTML = cl;
-			row.appendChild(proc_clave);
-			var proc_nombre = document.createElement('td');
-			proc_nombre.innerHTML = proc.nombre;
-			row.appendChild(proc_nombre);
-			profitProgClass = " profit_prog";
-			if(tipo == "procSimple"){
-				editClass = editable;
-			} else if(tipo == "procPadre"){
-				editClass = "";
-			} else if(tipo == "subproc"){
-				cl = "sub_" + cl;
-				editClass = editable;
-			}
+			editClass = editable;
 		}
+	} else {
+		var proc_clave = document.createElement('td');
+		proc_clave.innerHTML = cl;
+		row.appendChild(proc_clave);
+		var proc_nombre = document.createElement('td');
+		proc_nombre.innerHTML = proc.nombre;
+		row.appendChild(proc_nombre);
+		profitProgClass = " profit_prog";
+		if(tipo == "procSimple"){
+			editClass = editable;
+		} else if(tipo == "procPadre"){
+			editClass = "";
+		} else if(tipo == "subproc"){
+			parent_row_id = "row_" + cl.split("-")[0];
+			cl = "sub_" + cl;
+			editClass = editable;
+		}
+	}
 
-		var proy_ppto = document.createElement('td');
-		proy_ppto.id = cl + "_PROYECTOS_PPTO";
-		proy_ppto.innerHTML = proc.kaizen.PROYECTOS.PPTO;
-		proy_ppto.className = "celda " + editClass;
-		row.appendChild(proy_ppto);
-		var proy_pag = document.createElement('td');
-		proy_pag.id = cl + "_PROYECTOS_PAG";
-		proy_pag.innerHTML = proc.kaizen.PROYECTOS.PAG;
-		proy_pag.className = "celda " + editClass;
-		row.appendChild(proy_pag);
-		var prod_sum_cuant = document.createElement('td');
-		prod_sum_cuant.id = cl + "_PRODUCCION_SUMINISTROS_CUANT";
-		prod_sum_cuant.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.CUANT;
-		prod_sum_cuant.className = "celda " + editClass;
-		row.appendChild(prod_sum_cuant);
-		var prod_sum_odec = document.createElement('td');
-		prod_sum_odec.id = cl + "_PRODUCCION_SUMINISTROS_OdeC";
-		prod_sum_odec.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.OdeC;
-		prod_sum_odec.className = "celda " + editClass;
-		row.appendChild(prod_sum_odec);
-		var prod_sum_pag = document.createElement('td');
-		prod_sum_pag.id = cl + "_PRODUCCION_SUMINISTROS_PAG";
-		prod_sum_pag.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.PAG;
-		prod_sum_pag.className = "celda " + editClass;
-		row.appendChild(prod_sum_pag);
-		var prod_cop_pre = document.createElement('td');
-		prod_cop_pre.id = cl + "_PRODUCCION_COPEO_PREC";
-		prod_cop_pre.innerHTML = proc.kaizen.PRODUCCION.COPEO.PREC;
-		prod_cop_pre.className = "celda " + editClass;
-		row.appendChild(prod_cop_pre);
-		var prod_cop_cop = document.createElement('td');
-		prod_cop_cop.id = cl + "_PRODUCCION_COPEO_COPEO";
-		prod_cop_cop.innerHTML = proc.kaizen.PRODUCCION.COPEO.COPEO;
-		prod_cop_cop.className = "celda " + editClass;
-		row.appendChild(prod_cop_cop);
-		var prod_cop_pag = document.createElement('td');
-		prod_cop_pag.id = cl + "_PRODUCCION_COPEO_PAG";
-		prod_cop_pag.innerHTML = proc.kaizen.PRODUCCION.COPEO.PAG;
-		prod_cop_pag.className = "celda " + editClass;
-		row.appendChild(prod_cop_pag);
-		var avance_prog = document.createElement('td');
-		avance_prog.id = cl + "_avance_prog";
-		avance_prog.className = "celda";
-		var av_p = 0;
-		if(parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO) != 0){
-			av_p = 100 * parseFloat(proc.kaizen.PRODUCCION.COPEO.PAG) / parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO);
-		}
-		avance_prog.innerHTML = (av_p).toFixed(2) + "%";
-		row.appendChild(avance_prog);
-		var avance_real = document.createElement('td');
-		avance_real.id = cl + "_avance_real";
-		avance_real.className = "celda";
-		var av_r = 0;
-		if(parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) != 0){
-			av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO);
-		}
-		avance_real.innerHTML = (av_r).toFixed(2) + "%";
-		row.appendChild(avance_real);
-		var admin_estim_ppto = document.createElement('td');
-		admin_estim_ppto.id = cl + "_ADMINISTRACION_ESTIMACIONES_PPTO";
-		admin_estim_ppto.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO;
-		admin_estim_ppto.className = "celda " + editClass;
-		row.appendChild(admin_estim_ppto);
-		var admin_estim_est = document.createElement('td');
-		admin_estim_est.id = cl + "_ADMINISTRACION_ESTIMACIONES_EST";
-		admin_estim_est.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST;
-		admin_estim_est.className = "celda " + editClass;
-		row.appendChild(admin_estim_est);
-		var admin_estim_pag = document.createElement('td');
-		admin_estim_pag.id = cl + "_ADMINISTRACION_ESTIMACIONES_PAG";
-		admin_estim_pag.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.PAG;
-		admin_estim_pag.className = "celda " + editClass;
-		row.appendChild(admin_estim_pag);
-		var admin_anticipos_ppto = document.createElement('td');
-		admin_anticipos_ppto.id = cl + "_ADMINISTRACION_ANTICIPOS_PPTO";
-		admin_anticipos_ppto.innerHTML = proc.kaizen.ADMINISTRACION.ANTICIPOS.PPTO;
-		admin_anticipos_ppto.className = "celda " + editClass;
-		row.appendChild(admin_anticipos_ppto);
-		var admin_anticipos_pag = document.createElement('td');
-		admin_anticipos_pag.id = cl + "_ADMINISTRACION_ANTICIPOS_PAG";
-		admin_anticipos_pag.innerHTML = proc.kaizen.ADMINISTRACION.ANTICIPOS.PAG;
-		admin_anticipos_pag.className = "celda " + editClass;
-		row.appendChild(admin_anticipos_pag);
-		var profit_prog = document.createElement('td');
-		profit_prog.id = cl + "_PROFIT_PROG_BRUTO";
-		profit_prog.innerHTML = proc.kaizen.PROFIT.PROG.BRUTO;
-		profit_prog.className = "celda " + editClass + profitProgClass;
-		row.appendChild(profit_prog);
-		var profit_real = document.createElement('td');
-		profit_real.id = cl + "_PROFIT_REAL_BRUTO";
-		profit_real.innerHTML = proc.kaizen.PROFIT.REAL.BRUTO;
-		profit_real.className =  "celda";
-		row.appendChild(profit_real);
+	var proy_ppto = document.createElement('td');
+	proy_ppto.id = cl + "_PROYECTOS_PPTO";
+	proy_ppto.innerHTML = proc.kaizen.PROYECTOS.PPTO;
+	proy_ppto.className = "celda " + editClass;
+	row.appendChild(proy_ppto);
+	var proy_pag = document.createElement('td');
+	proy_pag.id = cl + "_PROYECTOS_PAG";
+	proy_pag.innerHTML = proc.kaizen.PROYECTOS.PAG;
+	proy_pag.className = "celda " + editClass;
+	row.appendChild(proy_pag);
+	var prod_sum_cuant = document.createElement('td');
+	prod_sum_cuant.id = cl + "_PRODUCCION_SUMINISTROS_CUANT";
+	prod_sum_cuant.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.CUANT;
+	prod_sum_cuant.className = "celda " + editClass;
+	row.appendChild(prod_sum_cuant);
+	var prod_sum_odec = document.createElement('td');
+	prod_sum_odec.id = cl + "_PRODUCCION_SUMINISTROS_OdeC";
+	prod_sum_odec.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.OdeC;
+	prod_sum_odec.className = "celda " + editClass;
+	row.appendChild(prod_sum_odec);
+	var prod_sum_pag = document.createElement('td');
+	prod_sum_pag.id = cl + "_PRODUCCION_SUMINISTROS_PAG";
+	prod_sum_pag.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.PAG;
+	prod_sum_pag.className = "celda " + editClass;
+	row.appendChild(prod_sum_pag);
+	var prod_cop_pre = document.createElement('td');
+	prod_cop_pre.id = cl + "_PRODUCCION_COPEO_PREC";
+	prod_cop_pre.innerHTML = proc.kaizen.PRODUCCION.COPEO.PREC;
+	prod_cop_pre.className = "celda " + editClass;
+	row.appendChild(prod_cop_pre);
+	var prod_cop_cop = document.createElement('td');
+	prod_cop_cop.id = cl + "_PRODUCCION_COPEO_COPEO";
+	prod_cop_cop.innerHTML = proc.kaizen.PRODUCCION.COPEO.COPEO;
+	prod_cop_cop.className = "celda " + editClass;
+	row.appendChild(prod_cop_cop);
+	var prod_cop_pag = document.createElement('td');
+	prod_cop_pag.id = cl + "_PRODUCCION_COPEO_PAG";
+	prod_cop_pag.innerHTML = proc.kaizen.PRODUCCION.COPEO.PAG;
+	prod_cop_pag.className = "celda " + editClass;
+	row.appendChild(prod_cop_pag);
+	var avance_prog = document.createElement('td');
+	avance_prog.id = cl + "_avance_prog";
+	avance_prog.className = "celda";
+	var av_p = 0;
+	if(parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO) != 0){
+		av_p = 100 * parseFloat(proc.kaizen.PRODUCCION.COPEO.PAG) / parseFloat(proc.kaizen.PRODUCCION.COPEO.COPEO);
+	}
+	avance_prog.innerHTML = (av_p).toFixed(2) + "%";
+	row.appendChild(avance_prog);
+	var avance_real = document.createElement('td');
+	avance_real.id = cl + "_avance_real";
+	avance_real.className = "celda";
+	var av_r = 0;
+	if(parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO) != 0){
+		av_r = 100 * parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST) / parseFloat(proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO);
+	}
+	avance_real.innerHTML = (av_r).toFixed(2) + "%";
+	row.appendChild(avance_real);
+	var admin_estim_ppto = document.createElement('td');
+	admin_estim_ppto.id = cl + "_ADMINISTRACION_ESTIMACIONES_PPTO";
+	admin_estim_ppto.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.PPTO;
+	admin_estim_ppto.className = "celda " + editClass;
+	row.appendChild(admin_estim_ppto);
+	var admin_estim_est = document.createElement('td');
+	admin_estim_est.id = cl + "_ADMINISTRACION_ESTIMACIONES_EST";
+	admin_estim_est.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.EST;
+	admin_estim_est.className = "celda " + editClass;
+	row.appendChild(admin_estim_est);
+	var admin_estim_pag = document.createElement('td');
+	admin_estim_pag.id = cl + "_ADMINISTRACION_ESTIMACIONES_PAG";
+	admin_estim_pag.innerHTML = proc.kaizen.ADMINISTRACION.ESTIMACIONES.PAG;
+	admin_estim_pag.className = "celda " + editClass;
+	row.appendChild(admin_estim_pag);
+	var admin_anticipos_ppto = document.createElement('td');
+	admin_anticipos_ppto.id = cl + "_ADMINISTRACION_ANTICIPOS_PPTO";
+	admin_anticipos_ppto.innerHTML = proc.kaizen.ADMINISTRACION.ANTICIPOS.PPTO;
+	admin_anticipos_ppto.className = "celda " + editClass;
+	row.appendChild(admin_anticipos_ppto);
+	var admin_anticipos_pag = document.createElement('td');
+	admin_anticipos_pag.id = cl + "_ADMINISTRACION_ANTICIPOS_PAG";
+	admin_anticipos_pag.innerHTML = proc.kaizen.ADMINISTRACION.ANTICIPOS.PAG;
+	admin_anticipos_pag.className = "celda " + editClass;
+	row.appendChild(admin_anticipos_pag);
+	var profit_prog = document.createElement('td');
+	profit_prog.id = cl + "_PROFIT_PROG_BRUTO";
+	profit_prog.innerHTML = proc.kaizen.PROFIT.PROG.BRUTO;
+	profit_prog.className = "celda " + editClass + profitProgClass;
+	row.appendChild(profit_prog);
+	var profit_real = document.createElement('td');
+	profit_real.id = cl + "_PROFIT_REAL_BRUTO";
+	profit_real.innerHTML = proc.kaizen.PROFIT.REAL.BRUTO;
+	profit_real.className =  "celda";
+	row.appendChild(profit_real);
+	if(tipo == "subproc"){
+		table.row('#' + parent_row_id).child(row).hide();
+	} else {
 		table.appendChild(row);
+	}
 }
 
 function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
@@ -391,6 +413,29 @@ function calculaAvance(tipo, pointer_kaiz, clave_elem){
 		document.getElementById(clave_elem + '_avance_real').innerHTML = (av_r).toFixed(2) + "%"
 	}
 }
+
+$('#' + id_desplegar_subprocesos_button_kaizen).on('click', function(){
+    // Enumerate all rows
+    //var table = $('#' + id_datatable_desplegar_kaizen).DataTable();
+    table.rows().every(function(){
+        // If row has details collapsed
+        if(!this.child.isShown()){
+            // Open this row
+            this.child(format(this.data())).show();
+            $(this.node()).addClass('shown');
+        }
+    });
+});
+
+$('#' + id_colapsar_subprocesos_button_kaizen).on('click', function(){
+    table.rows().every(function(){
+        if(this.child.isShown()){
+            this.child.hide();
+            $(this.node()).removeClass('shown');
+        }
+    });
+});
+
 $('#' + id_actualizar_button_kaizen).click(function(){
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos:");
 	console.log(json_kaizen);
