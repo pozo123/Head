@@ -238,33 +238,36 @@
 
 - kaizen: (Mayúsculas en caso de que haga falta llenarlas desde un excel)
   - PROYECTOS:
-     - PPTO
-     - PAG
+     - PPTO -> Admin/prod
+     - PAG -> SCORE (yo)
   - PRODUCCION:
      - SUMINISTROS:
-        - CUANT
-        - OdeC
-        - PAG
+        - CUANT -> Proyectos
+        - OdeC -> Compras
+        - PAG -> Compras
      - COPEO:
-        - PREC
-        - COPEO
-        - PAG
+        - PREC -> supervisor
+        - COPEO -> supervisor
+        - PAG -> rrhh
   - ADMINISTRACION:
      - ESTIMACIONES:
-        - PPTO
-        - EST
-        - PAG
+        - PPTO -> admin
+        - EST -> admin
+        - PAG -> admin
      - ANTICIPOS:
-        - PPTO
-        - PAG
+        - PPTO -> admin
+        - PAG -> admin
   - PROFIT:
      - PROG:
-        - BRUTO
-        - NETO
+        - BRUTO -> NADIEEEEE
+        - NETO -> NADIEEEEE
      - REAL:
-        - BRUTO
-        - NETO
+        - BRUTO -> NADIEEEEE
+        - NETO -> NADIEEEEE
   
   - Para calcular AVANCE (no sale en nuestra bd pero se puede calcular al displayearla):
       - EST = prod.copeo.pag / prod.copeo.copeo
       - REAL = admin.est.est / admin.est.ppto
+
+  - Para calcular el PROFIT PROG
+      - (admin.est.ppto + admin.ants.ppto)*0.8 - prod.copeo.(copeo||prec) - prod.sum.(cuant||OdeC) - proy.ppto
