@@ -15,6 +15,7 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
  actualizados/nuevos(5/3/19):
  - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
+ - app_presupuesto -> que el ddl jale subprocesos también
  
  actualizados/nuevos(26/2/19):
  - app_atributo
@@ -36,8 +37,11 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
     - Claves
  - eliminar en bibliotecas score
  - claves subprocesos
+ - Miscelaneos
+    - columnas, renglon, costos, venta, pagos (?), distribución, calculo, edicion
 
  Errores:
+ - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros
  - No se están sumando horas en "horas_trabajadas" en el ppto :/
@@ -47,23 +51,20 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 
 TO DO:
  - Produccion
- - Desplegar Kaizen
-   - Estilo:
-     - cambiar avance "prog" por "pag"
-     - avance.pag > avance.real
-     - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
-   - Funcionalidad:
-     - si copeo/odec = -1 jala el valor de prec/cuant
-     - dar de alta los subprocesos de via
-   
+   - Desplegar Kaizen
+     - Estilo:
+       - cambiar avance "prog" por "pag"
+       - avance.pag > avance.real = pag en rojo 
+       - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
+     - Funcionalidad:
+       - si copeo/odec = -1 jala el valor de prec/cuant
+       - dar de alta los subprocesos de via
+   - Gestionar SCORE en prod -> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
+ - Proyectos
+   - Definir generar ppto con Erick
+   - alta obra jala el nombre de un ddl y lo demás se bloquea como en obra_prod
  - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Manual de usuario, por sección y global.
- - Alta obra jerárquica. Que se pueda hacer desde score pero con ddl en nombre y clave, no en otro lado.
-   - Alta obra mágica en admon, los demás con ddl y bloqueando cosas como en app_obra_prod.
- - Definir generar ppto con Erick
- - Gestionar SCORE en prod -> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
- - Gantt no jala fechas reales, inicios futuros los pone como hoy
- - definir clave subproceso (numero del consecutivo por clase o por proceso?)
  - hitos en gantt
  - editable en gantt
  - alta_trabajadores
