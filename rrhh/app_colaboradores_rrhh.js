@@ -51,15 +51,15 @@ $('#' + id_registrar_button_colaborador_rrhh).click(function () {
         if(existe){
             firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador_rrhh).val()).once('child_added').then(function(snapshot){
                 var pers = snapshot.val();
-                guardaDatosRRHH(pers);
+                guardaDatosColRRHH(pers);
                 var tru = true;
                 firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/rrhh").set(tru);
             });
         } else {
             secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_rrhh).val(), $('#' + id_password_colaborador_rrhh).val())
                 .then(function (result) {
-                    guardaDatosCol(result.user);
-                    guardaDatosPersonalProd(result.user, $('#' + id_nombre_colaborador_rrhh).val(), $('#' + id_nickname_colaborador_rrhh).val());
+                    guardaDatosColRRHH(result.user);
+                    guardaDatosPersonalRRHH(result.user, $('#' + id_nombre_colaborador_rrhh).val(), $('#' + id_nickname_colaborador_rrhh).val());
                     secondaryApp.auth().signOut();
                 }
             );
