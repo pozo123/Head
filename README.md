@@ -12,8 +12,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_kaizen_global: CHECK
  - app_datos_kaizen
  - app_asistencia
+ 
  actualizados/nuevos(5/3/19):
- - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal
+ - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
  
  actualizados/nuevos(26/2/19):
  - app_atributo
