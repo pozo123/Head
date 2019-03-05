@@ -75,3 +75,7 @@ en terminal
   - Column Visibility en datatables
     - https://datatables.net/extensions/buttons/
     - https://datatables.net/reference/button/colvis
+  - Child rows en datatable
+    - https://datatables.net/reference/api/row().child()
+    Row selector:
+      - https://datatables.net/reference/type/row-selector
