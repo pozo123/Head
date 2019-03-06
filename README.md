@@ -13,6 +13,14 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
+ HOY:
+  - Definir misc y formato Kaiz
+  - Arreglar desplegar kaizen
+  - Dar formato amistoso a desplegar kaizen (?)
+  - Definir si las áreas lo van a meter o si nos lo mandan y nosotros lo llenamos
+  - Dar todas las cuentas y areas 
+    - YA SE PUEDE LLENAR AHÍ.
+ 
  actualizados/nuevos(5/3/19):
  - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
  - app_presupuesto -> que el ddl jale subprocesos también
