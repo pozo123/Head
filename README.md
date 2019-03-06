@@ -18,13 +18,6 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  - 3 apps llenar kaizen (ideal: viernes max: lunes)
  
- actualizados/nuevos(5/3/19):
- - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
- - app_presupuesto -> que el ddl jale subprocesos también
- - app_colaboradores_rrhh
- - app_colaboradores_admin
- - app_colaboradores_compras
- 
  actualizados/nuevos(26/2/19):
  - app_atributo
  
@@ -44,9 +37,6 @@ ESTA SEMANA:
  - Centro de costos 
     - Claves
  - eliminar en bibliotecas score
- - claves subprocesos
- - Miscelaneos
-    - columnas, renglon, costos, venta, pagos (?), distribución, calculo, edicion
 
  Errores:
  - Gantt fecha inicial
