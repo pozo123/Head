@@ -7,6 +7,40 @@ var rama_bd_obras = "proyectos/obras";
 $('#' + id_boton_chido).click(function(){
     
     /*
+    //PRORRATEAR MISCELANEOS
+    //FALTA DEFINIR LALA Y LELE
+    firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+        snapshot.forEach(function(obra_snap){
+            var obra = obra_snap.val();
+            var kaizen_total = obra.kaizen;
+            var proc_misc = obra.procesos.MISC.kaizen;
+            obra_snap.child("procesos").forEach(function(proc_snap){
+                var proc = proc_snap.val();
+                //lala = .PRODUCCION.COPEO.PREC... o para proporcion con venta?
+                var proporcion = parseFloat(proc.kaizen.lala) / parseFloat(kaizen_total.lala);
+                var aumento = parseFloat(proc_misc.lala) * proporcion;
+                var valor_nuevo = parseFloat(proc.kaizen.lala) + aumento;
+                //lele = nueva direccion (ej COSTO_MISC)
+                console.log(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/lele: " + valor_nuevo);
+                //firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/lele").set(valor_nuevo);
+                if(proc.num_subprocesos > 0){
+                    proc_snap.child("subprocesos").forEach(function(sub_snap){
+                        var subp = sub_snap.val();
+                        //lala = .PRODUCCION.COPEO.PREC... o para proporcion con venta?
+                        var proporcion = parseFloat(proc.kaizen.lala) / parseFloat(kaizen_total.lala);
+                        var aumento = parseFloat(proc_misc.lala) * proporcion;
+                        var valor_nuevo = parseFloat(proc.kaizen.lala) + aumento;
+                        //lele = nueva direccion (ej COSTO_MISC)
+                        console.log(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/lele: " + valor_nuevo);
+                        //firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/lele").set(valor_nuevo);
+                    });
+                }
+            });
+        });
+    });
+    */
+
+    /*
     //AGREGAR PROFIT BRUTO Y NETO A TODAS LAS OBRAS, PROCESO Y SUBPROCESOS
     var profit_kaiz = {
         PROG: {
@@ -21,17 +55,17 @@ $('#' + id_boton_chido).click(function(){
     firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
         snapshot.forEach(function(obra_snap){
             var obra = obra_snap.val();
-            console.log(rama_bd_obras + "/" + obra.nombre + "/kaizen/PROFIT");
-            //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/kaizen/PROFIT").set(profit_kaiz);
+            console.log(rama_bd_obras_magico + "/" + obra.nombre + "/kaizen/PROFIT");
+            //firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/kaizen/PROFIT").set(profit_kaiz);
             obra_snap.child("procesos").forEach(function(proc_snap){
                 var proc = proc_snap.val();
-                console.log(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT");
-                //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT").set(profit_kaiz);
+                console.log(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT");
+                //firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/kaizen/PROFIT").set(profit_kaiz);
                 if(proc.num_subprocesos > 0){
                     proc_snap.child("subprocesos").forEach(function(sub_snap){
                         var subp = sub_snap.val();
-                        console.log(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT");
-                        //firebase.database().ref(rama_bd_obras + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT").set(profit_kaiz);
+                        console.log(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT");
+                        //firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + proc.clave + "/subprocesos/" + subp.clave + "/kaizen/PROFIT").set(profit_kaiz);
                     });
                 }
             });
