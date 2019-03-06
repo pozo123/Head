@@ -13,16 +13,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_datos_kaizen
  - app_asistencia
  
- HOY:
-  - acutalizar app_ppto
-  - Definir misc y formato Kaiz -> actualizar_regs tiene uno cool pero hay que adaptarlo
-  - Arreglar desplegar kaizen
-  - Dar formato amistoso a desplegar kaizen (?)
-  - Definir si las áreas lo van a meter o si nos lo mandan y nosotros lo llenamos
-  - Dar todas las cuentas y areas 
-    - YA SE PUEDE LLENAR AHÍ.
-    
-  - Gantt, cols y desplegar
+ESTA SEMANA:
+ - Kaizen funcional (ideal: hoy max: jueves)
+ - Kaizen bonito (ideal: jueves max: viernes)
+ - 3 apps llenar kaizen (ideal: viernes max: lunes)
  
  actualizados/nuevos(5/3/19):
  - app_desplegar_kaizen -> colapsar subprocesos, utilidad semanal, avance pag/prog, editar profit
