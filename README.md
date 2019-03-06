@@ -62,34 +62,43 @@ TO DO:
      - Funcionalidad:
        - si copeo/odec = -1 jala el valor de prec/cuant
        - dar de alta los subprocesos de via
+   - Gantt
+     - Hitos
+     - Fechas raras :S
+     - Sem inic no sale
+     - editable
    - Gestionar SCORE en prod -> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
+   - colvis en desplegar_procesos
+   - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Proyectos
    - Definir generar ppto con Erick
    - alta obra jala el nombre de un ddl y lo demás se bloquea como en obra_prod
- - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
- - Manual de usuario, por sección y global.
- - hitos en gantt
- - editable en gantt
- - alta_trabajadores
-   - Conseguir datos
-   - Pasarlos a CSV
-   - Usar código cool para pasarlos a JSON (online si es no nested, https://github.com/chamkank/hone si lo es)
-   - Subir el json
- - colvis en desplegar_procesos
- - Centro de costos.
-   - alta cuenta
-   - añadir al desplegar
- - Revisar reporte_obras
- - arreglar las apps de permisos de usuario y de inicio de sesion
- - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
- - Poner botón regresar a index o links para navegar entre páginas
+   - Revisar reporte_obras
+   - Si clase = produccion -> hacer mas simple el formato
+ - Admin
+   - Inve$time
+   - Centro de costos.
+     - alta cuenta
+     - añadir al desplegar
+ - RRHH
+   - alta_trabajadores
+     - Conseguir datos
+     - Pasarlos a CSV
+     - Usar código cool para pasarlos a JSON (online si es no nested, https://github.com/chamkank/hone si lo es)
+     - Subir el json
+ - Pagina Web
+   - arreglar las apps de permisos de usuario y de inicio de sesion
+   - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
+   - Botón respaldo (aunque baje sólo el json)
+   - Poner botón regresar a index o links para navegar entre páginas
+   - Manual de usuario, por sección y global.
+
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
  - Altas colaboradores:
    - EBM, MBD y Ray en admin
    - ABD en compras
    - Virgilio en rrhh?
  - app_agregar_json
- - Botón respaldo (aunque baje sólo el json)
     
 SCORE:
   - Reporte semanal
