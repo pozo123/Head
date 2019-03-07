@@ -20,6 +20,8 @@ ESTA SEMANA:
  
  actualizados/nuevos(7/3/19):
  - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
+ - app_proy_cuant_kaizen (esta en pag_web)
+ - 
  
  actualizados/nuevos(26/2/19):
  - app_atributo
