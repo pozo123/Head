@@ -21,7 +21,7 @@ ESTA SEMANA:
  actualizados/nuevos(7/3/19):
  - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
  - app_proy_cuant_kaizen (esta en pag_web)
- - 
+ - app_compras_odec_kaizen (en compras)
  
  actualizados/nuevos(26/2/19):
  - app_atributo
@@ -42,6 +42,7 @@ ESTA SEMANA:
  - Centro de costos 
     - Claves
  - eliminar en bibliotecas score
+ - trabajadores en rama_bd_prod o rama_bd_rrhh?
 
  Errores:
  - Gantt fecha inicial
