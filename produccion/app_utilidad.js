@@ -68,7 +68,7 @@ function loadValuesObra(){
     		$('#' + id_precio_venta_utilidad).val(precio);
 
     		$('#' + id_profit_cantidad_utilidad).val(precio*0.8-costos);
-    		$('#' + id_profit_porcentaje_utilidad).val($('#' + id_profit_cantidad_utilidad).val()/precio);
+    		$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/(0.2*precio + costos));
     	});
     });
 };
@@ -97,11 +97,11 @@ function loadValuesProceso(){
 	    		$('#' + id_precio_venta_utilidad).val(precio);
 
 	    		$('#' + id_profit_cantidad_utilidad).val(precio*0.8-costos);
-	    		$('#' + id_profit_porcentaje_utilidad).val($('#' + id_profit_cantidad_utilidad).val()/precio);
+	    		$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/(0.2*precio + costos));
 	    	});
 	    });
 	} else {
-		firebase.database().ref(rama_bd_obras_magico + $('#' + id_obra_ddl_utilidad + " option:selected").val() + "/procesos/" + $('#' + id_proceso_ddl_utilidad + " option:selected").val()).once('value').then(function(snapshot){
+		firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_utilidad + " option:selected").val() + "/procesos/" + $('#' + id_proceso_ddl_utilidad + " option:selected").val()).once('value').then(function(snapshot){
 	    	snapshot.forEach(function(proc_snap){
 	    		var proc = proc_snap.val();
 	    		var costos_suministros = proc.kaizen.PRODUCCION.SUMINISTROS.OdeC;
@@ -120,7 +120,7 @@ function loadValuesProceso(){
 	    		$('#' + id_precio_venta_utilidad).val(precio);
 
 	    		$('#' + id_profit_cantidad_utilidad).val(precio*0.8-costos);
-	    		$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/precio);
+	    		$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/(0.2*precio + costos);
 	    	});
 	    });
 	}
@@ -139,7 +139,7 @@ function loadProfits(){
 	var precio = parseFloat($('#' + id_precio_venta_utilidad).val());
 
 	$('#' + id_profit_cantidad_utilidad).val(precio*0.8-costos);
-	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/precio);
+	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($('#' + id_profit_cantidad_utilidad).val())/(0.2*precio + costos));
 	highLight(id_profit_porcentaje_utilidad);
 	highLight(id_profit_cantidad_utilidad);
 }
@@ -162,7 +162,7 @@ $("#" + id_precio_venta_utilidad).change(function(){
 
 $("#" + id_profit_porcentaje_utilidad).change(function(){
 	var costos = parseFloat($('#' + id_proyectos_utilidad).val()) + parseFloat($('#' + id_copeo_utilidad).val()) + parseFloat($('#' + id_suministros_utilidad).val());
-	$('#' + id_precio_venta_utilidad).val(costos/(0.8-parseFloat($("#" + id_profit_porcentaje_utilidad).val())/100));
+	$('#' + id_precio_venta_utilidad).val((costos * (1 + parseFloat($("#" + id_profit_porcentaje_utilidad).val())/100))/(0.8-0.2 * parseFloat($("#" + id_profit_porcentaje_utilidad).val())/100));
 	$('#' + id_profit_cantidad_utilidad).val(parseFloat($('#' + id_precio_venta_utilidad).val())*.8-costos);
 	highLight(id_precio_venta_utilidad);
 	highLight(id_profit_cantidad_utilidad);
@@ -171,7 +171,7 @@ $("#" + id_profit_porcentaje_utilidad).change(function(){
 $("#" + id_profit_cantidad_utilidad).change(function(){
 	var costos = parseFloat($('#' + id_proyectos_utilidad).val()) + parseFloat($('#' + id_copeo_utilidad).val()) + parseFloat($('#' + id_suministros_utilidad).val());
 	$('#' + id_precio_venta_utilidad).val((parseFloat($("#" + id_profit_cantidad_utilidad).val()) + costos)/0.8);
-	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($("#" + id_profit_cantidad_utilidad).val())/parseFloat($('#' + id_precio_venta_utilidad).val()));
+	$('#' + id_profit_porcentaje_utilidad).val(100*parseFloat($("#" + id_profit_cantidad_utilidad).val())/(parseFloat($('#' + id_precio_venta_utilidad).val()) - parseFloat($("#" + id_profit_cantidad_utilidad).val())));
 	highLight(id_precio_venta_utilidad);
 	highLight(id_profit_porcentaje_utilidad);
 });
@@ -181,4 +181,3 @@ function highLight(id){
 	console.log("Gray: " + id);
   	setTimeout(function(){	document.getElementById(id).style.background = "white";}, 1000);
 }
-
