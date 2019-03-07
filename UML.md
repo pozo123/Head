@@ -250,6 +250,7 @@
          - year (por num)
             - semana (por num)
                - OdeC (por clave)
+                  - clave
                   - precio_ppto
                   - precio_pag
                   - pagada: bool
