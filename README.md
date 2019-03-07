@@ -22,6 +22,7 @@ ESTA SEMANA:
  - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
  - app_proy_cuant_kaizen (esta en pag_web)
  - app_compras_odec_kaizen (en compras)
+ - app_compras_pag_kaizen (en compras)
  - app_desplegar_procesos -> numero de renglones desplegados
  
  actualizados/nuevos(26/2/19):
