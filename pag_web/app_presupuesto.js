@@ -186,7 +186,7 @@ $('#tabPresupuesto').click(function() {
 
 $('#' + id_clase_ddl_presupuesto).change(function(){
     $('#' + id_proceso_ddl_presupuesto).empty();
-    if($('#' + id_clase_ddl_presupuesto + " option:selected").val() == "produccion"){
+    if($('#' + id_clase_ddl_presupuesto + " option:selected").val() == "PR"){
         $('#' + id_group_proceso_presupuesto).removeClass("hidden")
         var select = document.getElementById(id_proceso_ddl_presupuesto);   
         var option = document.createElement('option');
