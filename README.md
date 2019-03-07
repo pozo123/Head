@@ -4,17 +4,20 @@ Depto. de Innovacion y Optimizacion
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
  Orden Implementacion:
- - app_colaboradores_produccion: NOPE
+ - app_colaboradores_produccion: CHECK
  - app_cuenta_cc: 
  - app_obras_prod: CHECK
  - app_procesos: CHECK
  - app_desplegar_procesos: CHECK
  - app_kaizen_global: CHECK
- - app_datos_kaizen
- - app_asistencia
+ - app_datos_kaizen: CHECK
+ - apps que alimentan kaizen:
+    - cuant:
+    - odec:
+    - compras_pag:
+    - app_asistencia: 
  
 ESTA SEMANA:
- - Kaizen funcional (ideal: hoy max: jueves)
  - Kaizen bonito (ideal: jueves max: viernes)
  - 3 apps llenar kaizen (ideal: viernes max: lunes)
  
@@ -64,7 +67,6 @@ TO DO:
        - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
      - Funcionalidad:
        - si copeo/odec = -1 jala el valor de prec/cuant
-       - dar de alta los subprocesos de via
    - Gantt
      - Hitos
      - Fechas raras :S
@@ -86,9 +88,17 @@ TO DO:
  - RRHH
    - alta_trabajadores
      - Conseguir datos
-     - Pasarlos a CSV
-     - Usar código cool para pasarlos a JSON (online si es no nested, https://github.com/chamkank/hone si lo es)
+     - Subirlos con el formato de hector
+     - Tranformar el json al formato que nosotros queremos
      - Subir el json
+   - asistencia
+     - ddl obra. Carga trabajadores asignados a esa obra (existe obra "otros"/"misc" que se tiene que ir a cc)
+     - Row que permite hacer más trabajadores
+     - cada trabajador tiene ddl por proceso (+ falta, + ppr) por dia
+     - field para diversos
+     - boton actualizar sube lo que hay a la bd
+     - boton guardar actualiza todo, lo cierra, y genera reporte faltas
+     
  - Pagina Web
    - arreglar las apps de permisos de usuario y de inicio de sesion
    - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
