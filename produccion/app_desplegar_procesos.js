@@ -28,6 +28,7 @@ function loadTablaProcesos(){
                         });
                     }
                     var tabla_procesos = $('.' + class_table_datatable_procesos).DataTable({
+                        "lengthMenu": [[-1, 10, 25, 50], ["Todos", 10, 25, 50]],
                         destroy: true,
                         data: datos_procesos,
                         dom: 'Bfrtip',
@@ -51,7 +52,7 @@ function loadTablaProcesos(){
 }
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
-    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sLengthMenu":     "Mostrar _MENU_ procesos",
     "sZeroRecords":    "No se encontraron resultados",
     "sEmptyTable":     "Ningún dato disponible en esta tabla",
     "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
