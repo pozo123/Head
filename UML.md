@@ -112,7 +112,7 @@
       - finiquito
       - prestamos
       - caja_chica
-  - trabajadores:
+  - trabajadores: (no debería ir en rrhh?)
       - AFECTAN: app_trabajadores
       - SUSCRIBEN: app_asistencia
       - trabajador(por id):
@@ -235,7 +235,42 @@
 - clientes
 - proyectos
 - info_web
-
+- compras
+   - colaboradores
+      - same shit
+   - proveedores
+      - Por definir
+   - obras
+      - obra: (por nombre)
+      - nombre
+      - cliente
+      - clave
+      - num_procesos
+      - OdeC:
+         - year (por num)
+            - semana (por num)
+               - OdeC (por clave)
+                  - precio_ppto
+                  - precio_pag
+                  - pagada: bool
+                  - proveedor
+                  - timestamps:
+                     - OdeC
+                     - registro_OdeC
+                     - pago
+                     - registro_pago
+      - procesos:
+         - proceso (por clave):
+            - nombre
+            - alcance
+            - clave
+            - num_subprocesos
+            - subprocesos:
+               - subproceso (por clave):
+                  - nombre
+                  - alcance
+                  - clave
+                  
 - kaizen: (Mayúsculas en caso de que haga falta llenarlas desde un excel)
   - PROYECTOS:
      - PPTO -> Admin/prod
