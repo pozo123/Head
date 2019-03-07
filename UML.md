@@ -261,12 +261,16 @@
                      - registro_pago
       - procesos:
          - proceso (por clave):
+            - OdeC
+               - Igual
             - nombre
             - alcance
             - clave
             - num_subprocesos
             - subprocesos:
                - subproceso (por clave):
+                  - OdeC
+                     - Igual
                   - nombre
                   - alcance
                   - clave
