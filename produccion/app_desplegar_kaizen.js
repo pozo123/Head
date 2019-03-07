@@ -171,21 +171,45 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
         json_kaizen_obra = snapshot.val().kaizen;
 		obra_clave = snapshot.val().clave;
 		var table = document.getElementById(id_datatable_desplegar_kaizen);
-		if(snapshot.val().num_procesos == 0){
+		var num_procesos = snapshot.val().num_procesos;
+		if(num_procesos == 0){
 			createRow(snapshot.val(),table,"obraSimple");
 		} else {
+			var procesos = [];
+			var adic;
+			var misc;
 			snapshot.child("procesos").forEach(function(childSnap){
 				var proc = childSnap.val();
-				if(proc.num_subprocesos == 0){
-					createRow(proc,table,"procSimple");
-				} else {
-					createRow(proc,table,"procPadre");
-					childSnap.child("subprocesos").forEach(function(grandChildSnap){
-						var subproc = grandChildSnap.val();
-						createRow(subproc,table,"subproc");
-					});
+				if(proc.clave == "MISC")
+					procesos[num_procesos + 1] = {proc: proc, tipo: "misc"};
+				else {
+					var consec;
+					if(proc.clave == "ADIC"){
+						consec = num_procesos + 2;
+					} else {
+						consec = parseInt(proc.clave.substring(2,4));
+					}
+					if(proc.num_subprocesos == 0){
+						procesos[consec] = {proc: proc, tipo: "procSimple"};
+					} else {
+						var subp = [];
+						childSnap.child("subprocesos").forEach(function(grandChildSnap){
+							var cl = grandChildSnap.val().clave;
+							var subcons = parseInt(cl.substring(cl.length-2,cl.length))
+							subp[subcons] = grandChildSnap.val();
+						});
+						procesos[consec] = {proc: proc, tipo: "procPadre", num_subprocesos: proc.num_subprocesos, subproc: subp};
+					}
 				}
 			});
+			for(i=0;i<(num_procesos + 3);i++){
+				createRow(procesos[i].proc, table, procesos[i].tipo);
+				if(procesos[i].tipo == "procPadre"){
+					for(j=1;j<=procesos[i].num_subprocesos;j++){
+						createRow(procesos[i].subp[j], table, "subproc");
+					}
+				}
+			}
 			createRow(snapshot.val(),table,"obra");
 		}
 	});
