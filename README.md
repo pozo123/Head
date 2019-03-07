@@ -18,6 +18,9 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  - 3 apps llenar kaizen (ideal: viernes max: lunes)
  
+ actualizados/nuevos(7/3/19):
+ - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
+ 
  actualizados/nuevos(26/2/19):
  - app_atributo
  
