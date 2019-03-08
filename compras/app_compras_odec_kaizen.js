@@ -1,5 +1,7 @@
 var id_obra_ddl_odec_kaizen = "obraDdlOdeC";
+var id_group_proc_odec_kaizen = "groupProcOdec"
 var id_proc_ddl_odec_kaizen = "procDdlOdeC";//TIENEN QUE IR HIDDEN
+var id_group_subp_odec_kaizen = "groupSubpOdec"
 var id_subp_ddl_odec_kaizen = "subpDdlOdeC";//TIENEN QUE IR HIDDEN
 var id_fecha_odec_kaizen = "fechaOdeC";
 var id_clave_odec_kaizen = "claveOdeC";
@@ -38,10 +40,10 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
 	    if(obra.num_procesos == 0){
-	    	$('#' + id_proc_ddl_odec_kaizen).addClass('hidden');
+	    	$('#' + id_group_proc_odec_kaizen).addClass('hidden');
 	    	caso = "obra";
 	    } else {
-	    	$('#' + id_proc_ddl_odec_kaizen).removeClass('hidden');
+	    	$('#' + id_group_proc_odec_kaizen).removeClass('hidden');
 
 		    var select = document.getElementById(id_proc_ddl_odec_kaizen);
 		    var option = document.createElement('option');
@@ -66,11 +68,11 @@ $("#" + id_proc_ddl_odec_kaizen).change(function(){
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var proc = snapshot.val();
 	    if(proc.num_subprocesos == 0){
-	    	$('#' + id_subp_ddl_odec_kaizen).addClass('hidden');
+	    	$('#' + id_group_subp_odec_kaizen).addClass('hidden');
 	    	caso = "proc";
 	    } else {
 	    	caso = "subp";
-	    	$('#' + id_subp_ddl_odec_kaizen).removeClass('hidden');
+	    	$('#' + id_group_subp_odec_kaizen).removeClass('hidden');
 	    	$('#' + id_subp_ddl_odec_kaizen).empty();
 		    var select = document.getElementById(id_subp_ddl_odec_kaizen);
 		    var option = document.createElement('option');
@@ -89,7 +91,7 @@ $("#" + id_proc_ddl_odec_kaizen).change(function(){
 });
 
 $('#' + id_actualizar_valor_odec_kaizen).click(function(){
-	if($('#' + id_clave_odec_kaizen).val() == "" || $('#' + id_cantidad_odec_kaizen).val() == "" || $('#' + id_proveedor_odec_kaizen).val() == "" || $('#' + id_fecha_odec_kaizen).val() == "" || $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "" || (caso != "obra" && ('#' + id_proc_ddl_odec_kaizen + " option:selected").val() == "") || (caso == "subp" && ('#' + id_subp_ddl_odec_kaizen + " option:selected").val() == "")){
+	if($('#' + id_clave_odec_kaizen).val() == "" || $('#' + id_cantidad_odec_kaizen).val() == "" || $('#' + id_proveedor_odec_kaizen).val() == "" || $('#' + id_fecha_odec_kaizen).val() == "" || $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "" || (caso != "obra" && $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() == "") || (caso == "subp" && $('#' + id_subp_ddl_odec_kaizen + " option:selected").val() == "")){
 		alert("Llena todos los campos requeridos");
 	} else {
 		var hoy = getWeek(new Date().getTime()); //hoy[0] = week, hoy[1] = year
@@ -110,9 +112,9 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 		if(caso == "obra"){
 			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val();
 		} else if(caso == "proc"){
-			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' id_proc_ddl_odec_kaizen + " option:selected").val();
+			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val();
 		} else if(caso == "subp"){
-			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
+			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
 		}
 		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + hoy[1] + "/" + hoy[0] + "/" + $('#' + id_clave_odec_kaizen).val()).set(odec);
 		firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/OdeC").once('value').then(function(snapshot){
