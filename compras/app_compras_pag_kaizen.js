@@ -175,6 +175,11 @@ $('#' + id_actualizar_valor_pag_suministros_kaizen).click(function(){
 		var week = path [1];
 		var odec = (string_path).substring(path[0].length + path[1].length + 2, string_path.length);//+2 por el / entre year y week y el / entre week y odec
 		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + year + "/" + week + "/" + odec + "/pagos").push(pag_suministros);
+		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + year + "/" + week + "/" + odec).once('value').then(function(snapshot){
+			var odec = snapshot.val();
+			var valor_nuevo = parseFloat(odec.precio_pag) + parseFloat($('#' + id_cantidad_pag_suministros_kaizen).val());
+			firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + year + "/" + week + "/" + odec + "/precio_pag").set(valor_nuevo);
+		});
 		firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/PAG").once('value').then(function(snapshot){
 			var anterior = snapshot.val();
 			var nuevo = parseFloat(anterior) + parseFloat($('#' + id_cantidad_pag_suministros_kaizen).val());
