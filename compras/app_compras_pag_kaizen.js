@@ -1,8 +1,10 @@
 var id_obra_ddl_pag_suministros_kaizen = "obraDdlPagSum";
+var id_group_subp_pag_suministros_kaizen = "groupSubpPagSum"
 var id_subp_ddl_pag_suministros_kaizen = "subpDdlPagSum";//TIENEN QUE IR HIDDEN
+var id_group_proc_pag_suministros_kaizen = "groupProcPagSum"
 var id_proc_ddl_pag_suministros_kaizen = "procDdlPagSum";//TIENEN QUE IR HIDDEN
 var id_fecha_pag_suministros_kaizen = "fechaPagSum";
-var id_odec_ddl_kaizen = "clavePagSum";
+var id_odec_ddl_pag_suministros_kaizen = "clavePagSum";
 var id_cantidad_pag_suministros_kaizen = "cantidadPagSum";
 var id_actualizar_valor_pag_suministros_kaizen = "actualizarPagSum";
 
@@ -37,10 +39,10 @@ $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
 	    if(obra.num_procesos == 0){
-	    	$('#' + id_proc_ddl_pag_suministros_kaizen).addClass('hidden');
+	    	$('#' + id_group_proc_pag_suministros_kaizen).addClass('hidden');
 	    	caso = "obra";
 	    } else {
-	    	$('#' + id_proc_ddl_pag_suministros_kaizen).removeClass('hidden');
+	    	$('#' + id_group_proc_pag_suministros_kaizen).removeClass('hidden');
 
 		    var select = document.getElementById(id_proc_ddl_pag_suministros_kaizen);
 		    var option = document.createElement('option');
@@ -56,10 +58,10 @@ $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
 		        select.appendChild(option2);
 		    });
 
-			$('#' + id_odec_ddl_kaizen).empty();
-			var select2 = document.getElementById(id_odec_ddl_kaizen);
+			$('#' + id_odec_ddl_pag_suministros_kaizen).empty();
+			var select2 = document.getElementById(id_odec_ddl_pag_suministros_kaizen);
 			var option3 = document.createElement('option');
-			var option3.style = "display:none";
+			option3.style = "display:none";
 			option3.text = option3.value = "";
 			select2.appendChild(option);
 
@@ -80,22 +82,26 @@ $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
 $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
 	$('#' + id_subp_ddl_pag_suministros_kaizen).empty();
 
-    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
-	    var proc = snapshot.val();
+    firebase.database().ref(rama_bd_obras_compras + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
+        var proc = snapshot.val();
+        console.log(proc)
 	    if(proc.num_subprocesos == 0){
-	    	$('#' + id_subp_ddl_pag_suministros_kaizen).addClass('hidden');
+	    	$('#' + id_group_subp_pag_suministros_kaizen).addClass('hidden');
 	    	caso = "proc";
 
-	    	$('#' + id_odec_ddl_kaizen).empty();
-			var select2 = document.getElementById(id_odec_ddl_kaizen);
+	    	$('#' + id_odec_ddl_pag_suministros_kaizen).empty();
+			var select2 = document.getElementById(id_odec_ddl_pag_suministros_kaizen);
 			var option3 = document.createElement('option');
-			var option3.style = "display:none";
+			option3.style = "display:none";
 			option3.text = option3.value = "";
-			select2.appendChild(option);
+			select2.appendChild(option3);
 
 			snapshot.child('OdeC').forEach(function(yearSnap){
+                console.log(yearSnap)
 				yearSnap.forEach(function(weekSnap){
+                    console.log(weekSnap)
 					weekSnap.forEach(function(odecSnap){
+                        console.log(odecSnap)
 						var option4 = document.createElement('OPTION');
 				        option4.text = odecSnap.key;
 				        option4.value = yearSnap.key + "/" + weekSnap.key + "/" + odecSnap.key;
@@ -105,7 +111,7 @@ $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
 			});
 	    } else {
 	    	caso = "subp";
-	    	$('#' + id_subp_ddl_pag_suministros_kaizen).removeClass('hidden');
+	    	$('#' + id_group_subp_pag_suministros_kaizen).removeClass('hidden');
 	    	$('#' + id_subp_ddl_pag_suministros_kaizen).empty();
 		    var select = document.getElementById(id_subp_ddl_pag_suministros_kaizen);
 		    var option = document.createElement('option');
@@ -119,10 +125,10 @@ $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
 		        option2.value = subp.clave;
 		        select.appendChild(option2);
 
-		        $('#' + id_odec_ddl_kaizen).empty();
-				var select2 = document.getElementById(id_odec_ddl_kaizen);
+		        $('#' + id_odec_ddl_pag_suministros_kaizen).empty();
+				var select2 = document.getElementById(id_odec_ddl_pag_suministros_kaizen);
 				var option3 = document.createElement('option');
-				var option3.style = "display:none";
+				option3.style = "display:none";
 				option3.text = option3.value = "";
 				select2.appendChild(option);
 
@@ -142,7 +148,7 @@ $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
 });
 
 $('#' + id_actualizar_valor_pag_suministros_kaizen).click(function(){
-	if($('#' + id_odec_ddl_kaizen + " option:selected").val() == "" || $('#' + id_cantidad_pag_suministros_kaizen).val() == "" || $('#' + id_fecha_pag_suministros_kaizen).val() == "" || $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() == "" || (caso != "obra" && ('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val() == "") || (caso == "subp" && ('#' + id_subp_ddl_pag_suministros_kaizen + " option:selected").val() == "")){
+	if($('#' + id_odec_ddl_pag_suministros_kaizen + " option:selected").val() == "" || $('#' + id_cantidad_pag_suministros_kaizen).val() == "" || $('#' + id_fecha_pag_suministros_kaizen).val() == "" || $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() == "" || (caso != "obra" && ('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val() == "") || (caso == "subp" && ('#' + id_subp_ddl_pag_suministros_kaizen + " option:selected").val() == "")){
 		alert("Llena todos los campos requeridos");
 	} else {
 		var hoy = getWeek(new Date().getTime()); //hoy[0] = week, hoy[1] = year
@@ -158,11 +164,11 @@ $('#' + id_actualizar_valor_pag_suministros_kaizen).click(function(){
 		if(caso == "obra"){
 			query = $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val();
 		} else if(caso == "proc"){
-			query = $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' id_proc_ddl_pag_suministros_kaizen + " option:selected").val();
+			query = $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val();
 		} else if(caso == "subp"){
-			query = $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' id_proc_ddl_pag_suministros_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pag_suministros_kaizen + " option:selected").val();
+			query = $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pag_suministros_kaizen + " option:selected").val();
 		}
-		var string_path = $('#' + id_odec_ddl_kaizen + " option:selected").val();
+		var string_path = $('#' + id_odec_ddl_pag_suministros_kaizen + " option:selected").val();
 		var path = string_path.split("/");;
 		var year = path[0];
 		var week = path [1];
