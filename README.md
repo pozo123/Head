@@ -12,9 +12,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  - app_kaizen_global: CHECK
  - app_datos_kaizen: CHECK
  - apps que alimentan kaizen:
-    - cuant:
-    - odec:
-    - compras_pag:
+    - cuant: CHECK
+    - odec: CHECK
+    - compras_pag: CHECK
     - app_asistencia: 
  
 ESTA SEMANA:
@@ -22,12 +22,8 @@ ESTA SEMANA:
  - 3 apps llenar kaizen (ideal: viernes max: lunes)
  
  actualizados/nuevos(7/3/19):
- - app_presupuesto -> clave para que jale subproc
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
  - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
- - app_proy_cuant_kaizen (esta en pag_web)
- - app_compras_odec_kaizen (en compras)
- - app_compras_pag_kaizen (en compras)
  - app_desplegar_procesos -> numero de renglones desplegados
  
  actualizados/nuevos(26/2/19):
