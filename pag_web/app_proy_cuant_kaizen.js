@@ -108,17 +108,25 @@ $('#' + id_cantidad_cuant_kaizen).change(function(){
 });
 
 $('#' + id_actualizar_valor_cuant_kaizen).click(function(){
-	nuevo = parseFloat($('#' + id_valor_nuevo_cuant_kaizen).text());
-	var query;
-	if(caso == "obra"){
-		query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val();
-	} else if(caso == "proc"){
-		query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val();
-	} else if(caso == "subp"){
-		query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val();
+	if($('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() == ""){
+		alert("Selecciona una obra");
+	} else if(caso != "obra" && $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val() == ""){
+		alert("Selecciona un proceso");
+	} else if(caso == "subp" && $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val() == ""){
+		alert("Selecciona un subproceso");
+	} else {
+		nuevo = parseFloat($('#' + id_valor_nuevo_cuant_kaizen).text());
+		var query;
+		if(caso == "obra"){
+			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val();
+		} else if(caso == "proc"){
+			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val();
+		} else if(caso == "subp"){
+			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val();
+		}
+		firebase.database().ref(query + "/kaizen/PRODUCCION/SUMINISTROS/CUANT").set(nuevo);
+		$('#' + id_valor_anterior_cuant_kaizen).text(nuevo);
+		$('#' + id_cantidad_cuant_kaizen).val("");
+		alert("Actualizado");
 	}
-	firebase.database().ref(query + "/kaizen/PRODUCCION/SUMINISTROS/CUANT").set(nuevo);
-	$('#' + id_valor_anterior_cuant_kaizen).text(nuevo);
-	$('#' + id_cantidad_cuant_kaizen).val("");
-	alert("Actualizado");
 });
