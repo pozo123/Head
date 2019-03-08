@@ -12,6 +12,7 @@ var tab_pag_suministros_kaizen = "tabPagSum";
 var rama_bd_obras_magico = "obras";
 var rama_bd_obras_compras = "compras/obras";
 var caso;
+var obra_global;
 
 $('#' + tab_pag_suministros_kaizen).click(function(){
 	jQuery('#' + id_fecha_pag_suministros_kaizen).datetimepicker(
@@ -38,6 +39,7 @@ $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
 
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
+	    obra_global = obra;
 	    if(obra.num_procesos == 0){
 	    	$('#' + id_group_proc_pag_suministros_kaizen).addClass('hidden');
 	    	caso = "obra";
@@ -85,7 +87,7 @@ $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
     firebase.database().ref(rama_bd_obras_compras + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
         var proc = snapshot.val();
         console.log(proc)
-	    if(proc.num_subprocesos == 0){
+	    if(obra.procesos.child(proc.clave).num_subprocesos == 0){
 	    	$('#' + id_group_subp_pag_suministros_kaizen).addClass('hidden');
 	    	caso = "proc";
 
