@@ -6,6 +6,7 @@ var id_proyectos_checkbox_area = "checkProyectosArea";
 var id_produccion_checkbox_area = "checkproduccionArea";
 var id_compras_checkbox_area = "checkComprasArea";
 var id_admin_checkbox_area = "checkAdminArea";
+var id_rrhh_checkbox_area = "checkRRHHArea";
 
 $('#tabAreas').click(function(){
     var select = document.getElementById(id_colaborador_ddl_areas);
@@ -22,8 +23,7 @@ $('#tabAreas').click(function(){
     });   
 });
 
-//Esta hay que ponerla en el onchange del ddl colaborador
-function loadCheckboxesAreas(){
+$("#" + id_colaborador_ddl_areas).change(function(){
     firebase.database().ref(rama_bd_personal).orderByChild("nombre").equalTo($('#' + id_colaborador_ddl_areas + " option:selected").val()).once("child_added").then(function(snapshot){
         var areas = snapshot.val().areas;
         
@@ -46,8 +46,13 @@ function loadCheckboxesAreas(){
             $('#' + id_administracion_checkbox_area).bootstrapToggle('on');
         else
             $('#' + id_administracion_checkbox_area).bootstrapToggle('off');
+
+        if(areas.rrhh === true)
+            $('#' + id_rrhh_checkbox_area).bootstrapToggle('on');
+        else
+            $('#' + id_rrhh_checkbox_area).bootstrapToggle('off');
     });
-}
+});
 
 $('#' + id_guardar_button_areas).click(function () {
     var areas = {
@@ -55,8 +60,9 @@ $('#' + id_guardar_button_areas).click(function () {
         produccion: $('#' + id_produccion_checkbox_area).prop('checked'),
         compras: $('#' + id_compras_checkbox_area).prop('checked'),
         administracion: $('#' + id_administracion_checkbox_area).prop('checked'),
+        rrhh: $('#' + id_rrhh_checkbox_area).prop('checked'),
     }
-
+https://console.firebase.google.com/u/1/project/ingenieriahead/database/ingenieriahead/data/personal/WCpLarWgMKfwGsvAdrqlqjQxy243/nickname
     firebase.database().ref(rama_bd_personal).orderByChild("nombre").equalTo($('#' + id_colaborador_ddl_areas + " option:selected").val()).once("child_added").then(function(snapshot){
         firebase.database().ref(rama_bd_personal + "/" + snapshot.val().uid + "/areas").set(areas);
     });
