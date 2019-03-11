@@ -27,6 +27,8 @@ ESTA SEMANA:
  - col_compras no está actualizado
  - app_proy_asigna_proc
  - app_cierre_maestro -> linea 84
+ - app_actualizar_regs -> esp == "NA"
+ - app_desplegar_kaizen (no lo subí a git) -> if/elses de lineas 423-427 para alerta si avance esta mal 
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
@@ -56,7 +58,6 @@ ESTA SEMANA:
  - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros -> seguro por NAs
- - No se están sumando horas en "horas_trabajadas" en el ppto :/
  - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
