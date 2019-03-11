@@ -54,7 +54,7 @@ ESTA SEMANA:
  Errores:
  - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
- - Graphs central park misc tiene horas en ihs pero no hay registros
+ - Graphs central park misc tiene horas en ihs pero no hay registros -> seguro por NAs
  - No se están sumando horas en "horas_trabajadas" en el ppto :/
  - registros con horas 0 (creo que ya se resolvió)
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
