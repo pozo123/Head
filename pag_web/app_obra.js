@@ -1,4 +1,5 @@
-var id_nombre_obra = "obraNombre";
+//var id_nombre_obra = "obraNombre";
+var id_nombre_obra_ddl_obra_proy = "obraNombreProy";
 var id_clave_obra = "obraClave";
 var id_cliente_ddl_obra = "cliente";
 var id_direccion_calle_obra = "calleObra";
@@ -15,47 +16,21 @@ var rama_bd_obras_magico = "obras";
 
 var procesos = {};
 
-var kaiz = {
-    PROYECTOS: {
-        PPTO: 0,
-        PAG: 0,
-    },
-    PRODUCCION: {
-        SUMINISTROS: {
-            CUANT: 0,
-            OdeC: -1,
-            PAG: 0,
-        },
-        COPEO: {
-            PREC: 0,
-            COPEO: -1,
-            PAG: 0,
-        },
-    },
-    ADMINISTRACION: {
-        ESTIMACIONES: {
-            PPTO: 0,
-            EST: 0,
-            PAG: 0,
-        },
-        ANTICIPOS: {
-            PPTO: 0,
-            PAG: 0,
-        },
-    },
-    PROFIT: {
-        PROG: {
-            BRUTO: 0,
-            NETO: 0,
-        },
-        REAL: {
-            BRUTO: 0,
-            NETO: 0,
-        },
-    }
-};
-
 $('#tabBibObras').click(function(){
+    var select = document.getElementById(id_cliente_ddl_obra) ;
+    var option = document.createElement('option');
+    option.style = "display:none";
+    option.text = option.value = "";
+    select.appendChild(option);
+
+    firebase.database().ref(rama_bd_obras_magico).orderByChild('nombre').on('child_added',function(snapshot){
+        var obra = snapshot.val();
+        var option2 = document.createElement('OPTION');
+        option2.text = obra.nombre;
+        option2.value = obra.clave;
+        select.appendChild(option2);
+    });
+
     var select3 = document.getElementById(id_cliente_ddl_obra) ;
     var option3 = document.createElement('option');
     option3.style = "display:none";
@@ -72,187 +47,125 @@ $('#tabBibObras').click(function(){
    
 });
 
-var existe = false;
-$("#" + id_nombre_obra).change(function(){
-    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra).val()).once('child_added').then(function(snapshot){
+$("#" + id_nombre_obra_ddl_obra_proy).change(function(){
+    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val()).once('child_added').then(function(snapshot){
         var obra = snapshot.val();
-        if(obra != null){
-            $('#' + id_clave_obra).val(obra.clave);
-            $("#" + id_cliente_ddl_obra + " option:contains(" + obra.cliente + ")").attr('selected', 'selected');
-            document.getElementById(id_clave_obra).disabled = true;
-            document.getElementById(id_cliente_ddl_obra).disabled = true;
-            existe = true;
-            //fechas
-        } else {
-            document.getElementById(id_clave_obra).disabled = false;
-            document.getElementById(id_cliente_ddl_obra).disabled = false;
-            existe = false;
-            //fechas
-        }
+        $('#' + id_clave_obra).val(obra.clave);
+        $("#" + id_cliente_ddl_obra + " option:contains(" + obra.cliente + ")").attr('selected', 'selected');
+        document.getElementById(id_clave_obra).disabled = true;
+        document.getElementById(id_cliente_ddl_obra).disabled = true;
     });
 });
 
-
 $('#' + id_registrar_button_obra).click(function () {
-    if(!$('#' + id_nombre_obra).val() || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === "" || !$('#' + id_direccion_calle_obra).val() || !$('#' + id_direccion_num_obra).val() || !$('#' + id_direccion_colonia_obra).val() || !$('#' + id_direccion_delegacion_obra).val() || !$('#' + id_direccion_ciudad_obra).val() || !$('#' + id_direccion_cp_obra).val()){
+    if(!$('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() == "" || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === ""){// || !$('#' + id_direccion_calle_obra).val() || !$('#' + id_direccion_num_obra).val() || !$('#' + id_direccion_colonia_obra).val() || !$('#' + id_direccion_delegacion_obra).val() || !$('#' + id_direccion_ciudad_obra).val() || !$('#' + id_direccion_cp_obra).val()){
         alert("Llena todos los campos requeridos");
-    } else {
-        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val()).once('value').then(function(snapshot){
-            var o = snapshot.val();
-                if(o !== null){
-                    alert("Obra ya existente");
-                } else {
-                    if(!existe){
-                        var fech = {
-                            fecha_inicio_real: 0,
-                            fecha_inicio_teorica: 0,
-                            fecha_final_real: 0,
-                            fecha_final_teorica: 0,
+    } else {    
+        var obra = {      
+            nombre: $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val(),
+            clave: $('#' + id_clave_obra).val(),
+            direccion: {
+                calle: $('#' + id_direccion_calle_obra).val(),
+                numero: $('#' + id_direccion_num_obra).val(),
+                colonia: $('#' + id_direccion_colonia_obra).val(),
+                delegacion: $('#' + id_direccion_delegacion_obra).val(),
+                ciudad: $('#' + id_direccion_ciudad_obra).val(),
+                cp: $('#' + id_direccion_cp_obra).val()
+            },
+            cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
+            timestamps: {
+                startedAt: new Date().getTime(),
+                finishedAt: 0,
+            },
+            presupuestos: {
+                Miscelaneo: {
+                    nombre: "Miscelaneo",
+                    clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
+                    horas_programadas: 0,
+                    proceso: "MISC",
+                    colaboradores_asignados: {
+                        horas_totales: 0,
+                        horas_totales_ie: 0,
+                        horas_totales_ihs: 0,
+                        ie: {},
+                        ihs: {},
+                    },
+                    cash_presupuestado: 0,
+                    timestamps: {
+                        startedAt: new Date().getTime(),
+                        finishedAt: 0,
+                        activacion: 0,
+                        reqs_completados: 0
+                    },
+                    consecutivos:{
+                        1:{
+                            precio: 0,
+                            pdf: "",
+                            checkin: new Date().getTime(),
                         }
-                        procesos["MISC"] = {
-                            alcance: "MISCELANEOS",
-                            clave: "MISC",
-                            tipo: "miscelaneo",    
-                            fechas: fech,
-                            kaizen: kaiz,
-                            num_subprocesos: 0,
-                            subprocesos: "",
-                        };
-                        procesos["PC00"] = {
-                            alcance: "TRABAJO PREVIO A FIRMAR CONTRATO",
-                            clave: "PC00",
-                            tipo: "proyecto",
-                            fechas: fech,
-                            kaizen: kaiz,
-                            num_subprocesos: 0,
-                            subprocesos: "",
-                        };
-                        procesos["ADIC"] = {
-                            alcance: "ADICIONALES",
-                            clave: "ADIC",
-                            tipo: "adicional",
-                            fechas: fech,
-                            kaizen: kaiz,
-                            num_subprocesos: 0,
-                            subprocesos: "",
-                        };
-                        var obra_mag = {      
-                                nombre: $('#' + id_nombre_obra).val(),
-                                cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
-                                clave: $('#' + id_clave_obra).val(),
-                                num_procesos: 0,
-                                procesos: procesos,
-                                fechas: fech,
-                                kaizen: kaiz,
-                            }
-                        firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_nombre_obra).val()).set(obra_mag);
-                    }
-                    var obra = {      
-                        nombre: $('#' + id_nombre_obra).val(),
-                        clave: $('#' + id_clave_obra).val(),
-                        direccion: {
-                            calle: $('#' + id_direccion_calle_obra).val(),
-                            numero: $('#' + id_direccion_num_obra).val(),
-                            colonia: $('#' + id_direccion_colonia_obra).val(),
-                            delegacion: $('#' + id_direccion_delegacion_obra).val(),
-                            ciudad: $('#' + id_direccion_ciudad_obra).val(),
-                            cp: $('#' + id_direccion_cp_obra).val()
-                        },
-                        cliente: $('#' + id_cliente_ddl_obra + " option:selected").text(),
-                        timestamps: {
-                            startedAt: new Date().getTime(),
-                            finishedAt: 0,
-                        },
-                        presupuestos: {
-                            Miscelaneo: {
-                                nombre: "Miscelaneo",
-                                clave: $('#' + id_clave_obra).val() + "/" + $('#' + id_cliente_ddl_obra + " option:selected").val() + "/MI001",
-                                horas_programadas: 0,
-                                proceso: "MISC",
-                                colaboradores_asignados: {
-                                    horas_totales: 0,
-                                    horas_totales_ie: 0,
-                                    horas_totales_ihs: 0,
-                                    ie: {},
-                                    ihs: {},
-                                },
-                                cash_presupuestado: 0,
-                                timestamps: {
-                                    startedAt: new Date().getTime(),
-                                    finishedAt: 0,
-                                    activacion: 0,
-                                    reqs_completados: 0
-                                },
-                                consecutivos:{
-                                    1:{
-                                        precio: 0,
-                                        pdf: "",
-                                        checkin: new Date().getTime(),
-                                    }
-                                },
-                                contrato: true,
-                                terminado: false,
-                                reqs: "vacio",
-                                exclusiones: "vacio",
-                                atencion: "vacio",
-                                pagos: "vacio",
-                                consec: 1,
-                                oculto: false,
-                                tipo: "miscelaneo",
-                                genero: "miscelaneo",
-                                clase: "miscelaneo",
-                            }
-                        }
-                    }
-
-                    firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
-                                var elec = snapshot.val();
-                                var keys = Object.keys(elec);
-                                for(var i=0; i<keys.length; i++){
-                                    if(elec[keys[i]].permisos.perfil === true){
-                                        var inge_ie = {
-                                            horas: 0,
-                                            horas_trabajadas: 0,
-                                            nombre: elec[keys[i]].nombre,
-                                        }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
-                                    }
-                                }
-                            });
-                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(2).once('value').then(function(snapshot){
-                                var plom = snapshot.val();
-                                var keys = Object.keys(plom);
-                                for(var i=0; i<keys.length; i++){
-                                    if(plom[keys[i]].permisos.perfil === true){
-                                        var inge_ihs = {
-                                            horas: 0,
-                                            horas_trabajadas: 0,
-                                            nombre: plom[keys[i]].nombre,
-                                        }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
-                                    }
-                                }
-                            });
-                            firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(3).once('value').then(function(snapshot){
-                                var gral = snapshot.val();
-                                var keys = Object.keys(gral);
-                                for(var i=0; i<keys.length; i++){
-                                    if(gral[keys[i]].permisos.perfil === true){
-                                        var inge_gral = {
-                                            horas: 0,
-                                            horas_trabajadas: 0,
-                                            nombre: gral[keys[i]].nombre,
-                                        }
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
-                                        firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
-                                    }
-                                }
-                            });
-
-                    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra).val()).set(obra);
-
-                    alert("¡Alta exitosa!");
+                    },
+                    contrato: true,
+                    terminado: false,
+                    reqs: "vacio",
+                    exclusiones: "vacio",
+                    atencion: "vacio",
+                    pagos: "vacio",
+                    consec: 1,
+                    oculto: false,
+                    tipo: "miscelaneo",
+                    genero: "miscelaneo",
+                    clase: "miscelaneo",
                 }
-        });
+            }
+        }
+
+    firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(1).once('value').then(function(snapshot){
+        var elec = snapshot.val();
+        var keys = Object.keys(elec);
+        for(var i=0; i<keys.length; i++){
+            if(elec[keys[i]].permisos.perfil === true){
+                var inge_ie = {
+                    horas: 0,
+                    horas_trabajadas: 0,
+                    nombre: elec[keys[i]].nombre,
+                }
+                firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_ie);
+            }
+        }
+    });
+    firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(2).once('value').then(function(snapshot){
+        var plom = snapshot.val();
+        var keys = Object.keys(plom);
+        for(var i=0; i<keys.length; i++){
+            if(plom[keys[i]].permisos.perfil === true){
+                var inge_ihs = {
+                    horas: 0,
+                    horas_trabajadas: 0,
+                    nombre: plom[keys[i]].nombre,
+                }
+                firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_ihs);
+            }
+        }
+    });
+    firebase.database().ref(rama_bd_inges).orderByChild("especialidad").equalTo(3).once('value').then(function(snapshot){
+        var gral = snapshot.val();
+        var keys = Object.keys(gral);
+        for(var i=0; i<keys.length; i++){
+            if(gral[keys[i]].permisos.perfil === true){
+                var inge_gral = {
+                    horas: 0,
+                    horas_trabajadas: 0,
+                    nombre: gral[keys[i]].nombre,
+                }
+                firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ihs/" + keys[i]).set(inge_gral);
+                firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() + "/presupuestos/Miscelaneo/colaboradores_asignados/ie/" + keys[i]).set(inge_gral);
+            }
+        }
+    });
+
+    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val()).set(obra);
+
+    alert("¡Alta exitosa!");
+                
     }
 });
