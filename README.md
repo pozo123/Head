@@ -23,6 +23,7 @@ ESTA SEMANA:
  actualizados/nuevos(11/3/19):
  - app_rrhh_importar_trabajadores
  - app_admin_registro
+ - app_areas
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
@@ -41,14 +42,12 @@ ESTA SEMANA:
    
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
- - app_areas
  - loadScoreKaizen (en app_funciones)
  
  Por definir:
  - Centro de costos 
     - Claves
  - eliminar en bibliotecas score
- - trabajadores en rama_bd_prod o rama_bd_rrhh?
 
  Errores:
  - Gantt fecha inicial
