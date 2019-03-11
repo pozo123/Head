@@ -13,6 +13,15 @@
     - nickname: ? string
     - email: string
 - administracion:
+   - investime
+      - familias
+         - Globales
+            - subfamilias (por nombre)
+               - actividades: actividades
+         - Especificos
+            - actividades: actividades
+         - Rutinarios
+            - actividades: actividades
    - centro de costos
       - familia(nombre)
          - nombre
