@@ -19,7 +19,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
  
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
- - 3 apps llenar kaizen (ideal: viernes max: lunes)
+ 
+ actualizados/nuevos(11/3/19):
+ - app_rrhh_importar_trabajadores
+ - app_admin_registro
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
