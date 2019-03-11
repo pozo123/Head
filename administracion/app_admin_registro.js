@@ -91,7 +91,8 @@ $("#" + id_subfamilia_ddl_registroAdmin).change(function(){
 	    acts.forEach(function(childSnap){
 			var act = childSnap.key;
             var option2 = document.createElement('option');
-            option2.text = option2.value = act; 
+            option2.text = act;
+            option2.value = childSnap.value; 
             select.appendChild(option2);
 		});
 	}
