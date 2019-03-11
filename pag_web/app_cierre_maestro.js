@@ -81,7 +81,7 @@ function cierreMaestro(automatico){
 							firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto).once("value").then(function(snapshot){
 								var presu = snapshot.val();
 								var horas_trabajadas_p;
-								if(presu.horas_trabajadas === null)
+								if(presu.horas_trabajadas !== null)
 									horas_trabajadas_p = presu.horas_trabajadas + (horas_registro)/3600000;
 								else
 									horas_trabajadas_p = horas_registro/3600000;
