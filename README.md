@@ -25,6 +25,7 @@ ESTA SEMANA:
  - app_admin_registro
  - app_areas
  - col_compras no está actualizado
+ - app_proy_asigna_proc
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
