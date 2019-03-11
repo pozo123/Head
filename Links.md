@@ -79,3 +79,6 @@ en terminal
     - https://datatables.net/reference/api/row().child()
     Row selector:
       - https://datatables.net/reference/type/row-selector
+  
+  - Escalar tabla
+    - https://stackoverflow.com/questions/26712180/html-table-scale-to-fit
