@@ -14,6 +14,17 @@
     - email: string
 - administracion:
    - investime
+      - registros
+         - año (ej 2019)
+            - semana (ej 3)
+               - registro (por uid)
+                  - familia
+		      - subfamilia
+		      - actividad
+      		- activo
+		      - checkin
+		      - checkout
+		      - colaborador (por uid)
       - familias
          - Globales
             - subfamilias (por nombre)
