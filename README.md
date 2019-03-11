@@ -26,6 +26,7 @@ ESTA SEMANA:
  - app_areas
  - col_compras no está actualizado
  - app_proy_asigna_proc
+ - app_cierre_maestro -> linea 84
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
