@@ -1,13 +1,9 @@
-//Primera fila dice anidados. 
-    //0 -> atributo simple
-    //valor -> atributo anidado
-    //valor/valor2 -> atributo anidado n veces
-//Segunda fila dice titulos/keys del nuevo json
-
 var id_file_importarTrabajadores = "importarTrabajadoresFile";
 var id_button_guardar_importarTrabajadores = "importarTrabajadoresButton";
 var id_filename_importarTrabajadores = "importarTrabajadoresLabelFile";
+
 var rama_bd_trabajadores = "produccion/trabajadores";
+
 var excelSeleccionado = "";
 var fileName = "";
 
@@ -38,6 +34,7 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
 
     var uid_index;
     var titulos = [];
+    //AQUI hay que definir
     var niveles = [0,"nombre","nombre","accesorios/ropa/zapatos",0,0,"accesorios/ropa/zapatos"];
     for(key in json[0]){
         if(json[0][key] == "uid") 
