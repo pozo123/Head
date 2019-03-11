@@ -4,7 +4,12 @@ var id_familia_ddl_registroAdmin = "familiaDdlRegistroAdmin";
 var id_subfamilia_ddl_registroAdmin = "subfamiliaDdlRegistroAdmin";
 var id_actividad_ddl_registroAdmin = "actividadDdlRegistroAdmin";
 var id_actividad_otros_registroAdmin = "actividadOtrosRegistroAdmin";
+//PONER 3 radio buttons con name = "status_obra". 
+//ACTIVA
+//CIERRE
+//TERMINADA
 
+var id_group_status_obra_registroAdmin = "statusObraGroupRegistroAdmin";
 var id_group_entrada_registroAdmin = "entradaGroupRegistroAdmin";
 var id_group_otros_registroAdmin = "otrosGroupRegistroAdmin";
 var id_group_actividad_registroAdmin = "actividadGroupRegistroAdmin";
@@ -44,6 +49,7 @@ $("#" + id_familia_ddl_registroAdmin).change(function(){
 	var query;
 	var fam = $('#' + id_familia_ddl_registroAdmin + " option:selected").val();
     if(fam == "Especificos"){
+    	$('#' + id_group_status_obra_registroAdmin).removeClass('hidden');
     	firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
     		snapshot.forEach(function(childSnap){
     			var subfam = childSnap.key;
@@ -56,6 +62,7 @@ $("#" + id_familia_ddl_registroAdmin).change(function(){
             select.appendChild(option3);
     	});
     } else {
+    	$('#' + id_group_status_obra_registroAdmin).addClass('hidden');
     	familias[fam].forEach(function(childSnap){
 			var subfam = childSnap.key;
             var option2 = document.createElement('option');
@@ -106,6 +113,10 @@ $('#' + id_entrada_button_registroAdmin).change(function(){
 		actividad = $('#' + id_actividad_ddl_registroAdmin + " option:selected").val();
 	}
 	var now = new Date().getTime();
+	var status_obra = -1;
+	if($('#' + id_familia_ddl_registroAdmin + " option:selected").val() == "Especificos"){
+		status_obra = $("input[name='status_obra']:checked").val();
+	}
 	var reg = {
 		familia: $('#' + id_familia_ddl_registroAdmin + " option:selected").val(),
 		subfamilia: $('#' + id_subfamilia_ddl_registroAdmin + " option:selected").val(),
@@ -114,6 +125,7 @@ $('#' + id_entrada_button_registroAdmin).change(function(){
 		checkin: now;
 		checkout: 0,
 		colaborador: firebase.auth().currentUser.uid,
+		status_obra: status_obra,
 	}
 	var dates = getWeek(now);
 	var reg_uid = firebase.database().ref(rama_bd_registros_registros_admin + "/" + dates[1] + "/" + dates[0]).push(reg);
