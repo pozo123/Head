@@ -224,7 +224,11 @@ $('#' + id_boton_chido).click(function(){
             snapshot.forEach(function(childSnapshot){
                 var regis = childSnapshot.val();
                 if(regis.obra != "Otros"){
-                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp).orderByChild("nombre").equalTo(regis.inge).once('value').then(function(snapshot){
+                    var esp = "ihs";
+                    if(regis.esp == "ie"){
+                        esp = "ie";
+                    }
+                    firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp).orderByChild("nombre").equalTo(regis.inge).once('value').then(function(snapshot){
                         snapshot.forEach(function(snap_inge){
                             var username = snap_inge.key;
                             var horas = snap_inge.val().horas_trabajadas;
@@ -234,9 +238,9 @@ $('#' + id_boton_chido).click(function(){
                             } else {
                                 horas_nuevas = regis.horas/3600000;
                             }
-                            json[regis.obra][regis.presupuesto][regis.esp][regis.inge] += horas_nuevas;
-                            var horas_ppto = json[regis.obra][regis.presupuesto][regis.esp][regis.inge];
-                            firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + regis.esp + "/" + username + "/horas_trabajadas").set(horas_ppto);
+                            json[regis.obra][regis.presupuesto][esp][regis.inge] += horas_nuevas;
+                            var horas_ppto = json[regis.obra][regis.presupuesto][esp][regis.inge];
+                            firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/colaboradores_asignados/" + esp + "/" + username + "/horas_trabajadas").set(horas_ppto);
                         })
                     });
                     
