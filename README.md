@@ -24,6 +24,7 @@ ESTA SEMANA:
  - app_rrhh_importar_trabajadores
  - app_admin_registro
  - app_areas
+ - col_compras no está actualizado
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
@@ -108,11 +109,7 @@ TO DO:
 
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
  - Altas colaboradores:
-   - EBM, MBD y Ray en admin
-   - ABD en compras
-   - Virgilio en rrhh?
- - app_agregar_json
-    
+   - ABD en compras    
 SCORE:
   - Reporte semanal
     - Tabla de colabs contra procesos con totales
