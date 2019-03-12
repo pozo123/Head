@@ -94,7 +94,7 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 	if($('#' + id_clave_odec_kaizen).val() == "" || $('#' + id_cantidad_odec_kaizen).val() == "" || $('#' + id_proveedor_odec_kaizen).val() == "" || $('#' + id_fecha_odec_kaizen).val() == "" || $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "" || (caso != "obra" && $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() == "") || (caso == "subp" && $('#' + id_subp_ddl_odec_kaizen + " option:selected").val() == "")){
 		alert("Llena todos los campos requeridos");
 	} else {
-		var hoy = getWeek(new Date().getTime()); //hoy[0] = week, hoy[1] = year
+		var hoy = getWeek(new Date($('#' + id_fecha_odec_kaizen).val()).getTime()); //hoy[0] = week, hoy[1] = year
 		var odec = {
 			precio_ppto: $('#' + id_cantidad_odec_kaizen).val(),
 			clave: $('#' + id_clave_odec_kaizen).val(),
@@ -109,19 +109,29 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 			},
 		}
 		var query;
+		var query_o = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val();
+		var query_p = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val();
+		var query_s = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
+		sumaOdeCKaizen(query_o);
 		if(caso == "obra"){
-			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val();
+			query = query_o;
 		} else if(caso == "proc"){
-			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val();
+			query = query_p;
+			sumaOdeCKaizen(query_p);
 		} else if(caso == "subp"){
-			query = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
+			query = query_s;
+			sumaOdeCKaizen(query_p);
+			sumaOdeCKaizen(query_s);
 		}
 		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + hoy[1] + "/" + hoy[0] + "/" + $('#' + id_clave_odec_kaizen).val()).set(odec);
-		firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/OdeC").once('value').then(function(snapshot){
-			var anterior = snapshot.val();
-			var nuevo = parseFlaot(anterior) + parseFloat($('#' + id_cantidad_odec_kaizen).val());
-			firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/OdeC").set(nuevo);
-		});
 		alert("Actualizado");
 	}
 });
+
+function sumaOdeCKaizen(query){
+	firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/OdeC").once('value').then(function(snapshot){
+		var anterior = snapshot.val();
+		var nuevo = parseFloat(anterior) + parseFloat($('#' + id_cantidad_odec_kaizen).val());
+		firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/SUMINISTROS/OdeC").set(nuevo);
+	});
+}
