@@ -78,15 +78,8 @@ ARTURO:
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
  - Actualizar:
     - app_desplegar_procesos
-    - app_utilidad
-    - app_obra
     - app_rrhh_importar_trabajadores
-    - col_compras
-    - app_cierre_maestro
     - app_actualizar_regs
-    - app_proy_cuant_kaizen
-    - app_compras_odec_kaizen
-    - app_compras_pag_kaizen
     - app_desplegar_kaizen
  
 DIEGO:
@@ -102,7 +95,6 @@ DIEGO:
  - que el ddl de obra_proy solo cargue las que NO estan en proy
     - Y que si no está pueda dar otro de alta y se de en magico
  - clases para rows en desplegar_procs
- - getElementByClassName en desplegar_procs
  
 TO DO:
  - Produccion
