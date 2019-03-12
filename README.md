@@ -85,7 +85,7 @@ ARTURO:
     - app_admin_registro
     - app_areas
     - app_proy_asigna_proc
-    - app_prod_gestionar_pptos
+    - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
  - Actualizar:
     - app_desplegar_procesos
     - app_utilidad
@@ -104,7 +104,6 @@ DIEGO:
  - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
- - Gestionar pptos SCORE en prod
  - Desplegar CC
  - Conseguir datos trabajadores de hector
  - Botón respaldo (aunque baje sólo el json)
@@ -124,7 +123,6 @@ TO DO:
      - Fechas raras :S
      - Sem inic no sale
      - editable
-   - Gestionar SCORE en prod -> gerencia, que te salgan los pptos (con su obra, proc, precio) y que los active
    - colvis en desplegar_procesos
    - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Proyectos
