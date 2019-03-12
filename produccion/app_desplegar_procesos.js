@@ -50,26 +50,73 @@ function loadTablaProcesos(){
                         if(proc.tipo != "adicional"){
                             var row = document.createElement('tr');
                             row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
-                            row.appendChild(document.createElement('td').innerHTML = proc.clave);
-                            row.appendChild(document.createElement('td').innerHTML = proc.nombre);
-                            row.appendChild(document.createElement('td').innerHTML = proc.alcance);
-                            row.appendChild(document.createElement('td').innerHTML = obraSnap.val().nombre);
-                            row.appendChild(document.createElement('td').innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length));
-                            row.appendChild(document.createElement('td').innerHTML = "-");
+                            var clave = document.createElement('td') 
+                            clave.innerHTML= proc.clave;
+                            var nombre = document.createElement('td')
+                            nombre.innerHTML = proc.nombre;
+                            var alcance = document.createElement('td')
+                            alcance.innerHTML = proc.alcance;
+                            var nombreObra = document.createElement('td')
+                            nombreObra.innerHTML = obraSnap.val().nombre
+                            var consecPadre = document.createElement('td')
+                            consecPadre.innerHTML = "-";
+                            var consecProc = document.createElement('td')
+                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
+                            row.appendChild(clave);
+                            row.appendChild(nombre);
+                            row.appendChild(alcance);
+                            row.appendChild(nombreObra);
+                            row.appendChild(consecProc);
+                            row.appendChild(consecPadre);
                             body.appendChild(row);
                             //datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
                         }
                     } else { 
+
+                        var row = document.createElement('tr');
+                        row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
+                        var clave = document.createElement('td') 
+                        clave.innerHTML= proc.clave;
+                        var nombre = document.createElement('td')
+                        nombre.innerHTML = proc.nombre;
+                        var alcance = document.createElement('td')
+                        alcance.innerHTML = proc.alcance;
+                        var nombreObra = document.createElement('td')
+                        nombreObra.innerHTML = obraSnap.val().nombre
+                        var consecPadre = document.createElement('td')
+                        consecPadre.innerHTML = "-";
+                        var consecProc = document.createElement('td')
+                        consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
+                        row.appendChild(clave);
+                        row.appendChild(nombre);
+                        row.appendChild(alcance);
+                        row.appendChild(nombreObra);
+                        row.appendChild(consecProc);
+                        row.appendChild(consecPadre);
+                        body.appendChild(row);
+
                         childSnapshot.child("subprocesos").forEach(function(subSnap){
                             var subproceso = subSnap.val();
                             var row = document.createElement('tr');
                             row.id = subproceso.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
-                            row.appendChild(document.createElement('td').innerHTML = subproceso.clave);
-                            row.appendChild(document.createElement('td').innerHTML = subproceso.nombre);
-                            row.appendChild(document.createElement('td').innerHTML = subproceso.alcance);
-                            row.appendChild(document.createElement('td').innerHTML = obraSnap.val().nombre);
-                            row.appendChild(document.createElement('td').innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length));
-                            row.appendChild(document.createElement('td').innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length));
+                            var clave = document.createElement('td') 
+                            clave.innerHTML= subproceso.clave;
+                            var nombre = document.createElement('td')
+                            nombre.innerHTML = subproceso.nombre;
+                            var alcance = document.createElement('td')
+                            alcance.innerHTML = subproceso.alcance;
+                            var nombreObra = document.createElement('td')
+                            nombreObra.innerHTML = obraSnap.val().nombre
+                            var consecSubp = document.createElement('td')
+                            consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length)
+                            var consecProc = document.createElement('td')
+                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
+                            row.appendChild(clave);
+                            row.appendChild(nombre);
+                            row.appendChild(alcance);
+                            row.appendChild(nombreObra);
+                            row.appendChild(consecSubp);
+                            row.appendChild(consecProc);
                             body.appendChild(row);
                             //datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
                         });
@@ -77,10 +124,10 @@ function loadTablaProcesos(){
                 }); 
             }           
         });
-
-        document.getElementsByClassName(class_table_datatable_procesos).appendChild(head);
-        document.getElementsByClassName(class_table_datatable_procesos).appendChild(body);
-        document.getElementsByClassName(class_table_datatable_procesos).appendChild(foot);
+        var table = document.getElementById(class_table_datatable_procesos)
+        table.appendChild(head);
+        table.appendChild(body);
+        table.appendChild(foot);
 
         var obra_colum = 3;
         var proc_consec_colum = 4;
@@ -121,14 +168,16 @@ function loadTablaProcesos(){
                     }
                     if (lastSub !== mySubGroup) {
                         //console.log(this.id)
-                        var father_row = document.getElementById(proc+ "_" + groupName);
+                        var father_row = document.getElementById(proc + "_" + groupName);
+                        console.log(father_row)
+                        console.log(this)
                         father_row.className = father_row.className + " subgroup";
                         //$(father_row).removeClass("subproceso_row");
                         $(this).before(father_row);          
                         lastSub = mySubGroup;  
                     }
                 });
-            }
+            },
             language: idioma_espanol,
         });
      
