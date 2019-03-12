@@ -24,6 +24,7 @@ ESTA SEMANA:
  - app_proy_cuant_kaizen -> sumar horas en proc padre y obra
  - app_compras_odec_kaizen -> sumar horas en proc padre y obra
  - app_compras_pag_kaizen -> sumar horas en proc padre y obra, corregir algunos pedos
+ - app_desplegar_kaizen
  
  actualizados/nuevos(11/3/19):
  - app_rrhh_importar_trabajadores
@@ -33,11 +34,9 @@ ESTA SEMANA:
  - app_proy_asigna_proc
  - app_cierre_maestro -> linea 84
  - app_actualizar_regs -> esp == "NA"
- - app_desplegar_kaizen (no lo subí a git) -> if/elses de lineas 423-427 para alerta si avance esta mal 
  - app_obra -> jala valores de ddl, ya no altas nuevas
  
  actualizados/nuevos(7/3/19):
- - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
  - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
  - app_desplegar_procesos -> numero de renglones desplegados
  
@@ -68,8 +67,48 @@ ESTA SEMANA:
  - dropdown checkboxes se duplican cada que se le pica a la pestaña
  - falta empty a muchos ddls antes de cargarlos
 
+ARTURO:
+ - Asistencia
+ - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
+ - cambiar avance "prog" por "pag" en desplegar kaizen
+ - Clases en css para avance en rojo y prec/cuant en gris
+ - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
+ - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
+ - Ddl para navegar entre pestañas de areas
+ - HTMLs de:
+    - reporte_obras
+    - inve$stime
+    - alta_cc
+    - app_gestionar_supervisores
+    - app_atributo
+    - app_admin_registro
+    - app_areas
+    - app_proy_asigna_proc
+ - Actualizar:
+    - app_desplegar_procesos
+    - app_utilidad
+    - app_obra
+    - app_rrhh_importar_trabajadores
+    - col_compras
+    - app_cierre_maestro
+    - app_actualizar_regs
+    - app_proy_cuant_kaizen
+    - app_compras_odec_kaizen
+    - app_compras_pag_kaizen
+    - app_desplegar_kaizen
+ 
+DIEGO:
+ - Asistencia
+ - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
+ - si copeo/odec = -1 jala el valor de prec/cuant
+ - Todo lo de Gantt
+ - Gestionar pptos SCORE en prod
+ - Desplegar CC
+ - Conseguir datos trabajadores de hector
+ - Botón respaldo (aunque baje sólo el json)
+ - Manual de usuario
+ 
 TO DO:
- - Poner los labels bien y separados en proy_cuant_kaizen
  - Produccion
    - Desplegar Kaizen
      - Estilo:
@@ -87,10 +126,8 @@ TO DO:
    - colvis en desplegar_procesos
    - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Proyectos
-   - Definir generar ppto con Erick
-   - alta obra jala el nombre de un ddl y lo demás se bloquea como en obra_prod
    - Revisar reporte_obras
-   - Si clase = produccion -> hacer mas simple el formato
+   - Si clase = produccion -> hacer mas simple el formato de ppto
  - Admin
    - Inve$time
    - Centro de costos.
