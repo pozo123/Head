@@ -115,18 +115,28 @@ $('#' + id_actualizar_valor_cuant_kaizen).click(function(){
 	} else if(caso == "subp" && $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val() == ""){
 		alert("Selecciona un subproceso");
 	} else {
-		nuevo = parseFloat($('#' + id_valor_nuevo_cuant_kaizen).text());
 		var query;
+		var query_o = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val();
+		var query_p = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val();
+		var query_s = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val();
+		sumaCuantKaizen(query_o);
 		if(caso == "obra"){
-			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val();
+			query = query_o;
 		} else if(caso == "proc"){
-			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val();
+			query = query_p;
+			sumaCuantKaizen(query_p);
 		} else if(caso == "subp"){
-			query = rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_cuant_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_cuant_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_cuant_kaizen + " option:selected").val();
+			query = query_s;
+			sumaCuantKaizen(query_p);
+			sumaCuantKaizen(query_s);
 		}
-		firebase.database().ref(query + "/kaizen/PRODUCCION/SUMINISTROS/CUANT").set(nuevo);
 		$('#' + id_valor_anterior_cuant_kaizen).text(nuevo);
 		$('#' + id_cantidad_cuant_kaizen).val("");
 		alert("Actualizado");
 	}
 });
+
+function sumaCuantKaizen(query){
+	nuevo = parseFloat($('#' + id_valor_nuevo_cuant_kaizen).text());
+	firebase.database().ref(query + "/kaizen/PRODUCCION/SUMINISTROS/CUANT").set(nuevo);
+}
