@@ -58,7 +58,7 @@ $("#" + id_nombre_obra_ddl_obra_proy).change(function(){
 });
 
 $('#' + id_registrar_button_obra).click(function () {
-    if(!$('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() == "" || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === ""){// || !$('#' + id_direccion_calle_obra).val() || !$('#' + id_direccion_num_obra).val() || !$('#' + id_direccion_colonia_obra).val() || !$('#' + id_direccion_delegacion_obra).val() || !$('#' + id_direccion_ciudad_obra).val() || !$('#' + id_direccion_cp_obra).val()){
+    if(!$('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() == "" || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === "" || !$('#' + id_direccion_calle_obra).val() || !$('#' + id_direccion_num_obra).val() || !$('#' + id_direccion_colonia_obra).val() || !$('#' + id_direccion_delegacion_obra).val() || !$('#' + id_direccion_ciudad_obra).val() || !$('#' + id_direccion_cp_obra).val()){
         alert("Llena todos los campos requeridos");
     } else {    
         var obra = {      
