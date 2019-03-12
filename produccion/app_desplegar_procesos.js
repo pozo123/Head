@@ -46,33 +46,7 @@ function loadTablaProcesos(){
             if(obraSnap.val().nombre != "ZObra Prueba"){
                 obraSnap.child("procesos").forEach(function(childSnapshot){
                     var proc = childSnapshot.val();
-                    if(proc.num_subprocesos == 0){
-                        if(proc.tipo != "adicional"){
-                            var row = document.createElement('tr');
-                            row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
-                            var clave = document.createElement('td') 
-                            clave.innerHTML= proc.clave;
-                            var nombre = document.createElement('td')
-                            nombre.innerHTML = proc.nombre;
-                            var alcance = document.createElement('td')
-                            alcance.innerHTML = proc.alcance;
-                            var nombreObra = document.createElement('td')
-                            nombreObra.innerHTML = obraSnap.val().nombre
-                            var consecPadre = document.createElement('td')
-                            consecPadre.innerHTML = "-";
-                            var consecProc = document.createElement('td')
-                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
-                            row.appendChild(clave);
-                            row.appendChild(nombre);
-                            row.appendChild(alcance);
-                            row.appendChild(nombreObra);
-                            row.appendChild(consecProc);
-                            row.appendChild(consecPadre);
-                            body.appendChild(row);
-                            //datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, "-", "-"]);
-                        }
-                    } else { 
-
+                    if(proc.tipo != "adicional" && proc.num_subprocesos == 0){
                         var row = document.createElement('tr');
                         row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
                         var clave = document.createElement('td') 
@@ -94,23 +68,24 @@ function loadTablaProcesos(){
                         row.appendChild(consecProc);
                         row.appendChild(consecPadre);
                         body.appendChild(row);
-
+                    }
+                    if(proc.num_subprocesos != 0){
                         childSnapshot.child("subprocesos").forEach(function(subSnap){
                             var subproceso = subSnap.val();
                             var row = document.createElement('tr');
                             row.id = subproceso.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
-                            var clave = document.createElement('td') 
+                            var clave = document.createElement('td');
                             clave.innerHTML= subproceso.clave;
-                            var nombre = document.createElement('td')
+                            var nombre = document.createElement('td');
                             nombre.innerHTML = subproceso.nombre;
-                            var alcance = document.createElement('td')
+                            var alcance = document.createElement('td');
                             alcance.innerHTML = subproceso.alcance;
-                            var nombreObra = document.createElement('td')
-                            nombreObra.innerHTML = obraSnap.val().nombre
-                            var consecSubp = document.createElement('td')
-                            consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length)
-                            var consecProc = document.createElement('td')
-                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
+                            var nombreObra = document.createElement('td');
+                            nombreObra.innerHTML = obraSnap.val().nombre;
+                            var consecSubp = document.createElement('td');
+                            consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length);
+                            var consecProc = document.createElement('td');
+                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length);
                             row.appendChild(clave);
                             row.appendChild(nombre);
                             row.appendChild(alcance);
@@ -118,16 +93,17 @@ function loadTablaProcesos(){
                             row.appendChild(consecSubp);
                             row.appendChild(consecProc);
                             body.appendChild(row);
-                            //datos_procesos.push([obraSnap.val().clave, proc.clave, proc.alcance, subproceso.clave, subproceso.alcance]);
                         });
                     }
                 }); 
             }           
         });
-        var table = document.getElementById(class_table_datatable_procesos)
-        table.appendChild(head);
-        table.appendChild(body);
-        table.appendChild(foot);
+        var table = document.getElementByClassName(class_table_datatable_procesos);
+        for(i=0; i< table.length; i++){
+            table[i].appendChild(head);
+            table[i].appendChild(body);
+            table[i].appendChild(foot);
+        }
 
         var obra_colum = 3;
         var proc_consec_colum = 4;
@@ -140,7 +116,6 @@ function loadTablaProcesos(){
             ],
             "lengthMenu": [[-1, 10, 25, 50], ["Todos", 10, 25, 50]],
             destroy: true,
-            //data: datos_procesos,
             dom: 'Bfrtip',
             buttons: ['excel'],
             //https://datatables.net/extensions/buttons/
