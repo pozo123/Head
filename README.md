@@ -21,9 +21,6 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(12/3/19):
- - app_proy_cuant_kaizen -> sumar horas en proc padre y obra
- - app_compras_odec_kaizen -> sumar horas en proc padre y obra
- - app_compras_pag_kaizen -> sumar horas en proc padre y obra, corregir algunos pedos
  - app_desplegar_kaizen
  - app_prod_gestionar_pptos
  
