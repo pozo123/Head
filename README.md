@@ -31,9 +31,7 @@ ESTA SEMANA:
  - app_rrhh_importar_trabajadores
  - app_admin_registro
  - app_areas
- - col_compras no está actualizado
  - app_proy_asigna_proc
- - app_cierre_maestro -> linea 84
  - app_actualizar_regs -> esp == "NA"
   
  actualizados/nuevos(26/2/19):
