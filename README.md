@@ -104,6 +104,7 @@ DIEGO:
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
  - desplegar_procesos bonito y anidado.
+ - que el ddl de obra_proy solo cargue las que NO estan en proy
  
 TO DO:
  - Produccion
