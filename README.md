@@ -20,6 +20,11 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
+ actualizados/nuevos(12/3/19):
+ - app_proy_cuant_kaizen
+ - app_compras_odec_kaizen
+ - app_compras_pag_kaizen
+ 
  actualizados/nuevos(11/3/19):
  - app_rrhh_importar_trabajadores
  - app_admin_registro
@@ -29,6 +34,7 @@ ESTA SEMANA:
  - app_cierre_maestro -> linea 84
  - app_actualizar_regs -> esp == "NA"
  - app_desplegar_kaizen (no lo subí a git) -> if/elses de lineas 423-427 para alerta si avance esta mal 
+ - app_obra -> jala valores de ddl, ya no altas nuevas
  
  actualizados/nuevos(7/3/19):
  - app_desplegar_kaizen -> orden de proc y subproc adecuado (:
@@ -63,6 +69,7 @@ ESTA SEMANA:
  - falta empty a muchos ddls antes de cargarlos
 
 TO DO:
+ - Poner los labels bien y separados en proy_cuant_kaizen
  - Produccion
    - Desplegar Kaizen
      - Estilo:
