@@ -153,13 +153,9 @@ function loadTablaProcesos(){
                 var lastSub = null;   
                 var mySubGroup = null;
                 $(tableRows).each( function () {
-                    groupName = this.id.split("_")[1];
-                    var proc = this.id.split("-");
-                    if(proc.length == 1){
-                      proc =this.id.split("_")[0];
-                    } else {
-                      proc = proc[0];
-                    }
+                    var clave_proc = this.id.split("_")[0];
+                    groupName = this.id.substring(clave_proc.length + 1, this.id.length);
+                    var proc = clave_proc.split("-")[0];
                     var cons = proc.substring(proc.length - 2,proc.length);
                     mySubGroup = cons;//this.cells[3].innerHTML;
                     if ( lastGroup !== groupName ) {
@@ -203,29 +199,6 @@ $('.' + class_button_desplegar_subprocesos_desplegarProcesos).on('click', functi
     $('.subproceso_row').addClass('hidden');
 });
 //http://live.datatables.net/xovixoju/228/edit
-
-/*
-CSS
-body {
-  font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #333;
-  background-color: #fff;
-}
-
-
-tr.group,
-tr.group:hover {
-    background-color: #ddd !important;
-}
-
-tr.subgroup,
-tr.subgroup {
-   background-color: cornsilk !important;
-}
-
-*/
 
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
