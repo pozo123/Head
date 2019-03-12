@@ -76,7 +76,7 @@ $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
 					var option4 = document.createElement('OPTION');
 			        option4.text = odecSnap.key;
 			        option4.value = yearSnap.key + "/" + weekSnap.key + "/" + odecSnap.key;
-			        select.appendChild(option4);
+			        select2.appendChild(option4);
 				});
 			});
 		});
@@ -121,10 +121,9 @@ $("#" + id_proc_ddl_pag_suministros_kaizen).change(function(){
 		    option.text = option.value = "";
 		    select.appendChild(option);
 		    snapshot.child('subprocesos').forEach(function(childSnap){
-		    	var subp = childSnap.val();
-		    	var option2 = document.createElement('OPTION');
-		        option2.text = subp.key;
-		        option2.value = subp.key;
+				var option2 = document.createElement('OPTION');
+		        option2.text = childSnap.key;
+		        option2.value = childSnap.key;
 		        select.appendChild(option2);
 
 		        $('#' + id_odec_ddl_pag_suministros_kaizen).empty();
