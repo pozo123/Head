@@ -16,7 +16,7 @@ var rama_bd_obras_magico = "obras";
 
 var procesos = {};
 
-$('#tabBibObras').click(function(){
+$('#tabAltaObra').click(function(){
     var select = document.getElementById(id_cliente_ddl_obra) ;
     var option = document.createElement('option');
     option.style = "display:none";
