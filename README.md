@@ -25,6 +25,7 @@ ESTA SEMANA:
  - app_compras_odec_kaizen -> sumar horas en proc padre y obra
  - app_compras_pag_kaizen -> sumar horas en proc padre y obra, corregir algunos pedos
  - app_desplegar_kaizen
+ - app_prod_gestionar_pptos
  
  actualizados/nuevos(11/3/19):
  - app_rrhh_importar_trabajadores
@@ -84,6 +85,7 @@ ARTURO:
     - app_admin_registro
     - app_areas
     - app_proy_asigna_proc
+    - app_prod_gestionar_pptos
  - Actualizar:
     - app_desplegar_procesos
     - app_utilidad
