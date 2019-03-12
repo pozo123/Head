@@ -148,7 +148,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 					calculaProfit("prog", pointer_kaiz_padre, clave_proc);
 				}
 				calculaProfit("prog", pointer_kaiz, clave_elem);//, "datos");
-				calculaProfitProgGlobal(json_kaizen_obra,obra_clave)
+                calculaProfitProgGlobal(json_kaizen_obra,obra_clave)
 			} else if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PAG" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PAG"){
 				console.log("2");
 				if(sub){
@@ -212,20 +212,35 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			}
 			createRow(snapshot.val(),table,"obra");
 		}
+		addProfitNeto(snapshot.val(),table);
 	});
 });
 
+function addProfitNeto(obra, table){
+	var row = document.createElement('tr');
+	row.className = "row_data rowTotal";
+	row.id = "row_profit_neto_" + obra.clave;
+	var neto = document.createElement('td');
+	neto.innerHTML = "PROFIT NETO";
+	neto.colSpan = 8;
+	row.appendChild(neto);
+	var profit_neto = document.createElement('td');
+	profit_neto.innerHTML = obra.kaizen.PROFIT.PROG.BRUTO;
+	profit_neto.colSpan = 11;
+	row.appendChild(profit_neto);
+}
 //proc es algo que tiene kaizen
 function createRow(proc,table,tipo){
 	var editClass;
-	var profitProgClass = " profit_prog";
+	var profitProgClass = "";
 	var cl = proc.clave;
 	var row = document.createElement('tr');
-	row.className = "row_data";
+	row.className = "row_data row100";
 	row.id = "row_" + cl;	
 	if(tipo == "obra" || tipo == "obraSimple"){
 		var titulo = document.createElement('td');
 		titulo.innerHTML = "TOTAL";
+		row.className = "row_data rowTotal"
 		titulo.colSpan = 2;
 		row.appendChild(titulo);
 		profitProgClass = "";
@@ -241,11 +256,14 @@ function createRow(proc,table,tipo){
 		var proc_nombre = document.createElement('td');
 		proc_nombre.innerHTML = proc.nombre;
 		row.appendChild(proc_nombre);
-		profitProgClass = " profit_prog";
 		if(tipo == "procSimple"){
+            profitProgClass = " profit_prog";
 			editClass = editable;
+			row.className = "row_data row100 proceso"
 		} else if(tipo == "procPadre"){
-			editClass = "";
+            editClass = "";
+			profitProgClass = " profit_prog";
+			row.className = "row_data row100 proceso"
 		} else if(tipo == "subproc"){
 			cl = "sub_" + cl;
 			editClass = editable;
@@ -352,7 +370,9 @@ function createRow(proc,table,tipo){
 function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
 	var sum = 0;
 	$('.profit_prog').each(function(){
-	    sum += parseFloat(this.innerHTML);
+        console.log('hola')
+        sum += parseFloat(this.innerHTML);
+        console.log(this.innerHTML)
 	});
 	var new_profit = sum;
 	var new_profit_neto = new_profit * 0.6;
@@ -420,6 +440,13 @@ function calculaAvance(tipo, pointer_kaiz, clave_elem){
 		}
 		document.getElementById(clave_elem + '_avance_real').innerHTML = (av_r).toFixed(2) + "%"
 	}
+	/*
+	if(document.getElementById(clave_elem + '_avance_pag').innerHTML > document.getElementById(clave_elem + '_avance_real').innerHTML){
+		$('#' + clave_elem + '_avance_real').addClass('rojo')
+	} else {
+
+	}
+	*/
 }
 
 $('#' + id_desplegar_subprocesos_button_kaizen).on('click', function(){
@@ -435,10 +462,26 @@ $('#' + id_actualizar_button_kaizen).click(function(){
 	console.log(json_kaizen);
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen:");
 	console.log(json_kaizen_obra);
-	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/utilidad_semanal").update(utilidad_semanal);
+	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/utilidad_semanal").set(utilidad_semanal);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos").update(json_kaizen);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen").update(json_kaizen_obra);
 	alert("Operación exitosa");
 });
 //FALTA
 //Falta matar todos los td dentro del tr al cambiar en ddl
+/*
+var table = $("#"+markupId+" table:first-of-type");
+
+var tablecontainer = $("#"+markupId).parents( ".scalabletablecontainer" );
+var scalex = tablecontainer.innerWidth() / table.outerWidth();
+var scaley =  tablecontainer.innerHeight() / table.outerHeight();
+
+var scale = Math.min(scalex, scaley);
+if (scale<1.0) {
+    var fontsize = 12.0 * scale;
+    var padding  = 5.0 * scale;
+    $("#"+markupId+" table tbody").css("font-size", fontsize + "px");
+    $("#"+markupId+" table tbody TD").css("padding",padding + "px");
+    $("#"+markupId+" table TH").css("padding",padding + "px");
+}
+*/
