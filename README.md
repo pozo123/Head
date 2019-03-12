@@ -108,6 +108,7 @@ DIEGO:
  - Conseguir datos trabajadores de hector
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
+ - desplegar_procesos bonito y anidado.
  
 TO DO:
  - Produccion
