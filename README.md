@@ -100,6 +100,9 @@ DIEGO:
  - Manual de usuario
  - desplegar_procesos bonito y anidado.
  - que el ddl de obra_proy solo cargue las que NO estan en proy
+    - Y que si no está pueda dar otro de alta y se de en magico
+ - clases para rows en desplegar_procs
+ - getElementByClassName en desplegar_procs
  
 TO DO:
  - Produccion
