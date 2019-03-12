@@ -35,12 +35,7 @@ ESTA SEMANA:
  - app_proy_asigna_proc
  - app_cierre_maestro -> linea 84
  - app_actualizar_regs -> esp == "NA"
- - app_obra -> jala valores de ddl, ya no altas nuevas
- 
- actualizados/nuevos(7/3/19):
- - app_utilidad -> sobre costos totales y un error en un query. El botón de reset no tiene que limpiar campos!!!
- - app_desplegar_procesos -> numero de renglones desplegados
- 
+  
  actualizados/nuevos(26/2/19):
  - app_atributo
  
