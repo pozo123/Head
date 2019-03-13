@@ -179,7 +179,7 @@
                      - *todos los diversos*   
                   - impuestos (pago_pagadora_trabajador - subtotal)
                   - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos)
-		  - total (pagadora)
+                  - total (pagadora)
   - pagos_nomina: 
       - AFECTAN: app_pagos_nomina, app_asistencia
       - SUSCRIBEN: 
@@ -206,8 +206,8 @@
                         - asistencia: bool
                         - proceso: (clave) "NA" si asistencia es false
                   - horas_extra
-		  - total (lo que entra aquí e
-                  - horas_extras igual a lo que va al kaizen
+                  - total (lo que entra aquí eigual a lo que va al kaizen)
+                  - horas_extras 
                   - // De aquí en adelante chance no hace falta calcularlo aquí, que se guarde en trabajador los totales y el prorrateo se va a kaizen.
                   - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
                   - subtotal (sueldo base * asistencias + horas extra * costo_he + diversos)
