@@ -142,6 +142,20 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 					calculaAvance("real",pointer_kaiz_padre,clave_proc);	
 				}
 			}
+			if(id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_OdeC"){
+				if(nV != 0)
+					$('#' + clave_elem + "_PRODUCCION_SUMINISTROS_CUANT").addClass('grisDesplegarKaizen');
+				} else {
+					$('#' + clave_elem + "_PRODUCCION_SUMINISTROS_CUANT").removeClass('grisDesplegarKaizen');
+				}
+			}
+			if(id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
+				if(nV != 0){
+					$('#' + clave_elem + "_PRODUCCION_COPEO_PREC").addClass('grisDesplegarKaizen');
+				} else {
+					$('#' + clave_elem + "_PRODUCCION_COPEO_PREC").removeClass('grisDesplegarKaizen');
+				}
+			}
 			if(id_elem == clave_elem + "_PROYECTOS_PPTO" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_CUANT" || id_elem == clave_elem + "_PRODUCCION_SUMINISTROS_OdeC" || id_elem == clave_elem + "_PRODUCCION_COPEO_PREC" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO" || id_elem == clave_elem + "_ADMINISTRACION_ESTIMACIONES_PPTO" || id_elem == clave_elem + "_ADMINISTRACION_ANTICIPOS_PPTO"){
 				console.log("1");
 				if(sub){
