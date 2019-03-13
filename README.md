@@ -20,8 +20,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
- actualizados/nuevos(12/3/19):
+ actualizados/nuevos(13/3/19):
  - app_desplegar_kaizen
+ 
+ actualizados/nuevos(12/3/19):
  - app_prod_gestionar_pptos
  
  actualizados/nuevos(11/3/19):
@@ -66,6 +68,7 @@ ARTURO:
  - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Ddl para navegar entre pestañas de areas
+ - crear clase grisDesplegarKaizen
  - HTMLs de:
     - reporte_obras
     - inve$stime
@@ -84,7 +87,6 @@ ARTURO:
  
 DIEGO:
  - Asistencia
- - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
