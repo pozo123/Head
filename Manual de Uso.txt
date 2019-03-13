@@ -1,0 +1,26 @@
+IngenieriaHEAD
+URL: ingenieriahead.firebaseapp.com
+
+Landing Page:
+Al entrar al dominio, se despliega lo que será la página web de la empresa. Incluye una barra de navegación, aunque de momento los menús están deshabilitados.
+Existe un campo para inicio de sesión y un botón para reestablecer la contraseña de un usuario en casod e haberla olvidado. Al hacer click en éste botón se enviará un correo electrónico a la dirección de correo especificada.
+Una vez que un usuario se registra adecuadamente, dos botones se habilitan. Uno para el cierre de sesión y uno ("Comunidad HEAD") para acceder al sistema interno de la página.
+Al hacer click en el botón "Comunidad HEAD" se despliega una lista con las áreas habilitadas del usuario registrado. Seleccionar cualquiera de estas áreas redirige al usuario a la página específica del área seleccionada.
+
+Administración:
+Al entrar a la pestaña de administración se despliega un dashboard (de momento vacío) y el panel de control.
+
+Panel de control:
+Muestra el nombre y la imagen de perfil del usuario, junto con un botón para cambiarla. Hacer click en "seleccionar imagen" permite al usuario elegir su nueva imagen. Para guardar los cambios, hay que hacer click en el botón de "sube tu imagen".
+Un submenú de navegación, dividido en secciones.
+Un botón de cerrar sesión, el cual regresa automáticamente a la landing page.
+Secciones:
+
+Proyectos:
+
+Producción:
+
+Rrhh:
+
+Compras:
+
