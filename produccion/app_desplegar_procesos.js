@@ -46,7 +46,7 @@ function loadTablaProcesos(){
             if(obraSnap.val().nombre != "ZObra Prueba"){
                 obraSnap.child("procesos").forEach(function(childSnapshot){
                     var proc = childSnapshot.val();
-                    if(proc.tipo != "adicional" && proc.num_subprocesos == 0){
+                    if(proc.tipo != "adicional" || proc.num_subprocesos != 0){
                         var row = document.createElement('tr');
                         row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
                         var clave = document.createElement('td') 
@@ -63,14 +63,14 @@ function loadTablaProcesos(){
                             consecProc.innerHTML = "ZZ";
                         else
                             consecProc.innerHTML = consec_proc;
-                        var consecPadre = document.createElement('td')
-                        consecPadre.innerHTML = "-";
+                        var consecSubp = document.createElement('td')
+                        consecSubp.innerHTML = "-";
                         row.appendChild(clave);
                         row.appendChild(nombre);
                         row.appendChild(alcance);
                         row.appendChild(nombreObra);
                         row.appendChild(consecProc);
-                        row.appendChild(consecPadre);
+                        row.appendChild(consecSubp);
                         body.appendChild(row);
                     }
                     if(proc.num_subprocesos != 0){
@@ -86,20 +86,20 @@ function loadTablaProcesos(){
                             alcance.innerHTML = subproceso.alcance;
                             var nombreObra = document.createElement('td');
                             nombreObra.innerHTML = obraSnap.val().nombre;
-                            var consecSubp = document.createElement('td');
-                            consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length);
                             var consecProc = document.createElement('td');
                             var consec_proc = proc.clave.substring(proc.clave.length - 2,proc.clave.length);
                             if(consec_proc == "IC")
                                 consecProc.innerHTML = "ZZ";
                             else
                                 consecProc.innerHTML = consec_proc;
+                            var consecSubp = document.createElement('td');
+                            consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length);
                             row.appendChild(clave);
                             row.appendChild(nombre);
                             row.appendChild(alcance);
                             row.appendChild(nombreObra);
-                            row.appendChild(consecSubp);
                             row.appendChild(consecProc);
+                            row.appendChild(consecSubp);
                             body.appendChild(row);
                         });
                     }
