@@ -221,11 +221,12 @@ function addProfitNeto(obra, table){
 	row.className = "row_data rowTotal";
 	row.id = "row_profit_neto_" + obra.clave;
 	var neto = document.createElement('td');
+	neto.id = obra_clave + "_PROFIT_PROG_NETO";
 	neto.innerHTML = "PROFIT NETO";
 	neto.colSpan = 8;
 	row.appendChild(neto);
 	var profit_neto = document.createElement('td');
-	profit_neto.innerHTML = obra.kaizen.PROFIT.PROG.BRUTO;
+	profit_neto.innerHTML = formatMoney(obra.kaizen.PROFIT.PROG.BRUTO.toFixed(2));
 	profit_neto.colSpan = 11;
 	row.appendChild(profit_neto);
 }
@@ -378,7 +379,8 @@ function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
 	var new_profit_neto = new_profit * 0.6;
 	pointer_kaiz["PROFIT"]["PROG"]["BRUTO"] = new_profit;
 	pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;
-	document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = (new_profit).toFixed(2);
+	document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = formatMoney((new_profit).toFixed(2));
+	document.getElementById(clave_elem + "_PROFIT_PROG_NETO").innerHTML = formatMoney((new_profit_neto).toFixed(2));
 }
 
 function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
