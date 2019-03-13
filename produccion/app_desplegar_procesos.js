@@ -57,10 +57,14 @@ function loadTablaProcesos(){
                         alcance.innerHTML = proc.alcance;
                         var nombreObra = document.createElement('td')
                         nombreObra.innerHTML = obraSnap.val().nombre
+                        var consecProc = document.createElement('td')
+                        var consec_proc = proc.clave.substring(proc.clave.length - 2,proc.clave.length);
+                        if(consec_proc == "IC")
+                            consecProc.innerHTML = "ZZ";
+                        else
+                            consecProc.innerHTML = consec_proc;
                         var consecPadre = document.createElement('td')
                         consecPadre.innerHTML = "-";
-                        var consecProc = document.createElement('td')
-                        consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length)
                         row.appendChild(clave);
                         row.appendChild(nombre);
                         row.appendChild(alcance);
@@ -85,7 +89,11 @@ function loadTablaProcesos(){
                             var consecSubp = document.createElement('td');
                             consecSubp.innerHTML = subproceso.clave.substring(subproceso.clave.length - 2,subproceso.clave.length);
                             var consecProc = document.createElement('td');
-                            consecProc.innerHTML = proc.clave.substring(proc.clave.length - 2,proc.clave.length);
+                            var consec_proc = proc.clave.substring(proc.clave.length - 2,proc.clave.length);
+                            if(consec_proc == "IC")
+                                consecProc.innerHTML = "ZZ";
+                            else
+                                consecProc.innerHTML = consec_proc;
                             row.appendChild(clave);
                             row.appendChild(nombre);
                             row.appendChild(alcance);
