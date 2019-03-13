@@ -21,7 +21,7 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(13/3/19):
- - app_desplegar_kaizen
+ - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico
  
  actualizados/nuevos(12/3/19):
  - app_prod_gestionar_pptos
