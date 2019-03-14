@@ -49,6 +49,7 @@ function loadTablaProcesos(){
                     if(proc.tipo != "adicional" || proc.num_subprocesos != 0){
                         var row = document.createElement('tr');
                         row.id = proc.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
+                        row.className = "desplegadosDesplegarKaizen";
                         var clave = document.createElement('td') 
                         clave.innerHTML= proc.clave;
                         var nombre = document.createElement('td')
@@ -142,7 +143,7 @@ function loadTablaProcesos(){
                     var cons = proc.substring(proc.length - 2,proc.length);
                     mySubGroup = cons;//this.cells[3].innerHTML;
                     if ( lastGroup !== groupName ) {
-                        $(this).before('<tr class="groupDesplegarProcesos"><td colspan="3">' + groupName +'</td></tr>');
+                        $(this).before('<tr class="groupDesplegarProcesos desplegadosObraDesplegarKaizen"><td colspan="3">' + groupName +'</td></tr>');
                         lastGroup = groupName;
                     }
                     if (lastSub !== mySubGroup) {
@@ -174,12 +175,22 @@ function loadTablaProcesos(){
     });
 }
 
-$('.' + class_table_datatable_procesos + ' tr').click(function(){
+$("." + class_table_datatable_procesos).on("click", "tr", function() { 
+  //console.log(this.classList);
+  if(this.classList.contains("groupDesplegarProcesos")){
+    console.log(this.id);
+    if(this.classList.contains("desplegadosObraDesplegarKaizen")){
+      $('[id$=' + this.id + ']').addClass('hidden');
+      $(this).removeClass('hidden');
+      $('#' + this.id).removeClass('desplegadosObraDesplegarKaizen');
+    } else { 
+      $('[id$=' + this.id + ']').removeClass('hidden');
+      $('#' + this.id).addClass('desplegadosObraDesplegarKaizen');
+    } 
+  }
   if(this.classList.contains("subgroupDesplegarProcesos")){
     var split =this.id.split("_");
-    console.log(split)
     if(this.classList.contains("desplegadosDesplegarKaizen")){
-      console.log(split.length)
       $('[id^=' + split[0] + '][id$='+ split[split.length-1] + ']').addClass('hidden');
       $('#' + this.id).removeClass('hidden');
       $('#' + this.id).removeClass('desplegadosDesplegarKaizen');
@@ -189,6 +200,7 @@ $('.' + class_table_datatable_procesos + ' tr').click(function(){
     }
   }
 });
+
 
 $('.' + class_button_colapsar_subprocesos_desplegarProcesos).on('click', function(){
     $('.subproceso_row').removeClass('hidden');
