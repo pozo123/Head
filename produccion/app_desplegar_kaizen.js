@@ -171,7 +171,6 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				calculaProfit("real", pointer_kaiz, clave_elem);//, "datos");
 				calculaProfit("real", json_kaizen_obra, obra_clave);//, "datos");
 			}
-		}
 	});
 	//editor.constructor(tableId, tableCellEditorParams)
 	//editor.SetEditable(element, cellEditorParams)
@@ -192,6 +191,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			var procesos = [];
 			var adic;
 			var misc;
+			var subp;
 			snapshot.child("procesos").forEach(function(childSnap){
 				var proc = childSnap.val();
 				if(proc.clave == "MISC")
@@ -206,7 +206,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 					if(proc.num_subprocesos == 0){
 						procesos[consec] = {proc: proc, tipo: "procSimple"};
 					} else {
-						var subp = [];
+						subp = [];
 						childSnap.child("subprocesos").forEach(function(grandChildSnap){
 							var cl = grandChildSnap.val().clave;
 							var subcons = parseInt(cl.substring(cl.length-2,cl.length))
