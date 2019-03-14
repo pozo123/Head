@@ -63,14 +63,12 @@ ARTURO:
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
  - cambiar avance "prog" por "pag" en desplegar kaizen
  - Clases en css para avance en rojo y prec/cuant en gris
- - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Ddl para navegar entre pestañas de areas
- - crear clase grisDesplegarKaizen
+ - Poner filtros para pestañas en prod (gerente/supervisor)
  - HTMLs de:
     - reporte_obras
     - inve$stime
-    - app_gestionar_supervisores
     - app_atributo
     - app_admin_registro
     - app_areas
@@ -89,12 +87,12 @@ DIEGO:
  - Conseguir datos trabajadores de hector
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
- - clases para rows en desplegar_procs
+ - Agregar terminado a obra_magico
  - app_distribucion_supervisores
  - app_desplegar_kaizen tronó -> profit neto, gris condicional, orden alfabetico
  - app_rrhh_pagadora
  - app_desplegar_procesos para colapsar obra y asi
- - app_gestionar_colaboradores que no jale nombre de prod
+ - app_gestionar_supervisores que no jale nombre de prod
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
