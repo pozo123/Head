@@ -1,5 +1,5 @@
 var id_familia_ddl_cc = "familiaDdlCC";
-var id_nodo_cb_cc = "nodoCheckBoxCC";
+var id_nodo_cb_cc = "nodoCheckBoxCC";//Son los nombres de una familia nueva
 var id_nombre_cc = "nombreCC";
 var id_clave_cc = "claveCC";
 var id_div_cc = "divCC";
@@ -9,6 +9,7 @@ var id_button_registrar_cc = "registrarCC";
 var rama_bd_cc = "administracion/centro_de_costos";
 
 var num_nodos = 0; //num nodos DESPUES de la familia
+var num_hojas = 0;
 $('#tabCuentaCC').click(function(){
 	var select = document.getElementById(id_familia_ddl_cc) ;
     var option = document.createElement('option');
@@ -48,21 +49,21 @@ function agregaNodo(){
 	if($('#' + id_familia_ddl_cc + " option:selected").val() == ""){
 		familia = $('#' + id_nombre_cc).val();
 	} else { 
-		familia = $('#' + id_familia_ddl_cc + " option:selected").val();
+		familia = $('#' + id_familia_ddl_cc + " option:selected").text();
 	}
 	var ref = rama_bd_cc + "/" + familia;
 	for(i=1;i<=num_nodos;i++){
     if($("#ddl_" + i).val() == null){
-      ref = ref + $('#nom' + i).val();
+      ref = ref + "/" + $('#nom' + i).val();
     } else{
   		if($('#ddl_' + i + " option:selected").val() == ""){
-  			ref = ref + $('#nom' + i).val();
+  			ref = ref + "/" + $('#nom' + i).val();
   		} else {
-  			ref = ref + $('#ddl_' + i + " option:selected").val();
+  			ref = ref + "/" + $('#ddl_' + i + " option:selected").text();
   		}
     }
 	}
-	//Define ref dependiendo de i, haces un concatenar de strings. Si hay valor en el ddl lo tomas, si el de nombre
+	//Define ref dependiendo de i, haces un concatenar de strings. Si hay valor en el ddl lo tomas, si no el de nombre
 	firebase.database().ref(ref).once('value').then(function(snapshot){
 		//Poblar ddl si hay children, si no ni lo crees
 		var nodo = snapshot.val();
@@ -76,10 +77,10 @@ function agregaNodo(){
 			    ddl.appendChild(option);
 				snapshot.child("children").forEach(function(childSnap){
 					var kid = childSnap.val();
-        			var option2 = document.createElement('OPTION');
-        			option2.text = kid.nombre;
-        			option2.value = kid.clave;
-        			ddl.appendChild(option2);
+    			var option2 = document.createElement('OPTION');
+    			option2.text = kid.nombre;
+    			option2.value = kid.clave;
+    			ddl.appendChild(option2);
 				});
 				row.appendChild(ddl);
 			}
@@ -94,79 +95,79 @@ function agregaNodo(){
 		row.appendChild(cla);
 
 		var check = document.createElement('input');
-	    check.type = "checkbox";
-	    check.id = "check_" + num_nodos;
-	    check.value = num_nodos;
-	    check.innerHTML = "Nodo/Hoja";
-	    row.appendChild(check);
-	    console.log(check.id);
+    check.type = "checkbox";
+    check.id = "check_" + num_nodos;
+    check.value = num_nodos;
+    check.innerHTML = "Nodo/Hoja";
+    row.appendChild(check);
+    //console.log(check.id);
 
-	    var check_hoja = document.createElement('input');
-	    check_hoja.type = "checkbox";
-	    check_hoja.id = "check_h_" + num_nodos + "_0";
-	    check_hoja.value = num_nodos;
-	    row.appendChild(check_hoja);
-	    console.log(check_hoja.id);
-	    div.appendChild(row);//Tiene que appendearse antes de declarar la change function o no jala
+    var check_hoja = document.createElement('input');
+    check_hoja.type = "checkbox";
+    check_hoja.id = "check_h_" + num_nodos + "_0";
+    check_hoja.value = num_nodos;
+    row.appendChild(check_hoja);
+    //console.log(check_hoja.id);
+    div.appendChild(row);//Tiene que appendearse antes de declarar la change function o no jala
 
-	    $('#' + check.id).change(function(){
-	      if(this.checked == true){
-          if($("#ddl_" + this.value).val() == null){
-  	        if($("#nom_" + this.value).val() == "" || $("#cla_" + this.value).val() == ""){
-  	          alert("Llena todos los campos necesarios");
-  	          this.checked = false;
-  	        } else {
-  	          document.getElementById("nom_" + this.value).disabled = true;
-  	          document.getElementById("cla_" + this.value).disabled = true;
-  	          document.getElementById("check_h_" + this.value + "_0").disabled = true;
-  	          agregaNodo();
-  	        }
-          } else { 
-            if($("#ddl_" + this.value).val() == "" && ($("#nom_" + this.value).val() == "" || $("#cla_" + this.value).val() == "")){
-              alert("Llena todos los campos necesarios");
-              this.checked = false;
-            } else {
-              document.getElementById("ddl_" + this.value).disabled = true;
-              document.getElementById("nom_" + this.value).disabled = true;
-              document.getElementById("cla_" + this.value).disabled = true;
-              document.getElementById("check_h_" + this.value + "_0").disabled = true;
-              agregaNodo();
-            }
-          }
-	      } else {
-	        for(var i_r = parseInt(this.value) + 1;i_r<=num_nodos;i_r++){
-	          var elem = document.getElementById("row_" + i_r);
-	          elem.parentNode.removeChild(elem);
+    $('#' + check.id).change(function(){
+      if(this.checked == true){
+        if($("#ddl_" + this.value).val() == null){
+	        if($("#nom_" + this.value).val() == "" || $("#cla_" + this.value).val() == ""){
+	          alert("Llena todos los campos necesarios");
+	          this.checked = false;
+	        } else {
+	          document.getElementById("nom_" + this.value).disabled = true;
+	          document.getElementById("cla_" + this.value).disabled = true;
+	          document.getElementById("check_h_" + this.value + "_0").disabled = true;
+	          agregaNodo();
 	        }
-          if($("#ddl_" + this.value).val() == null){
-            document.getElementById("ddl_" + this.value).disabled = false;
-          }
-	        document.getElementById("nom_" + this.value).disabled = false;
-	        document.getElementById("cla_" + this.value).disabled = false;
-	        document.getElementById("check_h_" + this.value + "_0").disabled = false;
-	        num_nodos = this.value;
-	      }
-	    });
-
-	    $('#' + check_hoja.id).change(function(){
-	      if(this.checked == true){
-	        document.getElementById("check_" + this.value).disabled = true;
-          if($("#ddl_" + this.value).val() == null){
+        } else { 
+          if($("#ddl_" + this.value).val() == "" && ($("#nom_" + this.value).val() == "" || $("#cla_" + this.value).val() == "")){
+            alert("Llena todos los campos necesarios");
+            this.checked = false;
+          } else {
             document.getElementById("ddl_" + this.value).disabled = true;
+            document.getElementById("nom_" + this.value).disabled = true;
+            document.getElementById("cla_" + this.value).disabled = true;
+            document.getElementById("check_h_" + this.value + "_0").disabled = true;
+            agregaNodo();
           }
-	        agregaHoja();
-	      } else {
-	        for(var i_h = 1;i_h<=num_hojas;i_h++){
-	          var elem = document.getElementById("div_hoja_" + i_h);
-	          elem.parentNode.removeChild(elem);
-	        }
-	        document.getElementById("check_" + this.value).disabled = false;
-          if($("#ddl_" + this.value).val() == null){
-            document.getElementById("ddl_" + this.value).disabled = false;
-          }
-	        num_hojas = 0;
-	      }
-	    });
+        }
+      } else {
+        for(var i_r = parseInt(this.value) + 1;i_r<=num_nodos;i_r++){
+          var elem = document.getElementById("row_" + i_r);
+          elem.parentNode.removeChild(elem);
+        }
+        //if($("#ddl_" + this.value).val() == null){
+          document.getElementById("ddl_" + this.value).disabled = false;
+        //}
+        document.getElementById("nom_" + this.value).disabled = false;
+        document.getElementById("cla_" + this.value).disabled = false;
+        document.getElementById("check_h_" + this.value + "_0").disabled = false;
+        num_nodos = this.value;
+      }
+    });
+
+    $('#' + check_hoja.id).change(function(){
+      if(this.checked == true){
+        document.getElementById("check_" + this.value).disabled = true;
+        if($("#ddl_" + this.value).val() == null){
+          document.getElementById("ddl_" + this.value).disabled = true;
+        }
+        agregaHoja();
+      } else {
+        for(var i_h = 1;i_h<=num_hojas;i_h++){
+          var elem = document.getElementById("div_hoja_" + i_h);
+          elem.parentNode.removeChild(elem);
+        }
+        document.getElementById("check_" + this.value).disabled = false;
+        if($("#ddl_" + this.value).val() == null){
+          document.getElementById("ddl_" + this.value).disabled = false;
+        }
+        num_hojas = 0;
+      }
+    });
 	});
 }
 
@@ -211,7 +212,7 @@ $('#' + id_button_registrar_cc).click(function(){
 	if($('#' + id_familia_ddl_cc + " option:selected").val() == "" && (!$('#' + id_nombre_cc).val() || !$('#' + id_clave_cc).val())){
 		alert("Llena todos los campos");
 	} else { 
-		if($("#" + id_subproceso_checkbox_proceso).checked == false){
+		if($("#" + id_nodo_cb_cc).checked == false){
 			var name = $('#' + id_nombre_cc).val();
 			var clave = $('#' + id_clave_cc).val();
 			if(!name || !clave){
@@ -229,7 +230,7 @@ $('#' + id_button_registrar_cc).click(function(){
 					years: y,
 					children: "",
 				}
-				firebase.database().ref(rama_bd_cc + "/" + nombre).set(familia);
+				firebase.database().ref(rama_bd_cc + "/" + name).set(familia);
 			}
 
 		} else {
@@ -239,17 +240,23 @@ $('#' + id_button_registrar_cc).click(function(){
 			nombre: ,
 			clave: ,
 			total_cuenta: 0,
-			registros: {
+      ppto_cuenta: 0,
+      forma_pago: "",
+      formato_fecha: "",
+      areas_lectura: {},
+      areas_edicion: {},
+      children: "",
+			/*registros: {
 				2019:{
 					total_year: 0,
 				}
-			}
+			}*/
 		}
 		firebase.database().ref(rama_bd_cc + "/" + $('#' + id_familia_ddl_cc + " option:selected").val() + $('#' + id_nombre_cc).val()).set(cuenta);
 		alert("Alta exitosa");
 	}
-});
-*/
+});*/
+
 
 /*
 //PARA W3SCHOOLS
