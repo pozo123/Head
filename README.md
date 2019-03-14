@@ -21,7 +21,6 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(14/3/19):
- - app_desplegar_procesos
  - app_distribucion_trabajadores
  
  actualizados/nuevos(13/3/19):
@@ -86,7 +85,6 @@ ARTURO:
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
     - app_distribucion_trabajadores
  - Actualizar:
-    - app_desplegar_procesos
     - app_rrhh_importar_trabajadores
     - app_actualizar_regs
     - app_desplegar_kaizen
@@ -101,6 +99,8 @@ DIEGO:
  - Manual de usuario
  - clases para rows en desplegar_procs
  - app_distribucion_supervisores
+ - app_desplegar_kaizen
+ - app_pagadora
  
 TO DO:
  - Produccion
