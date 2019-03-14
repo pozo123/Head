@@ -94,6 +94,7 @@ DIEGO:
  - app_desplegar_kaizen tronó -> profit neto, gris condicional, orden alfabetico
  - app_rrhh_pagadora
  - app_desplegar_procesos para colapsar obra y asi
+ - app_gestionar_colaboradores que no jale nombre de prod
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
