@@ -34,7 +34,6 @@ ESTA SEMANA:
  - app_rrhh_importar_trabajadores
  - app_admin_registro
  - app_areas
- - app_proy_asigna_proc
  - app_actualizar_regs -> esp == "NA"
   
  actualizados/nuevos(26/2/19):
@@ -76,12 +75,10 @@ ARTURO:
  - HTMLs de:
     - reporte_obras
     - inve$stime
-    - alta_cc
     - app_gestionar_supervisores
     - app_atributo
     - app_admin_registro
     - app_areas
-    - app_proy_asigna_proc
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
     - app_distribucion_trabajadores
  - Actualizar:
