@@ -20,6 +20,10 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
+ actualizados/nuevos(14/3/19):
+ - app_desplegar_procesos
+ - app_distribucion_trabajadores
+ 
  actualizados/nuevos(13/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico
  - app_obra -> ddl con sólo las obras de mágico que no están en proy, pero puedes dar de alta
@@ -80,6 +84,7 @@ ARTURO:
     - app_areas
     - app_proy_asigna_proc
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
+    - app_distribucion_trabajadores
  - Actualizar:
     - app_desplegar_procesos
     - app_rrhh_importar_trabajadores
