@@ -21,10 +21,9 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(14/3/19):
- - app_distribucion_trabajadores
+ - app_distribucion_supervisores
  
  actualizados/nuevos(13/3/19):
- - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico
  - app_obra -> ddl con sólo las obras de mágico que no están en proy, pero puedes dar de alta
  
  actualizados/nuevos(12/3/19):
@@ -38,10 +37,6 @@ ESTA SEMANA:
   
  actualizados/nuevos(26/2/19):
  - app_atributo
- 
- actualizados/nuevos(25/2/19):
- - app_asistencia
- - app_cuenta_cc (descomentar botón)
 
  actualizados/nuevos (19/2/19)
  - app_gestionar_supervisores
@@ -96,8 +91,8 @@ DIEGO:
  - Manual de usuario
  - clases para rows en desplegar_procs
  - app_distribucion_supervisores
- - app_desplegar_kaizen
- - app_pagadora
+ - app_desplegar_kaizen tronó -> profit neto, gris condicional, orden alfabetico
+ - app_rrhh_pagadora
  - app_desplegar_procesos para colapsar obra y asi
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
