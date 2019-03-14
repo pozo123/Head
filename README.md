@@ -21,6 +21,7 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(14/3/19):
+ - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
  - app_distribucion_supervisores
  
  actualizados/nuevos(13/3/19):
@@ -89,9 +90,7 @@ DIEGO:
  - Manual de usuario
  - Agregar terminado a obra_magico
  - app_distribucion_supervisores
- - app_desplegar_kaizen tronó -> profit neto, gris condicional, orden alfabetico
  - app_rrhh_pagadora
- - app_desplegar_procesos para colapsar obra y asi
  - app_gestionar_supervisores que no jale nombre de prod
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
