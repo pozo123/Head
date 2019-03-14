@@ -101,6 +101,11 @@ DIEGO:
  - app_distribucion_supervisores
  - app_desplegar_kaizen
  - app_pagadora
+ - app_desplegar_procesos para colapsar obra y asi
+ - app_cuenta_cc 
+    - crear los fields necesarios para el UML
+    - corregir un error
+    - programar el boton
  
 TO DO:
  - Produccion
