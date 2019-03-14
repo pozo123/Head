@@ -143,7 +143,7 @@ function loadTablaProcesos(){
                     var cons = proc.substring(proc.length - 2,proc.length);
                     mySubGroup = cons;//this.cells[3].innerHTML;
                     if ( lastGroup !== groupName ) {
-                        $(this).before('<tr class="groupDesplegarProcesos desplegadosObraDesplegarKaizen"><td colspan="3">' + groupName +'</td></tr>');
+                        $(this).before('<tr id="' + groupName + '" class="groupDesplegarProcesos desplegadosObraDesplegarKaizen"><td colspan="3">' + groupName +'</td></tr>');
                         lastGroup = groupName;
                     }
                     if (lastSub !== mySubGroup) {
@@ -203,14 +203,20 @@ $("." + class_table_datatable_procesos).on("click", "tr", function() {
 
 
 $('.' + class_button_colapsar_subprocesos_desplegarProcesos).on('click', function(){
-    $('.subproceso_row').removeClass('hidden');
+    $('.subproceso_row').addClass('hidden');
     $('.subgroupDesplegarProcesos').removeClass('desplegadosDesplegarKaizen');
 });
 
 $('.' + class_button_desplegar_subprocesos_desplegarProcesos).on('click', function(){
-    $('.subproceso_row').addClass('hidden');
-    $('.subgroupDesplegarProcesos').removeClass('desplegadosDesplegarKaizen');
-});
+    $('.subproceso_row').each(function(){
+        console.log(this.id.substring(this.id.split("_")[0].length + 1,this.id.length));
+        if(document.getElementById(this.id.substring(this.id.split("_")[0].length + 1,this.id.length)).classList.contains("desplegadosObraDesplegarKaizen")){
+            console.log(this.id); 
+            $(this).removeClass('hidden');
+            $('.subgroupDesplegarProcesos').addClass('desplegadosDesplegarKaizen'); 
+        }
+  });
+}
 //http://live.datatables.net/xovixoju/228/edit
 
 var idioma_espanol = {
