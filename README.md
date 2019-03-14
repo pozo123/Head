@@ -95,9 +95,11 @@ DIEGO:
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
  - clases para rows en desplegar_procs
+ - app_distribucion_supervisores
  
 TO DO:
  - Produccion
+   - Quitar datos_kaizen y revisar ddl Virgilio
    - Desplegar Kaizen
      - Estilo:
        - cambiar avance "prog" por "pag"
