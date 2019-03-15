@@ -79,6 +79,7 @@ function loadTablaProcesos(){
                             var subproceso = subSnap.val();
                             var row = document.createElement('tr');
                             row.id = subproceso.clave + "_" + obraSnap.val().nombre;//Con los espacios chance truena
+                            row.className = "subproceso_row";
                             var clave = document.createElement('td');
                             clave.innerHTML= subproceso.clave;
                             var nombre = document.createElement('td');
@@ -107,7 +108,7 @@ function loadTablaProcesos(){
                 }); 
             }           
         });
-        var table = document.getElementByClassName(class_table_datatable_procesos);
+        var table = document.getElementsByClassName(class_table_datatable_procesos);
         for(i=0; i< table.length; i++){
             table[i].appendChild(head);
             table[i].appendChild(body);
@@ -120,13 +121,40 @@ function loadTablaProcesos(){
 
         var tabla_procesos = $('.' + class_table_datatable_procesos).DataTable({
             "order": [[ obra_colum, 'asc' ], [ proc_consec_colum, 'asc' ],[ subproc_consec_colum, 'asc' ]],
+            "columns": [
+                {title: "Clave"},
+                {title: "Nombre"},
+                {title: "Alcance"},
+                {title: "Obra"},
+                {title: "Proceso Padre"},
+                {title: "Consecutivo Subproceso"},
+            ],
             "columnDefs": [ 
-                { "visible": false, "targets": [obra_colum, proc_consec_colum, subproc_consec_colum] }
+                { "visible": false, "targets": [obra_colum, proc_consec_colum, subproc_consec_colum] },
+                {orderable:false, targets: [0,1,2]},
+                {targets: 2, className: 'dt-body-justify'},
             ],
             "lengthMenu": [[-1, 10, 25, 50], ["Todos", 10, 25, 50]],
             destroy: true,
             dom: 'Bfrtip',
-            buttons: ['excel'],
+            buttons: [
+                    {
+                        text: "Desplegar Procesos",
+                        action: function(e, dt, node, config){desplegarProcesos()}
+                    },
+                    {
+                        text: "Colapsar Procesos",
+                        action: function(e, dt, node, config){colapsarProcesos()}
+                    },
+                    {
+                        text: "Desplegar Subprocesos",
+                        action: function(e, dt, node, config){desplegarSubprocesos()}
+                    },
+                    {
+                        text: "Colapsar Subprocesos",
+                        action: function(e, dt, node, config){colapsarSubprocesos()}
+                    },
+                ],
             //https://datatables.net/extensions/buttons/
             //https://datatables.net/reference/button/colvis
         
@@ -138,6 +166,7 @@ function loadTablaProcesos(){
                 var mySubGroup = null;
                 $(tableRows).each( function () {
                     var clave_proc = this.id.split("_")[0];
+                    //console.log(this.id.split("_"))
                     groupName = this.id.substring(clave_proc.length + 1, this.id.length);
                     var proc = clave_proc.split("-")[0];
                     var cons = proc.substring(proc.length - 2,proc.length);
@@ -149,8 +178,6 @@ function loadTablaProcesos(){
                     if (lastSub !== mySubGroup) {
                         //console.log(this.id)
                         var father_row = document.getElementById(proc + "_" + groupName);
-                        console.log(father_row)
-                        console.log(this)
                         father_row.className = father_row.className + " subgroupDesplegarProcesos";
                         //$(father_row).removeClass("subproceso_row");
                         $(this).before(father_row);          
@@ -178,45 +205,69 @@ function loadTablaProcesos(){
 $("." + class_table_datatable_procesos).on("click", "tr", function() { 
   //console.log(this.classList);
   if(this.classList.contains("groupDesplegarProcesos")){
-    console.log(this.id);
+    //console.log(this.id);
     if(this.classList.contains("desplegadosObraDesplegarKaizen")){
-      $('[id$=' + this.id + ']').addClass('hidden');
+      $('[id$="' + this.id + '"]').addClass('hidden');
       $(this).removeClass('hidden');
-      $('#' + this.id).removeClass('desplegadosObraDesplegarKaizen');
+      $(this).removeClass('desplegadosObraDesplegarKaizen');
     } else { 
-      $('[id$=' + this.id + ']').removeClass('hidden');
-      $('#' + this.id).addClass('desplegadosObraDesplegarKaizen');
+      $('[id$="' + this.id + '"]').removeClass('hidden');
+      $(this).addClass('desplegadosObraDesplegarKaizen');
     } 
   }
   if(this.classList.contains("subgroupDesplegarProcesos")){
     var split =this.id.split("_");
     if(this.classList.contains("desplegadosDesplegarKaizen")){
-      $('[id^=' + split[0] + '][id$='+ split[split.length-1] + ']').addClass('hidden');
-      $('#' + this.id).removeClass('hidden');
-      $('#' + this.id).removeClass('desplegadosDesplegarKaizen');
+      $('[id^="' + split[0] + '"][id$="'+ split[split.length-1] + '"]').addClass('hidden');
+      $(this).removeClass('hidden');
+      $(this).removeClass('desplegadosDesplegarKaizen');
     } else { 
-      $('[id^=' + split[0] + '][id$='+ split[split.length-1] + ']').removeClass('hidden');
-      $('#' + this.id).addClass('desplegadosDesplegarKaizen');
+      $('[id^="' + split[0] + '"][id$="'+ split[split.length-1] + '"]').removeClass('hidden');
+      $(this).addClass('desplegadosDesplegarKaizen');
     }
   }
 });
 
 
-$('.' + class_button_colapsar_subprocesos_desplegarProcesos).on('click', function(){
+//$('.' + class_button_colapsar_subprocesos_desplegarProcesos).on('click', function(){
+function colapsarSubprocesos(){
     $('.subproceso_row').addClass('hidden');
     $('.subgroupDesplegarProcesos').removeClass('desplegadosDesplegarKaizen');
-});
+};
 
-$('.' + class_button_desplegar_subprocesos_desplegarProcesos).on('click', function(){
+//$('.' + class_button_desplegar_subprocesos_desplegarProcesos).on('click', function(){
+function desplegarSubprocesos(){
     $('.subproceso_row').each(function(){
-        console.log(this.id.substring(this.id.split("_")[0].length + 1,this.id.length));
+        //console.log(this.id.substring(this.id.split("_")[0].length + 1,this.id.length));
         if(document.getElementById(this.id.substring(this.id.split("_")[0].length + 1,this.id.length)).classList.contains("desplegadosObraDesplegarKaizen")){
-            console.log(this.id); 
+            //console.log(this.id); 
             $(this).removeClass('hidden');
             $('.subgroupDesplegarProcesos').addClass('desplegadosDesplegarKaizen'); 
         }
   });
-}
+};
+
+function colapsarProcesos(){
+    $('.subproceso_row').addClass('hidden');
+    $('.subgroupDesplegarProcesos').addClass('hidden');
+    $('.subgroupDesplegarProcesos').removeClass('desplegadosDesplegarKaizen');
+    $('.groupDesplegarProcesos').removeClass('desplegadosObraDesplegarKaizen');
+    /*$('tr').addClass('hidden');
+    $('.groupDesplegarProcesos').removeClass('hidden');
+    $('.subgroupDesplegarProcesos').removeClass('desplegadosDesplegarKaizen');
+    $('.groupDesplegarProcesos').removeClass('desplegadosObraDesplegarKaizen');*/
+};
+
+function desplegarProcesos(){
+    $('.subproceso_row').removeClass('hidden');
+    $('.subgroupDesplegarProcesos').removeClass('hidden');
+    $('.subgroupDesplegarProcesos').addClass('desplegadosDesplegarKaizen');
+    $('.groupDesplegarProcesos').addClass('desplegadosObraDesplegarKaizen');
+    /*$('.subgroupDesplegarProcesos').each(function(){
+        $(this).removeClass('hidden');
+        $('.groupDesplegarProcesos').addClass('desplegadosDesplegarKaizen');
+    });*/
+};
 //http://live.datatables.net/xovixoju/228/edit
 
 var idioma_espanol = {
