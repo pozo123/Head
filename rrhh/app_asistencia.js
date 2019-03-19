@@ -7,6 +7,8 @@ https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js
 https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
 
 //Aquí sólo asistencia y horas_extra
+    //En otra app terminar una semana
+    //Horas extra también en otra app!!
     //En otra app meter diversos
     //En otra app meter totales pagados (post-pagadora)
 var id_semana_ddl_asistencia = "semanaDdlAsistencia";
@@ -29,6 +31,9 @@ var nuevo;
 var trabajadores = [];
 
 $('#' + id_tab_asistencia).click(function(){
+    $('#' + id_semana_ddl_asistencia).empty();
+    $('#' + id_year_ddl_asistencia).empty();
+    $('#' + id_obra_ddl_asistencia).empty();
 	//getWeek() definido en app_funciones
 	var semana_actual = getWeek(new Date().getTime())[0];
 	var year_actual = getWeek(new Date().getTime())[1];
@@ -67,6 +72,7 @@ $('#' + id_tab_asistencia).click(function(){
 });
 
 $("#" + id_obra_ddl_asistencia).change(function(){
+    $('#' + id_lista_div_asistencia).empty();
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
     firebase.database.ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/terminada").once('value').then(function(snapshot){
@@ -80,7 +86,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                         var trabajador = childSnap.val();
                         //No se si el child de aqui abajo jale por lo de child_added/value AQUI
                         var nom = trabajador.nomina.child(year).child(semana);
-                        datos_asistencia.push([trabajador.uid, trabajador.nombre, trabajador.jefe, trabajador.especialidad, nom.jueves.obra, nom.jueves.proceso, nom.viernes.obra, nom.viernes.proceso, nom.lunes.obra, nom.lunes.proceso, nom.martes.obra, nom.martes.proceso, nom.miercoles.obra, nom.miercoles.proceso, trabajador.sueldo_base,nom.horas_extra, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
+                        datos_asistencia.push([trabajador.id_trabajador, trabajador.nombre, trabajador.jefe, trabajador.especialidad, nom.jueves.obra, nom.jueves.proceso, nom.viernes.obra, nom.viernes.proceso, nom.lunes.obra, nom.lunes.proceso, nom.martes.obra, nom.martes.proceso, nom.miercoles.obra, nom.miercoles.proceso, trabajador.sueldo_base,nom.horas_extra.total_horas, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
                     });
                 });
                 var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
@@ -88,6 +94,8 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                     data: datos_procesos,
                     dom: 'Bfrtip',
                     buttons: ['excel', 'colvis'],
+                    //https://datatables.net/extensions/buttons/
+                    //https://datatables.net/reference/button/colvis
                     columns: [
                         {title: "ID",width: 70},
                         {title: "NOMBRE",width: 150},
@@ -118,8 +126,16 @@ $("#" + id_obra_ddl_asistencia).change(function(){
         		var procesos = [];
         		var count_proc = 0;
         		snapshot.child("procesos").forEach(function(childSnapshot){
-        			procesos[count_proc] = childSnapshot.val().clave;
-                    count_proc++;
+                    var proc = childSnapshot.vaL();
+                    if(proc.num_subprocesos == 0){
+                        procesos[count_proc] = childSnapshot.val().clave;
+                        count_proc++;
+                    } else {
+                        childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                            procesos[count_proc] = grandChildSnapshot.val().clave;
+                            count_proc++;
+                        });
+                    }
         		});
                 //Carga todos los trabajadores con esta obra asignada
                 firebase.database().ref(rama_bd_trabajadores).orderByChild("obra_asignada").equalTo($("#" + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(snapshot){
@@ -170,7 +186,7 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     //----JUEVES----
     var ddl_ju = document.createElement('select');
     var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
-    ddl_ju.id = "chamba_" + trabajador.uid + "_ju";
+    ddl_ju.id = "chamba_" + trabajador.id_trabajador + "_ju";
     if(nom.jueves.asistencia.val()){
         if(nom.jueves.obra.val() == obra){
             var option = document.createElement('option');
@@ -204,7 +220,7 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     row.appendChild(ddl_ju);
     //----VIERNES----
     var ddl_vi = document.createElement('select');
-    ddl_vi.id = "chamba_" + trabajador.uid + "_vi";
+    ddl_vi.id = "chamba_" + trabajador.id_trabajador + "_vi";
     if(nom.viernes.asistencia.val()){
         if(nom.viernes.obra.val() == obra){
             var option = document.createElement('option');
@@ -238,7 +254,7 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     row.appendChild(ddl_vi);
     //----LUNES----
     var ddl_lu = document.createElement('select');
-    ddl_lu.id = "chamba_" + trabajador.uid + "_lu";
+    ddl_lu.id = "chamba_" + trabajador.id_trabajador + "_lu";
     if(nom.lunes.asistencia.val()){
         if(nom.lunes.obra.val() == obra){
             var option = document.createElement('option');
@@ -272,7 +288,7 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     row.appendChild(ddl_lu);
     //----MARTES----
     var ddl_ma = document.createElement('select');
-    ddl_ma.id = "chamba_" + trabajador.uid + "_ma";
+    ddl_ma.id = "chamba_" + trabajador.id_trabajador + "_ma";
     if(nom.martes.asistencia.val()){
         if(nom.martes.obra.val() == obra){
             var option = document.createElement('option');
@@ -306,7 +322,7 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     row.appendChild(ddl_ma);
     //----MIERCOLES----
     var ddl_mi = document.createElement('select');
-    ddl_mi.id = "chamba_" + trabajador.uid + "_mi";
+    ddl_mi.id = "chamba_" + trabajador.id_trabajador + "_mi";
     if(nom.miercoles.asistencia.val()){
         if(nom.miercoles.obra.val() == obra){
             var option = document.createElement('option');
@@ -341,11 +357,11 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     //----HORAS EXTRA----
     var horas_extra = document.createElement('input');
     horas_extra.type = "text";
-    horas_extra.id = "he_" + trabajador.uid;
+    horas_extra.id = "he_" + trabajador.id_trabajador;
     horas_extra.value = nom.horas_extra.val();
     row.appendChild(horas_extra);
 
-    trabajadores[trabajadores.length] = trabajador.uid;
+    trabajadores[trabajadores.length] = trabajador.id_trabajador;
 
     document.getElementById(id_lista_div_asistencia).insertBefore(row, nuevo);
 }
@@ -355,21 +371,21 @@ $('#' + id_guardar_button_asistencia).click(function(){
     var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
     var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
     for(i=0;i<trabajadores.length;i++){
-        var uid = trabajadores[i];
-        updateDia(uid,"jueves",semana,year);
-        updateDia(uid,"viernes",semana,year);
-        updateDia(uid,"lunes",semana,year);
-        updateDia(uid,"martes",semana,year);
-        updateDia(uid,"miercoles",semana,year); 
-        var he = $('#he_' + uid).val(); 
-        firebase.database().ref(rama_bd_trabajadores + "/" + uid + "/nomina/" + year + "/" + semana + "/horas_extra").set(he);
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + uid + "/horas_extra").set(he);   
+        var id_trabajador = trabajadores[i];
+        updateDia(id_trabajador,"jueves",semana,year);
+        updateDia(id_trabajador,"viernes",semana,year);
+        updateDia(id_trabajador,"lunes",semana,year);
+        updateDia(id_trabajador,"martes",semana,year);
+        updateDia(id_trabajador,"miercoles",semana,year); 
+        var he = $('#he_' + id_trabajador).val(); 
+        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").set(he);
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + id_trabajador + "/horas_extra").set(he);   
     }
 });
 
-function updateDia(uid,dia,semana,year){
+function updateDia(id_trabajador,dia,semana,year){
     var dia_corto = dia.substring(0,2);
-    var proceso = $("#chamba_" + trabajador.uid + "_" + dia_corto + " option:selected").val();
+    var proceso = $("#chamba_" + trabajador.id_trabajador + "_" + dia_corto + " option:selected").val();
         var asis;
         if(proceso == "Falta" || proceso == "Otra obra"){
             asis = {
@@ -386,13 +402,17 @@ function updateDia(uid,dia,semana,year){
                 proceso: proceso,
                 asistencia: true,
             }
-            firebase.database().ref(rama_bd_trabajadores + "/" + uid + "/nomina/" + year + "/" + semana + "/" + dia).set(asis_tra);
+            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/" + dia).set(asis_tra);
         }
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + uid + "/dias/" + dia).set(asis);   
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/" + id_trabajador + "/dias/" + dia).set(asis);   
 }
 
 $('#' + id_terminar_button_asistencia).click(function(){
 //PARA LOS BOTONES USA EL ARREGLO DE TRABAJADORES EN EL QUE ESTAN SUS IDs
+//Terminar debería estar en otra pestaña, y jalar año y semana de ddls
+    //var fecha = getWeek(new Date().getTime());
+    //firebase.database().ref(rama_bd_pagos_nomina + "/" + fecha[1] + "/" + fecha[0] + "/" + terminada).set(true);
+
 //Button terminar
     //Sumar horas en todas direcciones
         //en trabajadores
@@ -407,7 +427,7 @@ $('#' + id_terminar_button_asistencia).click(function(){
 /*function addNewWey(dt){
     var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable();
     tabla_procesos.row.add([
-    	trabajador.uid, 
+    	trabajador.id_trabajador, 
     	trabajador.nombre, 
     	trabajador.jefe, 
     	trabajador.especialidad, 
