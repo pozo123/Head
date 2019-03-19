@@ -163,7 +163,7 @@
 	    - pantalon
 	    - zapatos
 	 - clave_pagadora
-         - nomina
+	 - nomina
             - year: (ej 2019)
                - semana: (ej 1)
                   - lunes: 
