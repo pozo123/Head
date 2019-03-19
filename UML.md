@@ -164,7 +164,7 @@
 	    - zapatos
 	 - clave_pagadora
 	 - nomina
-            - year: (ej 2019)
+	    - year: (ej 2019)
                - semana: (ej 1)
                   - lunes: 
                      - obra (nombre)
