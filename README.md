@@ -135,7 +135,12 @@ TO DO:
      - field para diversos
      - boton actualizar sube lo que hay a la bd
      - boton guardar actualiza todo, lo cierra, y genera reporte faltas
-     
+  - pago_pagadora
+  - horas_extra
+  - pagos_adicionales
+  - alta_trabajador (individual)
+  - editar_trabajadores (como en bibliotecas en proy)
+  - supervisores
  - Pagina Web
    - arreglar las apps de permisos de usuario y de inicio de sesion
    - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
