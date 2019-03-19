@@ -21,6 +21,7 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(19/3/19):
+ - app_asistencia
  - app_rrhh_importar_trabajadores
  
  actualizados/nuevos(14/3/19):
@@ -80,6 +81,7 @@ ARTURO:
     - app_distribucion_trabajadores
  - Actualizar:
     - app_rrhh_importar_trabajadores
+    - app_asistencia
     - app_actualizar_regs
     - app_desplegar_kaizen
  
@@ -88,7 +90,6 @@ DIEGO:
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
- - Conseguir datos trabajadores de hector
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
  - Agregar terminado a obra_magico
