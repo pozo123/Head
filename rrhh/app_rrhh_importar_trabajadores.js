@@ -35,9 +35,9 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
     var uid_index;
     var titulos = [];
     //AQUI hay que definir
-    var niveles = [0,"nombre","nombre","accesorios/ropa/zapatos",0,0,"accesorios/ropa/zapatos"];
+    var niveles = [0,0,0,"claves","claves","claves","info_personal","info_personal","info_personal","info_personal",0,"datos_bancarios","datos_bancarios","datos_bancarios",0,0,0,"tallas","tallas","tallas",0,0];
     for(key in json[0]){
-        if(json[0][key] == "uid") 
+        if(json[0][key] == "id_trabajadores") 
             uid_index = key;
         titulos[key] = json[0][key];
     }
