@@ -20,6 +20,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
+ actualizados/nuevos(19/3/19):
+ - app_rrhh_importar_trabajadores
+ 
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
  - app_distribucion_supervisores
@@ -31,7 +34,6 @@ ESTA SEMANA:
  - app_prod_gestionar_pptos
  
  actualizados/nuevos(11/3/19):
- - app_rrhh_importar_trabajadores
  - app_admin_registro
  - app_areas
  - app_actualizar_regs -> esp == "NA"
@@ -67,6 +69,7 @@ ARTURO:
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Ddl para navegar entre pestañas de areas
  - Poner filtros para pestañas en prod (gerente/supervisor)
+ - Kaizen bonito
  - HTMLs de:
     - reporte_obras
     - inve$stime
