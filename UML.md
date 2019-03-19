@@ -132,25 +132,37 @@
       - finiquito
       - prestamos
       - caja_chica
-  - trabajadores: (no debería ir en rrhh?)
+  - trabajadores:
       - AFECTAN: app_trabajadores
       - SUSCRIBEN: app_asistencia
       - trabajador(por id):
-         - rango
+         - puesto
          - sueldo_base
          - jefe (nombre destajista o HEAD)
-         - nombre:
-            - primer_nombre
-            - apellido_paterno
-            - apellido_materno
-         - uid
-         - direccion
-         - timestamps:
-            - ingreso: (el último)
-            - ingresos: push de todos los que ha tenido
+         - nombre
+         - id_trabajador
+         - fecha_antiguedad
          - obra_asignada
          - especialidad
          - activo: bool
+	 - claves:
+	    - RFC
+	    - IMSS
+	    - CURP
+	 - info_personal
+	    - fecha_nacimiento
+	    - estado_civil
+	    - sexo
+	    - domicilio
+	 - datos_bancarios:
+	    - banco
+	    - cuenta
+	    - clabe
+	 - tallas:
+	    - camisa
+	    - pantalon
+	    - zapatos
+	 - clave_pagadora
          - nomina
             - year: (ej 2019)
                - semana: (ej 1)
