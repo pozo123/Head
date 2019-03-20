@@ -58,8 +58,7 @@ ESTA SEMANA:
  - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
  - Graphs central park misc tiene horas en ihs pero no hay registros -> seguro por NAs
- - registros con horas 0 (creo que ya se resolvió)
- - dropdown checkboxes se duplican cada que se le pica a la pestaña
+ - registros con horas 0
  - falta empty a muchos ddls antes de cargarlos
 
 ARTURO:
@@ -139,12 +138,12 @@ TO DO:
      - field para diversos
      - boton actualizar sube lo que hay a la bd
      - boton guardar actualiza todo, lo cierra, y genera reporte faltas
-  - pago_pagadora
-  - horas_extra
-  - pagos_adicionales
-  - alta_trabajador (individual)
-  - editar_trabajadores (como en bibliotecas en proy)
-  - supervisores
+   - pago_pagadora
+   - horas_extra
+   - pagos_adicionales
+   - alta_trabajador (individual)
+   - editar_trabajadores (como en bibliotecas en proy)
+   - supervisores
  - Pagina Web
    - arreglar las apps de permisos de usuario y de inicio de sesion
    - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
@@ -153,28 +152,27 @@ TO DO:
    - Manual de usuario, por sección y global.
 
  - Cambiar idioma_espanol en tablas de apps como datos_kaizen y asistencia y desplegar_procesos
- - Altas colaboradores:
-   - ABD en compras    
-SCORE:
-  - Reporte semanal
-    - Tabla de colabs contra procesos con totales
+
+ - SCORE:
+   - Reporte semanal
+      - Tabla de colabs contra procesos con totales
    
-  - Eliminar en bibliotecas
-    - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
-    - Obras Poner activo/No activo?
-    - pptos sí
-    - Despachos no, o sí?
-    - atn sí
-    - req/exc sí
-    - tipos/generos sí
-  - Dashgrid
-  - Dashcards nuevo diseño
-  - Amarillo y rojo en dashcards y graphs para cuando esten al 90% o se hayan pasado de las horas programadas
-  - Update uml
-  - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
-  - modal cambio contraseña
-  - Checar que no exista otra obra con esa clave
-  - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
+   - Eliminar en bibliotecas
+      - Colabs? borrarlos de auth pero no de database, no? meterle atributo "eliminado"? -> No, sólo en auth. lo demás es con permisos.
+      - Obras Poner activo/No activo?
+      - pptos sí
+      - Despachos no, o sí?
+      - atn sí
+      - req/exc sí
+      - tipos/generos sí
+   - Dashgrid
+   - Dashcards nuevo diseño
+   - Amarillo y rojo en dashcards y graphs para cuando esten al 90% o se hayan pasado de las horas programadas
+   - Update uml
+   - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
+   - modal cambio contraseña
+   - Checar que no exista otra obra con esa clave
+   - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
 
   
 - EMAIL
