@@ -165,6 +165,12 @@
 	 - clave_pagadora
 	 - nomina
 	    - year: (ej 2019)
+	       - semana: (ej 1)
+	          - lunes:
+		     - obra (nombre)
+		     - proceso (clave)
+		     - asistencia (bool)
+		     
                - semana: (ej 1)
                   - lunes: 
                      - obra (nombre)
