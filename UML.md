@@ -168,14 +168,12 @@
 	       - semana: (ej 1)
 	          - lunes:
 		     - obra (nombre)
-	          - lunes:
+		     - proceso (clave)
+		     - asistencia (bool)
+	          - martes:
 		     - obra (nombre)
 		     - proceso (clave)
 		     - asistencia (bool)
-                  - martes:
-                     - obra (nombre)
-                     - proceso (clave)
-                     - asistencia (bool)
                   - miercoles:
                      - obra (nombre)
                      - proceso (clave)
