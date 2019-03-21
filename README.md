@@ -20,9 +20,8 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
- actualizados/nuevos(19/3/19):
- - app_asistencia
- - app_rrhh_importar_trabajadores
+ actualizados/nuevos(21/3/19):
+ - app_asistencia -> arreglé lo de  nuevo
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
