@@ -76,6 +76,8 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
     
     $("#" + id_obra_ddl_asistencia).change(function(){
         $('#' + id_lista_div_asistencia).empty();
+        $('#' + nuevo.id).empty();
+        parentNode.appendChild(nuevo);
         var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
         var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/terminada").once('value').then(function(snapshot){
@@ -89,7 +91,28 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                             var trabajador = childSnap.val();
                             //No se si el child de aqui abajo jale por lo de child_added/value AQUI
                             var nom = trabajador.nomina.child(year).child(semana);
-                            datos_asistencia.push([trabajador.id_trabajador, trabajador.nombre, trabajador.jefe, trabajador.especialidad, nom.jueves.obra, nom.jueves.proceso, nom.viernes.obra, nom.viernes.proceso, nom.lunes.obra, nom.lunes.proceso, nom.martes.obra, nom.martes.proceso, nom.miercoles.obra, nom.miercoles.proceso, trabajador.sueldo_base,nom.horas_extra.total_horas, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
+                            var chamba_lu = "-";
+                            var chamba_ma = "-";
+                            var chamba_mi = "-";
+                            var chamba_ju = "-";
+                            var chamba_vi = "-";
+                            if(nom.jueves.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                                chamba_ju = nom.jueves.proceso;
+                            }
+                            if(nom.viernes.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                                chamba_vi = nom.viernes.proceso;
+                            }
+                            if(nom.lunes.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                                chamba_lu = nom.lunes.proceso;
+                            }
+                            if(nom.martes.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                                chamba_ma = nom.martes.proceso;
+                            }
+                            if(nom.miercoles.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                                chamba_mi = nom.miercoles.proceso;
+                            }
+
+                            datos_asistencia.push([trabajador.id_trabajador, trabajador.nombre, trabajador.jefe, trabajador.especialidad, chamba_ju, chamba_vi, chamba_lu, chamba_ma, chamba_mi, trabajador.sueldo_base,nom.horas_extra.total_horas, /*nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
                         });
                     });
                     var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
@@ -105,15 +128,10 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                             {title: "EMPLEADOR",width: 70},
                             {title: "ESP",width: 70},
                             {title: "JUEVES",width: 70},
-                            {title: "PROCESO", width: 70},
                             {title: "VIERNES",width: 70},
-                            {title: "PROCESO", width: 70},
                             {title: "LUNES",width: 70},
-                            {title: "PROCESO", width: 70},
                             {title: "MARTES",width: 70},
-                            {title: "PROCESO", width: 70},
                             {title: "MIERCOLES",width: 70},
-                            {title: "PROCESO", width: 70},
                             {title: "SUELDO BASE",width: 70},
                             {title: "HORAS EXTRA",width: 70},
                             //{title: "DIVERSOS",width: 70},//hay que desplegarlos separados
@@ -153,7 +171,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                     var t_id = document.createElement('input');
                     t_id.id = "t_id";
                     $('#t_id').change(function(){
-                        firebase.database().ref(rama_bd_trabajadores + "/" + t_id.val()).once('value').then(function(snapshot){
+                        firebase.database().ref(rama_bd_trabajadores + "/" + $('#' + t_id.id).val()).once('value').then(function(snapshot){
                             var trabajador = snapshot.val();
                             if(trabajador != null){
                                 cargaRenglon(trabajador,count_proc,procesos,semana,year);
@@ -167,7 +185,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                     var t_nombre = document.createElement('input');
                     t_nombre.id = "t_nombre"
                     $('#t_nombre').change(function(){
-                        firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo(t_nombre.val()).once('value').then(function(snapshot){
+                        firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo($('#' + t_nombre.id).val()).once('value').then(function(snapshot){
                             var trabajador = snapshot;
                             if(trabajador != null){
                                 cargaRenglon(trabajador,count_proc,procesos,semana,year);
@@ -203,6 +221,13 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             bool_nom = true;
         }
         var row = document.createElement('div');
+        //----LABELS----
+        var id_label = document.createElement('label');
+        id_label.innerHTML = trabajador.id_trabajador;
+        var nombre_label = document.createElement('label');
+        nombre_label.innerHTML = trabajador.nombre;
+        row.appendChild(id_label);
+        row.appendChild(nombre_label);
         //----JUEVES----
         var ddl_ju = document.createElement('select');
         var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
@@ -229,7 +254,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             var option3 = document.createElement('option');
             option3.text = "Parado";
             option3.value = 0.2;
-            ddl_ju.appendChild(option);
+            ddl_ju.appendChild(option3);
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
@@ -263,7 +288,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             var option3 = document.createElement('option');
             option3.text = "Parado";
             option3.value = 0.2;
-            ddl_vi.appendChild(option);
+            ddl_vi.appendChild(option3);
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
@@ -297,7 +322,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             var option3 = document.createElement('option');
             option3.text = "Parado";
             option3.value = 0.2;
-            ddl_lu.appendChild(option);
+            ddl_lu.appendChild(option3);
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
@@ -331,7 +356,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             var option3 = document.createElement('option');
             option3.text = "Parado";
             option3.value = 0.2;
-            ddl_ma.appendChild(option);
+            ddl_ma.appendChild(option3);
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
@@ -365,7 +390,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             var option3 = document.createElement('option');
             option3.text = "Parado";
             option3.value = 0.2;
-            ddl_mi.appendChild(option);
+            ddl_mi.appendChild(option3);
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
