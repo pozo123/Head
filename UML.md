@@ -167,7 +167,9 @@
 	    - year: (ej 2019)
 	       - semana: (ej 1)
 	          - lunes:
-                     - obra (nombre)
+		     - obra (nombre)
+	          - lunes:
+		     - obra (nombre)
 		     - proceso (clave)
 		     - asistencia (bool)
                   - martes:
