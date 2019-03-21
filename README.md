@@ -92,7 +92,8 @@ DIEGO:
  - Manual de usuario
  - Agregar terminado a obra_magico
  - app_distribucion_supervisores
- - app_rrhh_pagadora
+ - app_rrhh_pago_nomina
+ - app_rrhh_horas_extra
  - app_gestionar_supervisores que no jale nombre de prod
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
