@@ -97,6 +97,7 @@ DIEGO:
  - app_gestionar_supervisores que no jale nombre de prod
  - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - Revisar que pedo con procesos (subprocesos de marina en prod, no tienen clave, se hacen undefined, esta loco)
+ - en funciones pistaDeAuditoria() return un json con current user y timestamp
  - asistencia
     - que no deje cargar trabajadores qye ya esten
     - que cargue a los trabajadores que ya tenian asistencia anunque no esten asigandos
