@@ -96,6 +96,9 @@ DIEGO:
  - app_rrhh_horas_extra
  - app_gestionar_supervisores que no jale nombre de prod
  - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
+ - asistencia
+    - que no deje cargar trabajadores qye ya esten
+    - que cargue a los trabajadores que ya tenian asistencia anunque no esten asigandos
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
