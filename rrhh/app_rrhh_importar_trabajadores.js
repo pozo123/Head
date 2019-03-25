@@ -12,7 +12,7 @@ $('#' + id_file_importarTrabajadores).on("change",(function(event) {
     excelSeleccionado = event.target.files[0];
     fileName = excelSeleccionado.name;
     $('#' + id_filename_importarTrabajadores).text(fileName)
-}));;
+}));
 
 $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
     var reader = new FileReader();
