@@ -187,7 +187,8 @@
                      - proceso (clave)
                      - asistencia (bool)
                   - horas_extra:
-		     - dia(ej lunes):
+		     - por push:
+		        - fecha (timestamp)
 		        - obra
 			- proceso
 			- horas
