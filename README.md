@@ -82,6 +82,7 @@ DIEGO:
  - app_distribucion_supervisores
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
+ - app_rrhh_pagos_diversos
  - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - diversos en bd, alta, editar, etc
  - reporte rrhh
