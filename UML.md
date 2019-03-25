@@ -195,7 +195,12 @@
 			- horas
 	             - total_horas
                   - diversos
-                     - *todos los diversos*   
+                     - por push:
+		        - cantidad
+			- distribuible: bool
+			- obra: ("NA" si distribuilble == true)
+			- proceso: ("NA" si distribuilble == true)
+			- diverso (nombre de un catálogo)
                   - impuestos (pago_pagadora_trabajador - subtotal)
                   - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos)
                   - total (pagadora)
@@ -224,18 +229,20 @@
                      - viernes:
                         - asistencia: bool
                         - proceso: (clave) "NA" si asistencia es false
-                  - horas_extra
                   - total (lo que entra aquí es igual a lo que va al kaizen)
                   - horas_extra:
-		     - dia (ej lunes):
+		     - push:
 		        - horas
-			- proceso (clave)
+                        - proceso (clave)
+                        - fecha (ms, de un datepicker, es de cuando se trabajaron, no de cuando se pagan)
 	             - total_horas
-                  - // De aquí en adelante chance no hace falta calcularlo aquí, que se guarde en trabajador los totales y el prorrateo se va a kaizen.
                   - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
-                  - subtotal (sueldo base * asistencias + horas extra * costo_he + diversos)
-                  - diversos:
-                     - *todos los diversos*
+                  - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
+                  - diversos
+                     - por push: (si es distribuido se hacen entradas separadas)
+                        - cantidad
+			- proceso
+			- diverso (nombre de un catálogo)
                   - total (subtotal + impuestos)
                - total
   - colaboradores:
@@ -281,6 +288,17 @@
 - clientes
 - proyectos
 - info_web
+- rrhh
+   - colaboradores
+      - por uid:
+         - email
+         - nombre
+         - nickname
+         - uid
+   - diversos
+      - diverso (por nombre)
+         - nombre
+	 - clave (?)
 - compras
    - colaboradores
       - same shit
