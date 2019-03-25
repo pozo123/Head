@@ -10,7 +10,7 @@ ESTA SEMANA:
  - app_funciones -> pista de auditoria
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
- - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista
+ - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista, update faltas
  - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0"
  
  actualizados/nuevos(14/3/19):
@@ -35,6 +35,7 @@ ESTA SEMANA:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
+ - app_atributo
  
  Por definir:
  - Centro de costos 
@@ -82,6 +83,18 @@ DIEGO:
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
  - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
+ - diversos en bd, alta, editar, etc
+ - reporte rrhh
+    - filtros
+       - obra
+       - proceso
+       - trabajador
+       - periodo de tiempo
+    - datos
+       - diversos (ddcheckbox)
+       - horas trabajadas
+       - horas extra
+       - falta
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
