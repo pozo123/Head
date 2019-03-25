@@ -40,7 +40,7 @@ $('#tabGestionarSup').click(function(){
 
 $('#' + id_obras_ddl_supervisores).change(function(){
 	var div = document.getElementById(id_div_obra_supervisores);
-	div.empty();
+	$('#' + id_div_obra_supervisores).empty();
 	var nombre_obra = $('#' + id_obras_ddl_supervisores + " option:selected").val();
 	firebase.database().ref(rama_bd_obras_prod + "/" + nombre_obra).once('value').then(function(snapshot){
 		var obra = snapshot.val();
@@ -101,7 +101,7 @@ $('#' + id_obras_ddl_supervisores).change(function(){
 
 $('#' + id_supervisores_ddl_supervisores).change(function() {
 	var div = document.getElementById(id_div_supervisor_supervisores);
-	div.empty();
+	$('#' + id_div_supervisor_supervisores).empty();
 	var sup_uid = $('#' + id_supervisores_ddl_supervisores + " option:selected").val();
 	firebase.database().ref(rama_bd_supervisores + "/" + sup_uid).once('value').then(function(snapshot){
 		var supervisor = snapshot.val();
