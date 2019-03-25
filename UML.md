@@ -142,7 +142,8 @@
          - nombre
          - id_trabajador
          - fecha_antiguedad
-         - obra_asignada
+         - obra_asignada:
+	    - 0 (1,2,3, lista): nombre
          - especialidad
          - activo: bool
 	 - claves:
