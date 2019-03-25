@@ -150,31 +150,31 @@
             - RFC
             - IMSS
             - CURP
-	 - info_personal
-	    - fecha_nacimiento
-	    - estado_civil
-	    - sexo
-	    - domicilio
-	 - datos_bancarios:
-	    - banco
-	    - cuenta
-	    - clabe
-	 - tallas:
-	    - camisa
-	    - pantalon
-	    - zapatos
-	 - clave_pagadora
-	 - nomina
-	    - year: (ej 2019)
-	       - semana: (ej 1)
-	          - lunes:
-		     - obra (nombre)
-		     - proceso (clave)
-		     - asistencia (bool)
+         - info_personal
+            - fecha_nacimiento
+            - estado_civil
+            - sexo
+            - domicilio
+         - datos_bancarios:
+            - banco
+            - cuenta
+            - clabe
+         - tallas:
+            - camisa
+            - pantalon
+            - zapatos
+         - clave_pagadora
+         - nomina
+            - year: (ej 2019)
+               - semana: (ej 1)
+                  - lunes:
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
                   - martes:
-		     - obra (nombre)
-		     - proceso (clave)
-		     - asistencia (bool)
+                     - obra (nombre)
+                     - proceso (clave)
+                     - asistencia (bool)
                   - miercoles:
                      - obra (nombre)
                      - proceso (clave)
@@ -188,19 +188,19 @@
                      - proceso (clave)
                      - asistencia (bool)
                   - horas_extra:
-		     - por push:
-		        - fecha (timestamp)
-		        - obra
-			- proceso
-			- horas
-	             - total_horas
+                     - por push:
+                        - fecha (timestamp)
+                        - obra
+                        - proceso
+                        - horas
+                     - total_horas
                   - diversos
                      - por push:
-		        - cantidad
-			- distribuible: bool
-			- obra: ("NA" si distribuilble == true)
-			- proceso: ("NA" si distribuilble == true)
-			- diverso (nombre de un catálogo)
+                        - cantidad
+                        - distribuible: bool
+                        - obra: ("NA" si distribuilble == true)
+                        - proceso: ("NA" si distribuilble == true)
+                        - diverso (nombre de un catálogo)
                   - impuestos (pago_pagadora_trabajador - subtotal)
                   - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos)
                   - total (pagadora)
@@ -241,8 +241,8 @@
                   - diversos
                      - por push: (si es distribuido se hacen entradas separadas)
                         - cantidad
-			- proceso
-			- diverso (nombre de un catálogo)
+                        - proceso
+                        - diverso (nombre de un catálogo)
                   - total (subtotal + impuestos)
                - total
   - colaboradores:
