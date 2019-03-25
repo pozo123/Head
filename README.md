@@ -11,6 +11,7 @@ ESTA SEMANA:
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
  - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista
+ - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0"
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
@@ -71,7 +72,6 @@ ARTURO:
     - app_desplegar_kaizen
  
 DIEGO:
- - Asistencia
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
@@ -81,12 +81,7 @@ DIEGO:
  - app_distribucion_supervisores
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
- - app_gestionar_supervisores que no jale nombre de prod
- - asistencia
-    - que no deje cargar trabajadores qye ya esten (en los change de los textfields, revisa id con array trabajadores)
-    - dos "aqui" del asistencia que yo tengo
-    - cambiar en importar trabajadores, obra_asignada es lo que va hardcodeado y en el excel tiene que venir sólo un "0"
-    - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
+ - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
