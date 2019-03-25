@@ -11,7 +11,7 @@ ESTA SEMANA:
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
  - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista, update faltas
- - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0"
+ - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
@@ -83,7 +83,6 @@ DIEGO:
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
  - app_rrhh_pagos_diversos
- - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - diversos en bd, alta, editar, etc
  - reporte rrhh
     - filtros
