@@ -187,13 +187,15 @@ $('#' + id_agregar_procesos).click(function() {
                         clave: cl,
                         categoria: $('#' + id_categoria_ddl_procesos + " option:selected").text(),
                         fechas: fech,
-                        kaizen: kaiz,
+                        //kaizen: kaiz,
                         alcance: $('#' + id_alcance_proceso_procesos).val(),
                     }
                     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(subproceso);
                     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos").set(num_sub);
                     firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(subproceso);
                     firebase.database().ref(rama_bd_obras_prod + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos").set(num_sub);
+                    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl + "/kaizen").set(kaiz);
+                    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos/kaizen").set(kaiz);
                 });
             } else {
                 console.log(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text())
@@ -208,13 +210,15 @@ $('#' + id_agregar_procesos).click(function() {
                         fechas: fech,
                         num_subprocesos: 0,
                         subprocesos: "",
-                        kaizen: kaiz,
+                        //kaizen: kaiz,
                         alcance: $('#' + id_alcance_proceso_procesos).val(),
                     }
                     firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + cl).set(proceso);
                     firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/num_procesos").set(num_proc);
                     firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/procesos/" + cl).set(proceso);
                     firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/num_procesos").set(num_proc);
+                    firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + cl + "/kaizen").set(kaiz);
+                    firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/num_procesos/kaizen").set(kaiz);
                     if(f_f > obra.fechas.fecha_final_teorica){
                         firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
                         firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
