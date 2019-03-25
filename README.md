@@ -10,6 +10,7 @@ ESTA SEMANA:
  - app_funciones -> pista de auditoria
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
+ - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
