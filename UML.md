@@ -171,7 +171,7 @@
 		     - obra (nombre)
 		     - proceso (clave)
 		     - asistencia (bool)
-	          - martes:
+                  - martes:
 		     - obra (nombre)
 		     - proceso (clave)
 		     - asistencia (bool)
@@ -231,11 +231,11 @@
                         - proceso: (clave) "NA" si asistencia es false
                   - total (lo que entra aquí es igual a lo que va al kaizen)
                   - horas_extra:
-		     - push:
-		        - horas
+                     - push:
+                        - horas
                         - proceso (clave)
                         - fecha (ms, de un datepicker, es de cuando se trabajaron, no de cuando se pagan)
-	             - total_horas
+                     - total_horas
                   - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
                   - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
                   - diversos
