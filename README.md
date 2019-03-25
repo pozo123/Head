@@ -3,25 +3,11 @@ Depto. de Innovacion y Optimizacion
 
 Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
  
- Orden Implementacion:
- - app_colaboradores_produccion: CHECK
- - app_cuenta_cc: 
- - app_obras_prod: CHECK
- - app_procesos: CHECK
- - app_desplegar_procesos: CHECK
- - app_kaizen_global: CHECK
- - app_datos_kaizen: CHECK
- - apps que alimentan kaizen:
-    - cuant: CHECK
-    - odec: CHECK
-    - compras_pag: CHECK
-    - app_asistencia: 
- 
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
- actualizados/nuevos(21/3/19):
- - app_asistencia -> arreglé lo de  nuevo
+ actualizados/nuevos(25/3/19):
+ - app_funciones
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
@@ -95,12 +81,12 @@ DIEGO:
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
  - app_gestionar_supervisores que no jale nombre de prod
- - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - Revisar que pedo con procesos (subprocesos de marina en prod, no tienen clave, se hacen undefined, esta loco)
- - en funciones pistaDeAuditoria() return un json con current user y timestamp
  - asistencia
-    - que no deje cargar trabajadores qye ya esten
-    - que cargue a los trabajadores que ya tenian asistencia anunque no esten asigandos
+    - que no deje cargar trabajadores qye ya esten (en los change de los textfields, revisa id con array trabajadores)
+    - dos "aqui" del asistencia que yo tengo
+    - cambiar en importar trabajadores, obra_asignada es lo que va hardcodeado y en el excel tiene que venir sólo un "0"
+    - en importar trabajadores hacerlo con un for en vez de updatear todo de golpe. Si ya existe no me dejes
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
