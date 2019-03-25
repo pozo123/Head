@@ -374,6 +374,20 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                     asistencia: false,
                     proceso: "NA",
                 }
+                if(procesos == "Falta"){
+                    //Si es falta automaticamente lo tengo que subir como falta, porque si está en otra obra va a decir "Otra obra", no falta
+                    //firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/" + dia + "/obra").once('value').then(function(snapshot){
+                    //    var obra = snapshot.val();
+                    //    if(obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
+                    var asis_tra = {
+                        obra: "NA",
+                        proceso: "NA",
+                        asistencia: false,
+                    }
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/" + dia).set(asis_tra);
+                    //    }
+                    //});
+                }
             } else {
                 asis = {
                     asistencia: true,
