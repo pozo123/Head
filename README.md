@@ -10,7 +10,7 @@ ESTA SEMANA:
  - app_funciones -> pista de auditoria
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
- - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista, update faltas
+ - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista, update faltas, UML pagos_nomina/trabajadores
  - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
  
  actualizados/nuevos(14/3/19):
