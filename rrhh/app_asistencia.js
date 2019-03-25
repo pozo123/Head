@@ -228,7 +228,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                                         console.log(trabajador)
                                         if(trabajador != null){
                                             cargaRenglon(trabajador,count_proc,procesos,semana,year);
-                                            $('t_nombre').val("");
+                                            $('#t_nombre').val("");
                                         } else {
                                             alert("No existe un trabajador con ese nombre");
                                         }
