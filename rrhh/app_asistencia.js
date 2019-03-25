@@ -93,7 +93,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
             if(terminada){
                 //Cargar tabla con datos
                 var datos_asistencia = [];
-                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $("#" + id_obra_ddl_asistencia + " option:selected").val()).once('value').then(function(snapshot){
+                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $("#" + id_obra_ddl_asistencia + " option:selected").val() + "/trabajadores").once('value').then(function(snapshot){
                     snapshot.forEach(function(trabSnap){
                         firebase.database().ref(rama_bd_trabajadores + "/" + trabSnap.key).once('value').then(function(childSnap){
                             var trabajador = childSnap.val();
@@ -400,7 +400,7 @@ https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
                 }
                 firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/" + dia).set(asis_tra);
             }
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $('#' + id_obra_ddl_asistencia + " option:selected").val() + "/" + id_trabajador + "/dias/" + dia).set(asis);   
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $('#' + id_obra_ddl_asistencia + " option:selected").val() + "/trabajadores/" + id_trabajador + "/dias/" + dia).set(asis);   
     }
     
     $('#' + id_terminar_button_asistencia).click(function(){
