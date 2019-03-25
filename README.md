@@ -7,7 +7,9 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(25/3/19):
- - app_funciones
+ - app_funciones -> pista de auditoria
+ - app_procesos -> sin kaiz para obras_prod
+ - app_gestionar_supervisores -> empty con jquery
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
@@ -26,13 +28,11 @@ ESTA SEMANA:
   
  actualizados/nuevos(26/2/19):
  - app_atributo
-
- actualizados/nuevos (19/2/19)
- - app_gestionar_supervisores
    
  Por probar:
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
+ - app_gestionar_supervisores
  
  Por definir:
  - Centro de costos 
@@ -81,7 +81,6 @@ DIEGO:
  - app_rrhh_pago_nomina
  - app_rrhh_horas_extra
  - app_gestionar_supervisores que no jale nombre de prod
- - Revisar que pedo con procesos (subprocesos de marina en prod, no tienen clave, se hacen undefined, esta loco)
  - asistencia
     - que no deje cargar trabajadores qye ya esten (en los change de los textfields, revisa id con array trabajadores)
     - dos "aqui" del asistencia que yo tengo
@@ -94,7 +93,7 @@ DIEGO:
  
 TO DO:
  - Produccion
-   - Quitar datos_kaizen y revisar ddl Virgilio
+   - Quitar datos_kaizen
    - Desplegar Kaizen
      - Estilo:
        - cambiar avance "prog" por "pag"
@@ -108,7 +107,6 @@ TO DO:
      - Sem inic no sale
      - editable
    - colvis en desplegar_procesos
-   - el borrar todo de utilidad no debe borrar sino recargar. La funcionalidad ya está, sólo hay que quitarle el borra todo
  - Proyectos
    - Revisar reporte_obras
    - Si clase = produccion -> hacer mas simple el formato de ppto
