@@ -73,20 +73,17 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
             }
         }
         console.log(resultado); 
-        firebase.database().ref(rama_bd_trabajadores).update(resultado);
-        
+        for(key in resultado){
+            firebase.database().ref(rama_bd_trabajadores + "/" + key).once('value').then(function(snapshot){
+                if(snapshot.val() != null){
+                    console.log(rama_bd_trabajadores + "/" + key + ": " + resultado[key]);
+                    //firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
+                } else {
+                    console.log("El trabajador con ID " + key + " ya existe en la base de datos");
+                }
+            });
+        }
+        //firebase.database().ref(rama_bd_trabajadores).update(resultado);
     };
     reader.readAsArrayBuffer(excelSeleccionado);
-
-
 });
-/*
-var json = {
-    0: {0: "rango", 1: "nombre", 2:"apellido", 3:"talla_zapatos", 4: "sueldo_base", 5:"uid", 6:"color"},
-    1: {0: "Oficial", 1: "Juan", 2:"Perez", 3:"9", 4: "2200", 5:"123", 6:"azul"},
-    2: {0: "Oficial", 1: "Pedro", 2:"Lopez", 3:"8.5", 4: "2200", 5:"11230", 6:"azul"},
-    3: {0: "Ayudante", 1: "Fer", 2:"Fernandez", 3:"10", 4: "1500", 5:"92511", 6:"azul"},
-    4: {0: "Segundo Oficial", 1: "Ramiro", 2:"Ramirez", 3:"14", 4: "1800", 5:"149392", 6:"azul"},
-    5: {0: "Encargado", 1: "Lucia", 2:"Martinez", 3:"8", 4: "3000", 5:"80085", 6:"azul"},
-}
-*/
