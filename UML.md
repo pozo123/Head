@@ -19,12 +19,12 @@
             - semana (ej 3)
                - registro (por uid)
                   - familia
-		      - subfamilia
-		      - actividad
-      		- activo
-		      - checkin
-		      - checkout
-		      - colaborador (por uid)
+                      - subfamilia
+                         - actividad
+                         - activo
+                         - checkin
+                         - checkout
+                         - colaborador (por uid)
       - familias
          - Globales
             - subfamilias (por nombre)
@@ -143,13 +143,13 @@
          - id_trabajador
          - fecha_antiguedad
          - obra_asignada:
-	    - 0 (1,2,3, lista): nombre
+            - 0 (1,2,3, lista): nombre
          - especialidad
          - activo: bool
-	 - claves:
-	    - RFC
-	    - IMSS
-	    - CURP
+         - claves:
+            - RFC
+            - IMSS
+            - CURP
 	 - info_personal
 	    - fecha_nacimiento
 	    - estado_civil
