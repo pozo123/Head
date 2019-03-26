@@ -6,6 +6,9 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
+ actualizados/nuevos(26/03/19):
+ - app_rrhh_horas_extra
+ 
  actualizados/nuevos(25/3/19):
  - app_funciones -> pista de auditoria
  - app_procesos -> sin kaiz para obras_prod
@@ -80,9 +83,9 @@ DIEGO:
  - Manual de usuario
  - Agregar terminado a obra_magico
  - app_distribucion_supervisores
- - app_rrhh_pago_nomina
- - app_rrhh_horas_extra
  - app_rrhh_pagos_diversos
+ - botones terminar semana en asistencia, diversos y horas extra
+    - Meter atributo a cada uno de ellos, cambiarlo en donde lo buscas en query para cargar data table y aguas con los forEach
  - diversos en bd, alta, editar, etc
  - reporte rrhh
     - filtros
