@@ -51,8 +51,8 @@ $('#' + id_tab_horasExtra).click(function(){
         option4.value = obra.nombre;
         select3.appendChild(option4);
     });
-
-    nuevo = tableHorasExtra.insertRow(0);
+    headersHorasExtra();
+    nuevo = tableHorasExtra.insertRow(1);
     nuevo.id = "nuevo_trabajador";
 });
 
@@ -75,7 +75,8 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_horasExtra).addClass('hidden');
     $('#' + id_table_horasExtra).empty();
-    nuevo = tableHorasExtra.insertRow(0);
+    headersHorasExtra();
+    nuevo = tableHorasExtra.insertRow(1);
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
@@ -175,7 +176,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
 });
 
 function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc_in){
-    var row = tableHorasExtra.insertRow(0);
+    var row = tableHorasExtra.insertRow(1);
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
     var cell_fecha = row.insertCell(2);
@@ -283,6 +284,20 @@ $('#' + id_guardar_button_horasExtra).click(function(){
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas)
     });
 });
+
+function headersHorasExtra() {
+  var row = tableHorasExtra.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  cell1.innerHTML = "ID";
+  cell2.innerHTML = "NOMBRE";
+  cell3.innerHTML = "FECHA";
+  cell4.innerHTML = "HORAS";
+  cell5.innerHTML = "PROCESO";
+}
 
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
