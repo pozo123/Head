@@ -81,59 +81,33 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
         var terminada = snapshot.val().terminada;
-        if(terminada){//AQUI redefinir tabla
+        var obra = nomina[$("#" + id_obra_ddl_horasExtra + " option:selected").val()];
+        if(terminada){
             //Cargar tabla con datos
             var datos_horasExtra = [];
-            var obra = nomina[$("#" + id_obra_ddl_horasExtra + " option:selected").val()];
             obra.child("trabajadores").forEach(function(trabSnap){
-                firebase.database().ref(rama_bd_trabajadores + "/" + trabSnap.key).once('value').then(function(childSnap){
-                    var trabajador = childSnap.val();
-                    var nom = trabajador.nomina[year][semana];
-                    var chamba_lu = "-";
-                    var chamba_ma = "-";
-                    var chamba_mi = "-";
-                    var chamba_ju = "-";
-                    var chamba_vi = "-";
-                    if(nom.jueves.obra == $('#' + id_obra_ddl_horasExtra + " option:selected").val()){
-                        chamba_ju = nom.jueves.proceso;
+                trabSnap.child("horas_extra").forEach(function(childSnap){
+                    if(childSnap.key != "total_horas"){
+                        var entrada = childSnap.val();
+                        datos_horasExtra.push([trabSnap.key,trabSnap.val().nombre,entrada.fecha,entrada.proceso,entrada.horas]);
                     }
-                    if(nom.viernes.obra == $('#' + id_obra_ddl_horasExtra + " option:selected").val()){
-                        chamba_vi = nom.viernes.proceso;
-                    }
-                    if(nom.lunes.obra == $('#' + id_obra_ddl_horasExtra + " option:selected").val()){
-                        chamba_lu = nom.lunes.proceso;
-                    }
-                    if(nom.martes.obra == $('#' + id_obra_ddl_horasExtra + " option:selected").val()){
-                        chamba_ma = nom.martes.proceso;
-                    }
-                    if(nom.miercoles.obra == $('#' + id_obra_ddl_horasExtra + " option:selected").val()){
-                        chamba_mi = nom.miercoles.proceso;
-                    }
-
-                    datos_horasExtra.push([trabajador.id_trabajador, trabajador.nombre, trabajador.jefe, trabajador.especialidad, chamba_ju, chamba_vi, chamba_lu, chamba_ma, chamba_mi, trabajador.sueldo_base,/*nom.horas_extra.total_horas,/* nom.diversos,//Hay que desplegarlos separados*/ nom.impuestos, nom.total]);
-                    $('#' + id_datatable_horasExtra).removeClass('hidden');
-                    var tabla_procesos = $('#'+ id_datatable_horasExtra).DataTable({
-                        destroy: true,
-                        data: datos_horasExtra,
-                        dom: 'Bfrtip',
-                        buttons: ['excel'],
-                        columns: [
-                            {title: "ID",width: 70},
-                            {title: "NOMBRE",width: 150},
-                            {title: "EMPLEADOR",width: 70},
-                            {title: "ESP",width: 70},
-                            {title: "JUEVES",width: 70},
-                            {title: "VIERNES",width: 70},
-                            {title: "LUNES",width: 70},
-                            {title: "MARTES",width: 70},
-                            {title: "MIERCOLES",width: 70},
-                            {title: "SUELDO BASE",width: 70},
-                            {title: "IMPUESTOS",width: 70},
-                            {title: "TOTAL",width: 70},
-                        ],
-                        language: idioma_espanol,
-                    }); 
                 });
+                //Asincronía? :S
+                $('#' + id_datatable_horasExtra).removeClass('hidden');
+                var tabla_procesos = $('#'+ id_datatable_horasExtra).DataTable({
+                    destroy: true,
+                    data: datos_horasExtra,
+                    dom: 'Bfrtip',
+                    buttons: ['excel'],
+                    columns: [
+                        {title: "ID",width: 70},
+                        {title: "NOMBRE",width: 150},
+                        {title: "FECHA",width: 70},
+                        {title: "PROCESO",width: 70},
+                        {title: "HORAS",width: 70}
+                    ],
+                    language: idioma_espanol,
+                }); 
             });
         } else {
             //Cargar matriz (no necesariamente tabla) con ddls y textfield
@@ -156,7 +130,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                 obra.child('trabajadores').forEach(function(childSnapshot){
                     childSnapshot.child('horas_extra').forEach(function(horasSnap){
                         if(horasSnap.key != "total_horas"){
-                            cargaRenglonHorasExtra(childSnapshot.val(), procesos);
+                            cargaRenglonHorasExtra(childSnapshot.val(), procesos,false,horasSnap.fecha,horasSnap.horas,horasSnap.proceso);
                         }
                     });
                 });
@@ -171,7 +145,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                         firebase.database().ref(rama_bd_trabajadores + "/" + $('#' + t_id.id).val()).once('value').then(function(snapshot){
                             var trabajador = snapshot.val();
                             if(trabajador != null){
-                                cargaRenglonHorasExtra(trabajador, procesos);
+                                cargaRenglonHorasExtra(trabajador, procesos, true,"","","");
                                 $('#' + t_id.id).val("");
                             } else {
                                 alert("No existe un trabajador con ese ID");
@@ -190,7 +164,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                             snapshot.forEach(function(childSnap){
                                 var trabajador = childSnap.val();
                                 if(trabajador != null){
-                                    cargaRenglonHorasExtra(trabajador, procesos);
+                                    cargaRenglonHorasExtra(trabajador, procesos, true,"","","");
                                     $('#' + t_nombre.id).val("");
                                 } else {
                                     alert("No existe un trabajador con ese nombre");
@@ -205,8 +179,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
 });
 
 
-function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha,horas,proc){
-    //If !nuevo, fecha, horas y proc se bloquean, y meter parámetros nuevos cada que llamo la funcion AQUI
+function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc_in){
     var row = tableHorasExtra.insertRow(0);
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
@@ -223,13 +196,19 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha,horas,proc){
     nombre_label.id = "nombre_" + entradas;
     cell_nombre.appendChild(nombre_label);
 
-    var fecha = "";
-    fecha_label.id = "fecha_" + entradas;
+    var fecha = document.createElement('input');
+    fecha.className = "form-control";
+    fecha.type = "text";
+    fecha.readOnly = "readonly";//Sí?
+    fecha.id = "fecha_" + entradas;
+    jQuery('#' + fecha.id).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'}
+    ); 
     cell_fecha.appendChild(fecha);
 
     var horas = document.createElement('input');
     horas.type = "text";
-    horas_label.id = "horas_" + entradas;
+    horas.id = "horas_" + entradas;
     horas.placeholder = "Horas trabajadas";
     cell_horas.appendChild(horas);
 
@@ -240,8 +219,19 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha,horas,proc){
         option.value = procesos[i];
         proc.appendChild(option);
     }
-    proc_label.id = "proc_" + entradas;
+    proc.id = "proc_" + entradas;
     cell_proc.appendChild(proc);
+
+    if(!nuevo){
+        var date = new Date(fecha_in);
+        $("#" + fecha.id).val((date.getMonth() + 1) + "." + date.getDate() + "." + date.getFullYear());
+        $('#' + horas.id).val(horas_in);
+        for(var i = 0; i<proc.length;i++){
+            if(proc[i].text == proc_in){
+                proc.selectedIndex = i;
+            }
+        }     
+    }
 
     entradas++;
 }
