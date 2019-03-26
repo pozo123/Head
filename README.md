@@ -7,9 +7,9 @@ ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
  actualizados/nuevos(26/03/19):
- - app_rrhh_horas_extra
- - app_rrhh_pagos_diversos
- - app_asistencia
+ - app_rrhh_horas_extra -> errores encontrados en pruebas
+ - app_rrhh_pagos_diversos -> errores encontrados en pruebas
+ - app_asistencia -> errores encontrados en pruebas
  
  actualizados/nuevos(25/3/19):
  - app_funciones -> pista de auditoria
@@ -84,15 +84,9 @@ DIEGO:
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
  - Agregar terminado a obra_magico
- - app_distribucion_supervisores
- - app_rrhh_pagos_diversos
- - botones terminar semana en asistencia, diversos y horas extra
-    - Meter atributo a cada uno de ellos, cambiarlo en donde lo buscas en query para cargar data table y aguas con los forEach
  - diversos en bd, alta, editar, etc
- - si cambio año, llenar semanas de ese año en el ddl
- - diversos checar que se borren los dos ddls y los datos de dentro
- - terminar horas extray  diverso solo un bool, terminar asistencia revisa ese bool
- - meter blancos en los ddls de diversos
+ - Botón terminar asistencia
+ - Subir los diversos a la bd
  - reporte rrhh
     - filtros
        - obra
