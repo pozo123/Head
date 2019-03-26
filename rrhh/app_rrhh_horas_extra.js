@@ -58,8 +58,7 @@ $('#' + id_tab_horasExtra).click(function(){
         select3.appendChild(option4);
     });
     
-    headersHorasExtra();
-    nuevo = tableHorasExtra.insertRow(1);
+    nuevo = tableHorasExtra.insertRow(0);
     nuevo.id = "nuevo_trabajador_he";
     
 });
@@ -70,6 +69,16 @@ $('#' + id_year_ddl_horasExtra).change(function(){
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
+    var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
+    if(year < getWeek(new Date().getTime())[1]){
+        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
+        var select = document.getElementById(id_semana_ddl_horasExtra);
+        for(i=ult_sem;i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
+    }
 });
 
 $('#' + id_semana_ddl_horasExtra).change(function(){
@@ -225,6 +234,10 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     cell_horas.appendChild(horas);
 
     var proc = document.createElement('select');
+    var option2 = document.createElement('option');
+    option2.style = "display:none";
+    option2.text = option2.value = "";
+    proc.appendChild(option2);
     for(i=0;i<procesos.length;i++){
         var option = document.createElement('OPTION');
         option.text = procesos[i];
@@ -299,6 +312,13 @@ $('#' + id_guardar_button_horasExtra).click(function(){
         var horas_nuevas = parseFloat(horas_previas) + total_horas;
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas)
     });
+    alert("Datos actualizados");
+});
+
+$('#' + id_terminar_button_horasExtra).click(function(){
+    var tru = true;
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_horasExtra + " option:selected").val() + "/" + $('#' + id_semana_ddl_horasExtra + " option:selected").val() + "/horas_extra_terminadas").set(tru);
+    alert("Registro de horas extra de esta semana terminado");
 });
 
 function headersHorasExtra() {
