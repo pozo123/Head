@@ -91,6 +91,7 @@ DIEGO:
  - diversos en bd, alta, editar, etc
  - si cambio año, llenar semanas de ese año en el ddl
  - terminar horas extray  diverso solo un bool, terminar asistencia revisa ese bool
+ - meter blancos en los ddls de diversos
  - reporte rrhh
     - filtros
        - obra
