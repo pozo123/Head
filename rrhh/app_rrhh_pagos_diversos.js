@@ -3,6 +3,7 @@ var id_year_ddl_diversos = "yearDdlDiversos";
 var id_diverso_ddl_diversos = "diversoDdlDiversos";
 
 var id_guardar_button_diversos = "guardarButtonDiversos";
+var id_terminar_button_diversos = "terminarButtonDiversos";
 
 var id_datatable_diversos = "dataTableDiversos";
 var id_table_diversos = "tableDiversos";
@@ -57,8 +58,7 @@ $('#' + id_tab_diversos).click(function(){
         select3.appendChild(option4);
     });
     
-    headersDiversos();
-    nuevo = tableDiversos.insertRow(1);
+    nuevo = tableDiversos.insertRow(0);
     nuevo.id = "nuevo_trabajador_diversos";
     
 });
@@ -69,6 +69,16 @@ $('#' + id_year_ddl_diversos).change(function(){
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
     entradas = 0;
+    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+    if(year < getWeek(new Date().getTime())[1]){
+        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
+        var select = document.getElementById(id_semana_ddl_diversos);
+        for(i=ult_sem;i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
+    }
 });
 
 $('#' + id_semana_ddl_diversos).change(function(){
@@ -125,7 +135,6 @@ $("#" + id_diverso_ddl_diversos).change(function(){
         } else {
             //Carga todos los registros hechos
             firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
-                //sí así el child? AQUI
                 snapshot.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
                     var diver = diverSnap.val();
                     if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
@@ -209,13 +218,16 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
     $('#' + check.id).change(function(){
         if(this.checked != true){
             var cell_obra = row.insertCell(4);
-            cell_obra.id = "cell_obra_" + row.id.substring(row.id.length - 1, row.id.length)
+            var consec = row.id.substring(row.id.length - 2, row.id.length);
+            if(consec.substring(0,1) == "0"){
+                consec = consec.substring(1,2);
+            }
+            cell_obra.id = "cell_obra_" + consec;
             var cell_proc = row.insertCell(5);
-            cell_proc.id = "cell_proc_" + row.id.substring(row.id.length - 1, row.id.length)
             generateDdls(cell_obra, cell_proc); 
         } else {
             row.deleteCell(4);
-            row.deleteCell(5);
+            row.deleteCell(4);
         }
     });
 
@@ -248,7 +260,14 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
 
 function generateDdls(cell_obra, cell_proc){
     var obra_ddl = document.createElement('select');
-    var k = cell_obra.id.substring(cell_obra.id.length - 1, cell_obra.id.length)
+    var option2 = document.createElement('option');
+    option2.style = "display:none";
+    option2.text = option2.value = "";
+    obra_ddl.appendChild(option2);
+    var k = cell_obra.id.substring(cell_obra.id.length - 2, cell_obra.id.length);
+    if(k.substring(0,1) == "0"){
+        k = k.substring(1,2);
+    }
     obra_ddl.id = "obra_" + k;
     firebase.database().ref(rama_bd_obras_prod).once('value').then(function(snapshot){
         snapshot.forEach(function(obraSnap){
@@ -259,8 +278,18 @@ function generateDdls(cell_obra, cell_proc){
             cell_obra.appendChild(obra_ddl);
         });
         var proc_ddl = document.createElement('select');
+        proc_ddl.id = "proc_" + k;
+        var option2 = document.createElement('option');
+        option2.style = "display:none";
+        option2.text = option2.value = "";
+        proc_ddl.appendChild(option2);
         $('#' + obra_ddl.id).change(function(){
-            var obra = snapshot.child($(this).val());//Sí? Aqui
+            $('#' + proc_ddl.id).empty();
+            var option2 = document.createElement('option');
+            option2.style = "display:none";
+            option2.text = option2.value = "";
+            proc_ddl.appendChild(option2);
+            var obra = snapshot.child($(this).val());
             if(obra.val().num_procesos == 0){
                 var option = document.createElement('OPTION');
                 option.text = obra.val().nombre;
@@ -285,14 +314,12 @@ function generateDdls(cell_obra, cell_proc){
                     }
                 });
             }
-            proc_ddl.id = "proc_" + k;
             cell_proc.appendChild(proc_ddl);
         });
         return [obra_ddl, proc_ddl];
     });
 }
 
-//Guardar bien aqui
 $('#' + id_guardar_button_diversos).click(function(){
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
@@ -350,6 +377,13 @@ $('#' + id_guardar_button_diversos).click(function(){
             firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").set(horas_nuevas);
         });
     }
+    alert("Datos actualizados");
+});
+
+$('#' + id_terminar_button_diversos).click(function(){
+    var tru = true;
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_diversos + " option:selected").val() + "/" + $('#' + id_semana_ddl_diversos + " option:selected").val() + "/diversos_terminados").set(tru);
+    alert("Pagos diversos de esta semana terminados");
 });
 
 function headersDiversos() {
