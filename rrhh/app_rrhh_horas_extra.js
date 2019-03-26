@@ -16,7 +16,13 @@ var nuevo;
 var entradas = 0;
 var tableHorasExtra = document.getElementById(id_table_horasExtra)
 
+jQuery.datetimepicker.setLocale('es');
+
 $('#' + id_tab_horasExtra).click(function(){
+    $('#' + id_datatable_horasExtra).empty();
+    $('#' + id_datatable_horasExtra).addClass('hidden');
+    $('#' + id_table_horasExtra).empty();
+    entradas = 0;
     $('#' + id_semana_ddl_horasExtra).empty();
     $('#' + id_year_ddl_horasExtra).empty();
     $('#' + id_obra_ddl_horasExtra).empty();
@@ -51,11 +57,11 @@ $('#' + id_tab_horasExtra).click(function(){
         option4.value = obra.nombre;
         select3.appendChild(option4);
     });
-    /*
+    
     headersHorasExtra();
     nuevo = tableHorasExtra.insertRow(1);
     nuevo.id = "nuevo_trabajador_he";
-    */
+    
 });
 
 $('#' + id_year_ddl_horasExtra).change(function(){
@@ -63,6 +69,7 @@ $('#' + id_year_ddl_horasExtra).change(function(){
     $('#' + id_datatable_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
+    entradas = 0;
 });
 
 $('#' + id_semana_ddl_horasExtra).change(function(){
@@ -70,6 +77,7 @@ $('#' + id_semana_ddl_horasExtra).change(function(){
     $('#' + id_datatable_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
+    entradas = 0;
 });
 
 $("#" + id_obra_ddl_horasExtra).change(function(){
@@ -77,6 +85,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_horasExtra).addClass('hidden');
     $('#' + id_table_horasExtra).empty();
+    entradas = 0;
     headersHorasExtra();
     nuevo = tableHorasExtra.insertRow(1);
     nuevo.id = "nuevo_trabajador_he";
@@ -86,10 +95,13 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
         var nomina = snapshot.val();
         var terminada = snapshot.val().terminada;
         var obra = nomina[$("#" + id_obra_ddl_horasExtra + " option:selected").val()];
+        console.log(nomina)
+        console.log($("#" + id_obra_ddl_horasExtra + " option:selected").val())
+        console.log(obra)
         if(terminada){
             //Cargar tabla con datos
             var datos_horasExtra = [];
-            obra.child("trabajadores").forEach(function(trabSnap){
+            snapshot.child(year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(trabSnap){
                 trabSnap.child("horas_extra").forEach(function(childSnap){
                     var entrada = childSnap.val();
                     datos_horasExtra.push([trabSnap.key,trabSnap.val().nombre,entrada.fecha,entrada.proceso,entrada.horas]);
@@ -129,7 +141,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                     }
                 });
                 //Carga todos los registros hechos
-                obra.child('trabajadores').forEach(function(childSnapshot){
+                snapshot.child(year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(childSnapshot){
                     childSnapshot.child('horas_extra').forEach(function(horasSnap){
                         cargaRenglonHorasExtra(childSnapshot.val(), procesos,false,horasSnap.fecha,horasSnap.horas,horasSnap.proceso);
                     });
@@ -202,7 +214,8 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     fecha.id = "fecha_" + entradas;
     jQuery('#' + fecha.id).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
-    ); 
+    );
+    
     cell_fecha.appendChild(fecha);
 
     var horas = document.createElement('input');
