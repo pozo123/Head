@@ -32,6 +32,10 @@ var trabajadores = [];
 var tableAsistencia = document.getElementById(id_lista_table_asistencia)
 
 $('#' + id_tab_asistencia).click(function(){
+    $('#' + id_datatable_asistencia).empty();
+    $('#' + id_datatable_asistencia).addClass('hidden');
+    $('#' + id_lista_table_asistencia).empty();
+    trabajadores = [];
     $('#' + id_semana_ddl_asistencia).empty();
     $('#' + id_year_ddl_asistencia).empty();
     $('#' + id_obra_ddl_asistencia).empty();
@@ -66,11 +70,11 @@ $('#' + id_tab_asistencia).click(function(){
         option4.value = obra.nombre;
         select3.appendChild(option4);
     });
-    /*
+    
     headersAsistencia()
     nuevo = tableAsistencia.insertRow(1);
     nuevo.id = "nuevo_trabajadorasistencia";
-    */
+    
 });
 
 $('#' + id_semana_ddl_asistencia).change(function(){
@@ -78,6 +82,15 @@ $('#' + id_semana_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_lista_table_asistencia).empty();
+    trabajadores = [];
+});
+
+$('#' + id_year_ddl_asistencia).change(function(){
+    $('#' + id_datatable_asistencia).empty();
+    $('#' + id_datatable_asistencia).addClass('hidden');
+    $('#' + nuevo.id).empty();
+    $('#' + id_lista_table_asistencia).empty();
+    trabajadores = [];
 });
 
 $("#" + id_obra_ddl_asistencia).change(function(){
@@ -85,6 +98,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + id_lista_table_asistencia).empty();
+    trabajadores = [];
     headersAsistencia();
     nuevo = tableAsistencia.insertRow(1);
     nuevo.id = "nuevo_trabajador_asistencia";
@@ -304,7 +318,7 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos){
     var asistencia = false;
     if(bool_nom){
         if(nom[dia]){
-            if(nom[dia].obra == obra){
+            if(nom[dia].obra == obra || nom[dia].proceso == "NA"){
                 asistencia = true;
             } else {
                 otra_obra = true
@@ -372,6 +386,7 @@ $('#' + id_guardar_button_asistencia).click(function(){
             }
         });
     }
+    alert("Cambios realizados");
 });
 
 function updateDia(id_trabajador,dia,semana,year){
@@ -383,7 +398,7 @@ function updateDia(id_trabajador,dia,semana,year){
                 asistencia: false,
                 proceso: "NA",
             }
-            if(procesos == "Falta"){
+            if(proceso == "Falta"){
                 //Si es falta automaticamente lo tengo que subir como falta, porque si está en otra obra va a decir "Otra obra", no falta
                 //firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/" + dia + "/obra").once('value').then(function(snapshot){
                 //    var obra = snapshot.val();
@@ -429,7 +444,7 @@ $('#' + id_terminar_button_asistencia).click(function(){
 });
 
 function headersAsistencia() {
-  var row = tableHorasExtra.insertRow(0);
+  var row = tableAsistencia.insertRow(0);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
