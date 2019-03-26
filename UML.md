@@ -211,6 +211,8 @@
       - year: (ej 2019)
          - semana: (ej 1)
             - terminada: bool
+            - horas_extra_terminadas: bool
+            - diversos_terminados: bool
             - obra: (por nombre)
                - trabajadores:
                   - trabajador: (por id)
