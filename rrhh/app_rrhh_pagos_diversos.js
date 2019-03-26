@@ -52,9 +52,11 @@ $('#' + id_tab_diversos).click(function(){
         option4.value = diverso.nombre;
         select3.appendChild(option4);
     });
+    /*
     headersDiversos();
     nuevo = tableDiversos.insertRow(1);
     nuevo.id = "nuevo_trabajador_diversos";
+    */
 });
 
 $('#' + id_year_ddl_diversos).change(function(){
@@ -78,6 +80,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     $('#' + id_table_diversos).empty();
     headersDiversos();
     nuevo = tableDiversos.insertRow(1);
+    nuevo.id = "nuevo_trabajador_diversos";
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
