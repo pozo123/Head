@@ -193,7 +193,6 @@
                         - obra
                         - proceso
                         - horas
-                     - total_horas
                   - diversos
                      - por push:
                         - cantidad
@@ -201,6 +200,8 @@
                         - obra: ("NA" si distribuilble == true)
                         - proceso: ("NA" si distribuilble == true)
                         - diverso (nombre de un catálogo)
+                  - total_diversos
+                  - total_horas_extra
                   - impuestos (pago_pagadora_trabajador - subtotal)
                   - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos)
                   - total (pagadora)
