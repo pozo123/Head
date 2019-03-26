@@ -89,6 +89,7 @@ DIEGO:
  - botones terminar semana en asistencia, diversos y horas extra
     - Meter atributo a cada uno de ellos, cambiarlo en donde lo buscas en query para cargar data table y aguas con los forEach
  - diversos en bd, alta, editar, etc
+ - si cambio año, llenar semanas de ese año en el ddl
  - terminar horas extray  diverso solo un bool, terminar asistencia revisa ese bool
  - reporte rrhh
     - filtros
