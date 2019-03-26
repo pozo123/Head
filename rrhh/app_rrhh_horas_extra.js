@@ -51,9 +51,11 @@ $('#' + id_tab_horasExtra).click(function(){
         option4.value = obra.nombre;
         select3.appendChild(option4);
     });
+    /*
     headersHorasExtra();
     nuevo = tableHorasExtra.insertRow(1);
-    nuevo.id = "nuevo_trabajador";
+    nuevo.id = "nuevo_trabajador_he";
+    */
 });
 
 $('#' + id_year_ddl_horasExtra).change(function(){
@@ -77,6 +79,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     $('#' + id_table_horasExtra).empty();
     headersHorasExtra();
     nuevo = tableHorasExtra.insertRow(1);
+    nuevo.id = "nuevo_trabajador_he";
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
