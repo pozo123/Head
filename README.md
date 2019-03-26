@@ -8,6 +8,7 @@ ESTA SEMANA:
  
  actualizados/nuevos(26/03/19):
  - app_rrhh_horas_extra
+ - app_rrhh_pagos_diversos
  
  actualizados/nuevos(25/3/19):
  - app_funciones -> pista de auditoria
