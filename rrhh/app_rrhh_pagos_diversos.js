@@ -52,8 +52,8 @@ $('#' + id_tab_diversos).click(function(){
         option4.value = diverso.nombre;
         select3.appendChild(option4);
     });
-
-    nuevo = tableDiversos.insertRow(0);
+    headersDiversos();
+    nuevo = tableDiversos.insertRow(1);
     nuevo.id = "nuevo_trabajador_diversos";
 });
 
@@ -76,7 +76,8 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_diversos).addClass('hidden');
     $('#' + id_table_diversos).empty();
-    nuevo = tableDiversos.insertRow(0);
+    headersDiversos();
+    nuevo = tableDiversos.insertRow(1);
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
@@ -165,7 +166,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
 });
 
 function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_in,proc_in){
-    var row = tableDiversos.insertRow(0);
+    var row = tableDiversos.insertRow(1);
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
     var cell_cant = row.insertCell(2);
@@ -332,6 +333,22 @@ $('#' + id_guardar_button_diversos).click(function(){
         });
     }
 });
+
+function headersDiversos() {
+  var row = tableHorasExtra.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5);
+  cell1.innerHTML = "ID";
+  cell2.innerHTML = "NOMBRE";
+  cell3.innerHTML = "CANTIDAD";
+  cell4.innerHTML = "DISTRIBUIBLE";
+  cell5.innerHTML = "OBRA";
+  cell6.innerHTML = "PROCESO";
+}
 
 var idioma_espanol = {
     "sProcessing":     "Procesando...",
