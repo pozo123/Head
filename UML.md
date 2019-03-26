@@ -300,7 +300,7 @@
    - diversos
       - diverso (por nombre)
          - nombre
-	 - distribuible (generalmente, no forzoso)
+         - distribuible (generalmente, no forzoso)
 - compras
    - colaboradores
       - same shit
