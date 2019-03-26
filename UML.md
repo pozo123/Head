@@ -237,13 +237,13 @@
                            - proceso (clave)
                            - fecha (ms, de un datepicker, es de cuando se trabajaron, no de cuando se pagan)
                      - total_horas_extra
-		     - total_diversos
+                     - total_diversos
                      - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
                      - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
-                     - diversos
+                     - diversos (SE GUARDAN HASTA EL TERMINAR, POR LOS DISTRIBUIBLES)
                         - por push: (si es distribuido se hacen entradas separadas)
                            - cantidad
-                           - proceso
+                           - proceso ("distribuible" si depende de las asistencias)
                            - diverso (nombre de un catálogo)
                      - total (lo que entra aquí es igual a lo que va al kaizen = subtotal + impuestos)
                - total
@@ -300,7 +300,7 @@
    - diversos
       - diverso (por nombre)
          - nombre
-	 - clave (?)
+	 - distribuible (generalmente, no forzoso)
 - compras
    - colaboradores
       - same shit
