@@ -1,15 +1,3 @@
-//https://datatables.net/examples/api/add_row.html
-
-/*https://code.jquery.com/jquery-3.3.1.js
-https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js
-https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js
-https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js*/
-
-//Aquí sólo asistencia y horas_extra
-//En otra app terminar una semana
-//Horas extra también en otra app!!
-//En otra app meter diversos
-//En otra app meter totales pagados (post-pagadora)
 var id_semana_ddl_asistencia = "semanaDdlAsistencia";
 var id_year_ddl_asistencia = "yearDdlAsistencia";
 var id_obra_ddl_asistencia = "obraDdlAsistencia";
@@ -71,21 +59,30 @@ $('#' + id_tab_asistencia).click(function(){
         select3.appendChild(option4);
     });
     
-    headersAsistencia()
-    nuevo = tableAsistencia.insertRow(1);
+    nuevo = tableAsistencia.insertRow(0);
     nuevo.id = "nuevo_trabajadorasistencia";
     
 });
 
-$('#' + id_semana_ddl_asistencia).change(function(){
+$('#' + id_year_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_lista_table_asistencia).empty();
     trabajadores = [];
+    var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
+    if(year < getWeek(new Date().getTime())[1]){
+        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
+        var select = document.getElementById(id_semana_ddl_asistencia);
+        for(i=ult_sem;i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
+    }
 });
 
-$('#' + id_year_ddl_asistencia).change(function(){
+$('#' + id_semana_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
