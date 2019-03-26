@@ -21,6 +21,10 @@ $('#' + id_tab_diversos).click(function(){
     $('#' + id_semana_ddl_diversos).empty();
     $('#' + id_year_ddl_diversos).empty();
     $('#' + id_diverso_ddl_diversos).empty();
+    $('#' + id_datatable_diversos).empty();
+    $('#' + id_datatable_diversos).addClass('hidden');
+    $('#' + id_table_diversos).empty();
+    entradas = 0;
 
     var semana_actual = getWeek(new Date().getTime())[0];
     var year_actual = getWeek(new Date().getTime())[1];
@@ -52,11 +56,11 @@ $('#' + id_tab_diversos).click(function(){
         option4.value = diverso.nombre;
         select3.appendChild(option4);
     });
-    /*
+    
     headersDiversos();
     nuevo = tableDiversos.insertRow(1);
     nuevo.id = "nuevo_trabajador_diversos";
-    */
+    
 });
 
 $('#' + id_year_ddl_diversos).change(function(){
@@ -64,6 +68,7 @@ $('#' + id_year_ddl_diversos).change(function(){
     $('#' + id_datatable_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
+    entradas = 0;
 });
 
 $('#' + id_semana_ddl_diversos).change(function(){
@@ -71,6 +76,7 @@ $('#' + id_semana_ddl_diversos).change(function(){
     $('#' + id_datatable_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
+    entradas = 0;
 });
 
 $("#" + id_diverso_ddl_diversos).change(function(){
@@ -78,6 +84,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_diversos).addClass('hidden');
     $('#' + id_table_diversos).empty();
+    entradas = 0;
     headersDiversos();
     nuevo = tableDiversos.insertRow(1);
     nuevo.id = "nuevo_trabajador_diversos";
@@ -170,6 +177,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
 
 function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_in,proc_in){
     var row = tableDiversos.insertRow(1);
+    row.id = "row_" + entradas;
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
     var cell_cant = row.insertCell(2);
@@ -189,7 +197,7 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
     cant.type = "text";
     cant.id = "cant_" + entradas;
     cant.placeholder = "Cantidad pagada";
-    cell_horas.appendChild(horas);
+    cell_cant.appendChild(cant);
 
     var check = document.createElement('input');
     check.type = "checkbox";
@@ -199,9 +207,11 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
     cell_distribuible.appendChild(check);
 
     $('#' + check.id).change(function(){
-        if(this.checked == true){
+        if(this.checked != true){
             var cell_obra = row.insertCell(4);
+            cell_obra.id = "cell_obra_" + row.id.substring(row.id.length - 1, row.id.length)
             var cell_proc = row.insertCell(5);
+            cell_proc.id = "cell_proc_" + row.id.substring(row.id.length - 1, row.id.length)
             generateDdls(cell_obra, cell_proc); 
         } else {
             row.deleteCell(4);
@@ -238,7 +248,8 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
 
 function generateDdls(cell_obra, cell_proc){
     var obra_ddl = document.createElement('select');
-    obra_ddl.id = "obra_" + entradas;
+    var k = cell_obra.id.substring(cell_obra.id.length - 1, cell_obra.id.length)
+    obra_ddl.id = "obra_" + k;
     firebase.database().ref(rama_bd_obras_prod).once('value').then(function(snapshot){
         snapshot.forEach(function(obraSnap){
             var obra = obraSnap.val();
@@ -247,8 +258,8 @@ function generateDdls(cell_obra, cell_proc){
             obra_ddl.appendChild(option);
             cell_obra.appendChild(obra_ddl);
         });
+        var proc_ddl = document.createElement('select');
         $('#' + obra_ddl.id).change(function(){
-            var proc_ddl = document.createElement('select');
             var obra = snapshot.child($(this).val());//Sí? Aqui
             if(obra.val().num_procesos == 0){
                 var option = document.createElement('OPTION');
@@ -261,7 +272,7 @@ function generateDdls(cell_obra, cell_proc){
                     if(proceso.num_subprocesos == 0){
                         var option = document.createElement('OPTION');
                         option.text = proceso.clave;// + " (" + proceso.nombre + ")";
-                        option.value = procesos.clave;
+                        option.value = proceso.clave;
                         proc_ddl.appendChild(option);
                     } else {
                         procSnap.child("subprocesos").forEach(function(subpSnap){
@@ -274,7 +285,7 @@ function generateDdls(cell_obra, cell_proc){
                     }
                 });
             }
-            proc_ddl.id = "proc_" + entradas;
+            proc_ddl.id = "proc_" + k;
             cell_proc.appendChild(proc_ddl);
         });
         return [obra_ddl, proc_ddl];
@@ -292,14 +303,16 @@ $('#' + id_guardar_button_diversos).click(function(){
     }
     for(i=0;i<entradas;i++){
         var id_trabajador = document.getElementById("id_" + i).innerHTML;
-        suma_horas[id_trabajador] = parseFloat(cuant) + suma_horas[id_trabajador];
+        suma_horas[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_horas[id_trabajador];
         var dist = true;
         var obr = "NA";
         var pro = "NA";
+        console.log(!document.getElementById("check_" + i).checked)
         if(!document.getElementById("check_" + i).checked){
             dist = false;
             obr = $('#obra_' + i + " option:selected").val();
             pro = $('#proc_' + i + " option:selected").val();
+            console.log(obr)
         }
         var div = {
             cantidad: $('#cant_' + i).val(),
@@ -310,20 +323,22 @@ $('#' + id_guardar_button_diversos).click(function(){
         }
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push(div);
 
-        //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas").once('value').then(function(snapshot){
-            var existe = false;
-            var i = 0;
-            snapshot.forEach(function(childSnap){
-                i++;
-                if(childSnap.val() == obra)
-                    existe = true;
+        //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
+        if(obr != "NA"){
+            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas").once('value').then(function(snapshot){
+                var existe = false;
+                var i = 0;
+                snapshot.forEach(function(childSnap){
+                    i++;
+                    if(childSnap.val() == obr)
+                        existe = true;
+                });
+                if(!existe){
+                    //si es nuevo pero no le metí ninguna chamba no lo guardo
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obr);
+                }
             });
-            if(!existe){
-                //si es nuevo pero no le metí ninguna chamba no lo guardo
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obra);
-            }
-        });
+        }
     }
 
     for(key in json){
@@ -338,7 +353,7 @@ $('#' + id_guardar_button_diversos).click(function(){
 });
 
 function headersDiversos() {
-  var row = tableHorasExtra.insertRow(0);
+  var row = tableDiversos.insertRow(0);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
