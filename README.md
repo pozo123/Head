@@ -10,13 +10,12 @@ ESTA SEMANA:
  - app_rrhh_horas_extra -> errores encontrados en pruebas
  - app_rrhh_pagos_diversos -> errores encontrados en pruebas
  - app_asistencia -> errores encontrados en pruebas
+ - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
  
  actualizados/nuevos(25/3/19):
  - app_funciones -> pista de auditoria
  - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
- - app_asistencia -> asignación de obras, no desplegar un trabajador que ya está en la lista, update faltas, UML pagos_nomina/trabajadores
- - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
  
  actualizados/nuevos(14/3/19):
  - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
@@ -86,7 +85,9 @@ DIEGO:
  - Agregar terminado a obra_magico
  - diversos en bd, alta, editar, etc
  - Botón terminar asistencia
- - Subir los diversos a la bd
+ - Error fecha horas_extra
+ - alta_trabajadores
+ - editar_trabajadores
  - reporte rrhh
     - filtros
        - obra
