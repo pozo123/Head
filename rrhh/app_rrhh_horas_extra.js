@@ -221,11 +221,11 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     fecha.type = "text";
     fecha.readOnly = "readonly";//Sí?
     fecha.id = "fecha_" + entradas;
+    cell_fecha.appendChild(fecha);//chance con append antes de llamarlo jala
     jQuery('#' + fecha.id).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
     
-    cell_fecha.appendChild(fecha);
 
     var horas = document.createElement('input');
     horas.type = "text";
