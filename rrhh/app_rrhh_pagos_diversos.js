@@ -137,6 +137,8 @@ $("#" + id_diverso_ddl_diversos).change(function(){
             firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
                 snapshot.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
                     var diver = diverSnap.val();
+                    console.log(diver);
+                    console.log(diver.diverso);
                     if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
                         cargaRenglonDiversos(snapshot.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
                     }
