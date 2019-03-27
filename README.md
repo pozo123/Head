@@ -86,6 +86,7 @@ DIEGO:
  - diversos en bd, alta, editar, etc
  - Botón terminar asistencia
  - Error fecha horas_extra
+ - Diversos no carga existentes
  - alta_trabajadores
  - editar_trabajadores
  - Para supervisores, app_desplegar_OdeC
