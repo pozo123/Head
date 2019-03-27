@@ -88,6 +88,9 @@ DIEGO:
  - Error fecha horas_extra
  - alta_trabajadores
  - editar_trabajadores
+ - Para supervisores, app_desplegar_OdeC
+ - Reportes para suupervisores, de asistencia y de todo.
+ - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
  - reporte rrhh
     - filtros
        - obra
