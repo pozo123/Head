@@ -6,9 +6,11 @@ Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/v
 ESTA SEMANA:
  - Kaizen bonito (ideal: jueves max: viernes)
  
+ actualizados/nuevos(27/03/19):
+ - app_rrhh_horas_extra -> errores + datepicker
+ - app_rrhh_pagos_diversos -> errores
+ 
  actualizados/nuevos(26/03/19):
- - app_rrhh_horas_extra -> errores encontrados en pruebas
- - app_rrhh_pagos_diversos -> errores encontrados en pruebas
  - app_asistencia -> errores encontrados en pruebas
  - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
  
