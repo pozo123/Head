@@ -1,0 +1,170 @@
+var id_nombre_trabajador = "trabajadorNombre";//textfield *necesario
+var id_puesto_ddl_trabajador = "trabajadorPuesto";//ddl *necesario
+var id_obra_ddl_trabajador = "trabajadorObra";//ddl
+var id_id_trabajador = "trabajadorId";//textfield
+var id_generar_id_trabajador = "trabajadorGenerarId";//checkbox
+var id_sueldo_base_trabajador = "trabajadorSueldoBase";//textfield *necesario
+var id_jefe_trabajador = "trabajadorJefe";//textfield / destajistas + HEAD (pero habría que darlos de alta) *necesario
+var id_fecha_antiguedad_trabajador = "trabajadorFechaAntiguedad";//datepicker
+var id_especialidad_ddl_trabajador = "trabajadorEspecialidad";//ddl *necesario
+var id_activo_trabajador = "trabajadorActivo";//checkbox
+var id_clave_pagadora_trabajador = "trabajadorClavePagadora";//textfield *necesario
+var id_jefe_trabajador = "trabajadorJefe";//textfield *necesario
+//claves
+var id_RFC_trabajador = "trabajadorRFC";//textfield *necesario
+var id_IMSS_trabajador = "trabajadorIMSS";//textfield *necesario
+var id_CURP_trabajador = "trabajadorCURP";//textfield *necesario
+//info_personal
+var id_fecha_nacimiento_trabajador = "trabajadorFechaNacimiento";//datepicker
+var id_estado_civil_ddl_trabajador = "trabajadorEstadoCivil";//ddl
+var id_sexo_trabajador = "trabajadorSexo";//textfield
+var id_domicilio_trabajador = "trabajadorDomicilio";//textfield
+//datos_bancarios
+var id_banco_trabajador = "trabajadorBanco";//textfield *necesario
+var id_cuenta_trabajador = "trabajadorCuenta";//textfield *necesario
+var id_clabe_trabajador = "trabajadorClabe";//textfield *necesario
+//tallas
+var id_camisa_trabajador = "trabajadorCamisa";//textfield
+var id_pantalon_trabajador = "trabajadorPantalon";//textfield
+var id_zapatos_trabajador = "trabajadorZapatos";//textfield
+
+var id_registrar_button_trabajador = "registrarTrabajador";//button
+
+var rama_bd_trabajadores = "produccion/trabajadores";
+
+var id_tab_trabajadores = "tabTrabajadores";
+
+$('#' + id_tab_trabajadores).click(function(){
+	$('#' + id_especialidad_ddl_trabajador).empty();
+	$('#' + id_puesto_ddl_trabajador).empty();
+	$('#' + id_obra_ddl_trabajador).empty();
+	$('#' + id_estado_civil_ddl_trabajador).empty();
+	$('#' + id_id_trabajador).val("");
+	$('#' + id_id_trabajador).addClass('hidden');
+	
+	$("#" + id_generar_id_trabajador).prop("checked", true);
+
+	var option_blank = document.createElement('option');
+    option_blank.style = "display:none";
+    option_blank.text = option_blank.value = "";
+    
+    var select_obra = document.getElementById(id_obra_ddl_trabajador); 
+	var select_esp = document.getElementById(id_especialidad_ddl_trabajador); 
+	var select_puesto = document.getElementById(id_puesto_ddl_trabajador); 
+	var select_edoc = document.getElementById(id_estado_civil_ddl_trabajador); 
+	
+    select_obra.appendChild(option_blank);
+    select_esp.appendChild(option_blank);
+    select_puesto.appendChild(option_blank);
+    select_edoc.appendChild(option_blank);
+
+	var options_esp = ["ALM", "EMP", "IE", "IHS", "OE", "RTC", "UHS"]; 
+	var options_puesto = ["Almacenista", "Ayudante", "Ayudante General", "Empacadora", "Encargado", "Medio Oficial", "Oficial", "Supervisor", "Supervisor de Obra"]; 
+	var options_edoc = ["Casado/a", "Soltero/a", "Viudo/a", "Union Libre", "Divorciado/a"]; 
+	
+	for(var i = 0; i < options_esp.length; i++) {
+	    var opt = options_esp[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select_esp.appendChild(el);
+	}​
+
+	for(var i = 0; i < options_puesto.length; i++) {
+	    var opt = options_puesto[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select_puesto.appendChild(el);
+	}​
+
+	for(var i = 0; i < options_edoc.length; i++) {
+	    var opt = options_edoc[i];
+	    var el = document.createElement("option");
+	    el.textContent = opt;
+	    el.value = opt;
+	    select_edoc.appendChild(el);
+	}​
+	
+    firebase.database().ref(rama_bd_obras_prod).orderByChild('nombre').on('child_added',function(snapshot){
+        var obra = snapshot.val();
+        var option4 = document.createElement('OPTION');
+        option4.text = obra.nombre;
+        option4.value = obra.nombre;
+        select3.appendChild(option4);
+    });
+});
+
+$('#' + id_generar_id_trabajador).change(function(){
+	if($('#' + id_generar_id_trabajador).prop('checked')){
+		$('#' + id_id_trabajador).val("");
+		$('#' + id_id_trabajador).addClass('hidden');
+	} else {
+		$('#' + id_id_trabajador).removeClass('hidden');
+	}
+});
+
+$('#' + id_registrar_button_trabajador).click(function () {
+    if($('#' + id_jefe_trabajador).val() == "" ||($('#' + id_id_trabajador).val() == "" && $('#' + id_generar_id_trabajador).is(':checked')) ||$('#' + id_clabe_trabajador).val() == "" ||$('#' + id_cuenta_trabajador).val() == "" ||$('#' + id_banco_trabajador).val() == "" ||$('#' + id_CURP_trabajador).val() == "" ||$('#' + id_IMSS_trabajador).val() == "" ||$('#' + id_RFC_trabajador).val() == "" ||$('#' + id_clave_pagadora_trabajador).val() == "" ||$('#' + id_especialidad_ddl_trabajador + " option:selected").val() == "" ||$('#' + id_sueldo_base_trabajador).val() == "" ||$('#' + id_puesto_ddl_trabajador + " option:selected").val() == "" || $('#' + id_nombre_trabajador).val() == ""){
+        alert("Llena todos los campos requeridos");
+    } else {
+    	var trabajador = {
+			nombre: $('#' + id_nombre_trabajador).val(),
+			id_trabajador: "",
+			obra_asignada: {
+				0: $('#' + id_obra_ddl_trabajador + " option:selected").val(),
+			},
+			puesto: $('#' + id_puesto_ddl_trabajador + " option:selected").val(),
+			sueldo_base: $('#' + id_sueldo_base_trabajador).val(),
+			jefe: $('#' + id_jefe_trabajador).val(),
+			fecha_antiguedad: new Date($('#' + fecha_antiguedad).val()).getTime(),
+			especialidad: $('#' + id_especialidad_ddl_trabajador + " option:selected").val(),
+			activo: $('#' + id_activo_trabajador).is(':checked'),
+			clave_pagadora: $('#' + id_clave_pagadora_trabajador).val(),
+			claves: {
+				RFC: $('#' + id_RFC_trabajador).val(),
+				IMSS: $('#' + id_IMSS_trabajador).val(),
+				CURP: $('#' + id_CURP_trabajador).val(),
+			},
+			info_personal: {
+				fecha_nacimiento: new Date($('#' + fecha_nacimiento).val()).getTime(),
+				estado_civil: $('#' + id_estado_civil_ddl_trabajador + " option:selected").val(),
+				sexo: $('#' + id_sexo_trabajador).val(),
+				domicilio: $('#' + id_domicilio_trabajador).val(),
+			},
+			datos_bancarios: {
+				banco: $('#' + id_banco_trabajador).val(),
+				cuenta: $('#' + id_cuenta_trabajador).val(),
+				clabe: $('#' + id_clabe_trabajador).val(),
+			},
+			tallas: {
+				camisa: $('#' + id_camisa_trabajador).val(),
+				pantalon: $('#' + id_pantalon_trabajador).val(),
+				zapatos: $('#' + id_zapatos_trabajador).val(),
+			},
+		}
+		firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").once('value').then(function(snapshot){
+			var num_trabajadores = parseInt(snapshot.val());
+			var id_trabajador;
+			if($('#' + id_generar_id_trabajador).is(':checked')){
+				id_trabajador = num_trabajadores + 1;
+				trabajador["id_trabajador"] = id_trabajador;
+				firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).set(trabajador);
+				firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_trabajador);
+	    	} else {
+	    		id_trabajador = $('#' + id_id_trabajador).val();
+				trabajador["id_trabajador"] = id_trabajador;
+	    		firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).once('value').then(function(snapshot){
+	    			if(snapshot.val() != null){
+	    				alert("Ya existe un trabajador con ese ID");
+	    			} else {
+	    				if(id_trabajador > num_trabajadores){
+							firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_trabajador);
+	    				}
+	    				firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).set(trabajador);
+	    			}
+	    		});
+	    	}
+		});
+    }
+});
