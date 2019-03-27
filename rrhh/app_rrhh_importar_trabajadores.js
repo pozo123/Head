@@ -77,7 +77,7 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
             firebase.database().ref(rama_bd_trabajadores + "/" + key).once('value').then(function(snapshot){
                 if(snapshot.val() != null){
                     console.log(rama_bd_trabajadores + "/" + key + ": " + resultado[key]);
-                    //firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
+                    firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
                 } else {
                     console.log("El trabajador con ID " + key + " ya existe en la base de datos");
                 }
