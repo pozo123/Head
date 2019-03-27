@@ -132,7 +132,7 @@
       - finiquito
       - prestamos
       - caja_chica
-  - num_trabajadores: int (actualizado en app_rrhh_trabajadores y app_rrhh_importar_trabajadores)
+  - num_trabajadores_id: int (actualizado en app_rrhh_trabajadores y app_rrhh_importar_trabajadores)
   - trabajadores:
       - AFECTAN: app_trabajadores
       - SUSCRIBEN: app_asistencia
