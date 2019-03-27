@@ -368,9 +368,9 @@ $('#' + id_guardar_button_diversos).click(function(){
         }
     }
 
-    for(key in json){
+    for(key in suma_horas){
         firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").once('value').then(function(snapshot){
-            var horas_nuevas = json[key];
+            var horas_nuevas = suma_horas[key];
             if(snapshot.val() != null){
                 horas_nuevas += parseFloat(snapshot.val());
             }
