@@ -9,6 +9,7 @@ ESTA SEMANA:
  actualizados/nuevos(27/03/19):
  - app_rrhh_horas_extra -> errores + datepicker
  - app_rrhh_pagos_diversos -> errores
+ - app_rrhh_trabajadores -> Alta, nuevo doc
  
  actualizados/nuevos(26/03/19):
  - app_asistencia -> errores encontrados en pruebas
@@ -56,7 +57,6 @@ ESTA SEMANA:
  - falta empty a muchos ddls antes de cargarlos
 
 ARTURO:
- - Asistencia
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
  - cambiar avance "prog" por "pag" en desplegar kaizen
  - Clases en css para avance en rojo y prec/cuant en gris
@@ -66,49 +66,65 @@ ARTURO:
  - Kaizen bonito
  - HTMLs de:
     - reporte_obras
-    - inve$stime
+    - app_admin_registro
     - app_atributo
     - app_admin_registro
     - app_areas
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
-    - app_distribucion_trabajadores
+    - app_distribucion_supervisores (los pagos de la pagadora)
+    - app_gestionar_supervisores (las obras asignadas)
+    - app_rrhh_trabajadores
  - Actualizar:
     - app_rrhh_importar_trabajadores
-    - app_asistencia
     - app_actualizar_regs
     - app_desplegar_kaizen
- 
+    - app_obra
+    - app_procesos
+    - app_funciones
+    - app_asistencia
+    - app_rrhh_pagos_diversos
+    - app_rrhh_horas_extra
+    
 DIEGO:
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
- - Agregar terminado a obra_magico
- - diversos en bd, alta, editar, etc
+ - Agregar terminado a obra_magico (en el alta pero tambien usar app_atributo)
+ - diversos en bd, alta, editar, etc, hacer todo en una tabla
  - Botón terminar asistencia
- - Error fecha horas_extra
+ - app_rrhh_pagos_nomina
  - Diversos no carga existentes
- - alta_trabajadores
  - editar_trabajadores
- - Para supervisores, app_desplegar_OdeC
- - Reportes para suupervisores, de asistencia y de todo.
  - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
- - reporte rrhh
-    - filtros
-       - obra
-       - proceso
-       - trabajador
-       - periodo de tiempo
-    - datos
-       - diversos (ddcheckbox)
-       - horas trabajadas
-       - horas extra
-       - falta
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
     - programar el boton
+ - Reportes:
+    - app_reporte_supervisores
+       - filtros
+          - obra
+          - proceso
+          - periodo de tiempo
+       - datos
+          - OdeC
+          - Asistencias/faltas
+          - $$
+          - completez
+          - fechas?
+    - app_reporte_rrhh
+       - filtros
+          - obra
+          - proceso
+          - trabajador
+          - periodo de tiempo
+       - datos
+          - diversos (ddcheckbox)
+          - horas trabajadas
+          - horas extra
+          - falta
  
 TO DO:
  - Produccion
