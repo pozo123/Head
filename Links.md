@@ -83,3 +83,6 @@ en terminal
   
   - Escalar tabla
     - https://stackoverflow.com/questions/26712180/html-table-scale-to-fit
+    
+  - DatePicker
+    - https://xdsoft.net/jqplugins/datetimepicker/
