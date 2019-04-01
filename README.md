@@ -75,15 +75,15 @@ ARTURO:
     - app_gestionar_supervisores (las obras asignadas)
     - app_rrhh_trabajadores
  - Actualizar:
-    - app_rrhh_importar_trabajadores
-    - app_actualizar_regs
-    - app_desplegar_kaizen
-    - app_obra
-    - app_procesos
-    - app_funciones
-    - app_asistencia
-    - app_rrhh_pagos_diversos
-    - app_rrhh_horas_extra
+    - app_rrhh_importar_trabajadores LISTO 
+    - app_actualizar_regs LISTO 
+    - app_desplegar_kaizen LISTO 
+    - app_obra LISTO
+    - app_procesos LISTO 
+    - app_funciones LISTO 
+    - app_asistencia LISTO
+    - app_rrhh_pagos_diversos LISTO
+    - app_rrhh_horas_extra LISTO
     
 DIEGO:
  - si copeo/odec = -1 jala el valor de prec/cuant
