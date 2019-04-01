@@ -86,6 +86,7 @@ ARTURO:
     - app_rrhh_horas_extra LISTO
     
 DIEGO:
+ - Distribuir trabajadores
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
