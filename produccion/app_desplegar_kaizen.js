@@ -195,7 +195,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			snapshot.child("procesos").forEach(function(childSnap){
 				var proc = childSnap.val();
 				if(proc.clave == "MISC")
-					procesos[num_procesos + 1] = {proc: proc, tipo: "misc"};
+					procesos[num_procesos + 1] = {proc: proc, tipo: "procSimple"};//"misc"};
 				else {
 					var consec;
 					if(proc.clave == "ADIC"){
@@ -217,6 +217,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				}
 			});
 			for(i=0;i<(num_procesos + 3);i++){
+				//
 				createRow(procesos[i].proc, table, procesos[i].tipo);
 				if(procesos[i].tipo == "procPadre"){
 					for(j=1;j<=procesos[i].num_subprocesos;j++){
@@ -243,6 +244,7 @@ function addProfitNeto(obra, table){
 	profit_neto.innerHTML = formatMoney(obra.kaizen.PROFIT.PROG.BRUTO.toFixed(2));
 	profit_neto.colSpan = 11;
 	row.appendChild(profit_neto);
+	table.appendChild(row);
 }
 //proc es algo que tiene kaizen
 function createRow(proc,table,tipo){
@@ -385,7 +387,6 @@ function createRow(proc,table,tipo){
 function calculaProfitProgGlobal(pointer_kaiz,clave_elem){
 	var sum = 0;
 	$('.profit_prog').each(function(){
-        console.log('hola')
         sum += parseFloat(this.innerHTML);
         console.log(this.innerHTML)
 	});
