@@ -203,8 +203,11 @@
                         - diverso (nombre de un catálogo)
                   - total_diversos
                   - total_horas_extra
-                  - impuestos (pago_pagadora_trabajador - subtotal)
-                  - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos)
+                  - impuestos:
+                     - impuestos_horas_extra
+                     - impuestos_diversos
+                     - impuestos_asistencia (pagadora_trabajador - costo_asist - diversos - HE - impu_div - impu_HE)
+                  - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos) (No tiene ningun impuesto)
                   - total (pagadora)
   - pagos_nomina: 
       - AFECTAN: app_pagos_nomina, app_asistencia
@@ -239,15 +242,18 @@
                            - horas
                            - proceso (clave)
                            - fecha (ms, de un datepicker, es de cuando se trabajaron, no de cuando se pagan)
-                     - total_horas_extra
-                     - total_diversos
-                     - impuestos (subtotal_esta_obra / subtotal_todas_obras_este_trabajador * pago_pagadora_trabajador - subtotal_esta_obra)
-                     - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
                      - diversos (SE GUARDAN HASTA EL TERMINAR, POR LOS DISTRIBUIBLES)
                         - por push: (si es distribuido se hacen entradas separadas)
                            - cantidad
                            - proceso ("distribuible" si depende de las asistencias)
                            - diverso (nombre de un catálogo)
+                     - total_horas_extra
+                     - total_diversos
+                     - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
+                     - impuestos:
+                        - impuestos_horas_extra
+                        - impuestos_diversos
+                        - impuestos_asistencia ((pagadora-sub_total_trab)*subtotal_esta/subtotal_trab - imp_HE - imp_div)
                      - total (lo que entra aquí es igual a lo que va al kaizen = subtotal + impuestos)
                - total
   - colaboradores:
