@@ -355,6 +355,10 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos){
 }
 
 $('#' + id_guardar_button_asistencia).click(function(){
+    guardarAsistencias();
+});
+
+function guardarAsistencias(){
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
     var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
@@ -367,7 +371,7 @@ $('#' + id_guardar_button_asistencia).click(function(){
         updateDia(id_trabajador,"miercoles",semana,year); 
 
         //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas").once('value').then(function(snapshot){
+        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
             var existe = false;
             var i = 0;
             snapshot.forEach(function(childSnap){
@@ -378,13 +382,13 @@ $('#' + id_guardar_button_asistencia).click(function(){
             if(!existe){
                 //si es nuevo pero no le metí ninguna chamba no lo guardo
                 if($("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta"){
-                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obra);
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                 }
             }
         });
     }
     alert("Cambios realizados");
-});
+}
 
 function updateDia(id_trabajador,dia,semana,year){
     var dia_corto = dia.substring(0,2);
@@ -425,20 +429,37 @@ function updateDia(id_trabajador,dia,semana,year){
 }
 
 $('#' + id_terminar_button_asistencia).click(function(){
-//PARA LOS BOTONES USA EL ARREGLO DE TRABAJADORES EN EL QUE ESTAN SUS IDs
-//Terminar debería estar en otra pestaña, y jalar año y semana de ddls
-    //var fecha = getWeek(new Date().getTime());
-    //firebase.database().ref(rama_bd_pagos_nomina + "/" + fecha[1] + "/" + fecha[0] + "/" + terminada).set(true);
-
-//Button terminar
-    //Sumar horas en todas direcciones
-        //en trabajadores
-        //en nomina
-        //en kaizen
-    //Revisar y anotar faltas
-    //Reasignar obras
-    //Actualizar obra/terminada = true
+    var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
+    var week = $('#' + id_semana_ddl_asistencia + " option:selected").val();
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + terminada).set(tru);
+    guardarAsistencias();
+    //Revisar y anotar faltas -> EÑOÑE? AQUI 
+    asignarObras(year,week);
 });
+
+function asignarObras(year, week){
+    firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+        snapshot.forEach(function(trabSnap){
+            var obra_asignada = {};
+            var count = 0;
+            trabSnap.child("nomina/" + year + "/" + week).forEach(function(daySnap){
+                var flag = false;
+                var i = 0;
+                while(i<count && !flag){
+                    if(obra_asignada[i] == daySnap.val().obra){
+                        flag = true;
+                    }
+                    i++;
+                }
+                if(!flag){
+                    obra_asignada[count] = daySnap.val().obra;
+                    count++;
+                }
+            });
+            firebase.database().ref(rama_bd_trabajadores + "/" + trabSnap.key + "/obra_asignada").set(obra_asignada);
+        });
+    });
+}
 
 function headersAsistencia() {
   var row = tableAsistencia.insertRow(0);
