@@ -5,8 +5,7 @@ Depto. de Innovacion y Optimizacion
  - app_asistencias -> botón terminado con todas sus implicaciones
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
- 
- actualizados/nuevos(27/03/19):
+ - app_rrhh_editar_trabajadores -> como en biblioteca, necesita modal
  - app_rrhh_trabajadores -> Alta, nuevo doc
  
  actualizados/nuevos(25/3/19):
@@ -69,7 +68,6 @@ DIEGO:
  - diversos en bd, alta, editar, etc, hacer todo en una tabla
  - app_rrhh_pagos_nomina
  - Diversos no carga existentes
- - editar_trabajadores
  - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
