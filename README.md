@@ -3,16 +3,14 @@ Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
+ - app_distribucion_supervisores -> pda, meter datos y revisar
  
  actualizados/nuevos(27/03/19):
  - app_rrhh_trabajadores -> Alta, nuevo doc
  
  actualizados/nuevos(25/3/19):
  - app_gestionar_supervisores -> empty con jquery
- 
- actualizados/nuevos(14/3/19):
- - app_distribucion_supervisores
-  
+   
  actualizados/nuevos(12/3/19):
  - app_prod_gestionar_pptos
  
