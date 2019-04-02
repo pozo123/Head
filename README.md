@@ -60,7 +60,6 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
- - Distribuir trabajadores
  - si copeo/odec = -1 jala el valor de prec/cuant
  - Todo lo de Gantt
  - Desplegar CC
@@ -68,7 +67,6 @@ DIEGO:
  - Manual de usuario
  - Agregar terminado a obra_magico (en el alta pero tambien usar app_atributo)
  - diversos en bd, alta, editar, etc, hacer todo en una tabla
- - Botón terminar asistencia
  - app_rrhh_pagos_nomina
  - Diversos no carga existentes
  - editar_trabajadores
