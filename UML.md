@@ -260,6 +260,15 @@
          - uid
          - nickname
          - tipo (gerentes o supervisores. La única diferencia es que gerentes tiene obra vacío)
+         - nomina:
+            - year
+               - week
+                  - cantidad
+                  - distribucion:
+                     - obra: porcentaje (ej acanto: 80)
+                  - pda: (pista de auditoria)
+                     - uid
+                     - timestamp
          - obras:
             - obra (por nombre)
                - nombre
