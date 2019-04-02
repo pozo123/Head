@@ -431,10 +431,25 @@ function updateDia(id_trabajador,dia,semana,year){
 $('#' + id_terminar_button_asistencia).click(function(){
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     var week = $('#' + id_semana_ddl_asistencia + " option:selected").val();
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + terminada).set(tru);
-    guardarAsistencias();
-    //Revisar y anotar faltas -> EÑOÑE? AQUI 
-    asignarObras(year,week);
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value'),then(function(snapshot){
+        var semana = snapshot.val();
+        var listo = true;
+        if(!semana.horas_extra_terminadas){
+            listo = false;
+            alert("No se han terminado de registrar las horas extra");
+        }
+        if(!semana.diversos_terminados){
+            listo = false;
+            alert("No se han terminado de registrar los pagos diversos");
+        }
+        if(listo){
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + terminada).set(tru);
+            guardarAsistencias();
+            //Revisar y anotar faltas -> EÑOÑE? AQUI 
+            asignarObras(year,week);
+            alert("Datos de la semana guardados y bloqueados");
+        }
+    })
 });
 
 function asignarObras(year, week){
