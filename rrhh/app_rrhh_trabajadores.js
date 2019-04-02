@@ -9,7 +9,6 @@ var id_fecha_antiguedad_trabajador = "trabajadorFechaAntiguedad";//datepicker
 var id_especialidad_ddl_trabajador = "trabajadorEspecialidad";//ddl *necesario
 var id_activo_trabajador = "trabajadorActivo";//checkbox
 var id_clave_pagadora_trabajador = "trabajadorClavePagadora";//textfield *necesario
-var id_jefe_trabajador = "trabajadorJefe";//textfield *necesario
 //claves
 var id_RFC_trabajador = "trabajadorRFC";//textfield *necesario
 var id_IMSS_trabajador = "trabajadorIMSS";//textfield *necesario
