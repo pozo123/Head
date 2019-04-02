@@ -1,4 +1,4 @@
-//Descomentar firebase
+//Descomentar firebase AQUI
 var id_supervisores_ddl_distribucionSupervisores = "supervisoresDdlDistSuper";
 var id_cantidad_pagadora_distribucionSupervisores = "cantidadPagadoraDistSuper";
 var id_div_obras_distribucionSupervisores = "divObrasDistSuper";
@@ -48,7 +48,7 @@ $('#' + id_supervisores_ddl_distribucionSupervisores).change(function(){
 });
 
 $('#' + id_registrar_button_distribucionSupervisores).click(function(){
-	if($('#' + id_supervisores_ddl_distribucionSupervisores + " option:selected").val() = "" || $('#' + id_cantidad_pagadora_distribucionSupervisores).val() = ""){
+	if($('#' + id_supervisores_ddl_distribucionSupervisores + " option:selected").val() == "" || $('#' + id_cantidad_pagadora_distribucionSupervisores).val() == ""){
 		alert("Selecciona todos los campos requeridos");
 	} else {
 		var sum = 0;
@@ -58,18 +58,27 @@ $('#' + id_registrar_button_distribucionSupervisores).click(function(){
 	    if(sum != 100){
 	    	alert("Los valores deben ser porcentajes y el total debe sumar 100");
 	    } else {
+	    	var dist = {};
 	    	$('[id$=_distSuper]').each(function(){
 	    		var text_id = this.id.split("_");
 	    		text_id = text_id[text_id.length - 1];
 	    		var obra = this.id.substring(0,this.id.length - (text_id.length + 1));
+	    		dist[obra] = parseFloat($(this).val());
 	    		var valor = parseFloat($('#' + id_cantidad_pagadora_distribucionSupervisores).val()) * parseFloat($(this).val())/100;
 	    		firebase.database().ref(rama_bd_obras_magico + "/" + obra + "/procesos/MISC/kaizen/PRODUCCION/COPEO/PAG").once('value').then(function(snapshot){
 	    			var viejo = parseFloat(snapshot.val());
 	    			var nuevo = viejo + valor;
+	    			console.log(nuevo);
 	    			//firebase.database().ref(rama_bd_obras_magico + "/" + obra + "/procesos/MISC/kaizen/PRODUCCION/COPEO/PAG").set(nuevo);
 	    		});
-	    		//DONDE REGISTRO ESTOS PAGOS?!?!?
 	    	});
+    		var pago = {
+    			cantidad: $('#' + id_cantidad_pagadora_distribucionSupervisores).val(),
+    			distribucion: dist,
+    			pda: pistaDeAuditoria(),
+    		}
+    		var dia = getWeek(new Date().getTime());
+    		firebase.database().ref(rama_bd_colaboradores_prod + "/" + $('#' + id_supervisores_ddl_distribucionSupervisores " option:selected").val() + "/nomina/" + dia[1] + "/" + dia[0]).set(pago);
 	    }
 	}
 });
