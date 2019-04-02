@@ -225,6 +225,15 @@ $('#' + id_entrada_button_perfil).click(function () {
                             }
                             var ref_cu = firebase.database().ref(rama_bd_registros).push(registro);
                             var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
+                            if(cu == 0){
+                                console.log("REGISTRO 0");
+                                console.log("Ref_cu = " + ref_cu + ", cu = " + cu);
+                                var flag = 0;
+                                while(flag < 1000 && cu == 0){
+                                    flag++;
+                                    var cu = ("" + ref_cu).substring(("" + ref_cu).length - 20, (""+ref_cu).length);
+                                }
+                            }
                             firebase.database().ref(rama_bd_registros + "/" + cu + "/cu").set(cu);
 
                         });
@@ -282,6 +291,15 @@ $('#' + id_salida_button_perfil).click(function () {
                                     horas_trabajadas_p = horas_registro/3600000;
                                 firebase.database().ref(rama_bd_obras + "/" + regis.obra + "/presupuestos/" + regis.presupuesto + "/horas_trabajadas").set(horas_trabajadas_p);
                             });
+                            /*
+                            firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val()).orderByKey().on('child_added',function(snapshot){
+                                var aux = snapshot.val();
+                                if(aux.presupuesto == chamba){
+                                    horas_totales = horas_registro + aux.horas_trabajadas;
+                                    firebase.database().ref(rama_bd_inges + "/" + username + "/obras/"  + $('#' + id_obra_ddl_perfil).val() + "/" + chamba + "/horas_trabajadas").set(horas_totales);
+                                }
+                            });
+                            */
                         }
                         clicked = false;
                     }
