@@ -2,6 +2,7 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(2/4/19):
+ - app_asistencias -> botón terminado con todas sus implicaciones
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
  
