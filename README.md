@@ -7,6 +7,7 @@ Depto. de Innovacion y Optimizacion
  - app_distribucion_supervisores -> pda, meter datos y revisar
  - app_rrhh_editar_trabajadores -> como en biblioteca, necesita modal
  - app_rrhh_trabajadores -> Alta, nuevo doc
+ - app_desplegar_kaizen -> misc y row neto
  
  actualizados/nuevos(25/3/19):
  - app_gestionar_supervisores -> empty con jquery
