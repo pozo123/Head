@@ -1,39 +1,24 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
-Después de DEPLOY hay que actualizar la VERSION en firebase/database/info_web/version
- 
-ESTA SEMANA:
- - Kaizen bonito (ideal: jueves max: viernes)
+ actualizados/nuevos(2/4/19):
+ - app_perfil -> chance reg 0?
  
  actualizados/nuevos(27/03/19):
- - app_rrhh_horas_extra -> errores + datepicker
- - app_rrhh_pagos_diversos -> errores
  - app_rrhh_trabajadores -> Alta, nuevo doc
  
- actualizados/nuevos(26/03/19):
- - app_asistencia -> errores encontrados en pruebas
- - app_rrhh_importar_trabajadores -> hardcode "obra_asignada", en la columna de excel tiene que decir "0", descomentar firebase, lo hace con un for ahora para no repetir/borrar
- 
  actualizados/nuevos(25/3/19):
- - app_funciones -> pista de auditoria
- - app_procesos -> sin kaiz para obras_prod
  - app_gestionar_supervisores -> empty con jquery
  
  actualizados/nuevos(14/3/19):
- - app_desplegar_kaizen -> profit neto, gris condicional, orden alfabetico y error
  - app_distribucion_supervisores
- 
- actualizados/nuevos(13/3/19):
- - app_obra -> ddl con sólo las obras de mágico que no están en proy, pero puedes dar de alta
- 
+  
  actualizados/nuevos(12/3/19):
  - app_prod_gestionar_pptos
  
  actualizados/nuevos(11/3/19):
  - app_admin_registro
  - app_areas
- - app_actualizar_regs -> esp == "NA"
   
  actualizados/nuevos(26/2/19):
  - app_atributo
@@ -68,22 +53,12 @@ ARTURO:
     - reporte_obras
     - app_admin_registro
     - app_atributo
-    - app_admin_registro
     - app_areas
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
     - app_distribucion_supervisores (los pagos de la pagadora)
     - app_gestionar_supervisores (las obras asignadas)
     - app_rrhh_trabajadores
  - Actualizar:
-    - app_rrhh_importar_trabajadores LISTO 
-    - app_actualizar_regs LISTO 
-    - app_desplegar_kaizen LISTO 
-    - app_obra LISTO
-    - app_procesos LISTO 
-    - app_funciones LISTO 
-    - app_asistencia LISTO
-    - app_rrhh_pagos_diversos LISTO
-    - app_rrhh_horas_extra LISTO
     
 DIEGO:
  - Distribuir trabajadores
@@ -153,21 +128,11 @@ TO DO:
      - añadir al desplegar
  - RRHH
    - alta_trabajadores
-     - Conseguir datos
-     - Subirlos con el formato de hector
-     - Tranformar el json al formato que nosotros queremos
-     - Subir el json
+     - app de 1 x 1
    - asistencia
      - ddl obra. Carga trabajadores asignados a esa obra (existe obra "otros"/"misc" que se tiene que ir a cc)
-     - Row que permite hacer más trabajadores
-     - cada trabajador tiene ddl por proceso (+ falta, + ppr) por dia
-     - field para diversos
-     - boton actualizar sube lo que hay a la bd
      - boton guardar actualiza todo, lo cierra, y genera reporte faltas
    - pago_pagadora
-   - horas_extra
-   - pagos_adicionales
-   - alta_trabajador (individual)
    - editar_trabajadores (como en bibliotecas en proy)
    - supervisores
  - Pagina Web
