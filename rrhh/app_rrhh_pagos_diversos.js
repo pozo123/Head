@@ -405,6 +405,18 @@ $('#' + id_terminar_button_diversos).click(function(){
                                 proceso: diver.proceso,
                             }
                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
+                            var query = diver.obra;
+                            if(diver.obra != diver.proceso){
+                                var path = diver.proceso.split("-");
+                                query = query + "/procesos/" + path[0];
+                                sumaMOKaizen(query,diver.cantidad);
+                                if(path.length>1){
+                                    query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                    sumaMOKaizen(query,diver.cantidad);
+                                }
+                            } else {
+                                sumaMOKaizen(query,diver.cantidad);
+                            }
                             //AQUI checar asincronia
                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
                                 var valor_anterior = snapshot.val();
@@ -498,7 +510,7 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
 function sumaMOKaizen(query,cantidad){
     firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").once('value').then(function(snapshot){
         var anterior = snapshot.val();
-        var nuevo = (parseFloat(anterior) + parseFloat(cantidad) * 1.16).toFixed(2);
+        var nuevo = (parseFloat(anterior) + parseFloat(cantidad) * 1.16).toFixed(2);//se le agrega al impuesto para el kaizen
         firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").set(nuevo);
     });
 }
