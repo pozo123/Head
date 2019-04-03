@@ -406,6 +406,7 @@ $('#' + id_terminar_button_diversos).click(function(){
                             }
                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
                             var query = diver.obra;
+                            sumaMOKaizen(query,diver.cantidad);
                             if(diver.obra != diver.proceso){
                                 var path = diver.proceso.split("-");
                                 query = query + "/procesos/" + path[0];
@@ -414,8 +415,6 @@ $('#' + id_terminar_button_diversos).click(function(){
                                     query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
                                     sumaMOKaizen(query,diver.cantidad);
                                 }
-                            } else {
-                                sumaMOKaizen(query,diver.cantidad);
                             }
                             //AQUI checar asincronia
                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
