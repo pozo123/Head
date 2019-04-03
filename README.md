@@ -1,6 +1,11 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(3/4/19):
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN
+ - app_rrhh_horas_extra - > terminar, corregir errores, y sumar en totales, impuestos y kaizen
+ 
+ 
  actualizados/nuevos(2/4/19):
  - app_asistencias -> botón terminado con todas sus implicaciones
  - app_perfil -> chance reg 0?
