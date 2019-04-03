@@ -334,7 +334,7 @@ $('#' + id_guardar_button_horasExtra).click(function(){
 $('#' + id_terminar_button_horasExtra).click(function(){
     firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_horasExtra + " option:selected").val() + "/" + $('#' + id_semana_ddl_horasExtra + " option:selected").val()).once('value').then(function(snapshot){
         snapshot.forEach(function(obraSnap){
-            if(obraSnap.key != "terminada" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
+            if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
                 obraSnap.child("trabajadores").forEach(function(trabSnap){
                     trabSnap.child("horas_extra").forEach(function(heSnap){
                         var horas_extra = heSnap.val();
