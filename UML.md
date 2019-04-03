@@ -217,7 +217,9 @@
             - terminada: bool
             - horas_extra_terminadas: bool
             - diversos_terminados: bool
+            - total
             - obra: (por nombre)
+               - total (refleja TOTAL de kaizen)
                - trabajadores:
                   - trabajador: (por id)
                      - nombre
@@ -255,7 +257,6 @@
                         - impuestos_diversos
                         - impuestos_asistencia ((pagadora-sub_total_trab)*subtotal_esta/subtotal_trab - imp_HE - imp_div)
                      - total (subtotal + impuestos)
-               - total (refleja TOTAL de kaizen)
   - colaboradores:
       - AFECTAN: app_supervisores, app_obras_prod
       - SUSCRIBEN: app_obras_prod
