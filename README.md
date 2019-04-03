@@ -65,7 +65,7 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
- - si copeo/odec = -1 jala el valor de prec/cuant
+ - Revisar que en Compras se pueda meter todo en obraSimple, procSimple o ProcPadre
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
