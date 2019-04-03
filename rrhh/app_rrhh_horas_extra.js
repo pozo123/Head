@@ -137,18 +137,22 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
             firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
                 var procesos = [];
                 var count_proc = 0;
-                snapshot.child("procesos").forEach(function(childSnapshot){
-                    var proc = childSnapshot.val();
-                    if(proc.num_subprocesos == 0){
-                        procesos[count_proc] = childSnapshot.val().clave;
-                        count_proc++;
-                    } else {
-                        childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
-                            procesos[count_proc] = grandChildSnapshot.val().clave;
+                if(snapshot.child("num_procesos").val() == 0){
+                    procesos[0] = snapshot.child("nombre").val();
+                } else {
+                    snapshot.child("procesos").forEach(function(childSnapshot){
+                        var proc = childSnapshot.val();
+                        if(proc.num_subprocesos == 0){
+                            procesos[count_proc] = childSnapshot.val().clave;
                             count_proc++;
-                        });
-                    }
-                });
+                        } else {
+                            childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                                procesos[count_proc] = grandChildSnapshot.val().clave;
+                                count_proc++;
+                            });
+                        }
+                    });
+                }
                 //Carga todos los registros hechos
                 snapshot.child(year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(childSnapshot){
                     childSnapshot.child('horas_extra').forEach(function(horasSnap){
@@ -241,7 +245,7 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     for(i=0;i<procesos.length;i++){
         var option = document.createElement('OPTION');
         option.text = procesos[i];
-        option.value = procesos[i];
+        option.value = trabajador.sueldo_base;
         proc.appendChild(option);
     }
     proc.id = "proc_" + entradas;
@@ -265,23 +269,27 @@ $('#' + id_guardar_button_horasExtra).click(function(){
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     var obra = $('#' + id_obra_ddl_horasExtra + " option:selected").val();
-    var total_horas = 0;
+    var total_horas = {};
     for(i=0;i<entradas;i++){
         var id_trabajador = document.getElementById("id_" + i).innerHTML;
         
         var he = {
             horas: $('#horas_' + i).val(),
-            proceso: $('#proc_' + i + " option:selected").val(), 
+            proceso: $('#proc_' + i + " option:selected").text(), 
             fecha: new Date($('#fecha_' + i).val()).getTime(),
         }
         var he_con_obra = {
             horas: $('#horas_' + i).val(),
-            proceso: $('#proc_' + i + " option:selected").val(), 
+            proceso: $('#proc_' + i + " option:selected").text(), 
             fecha: new Date($('#fecha_' + i).val()).getTime(),
             obra: obra,
         }
         //Checar asincronía
-        total_horas += parseFloat($('#horas_' + i).val());
+        if(!total_horas[id_trabajador]){
+            total_horas[id_trabajador] = parseFloat($('#horas_' + i).val()) * $('#proc_' + i + " option:selected").val() * 2/48;//En $$ y no en horas (agarro el val de proc porque ahí guardo el sueldo_base)
+        } else {
+            total_horas[id_trabajador] = total_horas[id_trabajador] + parseFloat($('#horas_' + i).val()) * $('#proc_' + i + " option:selected").val() * 2/48;//En $$ y no en horas (agarro el val de proc porque ahí guardo el sueldo_base)
+        }
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);   
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
 
@@ -299,27 +307,67 @@ $('#' + id_guardar_button_horasExtra).click(function(){
                 firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obra);
             }
         });
+        //Sumar $$ a lo que ya está en total horas en la base de datos (trabajadores)
+        //Checar asincronia
+        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").once('value').then(function(snapshot){
+            var horas_previas = snapshot.val();
+            var horas_nuevas = parseFloat(horas_previas) + parseFloat($('#horas_' + i).val()) * $('#proc_' + i + " option:selected").val() * 2/48;
+            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
+            var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
+            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+        });
     }
-    //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina y trabajadores)
+    //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina)
     //Checar asincronia
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/total_horas_extra").once('value').then(function(snapshot){
-        var horas_previas = snapshot.val();
-        var horas_nuevas = parseFloat(horas_previas) + total_horas;
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/total_horas_extra").set(horas_nuevas)
-    });
-    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").once('value').then(function(snapshot){
-        var horas_previas = snapshot.val();
-        var horas_nuevas = parseFloat(horas_previas) + total_horas;
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas)
-    });
+    for(key in total_horas){
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").once('value').then(function(snapshot){
+            var horas_previas = snapshot.val();
+            var horas_nuevas = parseFloat(horas_previas) + total_horas[key];
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/total_horas_extra").set(horas_nuevas);
+            var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+        });
+    }
     alert("Datos actualizados");
 });
 
 $('#' + id_terminar_button_horasExtra).click(function(){
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_horasExtra + " option:selected").val() + "/" + $('#' + id_semana_ddl_horasExtra + " option:selected").val()).once('value').then(function(snapshot){
+        snapshot.forEach(function(obraSnap){
+            if(obraSnap.key != "terminada" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
+                obraSnap.child("trabajadores").forEach(function(trabSnap){
+                    trabSnap.child("horas_extra").forEach(function(heSnap){
+                        var horas_extra = heSnap.val();
+                        var proc = horas_extra.proceso;
+                        var cantidad = horas_extra.horas * trabSnap.val().sueldo_base * (2/48) * 1.16;
+                        var obra = obraSnap.val().nombre;
+                        sumaMOKaizenHE(obra,cantidad);
+                        if(proc != obra){
+                            var path = proc.split("-");
+                            if(path.length() > 1){
+                                sumaMOKaizenHE(obra + "/procesos/ " + path[0],cantidad);
+                                sumaMOKaizenHE(obra + "/procesos/ " + path[0] + "/subprocesos/" + proc,cantidad);
+                            } else {
+                                sumaMOKaizenHE(obra + "/procesos/ " + proc,cantidad);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
     var tru = true;
     firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_horasExtra + " option:selected").val() + "/" + $('#' + id_semana_ddl_horasExtra + " option:selected").val() + "/horas_extra_terminadas").set(tru);
     alert("Registro de horas extra de esta semana terminado");
 });
+
+function sumaMOKaizenHE(query,cantidad){
+    firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").once('value').then(function(snapshot){
+        var anterior = snapshot.val();
+        var nuevo = (parseFloat(anterior) + parseFloat(cantidad) * 1.16).toFixed(2);//se le agrega al impuesto para el kaizen
+        firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").set(nuevo);
+    });
+}
 
 function headersHorasExtra() {
   var row = tableHorasExtra.insertRow(0);
