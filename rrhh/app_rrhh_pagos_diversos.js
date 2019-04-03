@@ -13,7 +13,7 @@ var rama_bd_pagos_nomina = "produccion/pagos_nomina";
 var rama_bd_obras_prod = "produccion/obras";
 var rama_bd_trabajadores = "produccion/trabajadores";
 var rama_bd_diversos = "rrhh/diversos";
-
+var rama_bd_obras_magico = "obras";
 var nuevo;
 var entradas = 0;
 var tableDiversos = document.getElementById(id_table_diversos)
@@ -326,13 +326,13 @@ $('#' + id_guardar_button_diversos).click(function(){
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     var diverso = $('#' + id_diverso_ddl_diversos + " option:selected").val();
-    var suma_horas = {};
+    var suma_diversos = {};
     for(i=0;i<entradas;i++){
-        suma_horas[i] = 0;
+        suma_diversos[i] = 0;
     }
     for(i=0;i<entradas;i++){
         var id_trabajador = document.getElementById("id_" + i).innerHTML;
-        suma_horas[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_horas[id_trabajador];
+        suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
         var dist = true;
         var obr = "NA";
         var pro = "NA";
@@ -370,13 +370,15 @@ $('#' + id_guardar_button_diversos).click(function(){
         }
     }
 
-    for(key in suma_horas){
+    for(key in suma_diversos){
         firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").once('value').then(function(snapshot){
-            var horas_nuevas = suma_horas[key];
+            var diversos_nuevos = suma_diversos[key];
             if(snapshot.val() != null){
-                horas_nuevas += parseFloat(snapshot.val());
+                diversos_nuevos += parseFloat(snapshot.val());
             }
-            firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").set(horas_nuevas);
+            firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").set(diversos_nuevos);
+            var impuestos_diversos = (diversos_nuevos * 0.16).toFixed(2);
+            firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos").set(impuestos_diversos);
         });
     }
     alert("Datos actualizados");
@@ -411,6 +413,8 @@ $('#' + id_terminar_button_diversos).click(function(){
                                 }
                                 var nuevo_valor = valor_anterior + diver.cantidad;
                                 firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
+                                var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
+                                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
                             });
                         }
                     });
@@ -441,24 +445,38 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
                     totales[keyObra] = 0;
                 }
                 for(key in asistencias[keyObra]["procesos"]){
+                    var cant = (monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]).toFixed(2);
                     var diver = {
-                        cantidad: (monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]).toFixed(2),
+                        cantidad: cant,
                         proceso: key,
                         diverso: diverso,
                     }
                     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + keyObra + "/trabajadores/" + trabSnap.key + "/diversos").push(diver);
+                    //AQUI tiene que entrar al kaizen... pero me da miedo la asincronía
+                    sumaMOKaizen(keyObra,cant);
+                    var path = key.split("-");
+                    if(path.length > 1){
+                        sumaMOKaizen(keyObra + "/procesos/" + path[0],cant);
+                        sumaMOKaizen(keyObra + "/procesos/" + path[0] + "/subprocesos/" + key,cant);
+                    } else {
+                        sumaMOKaizen(keyObra + "/procesos/" + key,cant);
+                    }
+
                     console.log(keyObra + "/" + key + ": " + monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]);
-                    totales[keyObra] = totales[keyObra] + (monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]).toFixed(2);
+                    totales[keyObra] = totales[keyObra] + cant;
                 }
             } else {
+                var cant = (monto * asistencias[keyObra] / asistencias["asistencias"]).toFixed(2);
                 var diver = {
-                    cantidad: (monto * asistencias[keyObra] / asistencias["asistencias"]).toFixed(2),
+                    cantidad: cant,
                     proceso: keyObra,
                     diverso: diverso,
                 }
                 firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + keyObra + "/trabajadores/" + trabSnap.key + "/diversos").push(diver);
-                console.log(keyObra + ": " + monto * asistencias[keyObra] / asistencias["asistencias"]);
-                totales[keyObra] = (monto * asistencias[keyObra] / asistencias["asistencias"]).toFixed(2);
+                //AQUI tiene que entrar al kaizen... pero me da miedo la asincronía
+                sumaMOKaizen(keyObra,cant);
+                console.log(keyObra + ": " + cant);
+                totales[keyObra] = cant;
             }
         }
     }
@@ -471,8 +489,18 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
             }
             var nuevo_valor = valor_anterior + totales[key];
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
+            var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
         });
     }
+}
+
+function sumaMOKaizen(query,cantidad){
+    firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").once('value').then(function(snapshot){
+        var anterior = snapshot.val();
+        var nuevo = parseFloat(anterior) + parseFloat(cantidad);
+        firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").set(nuevo);
+    });
 }
 
 function asistenciaDia(asistencias, dia){
