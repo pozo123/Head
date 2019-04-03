@@ -254,8 +254,8 @@
                         - impuestos_horas_extra
                         - impuestos_diversos
                         - impuestos_asistencia ((pagadora-sub_total_trab)*subtotal_esta/subtotal_trab - imp_HE - imp_div)
-                     - total (lo que entra aquí es igual a lo que va al kaizen = subtotal + impuestos)
-               - total
+                     - total (subtotal + impuestos)
+               - total (refleja TOTAL de kaizen)
   - colaboradores:
       - AFECTAN: app_supervisores, app_obras_prod
       - SUSCRIBEN: app_obras_prod
