@@ -201,8 +201,8 @@
                         - obra: ("NA" si distribuilble == true)
                         - proceso: ("NA" si distribuilble == true)
                         - diverso (nombre de un catálogo)
-                  - total_diversos
-                  - total_horas_extra
+                  - total_diversos (No incluyen impuestos)
+                  - total_horas_extra (No incluyen impuestos)
                   - impuestos:
                      - impuestos_horas_extra
                      - impuestos_diversos
@@ -247,8 +247,8 @@
                            - cantidad
                            - proceso ("distribuible" si depende de las asistencias)
                            - diverso (nombre de un catálogo)
-                     - total_horas_extra
-                     - total_diversos
+                     - total_horas_extra (No incluyen impuestos)
+                     - total_diversos (No incluyen impuestos)
                      - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
                      - impuestos:
                         - impuestos_horas_extra
