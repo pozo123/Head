@@ -498,7 +498,7 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
 function sumaMOKaizen(query,cantidad){
     firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").once('value').then(function(snapshot){
         var anterior = snapshot.val();
-        var nuevo = parseFloat(anterior) + parseFloat(cantidad);
+        var nuevo = (parseFloat(anterior) + parseFloat(cantidad) * 1.16).toFixed(2);
         firebase.database().ref(rama_bd_obras_magico + "/" + query + "/kaizen/PRODUCCION/COPEO/PAG").set(nuevo);
     });
 }
