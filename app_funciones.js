@@ -55,7 +55,8 @@ function calculaUtilidad(costos, criterio, valor){
 //var week = getWeek(dia_en_ms)[0];
 //var year = getWeek(dia_en_ms)[1];
 //ej getWeek(new Date(2027,0,2).getTime())
-
+//La primera semana del año son todos aquellos dias que queden antes del primer miercoles del año.
+//La primera y ultima semana del año pueden tener menos días si no se empieza en jueves o termina en miercoles
 
 function getWeek(dia) {
   var d = new Date(dia);
@@ -63,29 +64,30 @@ function getWeek(dia) {
   var y = new Date(d).getFullYear();
   var timestmp = new Date().setFullYear(y, 0, 1);
   var yearFirstDay = Math.floor(timestmp / 86400000);
-  var day = Math.ceil(d / 86400000);
-  var dayOfYear = day - yearFirstDay;
-
-  var firstDay = new Date(y,0,1);
-  var offset = 4 - firstDay.getDay();
-  
-  if(offset < 0)
-  	offset = 8 + offset;
-  else
-  	offset = offset + 1;
-    
-  var week;
-  var year = y;
-  if(dayOfYear < offset){
-	year--;
-	week = getWeek(new Date(year,11,31).getTime())[0];
+  var today = Math.floor(d / 86400000);
+  var offset = new Date(timestmp).getDay() - 4;
+  var jueves = yearFirstDay;
+  if(offset<0){
+    jueves = yearFirstDay - offset;
+  } else if(offset>0){
+    jueves = yearFirstDay + (7 - offset);
   }
-  else{
-  	week = Math.floor((dayOfYear - offset)/7) + 1;
+  var daysSinceJueves = today - jueves;
+  var week = Math.floor(daysSinceJueves / 7) + 2;
+  if(offset == 0){
+    week--;
   }
-  //document.getElementById("demo").innerHTML = week;
-  //document.getElementById("demo2").innerHTML = year;
-  //document.getElementById("demo3").innerHTML = d; 
   
-  return [week,year];
+  return [week,y];
 }
+
+function formatMoney(n, c, d, t) {
+  var c = isNaN(c = Math.abs(c)) ? 2 : c,
+    d = d == undefined ? "." : d,
+    t = t == undefined ? "," : t,
+    s = n < 0 ? "-" : "",
+    i = String(parseFloat(n = Math.abs(Number(n) || 0).toFixed(c))),
+    j = (j = i.length) > 3 ? j % 3 : 0;
+
+  return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
