@@ -4,7 +4,7 @@ Depto. de Innovacion y Optimizacion
  actualizados/nuevos(4/4/19):
  - app_funciones -> getWeekDiaria, actualizar getWeek
  - app_rrhh_importar_trabajadores -> != por == linea 78
- - app_asistencia -> bloquear dias de otro año en semanas quebradas, boton terminado con todo lo que implica, atencion a clientes, terminada con nuevo uml, atencion a clientes
+ - app_asistencia -> textfields bloqueados y si en blanco no se suben
  - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
  - app_rrhh_horas_extra ->terminar, corregir errores, y sumar en totales, impuestos y kaizen , terminada con nuevo uml, atencion a clientes
  - app_compras_odec_kaizen -> limpiar bien ddls
