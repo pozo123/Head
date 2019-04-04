@@ -69,14 +69,7 @@ ARTURO:
     
 DIEGO:
  - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
- - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana
- 
- - Asistencias si textbox bloquearlo si en otra obra sí está. 
- - También si están en blanco cuenta como falta, aguas con eso
-  
- - Asistencias no carga
- - asincronia en impirtar trabajadores
- 
+ - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana 
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
