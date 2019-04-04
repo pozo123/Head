@@ -203,11 +203,11 @@
                         - diverso (nombre de un catálogo)
                   - total_diversos (No incluyen impuestos)
                   - total_horas_extra (en $ y sin impuestos)
+                  - total_asistencia (sueldo_base * asistencias)
                   - impuestos:
                      - impuestos_horas_extra
                      - impuestos_diversos
-                     - impuestos_asistencia (pagadora_trabajador - costo_asist - diversos - HE - impu_div - impu_HE)
-                  - subtotal (sum_asistencias * sueldo_base + horas_extra * precio_horas_extra + diversos) (No tiene ningun impuesto)
+                     - impuestos_asistencia (pagadora_trabajador - 3 totales - impu_div - impu_HE)
                   - total (pagadora)
   - pagos_nomina: 
       - AFECTAN: app_pagos_nomina, app_asistencia
@@ -252,11 +252,11 @@
                            - diverso (nombre de un catálogo)
                      - total_horas_extra (en $ y No incluyen impuestos)
                      - total_diversos (No incluyen impuestos)
-                     - subtotal (sueldo base * asistencias_esta_obra + horas extra_esta_obra * costo_he + diversos_esta_obra)
+                     - total_asistencia
                      - impuestos:
                         - impuestos_horas_extra
                         - impuestos_diversos
-                        - impuestos_asistencia ((pagadora-sub_total_trab)*subtotal_esta/subtotal_trab - imp_HE - imp_div)
+                        - impuestos_asistencia (impuestos_asistencia_trabajador * asistencias_aqui/asistencias totales)
                      - total (subtotal + impuestos)
   - colaboradores:
       - AFECTAN: app_supervisores, app_obras_prod
