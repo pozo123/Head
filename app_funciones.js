@@ -81,6 +81,38 @@ function getWeek(dia) {
   return [week,y];
 }
 
+
+//regresa un array con dias (ej ["jueves", "viernes"]) pertenecientes a la <semana> ("first" o "last") del año year
+//ej: getWeekDiaria("first",2019) me va a dar los días que entran en la semana 1 del 2019 = ["martes","miercoles"]
+function getWeekDiaria(semana,year){
+  var arrayWeek = ["jueves","viernes","sabado","domingo","lunes","martes","miercoles"];
+    var resultado = [];
+  if(semana == "first"){
+      var firstDayOfYear = new Date(year, 0, 1).getDay();
+    var offset = firstDayOfYear - 4;
+        var daysToJueves = offset;
+        if(offset < 0){
+          daysToJueves = -offset;
+        } else {
+          daysToJueves = 7 - (firstDayOfYear - 4);
+        }
+        for(i = daysToJueves - 1; i >= 0; i--){
+          resultado[daysToJueves - 1 - i] = arrayWeek[6-i];
+        }
+        return(resultado);
+    } else { 
+      var lastDayOfYear = new Date(year,11,31).getDay();
+        var offset = lastDayOfYear - 4;
+        if(offset < 0){
+          offset = offset + 7;
+        }
+        for(i=0;i<=offset;i++){
+          resultado[i] = arrayWeek[i];
+        }
+        return(resultado);
+    }
+}
+
 function formatMoney(n, c, d, t) {
   var c = isNaN(c = Math.abs(c)) ? 2 : c,
     d = d == undefined ? "." : d,
