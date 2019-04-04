@@ -75,7 +75,7 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
         console.log(resultado); 
         for(key in resultado){
             firebase.database().ref(rama_bd_trabajadores + "/" + key).once('value').then(function(snapshot){
-                if(snapshot.val() != null){
+                if(snapshot.val() == null){
                     console.log(rama_bd_trabajadores + "/" + key + ": " + resultado[key]);
                     firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
                 } else {
