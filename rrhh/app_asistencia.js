@@ -297,16 +297,44 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     cell_id.appendChild(id_label);
     cell_nombre.appendChild(nombre_label);
 
-    ddlDia("jueves",cell_ju,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos);
-    ddlDia("viernes",cell_vi,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos);
-    ddlDia("lunes",cell_lu,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos);
-    ddlDia("martes",cell_ma,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos);
-    ddlDia("miercoles",cell_mi,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos);
+    var bool_otro_year["jueves"] = false;
+    var bool_otro_year["viernes"] = false;
+    var bool_otro_year["lunes"] = false;
+    var bool_otro_year["martes"] = false;
+    var bool_otro_year["miercoles"] = false;
+
+    if(semana == 1){
+        var bool_otro_year["jueves"] = true;
+        var bool_otro_year["viernes"] = true;
+        var bool_otro_year["lunes"] = true;
+        var bool_otro_year["martes"] = true;
+        var bool_otro_year["miercoles"] = true;
+        var diasEsteYear = getWeekDiaria("first",year);
+        for(i=0;i<diasEsteYear.length;i++){
+            bool_otro_year[diasEsteYear[i]] = false;
+        }
+    } else if (semana == getWeek(new Date(year,11,31).getTime())[0]){
+        var bool_otro_year["jueves"] = true;
+        var bool_otro_year["viernes"] = true;
+        var bool_otro_year["lunes"] = true;
+        var bool_otro_year["martes"] = true;
+        var bool_otro_year["miercoles"] = true;
+        var diasEsteYear = getWeekDiaria("last",year);
+        for(i=0;i<diasEsteYear.length;i++){
+            bool_otro_year[diasEsteYear[i]] = false;
+        }
+    }
+
+    ddlDia("jueves",cell_ju,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year["jueves"]);
+    ddlDia("viernes",cell_vi,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year["viernes"]);
+    ddlDia("lunes",cell_lu,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year["lunes"]);
+    ddlDia("martes",cell_ma,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year["martes"]);
+    ddlDia("miercoles",cell_mi,trabajador.id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year["miercoles"]);
 
     trabajadores[trabajadores.length] = [trabajador.id_trabajador, trabajador.nombre];
 }
 
-function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos){
+function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year){
     var dia_corto = dia.substring(0,2);
     var ddl = document.createElement('select');
     ddl.id = "chamba_" + id_trabajador + "_" + dia_corto;
@@ -325,6 +353,12 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos){
     if(otra_obra){
         var option = document.createElement('option');
         option.text = "Otra obra";
+        option.value = 0;
+        ddl.appendChild(option);
+        ddl.disabled = true;
+    } else if(bool_otro_year){
+        var option = document.createElement('option');
+        option.text = "Otro año";
         option.value = 0;
         ddl.appendChild(option);
         ddl.disabled = true;
@@ -394,7 +428,7 @@ function updateDia(id_trabajador,dia,semana,year){
     var dia_corto = dia.substring(0,2);
     var proceso = $("#chamba_" + id_trabajador + "_" + dia_corto + " option:selected").text();
         var asis;
-        if(proceso == "Falta" || proceso == "Otra obra" || proceso == ""){
+        if(proceso == "Falta" || proceso == "Otra obra" || proceso == "" || proceso == "Otro año"){//AQUI dias que no cuentan
             asis = {
                 asistencia: false,
                 proceso: "NA",
