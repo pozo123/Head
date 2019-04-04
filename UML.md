@@ -169,37 +169,37 @@
             - year: (ej 2019)
                - semana: (ej 1)
                   - lunes:
-                     - obra (nombre)
-                     - proceso (clave)
+                     - obra (nombre) 
+                     - proceso (clave) (Si obra es "Atencion a Clientes" proc es cliente)
                      - asistencia (bool)
                   - martes:
-                     - obra (nombre)
-                     - proceso (clave)
+                     - obra (nombre) 
+                     - proceso (clave) (Si obra es "Atencion a Clientes" proc es cliente)
                      - asistencia (bool)
                   - miercoles:
-                     - obra (nombre)
-                     - proceso (clave)
+                     - obra (nombre) 
+                     - proceso (clave) (Si obra es "Atencion a Clientes" proc es cliente)
                      - asistencia (bool)
                    - jueves:
-                     - obra (nombre)
-                     - proceso (clave)
+                     - obra (nombre) 
+                     - proceso (clave) (Si obra es "Atencion a Clientes" proc es cliente)
                      - asistencia (bool)
                   - viernes:
-                     - obra (nombre)
-                     - proceso (clave)
+                     - obra (nombre) 
+                     - proceso (clave) (Si obra es "Atencion a Clientes" proc es cliente)
                      - asistencia (bool)
                   - horas_extra:
                      - por push:
                         - fecha (timestamp)
-                        - obra
-                        - proceso
+                        - obra 
+                        - proceso (Si obra es "Atencion a Clientes" proc es cliente)
                         - horas
                   - diversos
                      - por push:
                         - cantidad
                         - distribuible: bool
-                        - obra: ("NA" si distribuilble == true)
-                        - proceso: ("NA" si distribuilble == true)
+                        - obra: ("NA" si distribuilble == true) 
+                        - proceso: ("NA" si distribuilble == true) (Si obra es "Atencion a Clientes" proc es cliente)
                         - diverso (nombre de un catálogo)
                   - total_diversos (No incluyen impuestos)
                   - total_horas_extra (en $ y sin impuestos)
@@ -218,7 +218,7 @@
             - horas_extra_terminadas: bool
             - diversos_terminados: bool
             - total
-            - obra: (por nombre)
+            - obra: (por nombre) (Una es "Atencion a Clientes")
                - total (refleja TOTAL de kaizen)
                - trabajadores:
                   - trabajador: (por id)
