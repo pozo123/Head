@@ -515,13 +515,17 @@ function sumaMOKaizen(query,cantidad){
 }
 
 function asistenciaDia(asistencias, dia){
+    var proc = dia.proceso;
+    if(dia.proceso == "Otro año"){
+        proc = "MISC";
+    }
     if(dia.asistencia){
         if(asistencias["asistencias"]){
             asistencias["asistencias"] = asistencias["asistencias"] + 0.2;
         } else {
             asistencias["asistencias"] = 0.2;
         }
-        if(dia.obra == dia.proceso){
+        if(dia.obra == proc){
             if(asistencias[dia.obra]) {
                 asistencias[dia.obra] = asistencias[dia.obra] + 0.2;
             } else {
@@ -532,15 +536,15 @@ function asistenciaDia(asistencias, dia){
                 if(!asistencias[dia.obra]["procesos"]){
                     asistencias[dia.obra]["procesos"] = {};
                 }
-                if(asistencias[dia.obra]["procesos"][dia.proceso]){
-                    asistencias[dia.obra]["procesos"][dia.proceso] = asistencias[dia.obra]["procesos"][dia.proceso] + 0.2;
+                if(asistencias[dia.obra]["procesos"][proc]){
+                    asistencias[dia.obra]["procesos"][proc] = asistencias[dia.obra]["procesos"][proc] + 0.2;
                 } else {
-                    asistencias[dia.obra]["procesos"][dia.proceso] = 0.2;
+                    asistencias[dia.obra]["procesos"][proc] = 0.2;
                 }
             } else {
                 asistencias[dia.obra] = {};
                 asistencias[dia.obra]["procesos"] = {};
-                asistencias[dia.obra]["procesos"][dia.proceso] = 0.2;
+                asistencias[dia.obra]["procesos"][proc] = 0.2;
             }
         }
     }
