@@ -314,28 +314,30 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
     cell_id.appendChild(id_label);
     cell_nombre.appendChild(nombre_label);
 
-    var bool_otro_year["jueves"] = false;
-    var bool_otro_year["viernes"] = false;
-    var bool_otro_year["lunes"] = false;
-    var bool_otro_year["martes"] = false;
-    var bool_otro_year["miercoles"] = false;
+    var bool_otro_year = [];
+
+     bool_otro_year["jueves"] = false;
+     bool_otro_year["viernes"] = false;
+     bool_otro_year["lunes"] = false;
+     bool_otro_year["martes"] = false;
+     bool_otro_year["miercoles"] = false;
 
     if(semana == 1){
-        var bool_otro_year["jueves"] = true;
-        var bool_otro_year["viernes"] = true;
-        var bool_otro_year["lunes"] = true;
-        var bool_otro_year["martes"] = true;
-        var bool_otro_year["miercoles"] = true;
+         bool_otro_year["jueves"] = true;
+         bool_otro_year["viernes"] = true;
+         bool_otro_year["lunes"] = true;
+         bool_otro_year["martes"] = true;
+         bool_otro_year["miercoles"] = true;
         var diasEsteYear = getWeekDiaria("first",year);
         for(i=0;i<diasEsteYear.length;i++){
             bool_otro_year[diasEsteYear[i]] = false;
         }
     } else if (semana == getWeek(new Date(year,11,31).getTime())[0]){
-        var bool_otro_year["jueves"] = true;
-        var bool_otro_year["viernes"] = true;
-        var bool_otro_year["lunes"] = true;
-        var bool_otro_year["martes"] = true;
-        var bool_otro_year["miercoles"] = true;
+         bool_otro_year["jueves"] = true;
+         bool_otro_year["viernes"] = true;
+         bool_otro_year["lunes"] = true;
+         bool_otro_year["martes"] = true;
+         bool_otro_year["miercoles"] = true;
         var diasEsteYear = getWeekDiaria("last",year);
         for(i=0;i<diasEsteYear.length;i++){
             bool_otro_year[diasEsteYear[i]] = false;
@@ -430,7 +432,6 @@ function guardarAsistencias(){
 
         //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
-            console.log("Flag1");
             var existe = false;
             var i = 0;
             snapshot.forEach(function(childSnap){
@@ -438,7 +439,6 @@ function guardarAsistencias(){
                 if(childSnap.val() == obra)
                     existe = true;
             });
-            console.log("Flag2 " + existe);
             if(!existe){
                 //si es nuevo pero no le metí ninguna chamba no lo guardo
                 if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
@@ -447,8 +447,13 @@ function guardarAsistencias(){
                         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                     }
                 } else {
-                    if($("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta"){
-                        console.log("Flag4");
+
+                    var flaglu = $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Otra obra"
+                    var flagma= $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Otra obra"
+                    var flagmi = $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Otra obra"
+                    var flagju = $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Otra obra"
+                    var flagvi = $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Otra obra"
+                    if(flaglu || flagma || flagmi || flagju || flagvi){
                         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                     }
                 }
