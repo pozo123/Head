@@ -66,6 +66,7 @@ ARTURO:
     
 DIEGO:
  - Revisar que en Compras se pueda meter todo en obraSimple, procSimple o ProcPadre
+ - limpiar ddls en compras
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
