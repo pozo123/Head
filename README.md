@@ -1,13 +1,18 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(4/4/19):
+ - app_funciones -> getWeekDiaria, actualizar getWeek
+ - app_rrhh_importar_trabajadores -> != por == linea 78
+ - app_asistencia -> bloquear dias de otro año en semanas quebradas, boton terminado con todo lo que implica, atencion a clientes
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc
+ - app_compras_odec_kaizen -> limpiar bien ddls
+ - app_compras_pag_kaizen -> limpiar bien ddls
+ 
  actualizados/nuevos(3/4/19):
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN
  - app_rrhh_horas_extra - > terminar, corregir errores, y sumar en totales, impuestos y kaizen
  
- 
  actualizados/nuevos(2/4/19):
- - app_asistencias -> botón terminado con todas sus implicaciones
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
  - app_rrhh_editar_trabajadores -> como en biblioteca, necesita modal
@@ -65,9 +70,15 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
- - Revisar que en Compras se pueda meter todo en obraSimple, procSimple o ProcPadre
- - limpiar ddls en compras
- - Checar proceso "Parado" al guardar en kaizen en diversos, horas extra y pagos pagadora
+ - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
+ - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana
+ 
+ - Checar "Atencion a Clientes" diversos, horas extra
+ 
+ - Asistencias no carga
+ - Terminar diversos tienen que ir despues de asistencias -> terminar_asistencias distitno a semana terminada
+ - asincronia en impirtar trabajadores
+ 
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
@@ -132,9 +143,6 @@ TO DO:
  - RRHH
    - alta_trabajadores
      - app de 1 x 1
-   - asistencia
-     - ddl obra. Carga trabajadores asignados a esa obra (existe obra "otros"/"misc" que se tiene que ir a cc)
-     - boton guardar actualiza todo, lo cierra, y genera reporte faltas
    - pago_pagadora
    - editar_trabajadores (como en bibliotecas en proy)
    - supervisores
