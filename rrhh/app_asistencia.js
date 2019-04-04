@@ -357,6 +357,7 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro
         var textField = document.createElement('input');
         textField.type = "text";
         textField.id = "chamba_" + id_trabajador + "_" + dia_corto;
+        row.appendChild(textField);
     } else {
         var ddl = document.createElement('select');
         ddl.id = "chamba_" + id_trabajador + "_" + dia_corto;
@@ -429,6 +430,7 @@ function guardarAsistencias(){
 
         //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
+            console.log("Flag1");
             var existe = false;
             var i = 0;
             snapshot.forEach(function(childSnap){
@@ -436,14 +438,17 @@ function guardarAsistencias(){
                 if(childSnap.val() == obra)
                     existe = true;
             });
+            console.log("Flag2 " + existe);
             if(!existe){
                 //si es nuevo pero no le metí ninguna chamba no lo guardo
                 if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
                     if($("#chamba_" + id_trabajador + "_lu").val() != "" && $("#chamba_" + id_trabajador + "_ma").val() != "" && $("#chamba_" + id_trabajador + "_mi").val() != "" && $("#chamba_" + id_trabajador + "_ju").val() != "" && $("#chamba_" + id_trabajador + "_vi").val() != ""){
+                        console.log("Flag3");
                         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                     }
                 } else {
                     if($("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta"){
+                        console.log("Flag4");
                         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                     }
                 }
@@ -502,16 +507,16 @@ $('#' + id_terminar_button_asistencia).click(function(){
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value'),then(function(snapshot){
         var semana = snapshot.val();
         var listo = true;
-        if(!semana.horas_extra_terminadas){
+        /*if(!semana.horas_extra_terminadas){
             listo = false;
             alert("No se han terminado de registrar las horas extra");
         }
         if(!semana.diversos_terminados){
             listo = false;
             alert("No se han terminado de registrar los pagos diversos");
-        }
+        }*/
         if(listo){
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + terminada).set(tru);
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/asistencias_terminadas").set(tru);
             guardarAsistencias();
             //Revisar y anotar faltas -> EÑOÑE? AQUI 
             asignarObras(year,week);
