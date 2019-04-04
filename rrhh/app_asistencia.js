@@ -69,6 +69,7 @@ $('#' + id_tab_asistencia).click(function(){
 });
 
 $('#' + id_year_ddl_asistencia).change(function(){
+    $('#' + id_semana_ddl_asistencia).empty();
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
@@ -76,7 +77,7 @@ $('#' + id_year_ddl_asistencia).change(function(){
     trabajadores = [];
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     if(year < getWeek(new Date().getTime())[1]){
-        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
+        var ult_sem = getWeek(new Date(year,11,31).getTime())[0];
         var select = document.getElementById(id_semana_ddl_asistencia);
         for(i=ult_sem;i>0;i--){
             var option = document.createElement('option');
@@ -355,26 +356,33 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
 
 function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year){
     var dia_corto = dia.substring(0,2);
+    if(bool_nom){
+        if(nom[dia]){
+            if(nom[dia].obra == obra || nom[dia].proceso == "NA"){
+                asistencia = true;
+            } else {
+                otra_obra = true
+            }
+        }
+    }
     if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
         var textField = document.createElement('input');
         textField.type = "text";
         textField.id = "chamba_" + id_trabajador + "_" + dia_corto;
         row.appendChild(textField);
+        if(otra_obra){
+            $('#' + textField.id).val("Otra obra");
+            textField.disabled = true;
+        } else if(bool_otro_year){
+            $('#' + textField.id).val("Otro año");
+            textField.disabled = true;
+        }
     } else {
         var ddl = document.createElement('select');
         ddl.id = "chamba_" + id_trabajador + "_" + dia_corto;
         var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
         var otra_obra = false;
         var asistencia = false;
-        if(bool_nom){
-            if(nom[dia]){
-                if(nom[dia].obra == obra || nom[dia].proceso == "NA"){
-                    asistencia = true;
-                } else {
-                    otra_obra = true
-                }
-            }
-        }
         if(otra_obra){
             var option = document.createElement('option');
             option.text = "Otra obra";
@@ -441,21 +449,26 @@ function guardarAsistencias(){
             });
             if(!existe){
                 //si es nuevo pero no le metí ninguna chamba no lo guardo
+                var flaglu;
+                var flagma;
+                var flagmi;
+                var flagju;
+                var flagvi;
                 if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
-                    if($("#chamba_" + id_trabajador + "_lu").val() != "" && $("#chamba_" + id_trabajador + "_ma").val() != "" && $("#chamba_" + id_trabajador + "_mi").val() != "" && $("#chamba_" + id_trabajador + "_ju").val() != "" && $("#chamba_" + id_trabajador + "_vi").val() != ""){
-                        console.log("Flag3");
-                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
-                    }
+                    flaglu = $("#chamba_" + id_trabajador + "_lu").val() != "" && $("#chamba_" + id_trabajador + "_lu").val() != "Otra obra" && $("#chamba_" + id_trabajador + "_lu").val() != "Otro año";
+                    flagma = $("#chamba_" + id_trabajador + "_ma").val() != "" && $("#chamba_" + id_trabajador + "_ma").val() != "Otra obra" && $("#chamba_" + id_trabajador + "_ma").val() != "Otro año";
+                    flagmi = $("#chamba_" + id_trabajador + "_mi").val() != "" && $("#chamba_" + id_trabajador + "_mi").val() != "Otra obra" && $("#chamba_" + id_trabajador + "_mi").val() != "Otro año";
+                    flagju = $("#chamba_" + id_trabajador + "_ju").val() != "" && $("#chamba_" + id_trabajador + "_ju").val() != "Otra obra" && $("#chamba_" + id_trabajador + "_ju").val() != "Otro año";
+                    flagvi = $("#chamba_" + id_trabajador + "_vi").val() != "" && $("#chamba_" + id_trabajador + "_vi").val() != "Otra obra" && $("#chamba_" + id_trabajador + "_vi").val() != "Otro año";
                 } else {
-
-                    var flaglu = $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Otra obra"
-                    var flagma= $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Otra obra"
-                    var flagmi = $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Otra obra"
-                    var flagju = $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Otra obra"
-                    var flagvi = $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Otra obra"
-                    if(flaglu || flagma || flagmi || flagju || flagvi){
-                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
-                    }
+                    flaglu = $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Otra obra" && $("#chamba_" + id_trabajador + "_lu option:selected").text() != "Otro año";
+                    flagma = $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Otra obra" && $("#chamba_" + id_trabajador + "_ma option:selected").text() != "Otro año";
+                    flagmi = $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Otra obra" && $("#chamba_" + id_trabajador + "_mi option:selected").text() != "Otro año";
+                    flagju = $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Otra obra" && $("#chamba_" + id_trabajador + "_ju option:selected").text() != "Otro año";
+                    flagvi = $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Falta" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Otra obra" && $("#chamba_" + id_trabajador + "_vi option:selected").text() != "Otro año";
+                }
+                if(flaglu || flagma || flagmi || flagju || flagvi){
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
                 }
             }
         });
@@ -467,7 +480,11 @@ function updateDia(id_trabajador,dia,semana,year){
     var dia_corto = dia.substring(0,2);
     var proceso;
     if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
-        proceso = $("#chamba_" + id_trabajador + "_" + dia_corto).val();
+        if($("#chamba_" + id_trabajador + "_" + dia_corto).val() == ""){
+            proceso = "Falta";
+        } else {
+            proceso = $("#chamba_" + id_trabajador + "_" + dia_corto).val();
+        }
     } else { 
         proceso = $("#chamba_" + id_trabajador + "_" + dia_corto + " option:selected").text();
     }
