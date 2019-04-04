@@ -8,7 +8,7 @@ var excelSeleccionado = "";
 var fileName = "";
 
 $('#' + id_file_importarTrabajadores).on("change",(function(event) {
-    console.log("hola"); 
+    //console.log("hola"); 
     excelSeleccionado = event.target.files[0];
     fileName = excelSeleccionado.name;
     $('#' + id_filename_importarTrabajadores).text(fileName)
@@ -37,15 +37,15 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
             titulos[key] = json[0][key];
         }
         var resultado = {};
-        console.log(json)
+        //console.log(json)
         for(key in json){
             if(key > 0){
                 var trabajador = {};
-                console.log(json[key])
+                //console.log(json[key])
                 for(i=0;i<titulos.length;i++){
                     var n = niveles[i];
                     var k = titulos[i];
-                    console.log(json[key][i])
+                    //console.log(json[key][i])
                     if(n != 0){
                         var path = n.split("/");
                         var pointer = trabajador;
@@ -68,22 +68,22 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
                         }
                     }
                 }
-                console.log(json[key][uid_index])
+                //console.log(json[key][uid_index])
                 resultado[json[key][uid_index]] = trabajador;
             }
         }
         console.log(resultado); 
-        for(key in resultado){
-            firebase.database().ref(rama_bd_trabajadores + "/" + key).once('value').then(function(snapshot){
-                if(snapshot.val() == null){
+        firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+            var trabajadores = snapshot.val();
+            for(key in resultado){
+                if(resultado[key]){
+                    console.log("El trabajador con ID " + key + " ya existe en la base de datos");
+                } else {
                     console.log(rama_bd_trabajadores + "/" + key + ": " + resultado[key]);
                     firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
-                } else {
-                    console.log("El trabajador con ID " + key + " ya existe en la base de datos");
                 }
-            });
-        }
-        //firebase.database().ref(rama_bd_trabajadores).update(resultado);
+            }
+        });
     };
     reader.readAsArrayBuffer(excelSeleccionado);
 });
