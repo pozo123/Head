@@ -215,6 +215,7 @@
       - year: (ej 2019)
          - semana: (ej 1)
             - terminada: bool
+            - asistencias_terminadas: bool
             - horas_extra_terminadas: bool
             - diversos_terminados: bool
             - total
