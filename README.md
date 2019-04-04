@@ -67,6 +67,7 @@ ARTURO:
 DIEGO:
  - Revisar que en Compras se pueda meter todo en obraSimple, procSimple o ProcPadre
  - limpiar ddls en compras
+ - Checar proceso "Parado" al guardar en kaizen en diversos, horas extra y pagos pagadora
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
