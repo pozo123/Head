@@ -4,14 +4,12 @@ Depto. de Innovacion y Optimizacion
  actualizados/nuevos(4/4/19):
  - app_funciones -> getWeekDiaria, actualizar getWeek
  - app_rrhh_importar_trabajadores -> != por == linea 78
- - app_asistencia -> bloquear dias de otro año en semanas quebradas, boton terminado con todo lo que implica, atencion a clientes
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc
+ - app_asistencia -> bloquear dias de otro año en semanas quebradas, boton terminado con todo lo que implica, atencion a clientes, terminada con nuevo uml, atencion a clientes
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
+ - app_rrhh_horas_extra ->terminar, corregir errores, y sumar en totales, impuestos y kaizen , terminada con nuevo uml, atencion a clientes
  - app_compras_odec_kaizen -> limpiar bien ddls
  - app_compras_pag_kaizen -> limpiar bien ddls
- 
- actualizados/nuevos(3/4/19):
- - app_rrhh_horas_extra - > terminar, corregir errores, y sumar en totales, impuestos y kaizen
- 
+  
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
@@ -72,11 +70,8 @@ ARTURO:
 DIEGO:
  - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
  - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana
- 
- - Checar "Atencion a Clientes" diversos, horas extra
- 
+  
  - Asistencias no carga
- - Terminar diversos tienen que ir despues de asistencias -> terminar_asistencias distitno a semana terminada
  - asincronia en impirtar trabajadores
  
  - Todo lo de Gantt
