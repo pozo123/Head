@@ -64,16 +64,25 @@ $('#' + id_tab_diversos).click(function(){
 });
 
 $('#' + id_year_ddl_diversos).change(function(){
+    document.getElementById(id_diverso_ddl_diversos).selectedIndex = 0;
+    $('#' + id_semana_ddl_diversos).empty();
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
+
     entradas = 0;
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+    var select = document.getElementById(id_semana_ddl_diversos);
     if(year < getWeek(new Date().getTime())[1]){
-        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
-        var select = document.getElementById(id_semana_ddl_diversos);
+        var ult_sem = getWeek(new Date(year,11,31).getTime())[0];
         for(i=ult_sem;i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
+    } else {
+        for(i=getWeek(new Date().getTime())[0];i>0;i--){
             var option = document.createElement('option');
             option.text = option.value = i;
             select.appendChild(option);
@@ -102,7 +111,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
-        var terminada = snapshot.val().terminada;
+        var terminada = snapshot.val().diverosos_terminados;
         if(terminada){
             //Cargar tabla con datos
             var datos_diversos = [];
