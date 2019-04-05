@@ -3,6 +3,7 @@ var id_year_ddl_horasExtra = "yearDdlHorasExtra";
 var id_obra_ddl_horasExtra = "obraDdlHorasExtra";
 
 var id_guardar_button_horasExtra = "guardarButtonHorasExtra";
+var id_terminar_button_horasExtra = "terminarButtonHorasExtra";
 
 var id_datatable_horasExtra = "dataTableHorasExtra";
 var id_table_horasExtra = "tableHorasExtra";
@@ -71,22 +72,31 @@ $('#' + id_tab_horasExtra).click(function(){
 });
 
 $('#' + id_year_ddl_horasExtra).change(function(){
+    document.getElementById(id_obra_ddl_horasExtra).selectedIndex = 0;
     sueldos_base = [];
+    $('#' + id_semana_ddl_horasExtra).empty();
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
+    var select = document.getElementById(id_semana_ddl_horasExtra);
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     if(year < getWeek(new Date().getTime())[1]){
-        var ult_sem = getWeek(new Date(year-1,12,31).getTime())[0];
-        var select = document.getElementById(id_semana_ddl_horasExtra);
+        var ult_sem = getWeek(new Date(year,11,31).getTime())[0];
         for(i=ult_sem;i>0;i--){
             var option = document.createElement('option');
             option.text = option.value = i;
             select.appendChild(option);
         }
+    } else {
+        for(i=getWeek(new Date().getTime())[0];i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
     }
+    
 });
 
 $('#' + id_semana_ddl_horasExtra).change(function(){
@@ -112,7 +122,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
-        var terminada = snapshot.val().terminada;
+        var terminada = snapshot.val().horas_extra_terminadas;
         var obra = nomina[$("#" + id_obra_ddl_horasExtra + " option:selected").val()];
         console.log(nomina)
         console.log($("#" + id_obra_ddl_horasExtra + " option:selected").val())
