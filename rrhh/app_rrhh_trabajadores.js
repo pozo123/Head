@@ -9,6 +9,7 @@ var id_fecha_antiguedad_trabajador = "trabajadorFechaAntiguedad";//datepicker
 var id_especialidad_ddl_trabajador = "trabajadorEspecialidad";//ddl *necesario
 var id_activo_trabajador = "trabajadorActivo";//checkbox
 var id_clave_pagadora_trabajador = "trabajadorClavePagadora";//textfield *necesario
+var id_jefe_trabajador = "trabajadorJefe";//textfield *necesario
 //claves
 var id_RFC_trabajador = "trabajadorRFC";//textfield *necesario
 var id_IMSS_trabajador = "trabajadorIMSS";//textfield *necesario
@@ -27,6 +28,7 @@ var id_camisa_trabajador = "trabajadorCamisa";//textfield
 var id_pantalon_trabajador = "trabajadorPantalon";//textfield
 var id_zapatos_trabajador = "trabajadorZapatos";//textfield
 
+var id_groupId_trabajador = "groupIdTrabajador"
 var id_registrar_button_trabajador = "registrarTrabajador";//button
 
 var rama_bd_trabajadores = "produccion/trabajadores";
@@ -38,10 +40,18 @@ $('#' + id_tab_trabajadores).click(function(){
 	$('#' + id_puesto_ddl_trabajador).empty();
 	$('#' + id_obra_ddl_trabajador).empty();
 	$('#' + id_estado_civil_ddl_trabajador).empty();
-	$('#' + id_id_trabajador).val("");
-	$('#' + id_id_trabajador).addClass('hidden');
+	$('#' + id_groupId_trabajador).val("");
+	$('#' + id_groupId_trabajador).addClass('hidden');
 	
 	$("#" + id_generar_id_trabajador).prop("checked", true);
+
+	jQuery('#' + id_fecha_antiguedad_trabajador).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'}
+	);
+	
+	jQuery('#' + id_fecha_nacimiento_trabajador).datetimepicker(
+        {timepicker:false, weeks:true,format:'m.d.Y'}
+    );
 
 	var option_blank = document.createElement('option');
     option_blank.style = "display:none";
@@ -61,45 +71,62 @@ $('#' + id_tab_trabajadores).click(function(){
 	var options_puesto = ["Almacenista", "Ayudante", "Ayudante General", "Empacadora", "Encargado", "Medio Oficial", "Oficial", "Supervisor", "Supervisor de Obra"]; 
 	var options_edoc = ["Casado/a", "Soltero/a", "Viudo/a", "Union Libre", "Divorciado/a"]; 
 	
-	for(var i = 0; i < options_esp.length; i++) {
-	    var opt = options_esp[i];
+	var option3 = document.createElement('option');
+	option3.style = "display:none";
+	option3.text = option3.value = "";
+	select_obra.appendChild(option3);
+	var option4 = document.createElement('option');
+	option4.style = "display:none";
+	option4.text = option4.value = "";
+	select_esp.appendChild(option4);
+	var option5 = document.createElement('option');
+	option5.style = "display:none";
+	option5.text = option5.value = "";
+	select_puesto.appendChild(option5);
+	var option6 = document.createElement('option');
+	option6.style = "display:none";
+	option6.text = option6.value = "";
+	select_edoc.appendChild(option6);
+
+	for(var i=0; i<options_esp.length; i++){
+		var opt = options_esp[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
 	    el.value = opt;
 	    select_esp.appendChild(el);
-	}​
+	}
 
-	for(var i = 0; i < options_puesto.length; i++) {
+	for(var i=0; i<options_puesto.length; i++){
 	    var opt = options_puesto[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
 	    el.value = opt;
 	    select_puesto.appendChild(el);
-	}​
+	}
 
-	for(var i = 0; i < options_edoc.length; i++) {
+	for(var i=0; i<options_edoc.length; i++){
 	    var opt = options_edoc[i];
 	    var el = document.createElement("option");
 	    el.textContent = opt;
 	    el.value = opt;
 	    select_edoc.appendChild(el);
-	}​
-	
+	}
+
     firebase.database().ref(rama_bd_obras_prod).orderByChild('nombre').on('child_added',function(snapshot){
         var obra = snapshot.val();
-        var option4 = document.createElement('OPTION');
-        option4.text = obra.nombre;
-        option4.value = obra.nombre;
-        select3.appendChild(option4);
+        var option7 = document.createElement('OPTION');
+        option7.text = obra.nombre;
+        option7.value = obra.nombre;
+        select_obra.appendChild(option7);
     });
 });
 
 $('#' + id_generar_id_trabajador).change(function(){
 	if($('#' + id_generar_id_trabajador).prop('checked')){
-		$('#' + id_id_trabajador).val("");
-		$('#' + id_id_trabajador).addClass('hidden');
+		$('#' + id_groupId_trabajador).val("");
+		$('#' + id_groupId_trabajador).addClass('hidden');
 	} else {
-		$('#' + id_id_trabajador).removeClass('hidden');
+		$('#' + id_groupId_trabajador).removeClass('hidden');
 	}
 });
 
@@ -116,7 +143,7 @@ $('#' + id_registrar_button_trabajador).click(function () {
 			puesto: $('#' + id_puesto_ddl_trabajador + " option:selected").val(),
 			sueldo_base: $('#' + id_sueldo_base_trabajador).val(),
 			jefe: $('#' + id_jefe_trabajador).val(),
-			fecha_antiguedad: new Date($('#' + fecha_antiguedad).val()).getTime(),
+			fecha_antiguedad: new Date($('#' + id_fecha_antiguedad_trabajador).val()).getTime(),
 			especialidad: $('#' + id_especialidad_ddl_trabajador + " option:selected").val(),
 			activo: $('#' + id_activo_trabajador).is(':checked'),
 			clave_pagadora: $('#' + id_clave_pagadora_trabajador).val(),
@@ -126,7 +153,7 @@ $('#' + id_registrar_button_trabajador).click(function () {
 				CURP: $('#' + id_CURP_trabajador).val(),
 			},
 			info_personal: {
-				fecha_nacimiento: new Date($('#' + fecha_nacimiento).val()).getTime(),
+				fecha_nacimiento: new Date($('#' + id_fecha_nacimiento_trabajador).val()).getTime(),
 				estado_civil: $('#' + id_estado_civil_ddl_trabajador + " option:selected").val(),
 				sexo: $('#' + id_sexo_trabajador).val(),
 				domicilio: $('#' + id_domicilio_trabajador).val(),
@@ -150,6 +177,7 @@ $('#' + id_registrar_button_trabajador).click(function () {
 				trabajador["id_trabajador"] = id_trabajador;
 				firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).set(trabajador);
 				firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_trabajador);
+				alert("Alta exitosa!");
 	    	} else {
 	    		id_trabajador = $('#' + id_id_trabajador).val();
 				trabajador["id_trabajador"] = id_trabajador;
@@ -160,7 +188,8 @@ $('#' + id_registrar_button_trabajador).click(function () {
 	    				if(id_trabajador > num_trabajadores){
 							firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_trabajador);
 	    				}
-	    				firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).set(trabajador);
+						firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).set(trabajador);
+						alert("Alta exitosa!");
 	    			}
 	    		});
 	    	}
