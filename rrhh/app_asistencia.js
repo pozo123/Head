@@ -69,17 +69,24 @@ $('#' + id_tab_asistencia).click(function(){
 });
 
 $('#' + id_year_ddl_asistencia).change(function(){
+    document.getElementById(id_obra_ddl_asistencia).selectedIndex = 0;
     $('#' + id_semana_ddl_asistencia).empty();
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_lista_table_asistencia).empty();
     trabajadores = [];
+    var select = document.getElementById(id_semana_ddl_asistencia);
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     if(year < getWeek(new Date().getTime())[1]){
         var ult_sem = getWeek(new Date(year,11,31).getTime())[0];
-        var select = document.getElementById(id_semana_ddl_asistencia);
         for(i=ult_sem;i>0;i--){
+            var option = document.createElement('option');
+            option.text = option.value = i;
+            select.appendChild(option);
+        }
+    } else {
+        for(i=getWeek(new Date().getTime())[0];i>0;i--){
             var option = document.createElement('option');
             option.text = option.value = i;
             select.appendChild(option);
@@ -88,6 +95,7 @@ $('#' + id_year_ddl_asistencia).change(function(){
 });
 
 $('#' + id_semana_ddl_asistencia).change(function(){
+    document.getElementById(id_obra_ddl_asistencia).selectedIndex = 0;
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
@@ -106,7 +114,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
     nuevo.id = "nuevo_trabajador_asistencia";
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/terminada").once('value').then(function(snapshot){
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/asistencias_terminadas").once('value').then(function(snapshot){
         var terminada = snapshot.val();//Revisar si jala porque chance json porque value
         if(terminada){
             //Cargar tabla con datos
@@ -205,12 +213,17 @@ function loadAsistencias(semana,year,procesos,count_proc){
     firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
         //revisa si tienen esta obra asignada
         snapshot.forEach(function(childSnapshot){
-            childSnapshot.child("obra_asignada").forEach(function(obraSnap){
-                if(obraSnap.val() == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
-                    var trabajador = childSnapshot.val();
-                    cargaRenglon(trabajador,count_proc,procesos,semana,year);
+            var asignado = false;
+            childSnapshot.child("nomina/" + year + "/" + semana).forEach(function(obraSnap){
+                var ob = obraSnap.val();
+                if(obraSnap.val().obra == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
+                    asignado = true;
                 }
             });
+            if(asignado){
+                var trabajador = childSnapshot.val();
+                cargaRenglon(trabajador,count_proc,procesos,semana,year);
+            }
         });
     });
     //Crea 2 textfields para añadir trabajadores que no tengan la obra registrada
@@ -356,15 +369,6 @@ function cargaRenglon(trabajador, count_proc, procesos, semana, year){
 
 function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro_year){
     var dia_corto = dia.substring(0,2);
-    if(bool_nom){
-        if(nom[dia]){
-            if(nom[dia].obra == obra || nom[dia].proceso == "NA"){
-                asistencia = true;
-            } else {
-                otra_obra = true
-            }
-        }
-    }
     if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
         var textField = document.createElement('input');
         textField.type = "text";
@@ -383,6 +387,15 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro
         var obra = $('#' + id_obra_ddl_asistencia + " option:selected").val();
         var otra_obra = false;
         var asistencia = false;
+        if(bool_nom){
+            if(nom[dia]){
+                if(nom[dia].obra == obra || nom[dia].proceso == "NA"){
+                    asistencia = true;
+                } else {
+                    otra_obra = true
+                }
+            }
+        }
         if(otra_obra){
             var option = document.createElement('option');
             option.text = "Otra obra";
@@ -526,7 +539,7 @@ function updateDia(id_trabajador,dia,semana,year){
 $('#' + id_terminar_button_asistencia).click(function(){
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
     var week = $('#' + id_semana_ddl_asistencia + " option:selected").val();
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value'),then(function(snapshot){
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
         var semana = snapshot.val();
         var listo = true;
         /*if(!semana.horas_extra_terminadas){
@@ -538,6 +551,7 @@ $('#' + id_terminar_button_asistencia).click(function(){
             alert("No se han terminado de registrar los pagos diversos");
         }*/
         if(listo){
+            var tru = true;
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/asistencias_terminadas").set(tru);
             guardarAsistencias();
             //Revisar y anotar faltas -> EÑOÑE? AQUI 
