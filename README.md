@@ -2,9 +2,6 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(4/4/19):
- - app_funciones -> getWeekDiaria, actualizar getWeek
- - app_rrhh_importar_trabajadores -> != por == linea 78
- - app_asistencia -> textfields bloqueados y si en blanco no se suben
  - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
  - app_rrhh_horas_extra ->terminar, corregir errores, y sumar en totales, impuestos y kaizen , terminada con nuevo uml, atencion a clientes
  - app_compras_odec_kaizen -> limpiar bien ddls
@@ -15,7 +12,6 @@ Depto. de Innovacion y Optimizacion
  - app_distribucion_supervisores -> pda, meter datos y revisar
  - app_rrhh_editar_trabajadores -> como en biblioteca, necesita modal
  - app_rrhh_trabajadores -> Alta, nuevo doc
- - app_desplegar_kaizen -> misc y row neto
  
  actualizados/nuevos(25/3/19):
  - app_gestionar_supervisores -> empty con jquery
@@ -68,6 +64,7 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - Hablar con Hector sobre rama_bd_destajistas
  - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
  - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana 
  - Todo lo de Gantt
