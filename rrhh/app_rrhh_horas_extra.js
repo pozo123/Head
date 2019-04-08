@@ -188,7 +188,10 @@ function loadHorasExtra(year,semana,procesos,count_proc){
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val()).once('value').then(function(snapshot){  
         snapshot.child("trabajadores").forEach(function(childSnapshot){
             childSnapshot.child('horas_extra').forEach(function(horasSnap){
-                cargaRenglonHorasExtra(childSnapshot.val(), procesos,false,horasSnap.fecha,horasSnap.horas,horasSnap.proceso);
+                //AQUI asincronia?
+                firebase.database().ref(rama_bd_trabajadores + "/" + childSnapshot.key).once('value').then(function(trabSnap){
+                    cargaRenglonHorasExtra(snapshot.val(), procesos, false, horasSnap.val().fecha, horasSnap.val().horas, horasSnap.val().proceso);
+                });
             });
         });
     })
@@ -291,7 +294,7 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     if(!nuevo){
         var date = new Date(fecha_in);
         $("#" + fecha.id).val((date.getMonth() + 1) + "." + date.getDate() + "." + date.getFullYear());
-        $('#' + horas.id).val(horas_in);
+        $('#' + horas.id).val(parseFloat(horas_in));
         for(var i = 0; i<proc.length;i++){
             if(proc[i].text == proc_in){
                 proc.selectedIndex = i;
@@ -328,9 +331,9 @@ $('#' + id_guardar_button_horasExtra).click(function(){
         }
         //Checar asincronía
         if(!total_horas[id_trabajador]){
-            total_horas[id_trabajador] = parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas (agarro el val de proc porque ahí guardo el sueldo_base)
+            total_horas[id_trabajador] = parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
         } else {
-            total_horas[id_trabajador] = total_horas[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas (agarro el val de proc porque ahí guardo el sueldo_base)
+            total_horas[id_trabajador] = total_horas[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
         }
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);   
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
@@ -352,7 +355,10 @@ $('#' + id_guardar_button_horasExtra).click(function(){
         //Sumar $$ a lo que ya está en total horas en la base de datos (trabajadores)
         //Checar asincronia
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").once('value').then(function(snapshot){
-            var horas_previas = snapshot.val();
+            var horas_previas = 0;
+            if(snapshot.exists()){
+                horas_previas = snapshot.val();
+            }
             var horas_nuevas = parseFloat(horas_previas) + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;
             firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
             var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
@@ -363,11 +369,14 @@ $('#' + id_guardar_button_horasExtra).click(function(){
     //Checar asincronia
     for(key in total_horas){
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").once('value').then(function(snapshot){
-            var horas_previas = snapshot.val();
+            var horas_previas = 0;
+            if(snapshot.exists()){
+                horas_previas = snapshot.val();
+            }
             var horas_nuevas = parseFloat(horas_previas) + total_horas[key];
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/total_horas_extra").set(horas_nuevas);
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").set(horas_nuevas);
             var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
         });
     }
     alert("Datos actualizados");
