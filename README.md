@@ -68,6 +68,7 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - Semanas quebradas en diversos al distribuir
  - Hablar con Hector sobre rama_bd_destajistas
  - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
  - en pagos nomina de la semana 1 si quebrada pasarlos a la otra semana 
