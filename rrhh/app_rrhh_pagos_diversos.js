@@ -435,14 +435,16 @@ $('#' + id_terminar_button_diversos).click(function(){
                                     }
                                     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
                                     var query = diver.obra;
-                                    sumaMOKaizen(query,diver.cantidad);
-                                    if(diver.obra != diver.proceso){
-                                        var path = diver.proceso.split("-");
-                                        query = query + "/procesos/" + path[0];
+                                    if(diver.obra != "Atencion a Clientes"){
                                         sumaMOKaizen(query,diver.cantidad);
-                                        if(path.length>1){
-                                            query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                        if(diver.obra != diver.proceso){
+                                            var path = diver.proceso.split("-");
+                                            query = query + "/procesos/" + path[0];
                                             sumaMOKaizen(query,diver.cantidad);
+                                            if(path.length>1){
+                                                query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                                sumaMOKaizen(query,diver.cantidad);
+                                            }
                                         }
                                     }
                                     //AQUI checar asincronia
@@ -497,13 +499,15 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
                     }
                     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + keyObra + "/trabajadores/" + trabSnap.key + "/diversos").push(diver);
                     //AQUI tiene que entrar al kaizen... pero me da miedo la asincronía
-                    sumaMOKaizen(keyObra,cant);
-                    var path = key.split("-");
-                    if(path.length > 1){
-                        sumaMOKaizen(keyObra + "/procesos/" + path[0],cant);
-                        sumaMOKaizen(keyObra + "/procesos/" + path[0] + "/subprocesos/" + key,cant);
-                    } else {
-                        sumaMOKaizen(keyObra + "/procesos/" + key,cant);
+                    if(keyObra != "Atencion a Clientes"){
+                        sumaMOKaizen(keyObra,cant);
+                        var path = key.split("-");
+                        if(path.length > 1){
+                            sumaMOKaizen(keyObra + "/procesos/" + path[0],cant);
+                            sumaMOKaizen(keyObra + "/procesos/" + path[0] + "/subprocesos/" + key,cant);
+                        } else {
+                            sumaMOKaizen(keyObra + "/procesos/" + key,cant);
+                        }
                     }
 
                     console.log(keyObra + "/" + key + ": " + monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]);
