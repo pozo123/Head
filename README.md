@@ -7,7 +7,7 @@ Depto. de Innovacion y Optimizacion
  - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal
  - app_rrhh_importar_trabajadores -> num_trabajadores_id
  - app_rrhh_horas_extra -> sumar totales/impuestos y cargar bien datos
- - app_rrhh_pagos_diversos -> generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma
+ - app_rrhh_pagos_diversos -> generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma, ya no al kaizen si atencion a clientes
  
  actualizados/nuevos(4/4/19):
  - app_compras_odec_kaizen -> limpiar bien ddls
@@ -72,8 +72,7 @@ ARTURO:
     
 DIEGO:
  - Titulos de obra en catalogo de proceso en negritas y mas grandes
- - ver que chingados con los calendarios en produccion
- - Semanas quebradas en diversos al distribuir, también Atención al cliente, no puede entrar al Kaizen
+ - Semanas quebradas en diversos al distribuir
  - Hablar con Hector sobre rama_bd_destajistas
  - Todo lo de Gantt
  - Desplegar CC
