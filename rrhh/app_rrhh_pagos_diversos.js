@@ -295,27 +295,28 @@ function generateDdls(cell_obra, cell_proc){
         option3.text = option3.value = "Atencion a Clientes";
         obra_ddl.appendChild(option3);
         cell_obra.appendChild(obra_ddl);
+        var proc_input;
 
         $('#' + obra_ddl.id).change(function(){
             $('#' + cell_proc.id).empty();
             if($('#' + obra_ddl.id + " option:selected").val() == "Atencion a Clientes"){
-                var proc_text = document.createElement('input');
-                proc_text.type = "text";
-                proc_text.id = "proc_" + k;
-                cell_proc.appendChild(proc_text);
+                var proc_input = document.createElement('input');
+                proc_input.type = "text";
+                proc_input.id = "proc_" + k;
+                cell_proc.appendChild(proc_input);
             } else {
-                var proc_ddl = document.createElement('select');
-                proc_ddl.id = "proc_" + k;
+                var proc_input = document.createElement('select');
+                proc_input.id = "proc_" + k;
                 var option2 = document.createElement('option');
                 option2.style = "display:none";
                 option2.text = option2.value = "";
-                proc_ddl.appendChild(option2);
+                proc_input.appendChild(option2);
                 var obra = snapshot.child($('#' + obra_ddl.id + " option:selected").val());
                 if(obra.val().num_procesos == 0){
                     var option = document.createElement('OPTION');
                     option.text = obra.val().nombre;
                     option.value = obra.val().nombre;
-                    proc_ddl.appendChild(option);
+                    proc_input.appendChild(option);
                 } else {
                     obra.child("procesos").forEach(function(procSnap){
                         var proceso = procSnap.val();
@@ -323,22 +324,22 @@ function generateDdls(cell_obra, cell_proc){
                             var option = document.createElement('OPTION');
                             option.text = proceso.clave;// + " (" + proceso.nombre + ")";
                             option.value = proceso.clave;
-                            proc_ddl.appendChild(option);
+                            proc_input.appendChild(option);
                         } else {
                             procSnap.child("subprocesos").forEach(function(subpSnap){
                                 var subproc = subpSnap.val();
                                 var option = document.createElement('OPTION');
                                 option.text = subproc.clave;// + " (" + subproc.nombre + ")";
                                 option.value = subproc.clave;
-                                proc_ddl.appendChild(option);
+                                proc_input.appendChild(option);
                             });
                         }
                     });
                 }
-                cell_proc.appendChild(proc_ddl);
+                cell_proc.appendChild(proc_input);
             }
         });
-        return [obra_ddl, proc_ddl];
+        return [obra_ddl, proc_input];
     });
 }
 
