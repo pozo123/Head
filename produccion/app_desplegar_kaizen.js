@@ -315,7 +315,7 @@ function createRow(proc,table,tipo){
 	var proy_pag = document.createElement('td');
 	proy_pag.id = cl + "_PROYECTOS_PAG";
 	proy_pag.innerHTML = proc.kaizen.PROYECTOS.PAG;
-	proy_pag.className = "celda " + editClass + " proyectos right";
+	proy_pag.className = "celda proyectos right";
 	row.appendChild(proy_pag);
 	var prod_sum_cuant = document.createElement('td');
 	prod_sum_cuant.id = cl + "_PRODUCCION_SUMINISTROS_CUANT";
@@ -325,12 +325,12 @@ function createRow(proc,table,tipo){
 	var prod_sum_odec = document.createElement('td');
 	prod_sum_odec.id = cl + "_PRODUCCION_SUMINISTROS_OdeC";
 	prod_sum_odec.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.OdeC;
-	prod_sum_odec.className = "celda " + editClass + " produccion";
+	prod_sum_odec.className = "celda produccion";
 	row.appendChild(prod_sum_odec);
 	var prod_sum_pag = document.createElement('td');
 	prod_sum_pag.id = cl + "_PRODUCCION_SUMINISTROS_PAG";
 	prod_sum_pag.innerHTML = proc.kaizen.PRODUCCION.SUMINISTROS.PAG;
-	prod_sum_pag.className = "celda " + editClass + " produccion";
+	prod_sum_pag.className = "celda produccion";
 	row.appendChild(prod_sum_pag);
 	var prod_cop_pre = document.createElement('td');
 	prod_cop_pre.id = cl + "_PRODUCCION_COPEO_PREC";
@@ -345,7 +345,7 @@ function createRow(proc,table,tipo){
 	var prod_cop_pag = document.createElement('td');
 	prod_cop_pag.id = cl + "_PRODUCCION_COPEO_PAG";
 	prod_cop_pag.innerHTML = proc.kaizen.PRODUCCION.COPEO.PAG;
-	prod_cop_pag.className = "celda " + editClass + " produccion right";
+	prod_cop_pag.className = "celda produccion right";
 	row.appendChild(prod_cop_pag);
 	var avance_pag = document.createElement('td');
 	avance_pag.id = cl + "_avance_pag";
