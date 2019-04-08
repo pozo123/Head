@@ -2,7 +2,7 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(8/4/19):
- - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag
+ - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal
  - app_rrhh_importar_trabajadores -> num_trabajadores_id
  - app_rrhh_horas_extra -> sumar totales/impuestos y cargar bien datos
  - app_rrhh_pagos_diversos -> generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma
