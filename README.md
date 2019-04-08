@@ -68,6 +68,8 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - Titulos de obra en catalogo de proceso en negritas y mas grandes
+ - ver que chingados con los calendarios en produccion
  - Semanas quebradas en diversos al distribuir, también Atención al cliente, no puede entrar al Kaizen
  - Hablar con Hector sobre rama_bd_destajistas
  - Checar proceso "Parado" y "Atencion a Clientes" al guardar en kaizen en pagos pagadora 
