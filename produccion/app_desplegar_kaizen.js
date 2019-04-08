@@ -253,11 +253,11 @@ function addProfitNeto(obra, table){
 	row.className = "row_data rowTotal";
 	row.id = "row_profit_neto_" + obra.clave;
 	var neto = document.createElement('td');
-	neto.id = obra_clave + "_PROFIT_PROG_NETO";
 	neto.innerHTML = "PROFIT NETO";
 	neto.colSpan = 8;
 	row.appendChild(neto);
 	var profit_neto = document.createElement('td');
+	profit_neto.id = obra_clave + "_PROFIT_PROG_NETO";
 	profit_neto.innerHTML = formatMoney(obra.kaizen.PROFIT.PROG.BRUTO.toFixed(2));
 	profit_neto.colSpan = 11;
 	row.appendChild(profit_neto);
