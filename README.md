@@ -1,9 +1,12 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(8/4/19):
+ - app_rrhh_importar_trabajadores -> num_trabajadores_id
+ - app_rrhh_horas_extra -> sumar totales/impuestos y cargar bien datos
+ - app_rrhh_pagos_diversos -> generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma
+ 
  actualizados/nuevos(4/4/19):
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
- - app_rrhh_horas_extra ->terminar, corregir errores, y sumar en totales, impuestos y kaizen , terminada con nuevo uml, atencion a clientes
  - app_compras_odec_kaizen -> limpiar bien ddls
  - app_compras_pag_kaizen -> limpiar bien ddls
   
@@ -11,7 +14,6 @@ Depto. de Innovacion y Optimizacion
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
  - app_rrhh_editar_trabajadores -> como en biblioteca, necesita modal
- - app_rrhh_trabajadores -> Alta, nuevo doc
  
  actualizados/nuevos(25/3/19):
  - app_gestionar_supervisores -> empty con jquery
@@ -27,6 +29,8 @@ Depto. de Innovacion y Optimizacion
  - app_atributo
    
  Por probar:
+ - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos y kaizen, atencion a clientes
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
