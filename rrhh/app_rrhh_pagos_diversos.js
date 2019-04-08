@@ -207,10 +207,10 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
     id_label.innerHTML = trabajador.id_trabajador;
     id_label.id = "id_" + entradas;
     cell_id.appendChild(id_label);
+
     var nombre_label = document.createElement('label');
     nombre_label.innerHTML = trabajador.nombre;
     nombre_label.id = "nombre_" + entradas;
-
     cell_nombre.appendChild(nombre_label);
 
     var cant = document.createElement('input');
@@ -348,12 +348,14 @@ $('#' + id_guardar_button_diversos).click(function(){
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     var diverso = $('#' + id_diverso_ddl_diversos + " option:selected").val();
     var suma_diversos = {};
-    for(i=0;i<entradas;i++){
-        suma_diversos[i] = 0;
-    }
+
     for(i=0;i<entradas;i++){
         var id_trabajador = document.getElementById("id_" + i).innerHTML;
-        suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
+        if(!suma_diversos[id_trabajador]){
+            suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val());
+        } else {
+            suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
+        }
         var dist = true;
         var obr = "NA";
         var pro = "NA";
