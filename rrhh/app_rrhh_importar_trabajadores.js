@@ -7,6 +7,8 @@ var rama_bd_trabajadores = "produccion/trabajadores";
 var excelSeleccionado = "";
 var fileName = "";
 
+var id_max = 0;
+
 $('#' + id_file_importarTrabajadores).on("change",(function(event) {
     //console.log("hola"); 
     excelSeleccionado = event.target.files[0];
@@ -57,7 +59,7 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
                         }
                         if(!json[key][i]){
                             pointer[k] = "";
-                        } else {
+                        } else {
                             pointer[k] = json[key][i];
                         }
                     } else {
@@ -76,13 +78,22 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
         firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
             var trabajadores = snapshot.val();
             for(key in resultado){
-                if(resultado[key]){
+                if(key > id_max){
+                    id_max = key;
+                }
+                if(trabajadores[key]){
                     console.log("El trabajador con ID " + key + " ya existe en la base de datos");
                 } else {
                     console.log(rama_bd_trabajadores + "/" + key + ": " + resultado[key]);
                     firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
                 }
             }
+            firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").once('value').then(function(snapshot){
+                var num_trabajadores = parseInt(snapshot.val());
+                if(id_max > num_trabajadores){
+                    firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_max);
+                }
+            });
         });
     };
     reader.readAsArrayBuffer(excelSeleccionado);
