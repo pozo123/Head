@@ -2,6 +2,7 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(8/4/19):
+ - app_procesos -> se subía un kaiz a num_subprocesos (!?)
  - app_rrhh_pagos_nomina -> Nueva app (:
  - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal
  - app_rrhh_importar_trabajadores -> num_trabajadores_id
