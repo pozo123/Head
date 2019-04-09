@@ -13,6 +13,21 @@
     - nickname: ? string
     - email: string
 - administracion:
+   - pagos
+      - obra (por nombre)
+         - total
+         - procesos: (si obra simple, directo "pagos" con todo lo que contiene)
+            - proceso (por nombre):
+               - total
+               - subprocesos: (si proc simple, directo "pagos" con todo lo que contiene)
+                  - subproceso (por nombre):
+                     - total
+                     - pagos
+                        - cu (por push)
+                           - monto
+                           - fecha_pago
+                           - fecha_registro
+                           - formato ("estimaciones" o "anticipos")
    - investime
       - registros
          - año (ej 2019)
