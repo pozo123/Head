@@ -288,7 +288,7 @@
          - nombre
          - telefono
          - cuenta_bancaria
-         - especialidad
+         - especialidad: ("IE"/"IHS"/"Ambas")
   - obras: 
       - AFECTAN: app_obras_prod app_procesos
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
