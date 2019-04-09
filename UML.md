@@ -13,7 +13,7 @@
     - nickname: ? string
     - email: string
 - administracion:
-   - pagos
+   - flujos
       - obra (por nombre)
          - total
          - procesos: (si obra simple, directo "pagos" con todo lo que contiene)
@@ -22,8 +22,10 @@
                - subprocesos: (si proc simple, directo "pagos" con todo lo que contiene)
                   - subproceso (por nombre):
                      - total
-                     - pagos
+                     - ingresos
                         - cu (por push)
+                           - folio
+                           - tipo_pago: ("recibo" o "factura")
                            - monto
                            - fecha_pago
                            - fecha_registro
