@@ -476,6 +476,25 @@ $('#' + id_terminar_button_diversos).click(function(){
 
 function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
     var asistencias = {asistencias: 0};
+    var lastDay = new Date(year,11,31);
+    if(week == getWeek(lastDay.getTime().getTime())[0] && lastDay.getDay() != 3){
+        var year_siguiente = year + 1;
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/lunes").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/martes").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/miercoles").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/jueves").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/viernes").val());
+    }
+    if(week == 1 && new Date(year,0,1).getDay() != 4){
+        var year_anterior = year - 1;
+        var last_week = getWeek(new Date(year_anterior,11,31).getTime())[0];
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_anterior + "/" + last_week + "/lunes").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_anterior + "/" + last_week + "/martes").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_anterior + "/" + last_week + "/miercoles").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_anterior + "/" + last_week + "/jueves").val());
+        asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_anterior + "/" + last_week + "/viernes").val());
+        distribuyeEnAsistencias(monto, trabSnap, year_anterior, last_week, diverso);
+    }
     asistenciaDia(asistencias, trabSnap.child("nomina/" + year + "/" + week + "/lunes").val());
     asistenciaDia(asistencias, trabSnap.child("nomina/" + year + "/" + week + "/martes").val());
     asistenciaDia(asistencias, trabSnap.child("nomina/" + year + "/" + week + "/miercoles").val());
@@ -551,17 +570,23 @@ function sumaMOKaizen(query,cantidad){
     });
 }
 
-function asistenciaDia(asistencias, dia){
-    var proc = dia.proceso;
-    if(dia.proceso == "Parado"){
-        proc = "MISC";
-    }
+function asistenciaSimpleDiversos(asistencias, dia){
     if(dia.asistencia){
         if(asistencias["asistencias"]){
             asistencias["asistencias"] = asistencias["asistencias"] + 0.2;
         } else {
             asistencias["asistencias"] = 0.2;
-        }
+        }   
+    }
+}
+
+function asistenciaDia(asistencias, dia){
+    var proc = dia.proceso;
+    if(dia.proceso == "Parado"){
+        proc = "MISC";
+    }
+    asistenciaSimpleDiversos(asistencias, dia);
+    if(dia.asistencia){
         if(dia.obra == proc){
             if(asistencias[dia.obra]) {
                 asistencias[dia.obra] = asistencias[dia.obra] + 0.2;
