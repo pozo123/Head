@@ -57,8 +57,10 @@ Depto. de Innovacion y Optimizacion
 ARTURO:
  - en app_principal.js linea 115 cambiar rama_bd_inges por rama_bd_personal
  - Desplegar Kaizen: TODO en colores por columna, sin el negro
+ - Titulos de obra en catalogo de proceso en negritas y mas grandes
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
  - cambiar avance "prog" por "pag" en desplegar kaizen
+ - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
  - Clases en css para avance en rojo y prec/cuant en gris
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Ddl para navegar entre pestañas de areas
@@ -73,19 +75,20 @@ ARTURO:
     - app_distribucion_supervisores (los pagos de la pagadora)
     - app_gestionar_supervisores (las obras asignadas)
     - app_rrhh_trabajadores
+    - app_destajista
+    - app_pago_nomina
  - Actualizar:
     
 DIEGO:
- - Titulos de obra en catalogo de proceso en negritas y mas grandes
- - Semanas quebradas en diversos al distribuir
- - Hablar con Hector sobre rama_bd_destajistas
+ - app_admon_pago_anticipo
+ - app_admon_pago_estimacion
+ - app_prod_entrada_estimacion
  - Todo lo de Gantt
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
  - Agregar terminado a obra_magico (en el alta pero tambien usar app_atributo)
  - diversos en bd, alta, editar, etc, hacer todo en una tabla
- - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
     - corregir un error
