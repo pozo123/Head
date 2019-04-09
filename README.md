@@ -4,7 +4,8 @@ Depto. de Innovacion y Optimizacion
  actualizados/nuevos(9/4/19):
  - app_rrhh_pagos_diversos -> semana quebrada
  - app_procesos -> kaiz en num_procesos
-
+ - app_destajista -> Nueva app (3 textfields, 2 checkbox y un botón)
+ 
  actualizados/nuevos(8/4/19):
  - app_rrhh_pagos_nomina -> Nueva app (:
  - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal
