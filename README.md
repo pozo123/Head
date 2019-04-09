@@ -55,6 +55,7 @@ Depto. de Innovacion y Optimizacion
 
 ARTURO:
  - en app_principal.js linea 115 cambiar rama_bd_inges por rama_bd_personal
+ - Desplegar Kaizen: TODO en colores por columna, sin el negro
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
  - cambiar avance "prog" por "pag" en desplegar kaizen
  - Clases en css para avance en rojo y prec/cuant en gris
