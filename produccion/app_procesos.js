@@ -217,7 +217,6 @@ $('#' + id_agregar_procesos).click(function() {
                     firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/procesos/" + cl).set(proceso);
                     firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/num_procesos").set(num_proc);
                     firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/" + cl + "/kaizen").set(kaiz);
-                    firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/num_procesos/kaizen").set(kaiz);
                     if(f_f > obra.fechas.fecha_final_teorica){
                         firebase.database().ref(rama_bd_obras_prod + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
                         firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/fechas/fecha_final_teorica").set(f_f);
