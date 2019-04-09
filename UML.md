@@ -286,9 +286,9 @@
       - SUSCRIBEN:
       - destajista: (por nombre)
          - nombre
-         - year:
-            - semana: 
-               - ?
+         - telefono
+         - cuenta_bancaria
+         - especialidad
   - obras: 
       - AFECTAN: app_obras_prod app_procesos
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
