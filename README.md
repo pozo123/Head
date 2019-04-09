@@ -1,13 +1,15 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(9/4/19):
+ - app_rrhh_pagos_diversos -> semana quebrada
+
  actualizados/nuevos(8/4/19):
  - app_procesos -> se subía un kaiz a num_subprocesos (!?)
  - app_rrhh_pagos_nomina -> Nueva app (:
  - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal
  - app_rrhh_importar_trabajadores -> num_trabajadores_id
  - app_rrhh_horas_extra -> sumar totales/impuestos y cargar bien datos
- - app_rrhh_pagos_diversos -> generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma, ya no al kaizen si atencion a clientes
  
  actualizados/nuevos(4/4/19):
  - app_compras_odec_kaizen -> limpiar bien ddls
@@ -33,7 +35,7 @@ Depto. de Innovacion y Optimizacion
    
  Por probar:
  - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos y kaizen, atencion a clientes
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes, generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
