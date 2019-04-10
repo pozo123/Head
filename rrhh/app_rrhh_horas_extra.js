@@ -190,7 +190,7 @@ function loadHorasExtra(year,semana,procesos,count_proc){
             childSnapshot.child('horas_extra').forEach(function(horasSnap){
                 //AQUI asincronia?
                 firebase.database().ref(rama_bd_trabajadores + "/" + childSnapshot.key).once('value').then(function(trabSnap){
-                    cargaRenglonHorasExtra(snapshot.val(), procesos, false, horasSnap.val().fecha, horasSnap.val().horas, horasSnap.val().proceso);
+                    cargaRenglonHorasExtra(trabSnap.val(), procesos, false, horasSnap.val().fecha, horasSnap.val().horas, horasSnap.val().proceso);
                 });
             });
         });
@@ -269,7 +269,7 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     horas.placeholder = "Horas trabajadas";
     cell_horas.appendChild(horas);
 
-    sueldos_base[entradas] = parseFloat(trabajador.sueldos_base);
+    sueldos_base[entradas] = parseFloat(trabajador.sueldo_base);
     if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
         var textField = document.createElement('input');
         textField.type = "text";
