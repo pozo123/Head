@@ -5,6 +5,7 @@ Depto. de Innovacion y Optimizacion
  - app_asistencia -> if terminada, impuestos y total de table checo si existen
  - app_rrhh_horas_extra -> trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
  - app_rrhh_pagos_diversos -> ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
+ - app_desplegar_kaizen -> borders entre suministros/copeo y estimaciones/anticipos
 
  actualizados/nuevos(9/4/19):
  - app_destajista -> Nueva app (3 textfields, 2 checkbox y un botón)
