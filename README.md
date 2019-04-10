@@ -1,21 +1,14 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(10/4/19):
+ - app_asistencia -> if terminada, impuestos y total de table checo si existen
+ - app_rrhh_horas_extra -> trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
+ - app_rrhh_pagos_diversos -> ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
+
  actualizados/nuevos(9/4/19):
- - app_rrhh_pagos_diversos -> semana quebrada - CHECK
- - app_procesos -> kaiz en num_procesos- CHECK
  - app_destajista -> Nueva app (3 textfields, 2 checkbox y un botón)
- 
- actualizados/nuevos(8/4/19):
- - app_rrhh_pagos_nomina -> Nueva app (: CHECK
- - app_desplegar_kaizen -> bloqueo de columnas odec, sum pag y proy pag, profit neto label el id estaba mal CHECK
- - app_rrhh_importar_trabajadores -> num_trabajadores_id CHECK 
- - app_rrhh_horas_extra -> sumar totales/impuestos y cargar bien datos CHECK
- 
- actualizados/nuevos(4/4/19):
- - app_compras_odec_kaizen -> limpiar bien ddls CHECK
- - app_compras_pag_kaizen -> limpiar bien ddls CHECK
-  
+   
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
  - app_distribucion_supervisores -> pda, meter datos y revisar
@@ -35,6 +28,7 @@ Depto. de Innovacion y Optimizacion
  - app_atributo
    
  Por probar:
+ - app_pagos_nomina
  - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos y kaizen, atencion a clientes
  - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes, generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
@@ -48,9 +42,9 @@ Depto. de Innovacion y Optimizacion
  - eliminar en bibliotecas score
 
  Errores:
+ - profit neto y total tiene ####.##.00 en desplegar kaizen
  - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
- - Graphs central park misc tiene horas en ihs pero no hay registros -> seguro por NAs
  - registros con horas 0
  - falta empty a muchos ddls antes de cargarlos
 
