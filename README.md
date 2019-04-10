@@ -2,6 +2,7 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(10/4/19):
+ - app_funciones -> formatMoney y deformatMoney
  - app_asistencia -> if terminada, impuestos y total de table checo si existen
  - app_rrhh_horas_extra -> trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
  - app_rrhh_pagos_diversos -> ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
