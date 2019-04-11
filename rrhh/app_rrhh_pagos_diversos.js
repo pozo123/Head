@@ -235,7 +235,7 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
             }
             cell_obra.id = "cell_obra_" + consec;
             var cell_proc = row.insertCell(5);
-            cell_proc = "cell_proc_" + consec;
+            cell_proc.id = "cell_proc_" + consec;
             generateDdls(cell_obra, cell_proc); 
         } else {
             row.deleteCell(4);
@@ -256,7 +256,7 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
             }
             cell_obra.id = "cell_obra_" + consec;
             var cell_proc = row.insertCell(5);
-            cell_proc = "cell_proc_" + consec;
+            cell_proc.id = "cell_proc_" + consec;
             ddls = generateDdls(cell_obra, cell_proc);
             var obra = ddls[0];
             var proc = ddls[1];
