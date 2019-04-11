@@ -355,10 +355,19 @@
             - semana (por num)
                - OdeC (por clave)
                   - clave
+                  - pad: pad*
                   - precio_ppto
                   - precio_pag
                   - pagada: bool
                   - proveedor
+                  - pagos:
+                     - pago (por push)
+                        - pagada
+                        - precio_pag
+                        - pad: pad*
+                        - timestamps:
+                           - pago
+                           - registro_pago
                   - timestamps:
                      - OdeC
                      - registro_OdeC
@@ -383,6 +392,7 @@
 - pad:
   - uid
   - timestamp
+  
 - kaizen: (Mayúsculas en caso de que haga falta llenarlas desde un excel)
   - PROYECTOS:
      - PPTO -> Admin/prod
