@@ -327,6 +327,14 @@
             - fecha_final_teorica
 - clientes
 - proyectos
+   - cuantificaciones
+      - obra (por nombre)
+         - year
+            - semana
+               - cuantificacion (por push)
+                  - monto
+                  - descripcion
+                  - pad: pad*
 - info_web
 - rrhh
    - colaboradores
