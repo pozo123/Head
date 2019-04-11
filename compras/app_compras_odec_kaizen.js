@@ -106,6 +106,7 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 		var odec = {
 			precio_ppto: $('#' + id_cantidad_odec_kaizen).val(),
 			clave: $('#' + id_clave_odec_kaizen).val(),
+			pad: pistaDeAuditoria(),
 			precio_pag: 0,
 			pagada: false,
 			proveedor: $('#' + id_proveedor_odec_kaizen).val(),
