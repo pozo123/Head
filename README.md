@@ -29,7 +29,7 @@ Depto. de Innovacion y Optimizacion
  Por probar:
  - app_pagos_nomina
  - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos y kaizen, atencion a clientes
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, totales, impuestos y KAIZEN y meter ppr en misc, terminada con nuevo uml, atencion a clientes, generateDdls no declaraba proc hasta cambio, a ver si ahora funciona, suma, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN y meter ppr en misc, terminada con nuevo uml, ddls proc, suma, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
