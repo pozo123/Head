@@ -3,8 +3,9 @@ Depto. de Innovacion y Optimizacion
 
 
  actualizados/nuevos(11/4/19):
+ - app_proy_cuant_kaizen -> NECESITA UN TEXTFIELD NUEVO (id = "descripcionCuant") pda, rama_bd_cuantificaciones y totales
  - app_funciones -> deformatMoney robusto a $
- - app_desplegar_kaizen -> si haces click en proy se pone el valor en horas, no en $, format y deformatMoney
+ - app_desplegar_kaizen -> si haces click en proy se pone el valor en horas, no en $, format y deformatMoney, deshabilitar pag de admon
  - app_rrhh_importar_trabajadores -> num_id? no jalaba y alert
  - app_compras_asigna_contrato -> nueva app
  - app_compras_pag_kaizen -> groups en vez de ddls, pad
