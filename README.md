@@ -11,6 +11,7 @@ Depto. de Innovacion y Optimizacion
  - app_rrhh_horas_extra -> Había espacios en un query, "obraS_asignadaS" -> obra_asignada, asincronía totales. console para ver por que No se cargan totales ni impuestos.
  - app_rrhh_pagos_diversos -> crear los ddls tenían un _ extra, if(bool) -> if(bool == true)
  - app_admon_pago_kaizen -> nueva app + pad
+ - app_rrhh_pago_nomina -> datatable if terminada
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
