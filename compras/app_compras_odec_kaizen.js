@@ -23,7 +23,6 @@ $('#' + tab_odec_kaizen).click(function(){
 	jQuery('#' + id_fecha_odec_kaizen).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
-	$('#' + id_obra_ddl_odec_kaizen).empty();
     var select = document.getElementById(id_obra_ddl_odec_kaizen);
     var option = document.createElement('option');
     option.style = "display:none";
@@ -60,9 +59,7 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 
 		    snapshot.child('procesos').forEach(function(childSnap){
 		    	var proc = childSnap.val();
-		    	var contrato = proc.nombre
-		    	if(proc.contrato)
-		    		contrato = proc.contrato;
+		    	var contrato = proc.contrato ? proc.contrato : proc.nombre;
 		    	var option2 = document.createElement('OPTION');
 		        option2.text = proc.clave + " (" + contrato + ")";
 		        option2.value = proc.clave;
@@ -91,8 +88,9 @@ $("#" + id_proc_ddl_odec_kaizen).change(function(){
 		    select.appendChild(option);
 		    snapshot.child('subprocesos').forEach(function(childSnap){
 		    	var subp = childSnap.val();
+		    	var contrato = subp.contrato ? subp.contrato : subp.nombre;
 		    	var option2 = document.createElement('OPTION');
-		        option2.text = subp.clave + " (" + subp.nombre + ")";
+		        option2.text = subp.clave + " (" + contrato + ")";
 		        option2.value = subp.clave;
 		        select.appendChild(option2);
 		    });
