@@ -68,10 +68,11 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
     $(".row_data").remove();
 	const editor = new SimpleTableCellEditor(id_datatable_desplegar_kaizen);
 	editor.SetEditableClass(editable);
-	$('#' + id_datatable_desplegar_kaizen).on("cell:cell:onEditEnter", function (element, oldValue) {  
+	$('#' + id_datatable_desplegar_kaizen).on("cell:onEditEnter", function (element, oldValue) {  
 		var id_elem = element.element.id;
 		if(id_elem.substring(id_elem.length - 14,id_elem.length) == "_PROYECTOS_PAG" || id_elem.substring(id_elem.length - 15,id_elem.length) == "_PROYECTOS_PPTO"){
 			$('#' + id_elem).attr("placeholder", "Ingresa valor en horas");
+			$('#' + id_elem).val(deformatMoney(element.oldValue)/parseFloat($('#' + id_precio_score_desplegar_kaizen).val()));
 		}
 	});
 	$('#' + id_datatable_desplegar_kaizen).on("cell:edited", function (element, oldValue, newValue) {  
@@ -81,6 +82,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			alert("El valor ingresado debe ser un numero");
 		} else { 
 			var nV = element.newValue;
+			var oV = deformatMoney(element.oldValue);
 			var id_elem = element.element.id;
 			var pointer = json_kaizen;
 			var path = id_elem.split("_");
@@ -98,7 +100,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
 					nV = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
 					console.log("Nv: " + nV)
-					document.getElementById(id_elem).innerHTML = parseFloat(nV);
+					document.getElementById(id_elem).innerHTML = formatMoney(parseFloat(nV));
 				}
 				var pointer_proc = json_kaizen[clave_proc]["kaizen"];
 				pointer = pointer[clave_proc]["subprocesos"][path[1]]["kaizen"];
@@ -108,14 +110,14 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 					pointer_obra = pointer_obra[path[i]];
 					pointer = pointer[path[i]];
 				}
-				pointer_proc[path[path.length - 1]] = parseFloat(pointer_proc[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(nV);
-				document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML = parseFloat(document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(nV);
+				pointer_proc[path[path.length - 1]] = parseFloat(pointer_proc[path[path.length - 1]]) - parseFloat(oV) + parseFloat(nV);
+				document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML = formatMoney(parseFloat(document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML) - parseFloat(oV) + parseFloat(nV));
 			} else {
 				clave_elem = path[0];
 				if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
 					nV = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
 					console.log("Nv: " + nV)
-					document.getElementById(id_elem).innerHTML = parseFloat(nV);
+					document.getElementById(id_elem).innerHTML = formatMoney(parseFloat(nV));
 				}
 				pointer = pointer[path[0]];
 				pointer = pointer["kaizen"];
@@ -126,8 +128,8 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				}
 			}
 			pointer[path[path.length - 1]] = nV;
-			pointer_obra[path[path.length - 1]] = parseFloat(pointer_obra[path[path.length - 1]]) - parseFloat(element.oldValue) + parseFloat(nV);
-			document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = parseFloat(document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(element.oldValue) + parseFloat(nV);
+			pointer_obra[path[path.length - 1]] = parseFloat(pointer_obra[path[path.length - 1]]) - parseFloat(oV) + parseFloat(nV);
+			document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = formatMoney(parseFloat(document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(oV) + parseFloat(nV));
 			
 			if(id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
 				calculaAvance("pag",pointer_kaiz,clave_elem);
@@ -444,7 +446,7 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 		var new_profit_neto = new_profit * 0.6;
 		pointer_kaiz["PROFIT"]["PROG"]["BRUTO"] = new_profit;
 		pointer_kaiz["PROFIT"]["PROG"]["NETO"] = new_profit_neto;
-		document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = (new_profit).toFixed(2);
+		document.getElementById(clave_elem + "_PROFIT_PROG_BRUTO").innerHTML = formatMoney(new_profit);
 		/*} else if(cambio == "profit"){
 			var new_venta = costos/(0.8-parseFloat(pointer_kaiz["PROFIT"]["PROG"]["BRUTO"])/100);
 			var new_venta_ant = new_venta * venta_anticipo / venta;
@@ -458,7 +460,7 @@ function calculaProfit(tipo, pointer_kaiz, clave_elem/*, cambio*/){
 		var venta = parseFloat(pointer_kaiz["ADMINISTRACION"]["ESTIMACIONES"]["PAG"]) + parseFloat(pointer_kaiz["ADMINISTRACION"]["ANTICIPOS"]["PAG"]);
 		var new_profit = venta * 0.8 - proy - sum - cop;
 		pointer_kaiz["PROFIT"]["REAL"]["BRUTO"] = new_profit;
-		document.getElementById(clave_elem + "_PROFIT_REAL_BRUTO").innerHTML = (new_profit).toFixed(2);
+		document.getElementById(clave_elem + "_PROFIT_REAL_BRUTO").innerHTML = formatMoney(new_profit);
 	}
 }
 
