@@ -334,6 +334,7 @@
                - cuantificacion (por push)
                   - monto
                   - descripcion
+                  - proceso (clave de proc, subp u obra)
                   - pad: pad*
 - info_web
 - rrhh
