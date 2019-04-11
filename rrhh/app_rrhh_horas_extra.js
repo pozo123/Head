@@ -391,12 +391,12 @@ $('#' + id_terminar_button_horasExtra).click(function(){
                         var horas_extra = heSnap.val();
                         var proc = horas_extra.proceso;
                         var cantidad = horas_extra.horas * trabSnap.val().sueldo_base * (2/48) * 1.16;
-                        var obra = obraSnap.val().nombre;
+                        var obra = obraSnap.key;
                         if(obra != "Atencion a Clientes"){
                             sumaMOKaizenHE(obra,cantidad);
                             if(proc != obra){
                                 var path = proc.split("-");
-                                if(path.length() > 1){
+                                if(path.length > 1){
                                     sumaMOKaizenHE(obra + "/procesos/ " + path[0],cantidad);
                                     sumaMOKaizenHE(obra + "/procesos/ " + path[0] + "/subprocesos/" + proc,cantidad);
                                 } else {
