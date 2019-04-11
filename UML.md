@@ -24,6 +24,7 @@
                      - total
                      - ingresos
                         - cu (por push)
+                           - pad: pad*
                            - folio
                            - tipo_pago: ("recibo" o "factura")
                            - monto
@@ -379,6 +380,9 @@
                   - alcance
                   - clave
                   
+- pad:
+  - uid
+  - timestamp
 - kaizen: (Mayúsculas en caso de que haga falta llenarlas desde un excel)
   - PROYECTOS:
      - PPTO -> Admin/prod
