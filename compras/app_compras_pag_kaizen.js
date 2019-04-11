@@ -164,6 +164,7 @@ $('#' + id_actualizar_valor_pag_suministros_kaizen).click(function(){
 		var pag_suministros = {
 			precio_pag: $('#' + id_cantidad_pag_suministros_kaizen).val(),
 			pagada: true,
+			pad: pistaDeAuditoria(),
 			timestamps: {
 				pago: new Date($('#' + id_fecha_pag_suministros_kaizen).val()).getTime(),
 				registro_pago: new Date().getTime(),
