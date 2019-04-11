@@ -50,6 +50,19 @@ function calculaUtilidad(costos, criterio, valor){
     //return profitCantidad;
   }
 }
+
+function downloadObjectAsJson(exportObj, exportName){
+  var d = new Date();
+  exportName = exportName == undefined ? "respaldoHEAD-" + d.getDate() + "-" + parseInt(d.getMonth() + 1) + "-" + d.getFullYear() : exportName;
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href",     dataStr);
+  downloadAnchorNode.setAttribute("download", exportName + ".json");
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
 //input un dia en ms
 //regresa un array [week, year]
 //var week = getWeek(dia_en_ms)[0];
