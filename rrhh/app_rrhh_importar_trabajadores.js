@@ -88,12 +88,10 @@ $('#' + id_button_guardar_importarTrabajadores).on("click",function() {
                     firebase.database().ref(rama_bd_trabajadores + "/" + key).set(resultado[key]);
                 }
             }
-            firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").once('value').then(function(snapshot){
-                var num_trabajadores = parseInt(snapshot.val());
-                if(id_max > num_trabajadores){
-                    firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_max);
-                }
-            });
+            var num_trabajadores = parseInt(trabajadores.num_trabajadores_id);
+            if(id_max > num_trabajadores){
+                firebase.database().ref(rama_bd_trabajadores + "/num_trabajadores_id").set(id_max);
+            }
         });
     };
     reader.readAsArrayBuffer(excelSeleccionado);
