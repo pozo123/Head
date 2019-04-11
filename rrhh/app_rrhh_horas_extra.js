@@ -349,8 +349,9 @@ function guarDarHorasExtra(){
                     existe = true;
             });
             if(!existe){
-                //si es nuevo pero no le metí ninguna chamba no lo guardo
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
+                if($('#horas_' + i).val() != ""){
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
+                }
             }
         });
         //Sumar $$ a lo que ya está en total horas en la base de datos (trabajadores)
