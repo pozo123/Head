@@ -124,9 +124,6 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
         var nomina = snapshot.val();
         var terminada = snapshot.val().horas_extra_terminadas;
         var obra = nomina[$("#" + id_obra_ddl_horasExtra + " option:selected").val()];
-        console.log(nomina)
-        console.log($("#" + id_obra_ddl_horasExtra + " option:selected").val())
-        console.log(obra)
         if(terminada){
             //Cargar tabla con datos
             var datos_horasExtra = [];
@@ -306,6 +303,10 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
 }
 
 $('#' + id_guardar_button_horasExtra).click(function(){
+    guardarHorasExtra();
+});
+
+function guarDarHorasExtra(){
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     var obra = $('#' + id_obra_ddl_horasExtra + " option:selected").val();
@@ -339,7 +340,7 @@ $('#' + id_guardar_button_horasExtra).click(function(){
         firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
 
         //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas").once('value').then(function(snapshot){
+        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
             var existe = false;
             var i = 0;
             snapshot.forEach(function(childSnap){
@@ -349,7 +350,7 @@ $('#' + id_guardar_button_horasExtra).click(function(){
             });
             if(!existe){
                 //si es nuevo pero no le metí ninguna chamba no lo guardo
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obra);
+                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
             }
         });
         //Sumar $$ a lo que ya está en total horas en la base de datos (trabajadores)
@@ -360,6 +361,10 @@ $('#' + id_guardar_button_horasExtra).click(function(){
                 horas_previas = snapshot.val();
             }
             var horas_nuevas = parseFloat(horas_previas) + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;
+            console.log("horas_previas: " + horas_previas);
+            console.log("sueldo_base: " + sueldos_base[i]);
+            console.log("horas: " + parseFloat($('#horas_' + i).val()));
+            console.log("horas_nuevas: " + horas_nuevas);
             firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
             var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
             firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
@@ -367,22 +372,25 @@ $('#' + id_guardar_button_horasExtra).click(function(){
     }
     //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina)
     //Checar asincronia
-    for(key in total_horas){
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").once('value').then(function(snapshot){
-            var horas_previas = 0;
-            if(snapshot.exists()){
-                horas_previas = snapshot.val();
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores").once('value').then(function(snapshot){
+        for(key in total_horas){
+            var horas_previas = snapshot.child(key + "/total_horas_extra");
+            if(!horas_previas.exists()){
+                horas_previas = 0;
+            } else {
+                horas_previas = horas_previas.val();
             }
             var horas_nuevas = parseFloat(horas_previas) + total_horas[key];
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").set(horas_nuevas);
             var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
-        });
-    }
+        }
+    });
     alert("Datos actualizados");
-});
+};
 
 $('#' + id_terminar_button_horasExtra).click(function(){
+    guardarHorasExtra();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_horasExtra + " option:selected").val() + "/" + $('#' + id_semana_ddl_horasExtra + " option:selected").val()).once('value').then(function(snapshot){
         snapshot.forEach(function(obraSnap){
             if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "asistencias_terminadas" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
@@ -397,10 +405,10 @@ $('#' + id_terminar_button_horasExtra).click(function(){
                             if(proc != obra){
                                 var path = proc.split("-");
                                 if(path.length > 1){
-                                    sumaMOKaizenHE(obra + "/procesos/ " + path[0],cantidad);
-                                    sumaMOKaizenHE(obra + "/procesos/ " + path[0] + "/subprocesos/" + proc,cantidad);
+                                    sumaMOKaizenHE(obra + "/procesos/" + path[0],cantidad);
+                                    sumaMOKaizenHE(obra + "/procesos/" + path[0] + "/subprocesos/" + proc,cantidad);
                                 } else {
-                                    sumaMOKaizenHE(obra + "/procesos/ " + proc,cantidad);
+                                    sumaMOKaizenHE(obra + "/procesos/" + proc,cantidad);
                                 }
                             }
                         }
