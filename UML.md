@@ -29,7 +29,7 @@
                            - monto
                            - fecha_pago
                            - fecha_registro
-                           - formato ("estimaciones" o "anticipos")
+                           - formato ("estimacion" o "anticipo")
    - investime
       - registros
          - año (ej 2019)
