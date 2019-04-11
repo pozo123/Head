@@ -1,15 +1,12 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
- actualizados/nuevos(10/4/19):
- - app_funciones -> CHECK formatMoney y deformatMoney
- - app_asistencia -> CHECK if terminada, impuestos y total de table checo si existen
- - app_rrhh_horas_extra -> CHECK trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
- - app_rrhh_pagos_diversos -> CHECK ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
- - app_desplegar_kaizen -> CHECK borders entre suministros/copeo y estimaciones/anticipos
 
- actualizados/nuevos(9/4/19):
- - app_destajista -> CHECK (en RRHH) Nueva app (3 textfields, 2 checkbox y un botón)
+ actualizados/nuevos(11/4/19):
+ - app_asistencia -> revisa impuestos antes de revisar impuestos.impuestos_asistencia
+ - app_rrhh_horas_extra -> length() era length y obraSnap.key en vez de val().nombre
+ - app_rrhh_pagos_diversos -> cell_proc.id, faltaba el .id, faltaba un snapshot.forEach() al cargar los existentes y el key del push en el ref del update
+ - app_destajistas -> alert  
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
@@ -44,7 +41,6 @@ Depto. de Innovacion y Optimizacion
  - eliminar en bibliotecas score
 
  Errores:
- - profit neto y total tiene ####.##.00 en desplegar kaizen
  - Gantt fecha inicial
  - Gantt no saca inicio (sem) pero sí final (sem)
  - registros con horas 0
@@ -52,6 +48,7 @@ Depto. de Innovacion y Optimizacion
 
 ARTURO:
  - en app_principal.js linea 115 cambiar rama_bd_inges por rama_bd_personal
+ - mover gantt abajo de kaizen
  - Desplegar Kaizen: TODO en colores por columna, sin el negro
  - Titulos de obra en catalogo de proceso en negritas y mas grandes
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
@@ -76,6 +73,8 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - desplegar kaizen lo del cambio de obra
+ - Definir Adic en obras simples
  - app_admon_pago_anticipo
  - app_admon_pago_estimacion
  - app_prod_entrada_estimacion
