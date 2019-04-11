@@ -1,8 +1,8 @@
 var id_obra_ddl_odec_kaizen = "obraDdlOdeC";
 var id_group_proc_odec_kaizen = "groupProcOdec"
-var id_proc_ddl_odec_kaizen = "procDdlOdeC";//TIENEN QUE IR HIDDEN
+var id_proc_ddl_odec_kaizen = "procDdlOdeC";
 var id_group_subp_odec_kaizen = "groupSubpOdec"
-var id_subp_ddl_odec_kaizen = "subpDdlOdeC";//TIENEN QUE IR HIDDEN
+var id_subp_ddl_odec_kaizen = "subpDdlOdeC";
 var id_fecha_odec_kaizen = "fechaOdeC";
 var id_clave_odec_kaizen = "claveOdeC";
 var id_cantidad_odec_kaizen = "cantidadOdeC";
@@ -18,8 +18,8 @@ $('#' + tab_odec_kaizen).click(function(){
 	$('#' + id_obra_ddl_odec_kaizen).empty();
     $('#' + id_proc_ddl_odec_kaizen).empty();
     $('#' + id_subp_ddl_odec_kaizen).empty();
-    $('#' + id_proc_ddl_odec_kaizen).addClass('hidden');
-    $('#' + id_subp_ddl_odec_kaizen).addClass('hidden');
+    $('#' + id_group_proc_odec_kaizen).addClass('hidden');
+    $('#' + id_group_subp_odec_kaizen).addClass('hidden');
 	jQuery('#' + id_fecha_odec_kaizen).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
@@ -42,7 +42,7 @@ $('#' + tab_odec_kaizen).click(function(){
 $("#" + id_obra_ddl_odec_kaizen).change(function(){
 	$('#' + id_proc_ddl_odec_kaizen).empty();
     $('#' + id_subp_ddl_odec_kaizen).empty();
-    $('#' + id_subp_ddl_odec_kaizen).addClass('hidden');
+    $('#' + id_group_subp_odec_kaizen).addClass('hidden');
 
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
@@ -60,8 +60,11 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 
 		    snapshot.child('procesos').forEach(function(childSnap){
 		    	var proc = childSnap.val();
+		    	var contrato = proc.nombre
+		    	if(proc.contrato)
+		    		contrato = proc.contrato;
 		    	var option2 = document.createElement('OPTION');
-		        option2.text = proc.clave + " (" + proc.nombre + ")";
+		        option2.text = proc.clave + " (" + contrato + ")";
 		        option2.value = proc.clave;
 		        select.appendChild(option2);
 		    });
