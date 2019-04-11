@@ -28,5 +28,6 @@ $('#' + id_registrar_button_destajista).click(function () {
     		especialidad: esp,
     	}
     	firebase.database().ref(rama_bd_destajista + "/" + $('#' + id_nombre_destajista).val()).set(destajista);
+        alert("Registro exitoso");
     }
 });
