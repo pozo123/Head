@@ -61,26 +61,58 @@ function loadSemanasPagoNomina(year){
 
 $('#' + id_semana_ddl_pago_nomina).change(function(){
 	trabajadores = [];
-	if($('#' + id_semana_ddl_pago_nomina + " option:selected").val()){
-		//DataTable AQUI falta
-	} else {
-		//Cargar tabla
-		headersPagoNomina();
-		var year = $('#' + id_year_ddl_pago_nomina + " option:selected").val();
-		var week = $('#' + id_semana_ddl_pago_nomina + " option:selected").text();
-		firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
-			snapshot.forEach(function(obraSnap){
-				if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "asistencias_terminadas" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
-					obraSnap.child("trabajadores").forEach(function(trabSnap){
-						//Si no existe ya, crealo.
-						if(!trabajadores[trabSnap.key]){
-							cargaRenglonPagoNomina(trabSnap);
-						}
-					});
-				}
+    var year = $('#' + id_year_ddl_pago_nomina + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_pago_nomina + " option:selected").val();
+	firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
+		var terminada = snapshot.val().terminada;
+		if(terminada){
+			//DataTable
+			var datos_pagoNomina = [];
+			firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+				snapshot.forEach(function(trabSnap){
+					var trabajador = trabSnap.val();
+					if(trabSnap.child("nomina/" + year + "/" + semana).exists()){
+						var nom = trabSnap.child("nomina/" + year + "/" + semana).val();
+						var subtotal = formatMoney(parseFloat(nom.total_asistencia) + parseFloat(nom.total_horas_extra) + parseFloat(nom.total_diversos));
+						var impuestos = formatMoney(parseFloat(nom.impuestos.impuestos_asistencia) + parseFloat(nom.impuestos.impuestos_horas_extra) + parseFloat(nom.impuestos.impuestos_diversos));
+						var total = formatMoney(parseFloat(nom.total));
+	                    datos_pagoNomina.push([trabSnap.key,trabajador.nombre,subtotal,impuestos,total]);
+					}
+				});
+	            $('#' + id_datatable_pago_nomina).removeClass('hidden');
+	            var tabla_procesos = $('#'+ id_datatable_pago_nomina).DataTable({
+	                destroy: true,
+	                data: datos_pagoNomina,
+	                dom: 'Bfrtip',
+	                buttons: ['excel'],
+	                columns: [
+	                    {title: "ID",width: 70},
+	                    {title: "NOMBRE",width: 150},
+	                    {title: "SUBTOTAL",width: 70},
+	                    {title: "IMPUESTOS",width: 70},
+	                    {title: "TOTAL",width: 70}
+	                ],
+	                language: idioma_espanol,
+	            }); 
 			});
-		});
-	}
+		} else {
+			//Cargar tabla
+			headersPagoNomina();
+			var year = $('#' + id_year_ddl_pago_nomina + " option:selected").val();
+			var week = $('#' + id_semana_ddl_pago_nomina + " option:selected").text();
+			firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
+				snapshot.forEach(function(obraSnap){
+					if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "asistencias_terminadas" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
+						obraSnap.child("trabajadores").forEach(function(trabSnap){
+							//Si no existe ya, crealo.
+							if(!trabajadores[trabSnap.key]){
+								cargaRenglonPagoNomina(trabSnap);
+							}
+						});
+					}
+				});
+			});
+		}
 });
 
 function cargaRenglonPagoNomina(trabSnap){
