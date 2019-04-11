@@ -6,7 +6,8 @@ Depto. de Innovacion y Optimizacion
  - app_asistencia -> revisa impuestos antes de revisar impuestos.impuestos_asistencia
  - app_rrhh_horas_extra -> length() era length y obraSnap.key en vez de val().nombre
  - app_rrhh_pagos_diversos -> cell_proc.id, faltaba el .id, faltaba un snapshot.forEach() al cargar los existentes y el key del push en el ref del update
- - app_destajistas (YA LA PASE A RRHH)-> alert  
+ - app_destajistas (YA LA PASE A RRHH)-> alert
+ - app_funciones -> downloadObjectAsJson
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
