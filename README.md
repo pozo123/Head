@@ -2,14 +2,14 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(10/4/19):
- - app_funciones -> formatMoney y deformatMoney
- - app_asistencia -> if terminada, impuestos y total de table checo si existen
- - app_rrhh_horas_extra -> trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
- - app_rrhh_pagos_diversos -> ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
- - app_desplegar_kaizen -> borders entre suministros/copeo y estimaciones/anticipos
+ - app_funciones -> CHECK formatMoney y deformatMoney
+ - app_asistencia -> CHECK if terminada, impuestos y total de table checo si existen
+ - app_rrhh_horas_extra -> CHECK trabSnap en vez de snapshot en cargaRenglon, "sueldo_base" en vez de "sueldoS_base"
+ - app_rrhh_pagos_diversos -> CHECK ids en generarDdls, asincronía, hay que checar lo de id_trabajador en guardar
+ - app_desplegar_kaizen -> CHECK borders entre suministros/copeo y estimaciones/anticipos
 
  actualizados/nuevos(9/4/19):
- - app_destajista -> Nueva app (3 textfields, 2 checkbox y un botón)
+ - app_destajista -> CHECK (en RRHH) Nueva app (3 textfields, 2 checkbox y un botón)
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
