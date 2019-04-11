@@ -18,8 +18,8 @@ $('#' + tab_pag_suministros_kaizen).click(function(){
 	$('#' + id_obra_ddl_pag_suministros_kaizen).empty();
     $('#' + id_proc_ddl_pag_suministros_kaizen).empty();
     $('#' + id_subp_ddl_pag_suministros_kaizen).empty();
-    $('#' + id_proc_ddl_pag_suministros_kaizen).addClass('hidden');
-    $('#' + id_subp_ddl_pag_suministros_kaizen).addClass('hidden');
+    $('#' + id_group_proc_pag_suministros_kaizen).addClass('hidden');
+    $('#' + id_group_subp_pag_suministros_kaizen).addClass('hidden');
 	jQuery('#' + id_fecha_pag_suministros_kaizen).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
@@ -42,7 +42,7 @@ $('#' + tab_pag_suministros_kaizen).click(function(){
 $("#" + id_obra_ddl_pag_suministros_kaizen).change(function(){
     $('#' + id_proc_ddl_pag_suministros_kaizen).empty();
     $('#' + id_subp_ddl_pag_suministros_kaizen).empty();
-    $('#' + id_subp_ddl_pag_suministros_kaizen).addClass('hidden');
+    $('#' + id_group_subp_pag_suministros_kaizen).addClass('hidden');
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_pag_suministros_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
 	    obra_global = obra;
