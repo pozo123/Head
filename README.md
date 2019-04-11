@@ -75,6 +75,8 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - Asistencias no cargan obras_asignadas
+ - alert en importar trabajadores
  - desplegar kaizen lo del cambio de obra
  - Definir Adic en obras simples
  - app_prod_entrada_estimacion
