@@ -3,11 +3,8 @@ Depto. de Innovacion y Optimizacion
 
 
  actualizados/nuevos(11/4/19):
- - app_asistencia -> revisa impuestos antes de revisar impuestos.impuestos_asistencia
- - app_rrhh_horas_extra -> length() era length y obraSnap.key en vez de val().nombre
- - app_rrhh_pagos_diversos -> cell_proc.id, faltaba el .id, faltaba un snapshot.forEach() al cargar los existentes y el key del push en el ref del update
- - app_destajistas (YA LA PASE A RRHH)-> alert
- - app_funciones -> downloadObjectAsJson
+ - app_rrhh_horas_extra -> Había espacios en un query, "obraS_asignadaS" -> obra_asignada, asincronía totales. console para ver por que No se cargan totales ni impuestos.
+ - app_rrhh_pagos_diversos -> crear los ddls tenían un _ extra, if(bool) -> if(bool == true)
  - app_admon_pago_kaizen -> nueva app
    
  actualizados/nuevos(2/4/19):
@@ -30,8 +27,8 @@ Depto. de Innovacion y Optimizacion
    
  Por probar:
  - app_pagos_nomina
- - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos y kaizen, atencion a clientes
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN y meter ppr en misc, terminada con nuevo uml, ddls proc, suma, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
+ - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos, atencion a clientes
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN y meter ppr en misc, terminada con nuevo uml, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
