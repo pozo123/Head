@@ -3,6 +3,8 @@ Depto. de Innovacion y Optimizacion
 
 
  actualizados/nuevos(11/4/19):
+ - app_compras_pag_kaizen -> groups en vez de ddls
+ - app_compras_odec_kaizen -> groups en vez de ddls, num contrato en ddl
  - app_asistencia -> carga también a los que tengan la obra como asingada
  - app_rrhh_horas_extra -> Había espacios en un query, "obraS_asignadaS" -> obra_asignada, asincronía totales. console para ver por que No se cargan totales ni impuestos.
  - app_rrhh_pagos_diversos -> crear los ddls tenían un _ extra, if(bool) -> if(bool == true)
