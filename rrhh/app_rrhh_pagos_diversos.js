@@ -247,7 +247,7 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
 
     if(!nuevo){
         $("#" + cant.id).val(cantidad_in);
-        if(distribuible_in){
+        if(distribuible_in == true){
             check.checked = true;
         } else {
             check.checked = false;
@@ -289,7 +289,7 @@ function generateDdls(cell_obra, cell_proc){
     option2.text = option2.value = "";
     obra_ddl.appendChild(option2);
     var k = cell_obra.id.substring(cell_obra.id.length - 2, cell_obra.id.length);
-    if(k.substring(0,1) == "0"){
+    if(k.substring(0,1) == "_"){
         k = k.substring(1,2);
     }
     obra_ddl.id = "obra_" + k;
@@ -396,7 +396,7 @@ $('#' + id_guardar_button_diversos).click(function(){
 
             //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
             if(obr != "NA"){
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas").once('value').then(function(snapshot){
+                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
                     var existe = false;
                     var i = 0;
                     snapshot.forEach(function(childSnap){
@@ -406,7 +406,7 @@ $('#' + id_guardar_button_diversos).click(function(){
                     });
                     if(!existe){
                         //si es nuevo pero no le metí ninguna chamba no lo guardo
-                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obras_asignadas/" + i).set(obr);
+                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obr);
                     }
                 });
             }
