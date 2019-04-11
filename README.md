@@ -3,6 +3,7 @@ Depto. de Innovacion y Optimizacion
 
 
  actualizados/nuevos(11/4/19):
+ - app_compras_asigna_contrato -> nueva app
  - app_compras_pag_kaizen -> groups en vez de ddls
  - app_compras_odec_kaizen -> groups en vez de ddls, num contrato en ddl
  - app_asistencia -> carga también a los que tengan la obra como asingada
