@@ -144,13 +144,15 @@ $("#" + id_diverso_ddl_diversos).change(function(){
         } else {
             //Carga todos los registros hechos
             firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
-                snapshot.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
-                    var diver = diverSnap.val();
-                    console.log(diver);
-                    console.log(diver.diverso);
-                    if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
-                        cargaRenglonDiversos(snapshot.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
-                    }
+                snapshot.forEach(function(trabSnap){
+                    trabSnap.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
+                        var diver = diverSnap.val();
+                        console.log(diver);
+                        console.log(diver.diverso);
+                        if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
+                            cargaRenglonDiversos(snapshot.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
+                        }
+                    });
                 });
                 var cell_id = nuevo.insertCell(0);
                 var t_id = document.createElement('input');
@@ -389,7 +391,7 @@ $('#' + id_guardar_button_diversos).click(function(){
             //Creo que asincronía
             //AQUI nuevo, con update
             var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
-            updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos"] = div;
+            updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
             //firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push(div);
 
             //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
