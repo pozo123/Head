@@ -116,6 +116,7 @@ $('#' + id_guardar_button_pago_kaizen).click(function(){
 		var formKaizen = rb_form_ant ? "ANTICIPOS" : "ESTIMACIONES";
 		var tipo = rb_tipo_rec ? "recibo" : "factura";
 		var pago = {
+			pad: pistaDeAuditoria(),
 			monto: monto,
 			fecha_pago: new Date($('#' + id_fecha_pago_kaizen).val()).getTime(),
 			fecha_registro: new Date().getTime(),
