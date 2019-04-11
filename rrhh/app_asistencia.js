@@ -227,12 +227,18 @@ function loadAsistencias(semana,year,procesos,count_proc){
         //revisa si tienen esta obra asignada
         snapshot.forEach(function(childSnapshot){
             var asignado = false;
-            childSnapshot.child("nomina/" + year + "/" + semana).forEach(function(obraSnap){
-                var ob = obraSnap.val();
-                if(obraSnap.val().obra == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
+            childSnapshot.child("obra_asignada").forEach(function(obraSnap){
+                if(obraSnap.val() == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
                     asignado = true;
                 }
             });
+            if(!asignado){
+                childSnapshot.child("nomina/" + year + "/" + semana).forEach(function(obraSnap){
+                    if(obraSnap.val().obra == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
+                        asignado = true;
+                    }
+                });
+            }
             if(asignado){
                 var trabajador = childSnapshot.val();
                 cargaRenglon(trabajador,count_proc,procesos,semana,year);
