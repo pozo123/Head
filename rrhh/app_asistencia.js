@@ -143,29 +143,20 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                         }
                         if(nom.miercoles.obra == $('#' + id_obra_ddl_asistencia + " option:selected").val()){
                             chamba_mi = nom.miercoles.proceso;
-                        }/*
-                        var impuestos = 0;
-                        if(nom.impuestos.impuestos_diversos){
-                            impuestos += nom.impuestos.impuestos_diversos;
                         }
-                        if(nom.impuestos.impuestos_horas_extra){
-                            impuestos += nom.impuestos.impuestos_horas_extra;
-                        }
-                        if(nom.impuestos.impuestos_asistencia){
-                            impuestos += nom.impuestos.impuestos_asistencia;
-                        }*/
                         var total;
                         if(nom.total_asistencia){
                             total = nom.total_asistencia;
                         } else {
                             total = "No se ha generado un pago de nómina";
                         }
-                        var impuestos;
-                        if(nom.impuestos.impuestos_asistencia){
-                            impuestos = nom.impuestos.impuestos_asistencia;
-                        } else {
-                            impuestos = "No se ha generado un pago de nómina";
+                        var impuestos = "No se ha generado un pago de nómina";
+                        if(nom.impuestos){
+                            if(nom.impuestos.impuestos_asistencia){
+                                impuestos = nom.impuestos.impuestos_asistencia;
+                            }
                         }
+                            
 
                         datos_asistencia.push([trabajador.id_trabajador, trabajador.nombre, trabajador.jefe, trabajador.especialidad, chamba_ju, chamba_vi, chamba_lu, chamba_ma, chamba_mi, trabajador.sueldo_base, impuestos, total]);
                         $('#' + id_datatable_asistencia).removeClass('hidden');
