@@ -211,7 +211,7 @@
                         - fecha (timestamp)
                         - obra 
                         - proceso (Si obra es "Atencion a Clientes" proc es cliente)
-                        - horas
+                        - horas (en horas)
                   - diversos
                      - por push:
                         - cantidad
@@ -260,7 +260,7 @@
                            - proceso: (clave) "NA" si asistencia es false
                      - horas_extra:
                         - push:
-                           - horas
+                           - horas (EN $)
                            - proceso (clave)
                            - fecha (ms, de un datepicker, es de cuando se trabajaron, no de cuando se pagan)
                      - diversos (SE GUARDAN HASTA EL TERMINAR, POR LOS DISTRIBUIBLES)
