@@ -143,8 +143,8 @@ $('#' + id_guardar_button_pago_kaizen).click(function(){
 				if(caso == "subp"){
 					query = query + "/subprocesos/" + $('#' + id_subp_ddl_pago_kaizen + " option:selected").val();
 					var nuevo_total_subp = monto;
-					if(snapshot.child("procesos/" + $('#' + id_proc_ddl_pago_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pago_kaizen " option:selected").val() + "/total").exists()){
-						nuevo_total_subp += snapshot.child("procesos/" + $('#' + id_proc_ddl_pago_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pago_kaizen " option:selected").val() + "/total").val();
+					if(snapshot.child("procesos/" + $('#' + id_proc_ddl_pago_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pago_kaizen + " option:selected").val() + "/total").exists()){
+						nuevo_total_subp += snapshot.child("procesos/" + $('#' + id_proc_ddl_pago_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_pago_kaizen + " option:selected").val() + "/total").val();
 					}
 					firebase.database().ref(rama_bd_flujos + "/" + query + "/total").set(nuevo_total_subp);
 					sumaPagoKaizenAdmon(query,nuevo_total_subp,formKaizen);
