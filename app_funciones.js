@@ -127,7 +127,8 @@ function getWeekDiaria(semana,year){
 }
 
 function deformatMoney(string){
-  return parseFloat(string.substring(1,substring.length).replace(/,/g,""));
+  var sin_comas = string.replace(/,/g,"");
+  return parseFloat(sin_comas.replace("$",""));
 }
 
 function formatMoney(n, c, d, t) {
