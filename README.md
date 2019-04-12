@@ -1,6 +1,12 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+hoy:
+funciones.
+desplegar_kaizen.
+Dash prod bonito
+rrhh funcional al 100%
+compras solo actualizar
 
  actualizados/nuevos(11/4/19):
  - app_proy_cuant_kaizen -> NECESITA UN TEXTFIELD NUEVO (id = "descripcionCuant") pda, rama_bd_cuantificaciones y totales
