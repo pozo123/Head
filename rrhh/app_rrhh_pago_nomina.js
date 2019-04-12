@@ -113,6 +113,7 @@ $('#' + id_semana_ddl_pago_nomina).change(function(){
 				});
 			});
 		}
+	});
 });
 
 function cargaRenglonPagoNomina(trabSnap){
