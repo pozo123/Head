@@ -174,7 +174,6 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                         });
                     }
                     loadHorasExtra(year,semana,procesos,count_proc);                    
-                    console.log(sueldos_base)
                 });
             }
         }
@@ -235,7 +234,7 @@ function loadHorasExtra(year,semana,procesos,count_proc){
 }
 
 function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc_in){
-    var row = tableHorasExtra.insertRow(1);
+    var row = tableHorasExtra.insertRow(entradas + 1);
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
     var cell_fecha = row.insertCell(2);
@@ -267,9 +266,6 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     horas.placeholder = "Horas trabajadas";
     cell_horas.appendChild(horas);
 
-    console.log(entradas);
-    console.log(trabajador);
-    console.log(trabajador.sueldo_base)
     sueldos_base[entradas] = parseFloat(trabajador.sueldo_base);
     if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
         var textField = document.createElement('input');
@@ -310,91 +306,101 @@ $('#' + id_guardar_button_horasExtra).click(function(){
     guardarHorasExtra();
 });
 
-function guardarHorasExtra(){
+function guarDarHorasExtra(){
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     var obra = $('#' + id_obra_ddl_horasExtra + " option:selected").val();
     var total_horas = {};
-    console.log(sueldos_base)
-    for(i=0;i<entradas;i++){
-        var id_trabajador = document.getElementById("id_" + i).innerHTML;
-        var proc;
-        if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
-            proc = $('#proc_' + i).val()
-        } else {
-            proc = $('#proc_' + i + " option:selected").text();
-        }
-        var he = {
-            horas: $('#horas_' + i).val(),
-            proceso: proc, 
-            fecha: new Date($('#fecha_' + i).val()).getTime(),
-        }
-        var he_con_obra = {
-            horas: $('#horas_' + i).val(),
-            proceso: proc, 
-            fecha: new Date($('#fecha_' + i).val()).getTime(),
-            obra: obra,
-        }
-        //Checar asincronía
-        if(!total_horas[id_trabajador]){
-            total_horas[id_trabajador] = parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
-        } else {
-            total_horas[id_trabajador] = total_horas[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
-        }
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);   
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
-
-        //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
-        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
-            var existe = false;
-            var i = 0;
-            snapshot.forEach(function(childSnap){
-                i++;
-                if(childSnap.val() == obra)
-                    existe = true;
-            });
-            if(!existe){
-                if($('#horas_' + i).val() != ""){
-                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
+    firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+        for(i=0;i<entradas;i++){
+            if($('#horas_' + i).val() != ""){
+                var id_trabajador = document.getElementById("id_" + i).innerHTML;
+                var proc;
+                if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
+                    proc = $('#proc_' + i).val();
+                } else {
+                    proc = $('#proc_' + i + " option:selected").text();
                 }
-            }
-        });
+                var he = {
+                    horas: $('#horas_' + i).val(),
+                    proceso: proc, 
+                    fecha: new Date($('#fecha_' + i).val()).getTime(),
+                }
+                var he_con_obra = {
+                    horas: $('#horas_' + i).val(),
+                    proceso: proc, 
+                    fecha: new Date($('#fecha_' + i).val()).getTime(),
+                    obra: obra,
+                }
+                //Checar asincronía
+                if(!total_horas[id_trabajador]){
+                    total_horas[id_trabajador] = parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
+                } else {
+                    total_horas[id_trabajador] = total_horas[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
+                }
+                var existe_nom = false;
+                snapshot.child(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").forEach(function(heSnap){
+                    if(_.isEqual(heSnap.val(), he)){
+                        existe_nom = true;
+                    }
+                });
+                if(!existe_nom){
+                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);
+                }
+                var existe_tra = false;
+                snapshot.child(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").forEach(function(heSnap){
+                    if(_.isEqual(heSnap.val(), he_con_obra)){
+                        existe_tra = true;
+                    }
+                });
+                if(!existe_tra){
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
+                }
+
+                //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
+                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
+                    var existe = false;
+                    var i = 0;
+                    snapshot.forEach(function(childSnap){
+                        i++;
+                        if(childSnap.val() == obra)
+                            existe = true;
+                    });
+                    if(!existe){
+                        if($('#horas_' + i).val() != ""){
+                            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obra);
+                        }
+                    }
+                });
+            }       
+        }
         //Sumar $$ a lo que ya está en total horas en la base de datos (trabajadores)
         //Checar asincronia
-    }
-    firebase.database().ref(rama_bd_trabajadores ).once('value').then(function(snapshot){
-        
-        for(var i = 0; i < entradas; i++){
-            var id_trabajador = document.getElementById("id_" + i).innerHTML;
-            var horas_previas = snapshot.child(id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra");
-            horas_previas = horas_previas.exists() ? horas_previas.val() : 0;
-            var horas_nuevas = parseFloat(horas_previas) + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;
-            console.log("horas_previas: " + horas_previas);
-            console.log("sueldo_base: " + sueldos_base[i]);
-            console.log("horas: " + parseFloat($('#horas_' + i).val()));
-            console.log("horas_nuevas: " + horas_nuevas);
-            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
-            var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
-            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
-        }
-    });
-    //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina)
-    //Checar asincronia
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores").once('value').then(function(snapshot){
-        for(key in total_horas){
-            var horas_previas = snapshot.child(key + "/total_horas_extra");
-            if(!horas_previas.exists()){
-                horas_previas = 0;
-            } else {
-                horas_previas = horas_previas.val();
+        firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+            for(key in total_horas){
+                var horas_previas = snapshot.child(key + "/nomina/" + year + "/" + semana + "/total_horas_extra");
+                horas_previas = horas_previas.exists() ? parseFloat(horas_previas.val()) : 0;
+                var horas_nuevas = parseFloat(horas_previas) + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;
+                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
+                var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
+                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+
             }
-            var horas_nuevas = parseFloat(horas_previas) + total_horas[key];
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").set(horas_nuevas);
-            var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
-        }
+        });
+        //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina)
+        //Checar asincronia
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores").once('value').then(function(snapshot){
+            for(key in total_horas){
+                var horas_previas = snapshot.child(key + "/total_horas_extra");
+                horas_previas = horas_previas.exists() ? horas_previas.val() : 0;
+                var horas_nuevas = parseFloat(horas_previas) + total_horas[key];
+                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").set(horas_nuevas);
+                var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
+                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+            }
+        });
+        alert("Datos actualizados");
     });
-    alert("Datos actualizados");
 };
 
 $('#' + id_terminar_button_horasExtra).click(function(){
@@ -406,7 +412,7 @@ $('#' + id_terminar_button_horasExtra).click(function(){
                     trabSnap.child("horas_extra").forEach(function(heSnap){
                         var horas_extra = heSnap.val();
                         var proc = horas_extra.proceso;
-                        var cantidad = parseFloat(horas_extra.horas) * parseFloat(trabSnap.val().sueldo_base) * (2/48) * 1.16;
+                        var cantidad = horas_extra.horas * trabSnap.val().sueldo_base * (2/48) * 1.16;
                         var obra = obraSnap.key;
                         if(obra != "Atencion a Clientes"){
                             sumaMOKaizenHE(obra,cantidad);
