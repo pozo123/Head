@@ -111,7 +111,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
-        var terminada = snapshot.val().diverosos_terminados;
+        var terminada = snapshot.val().diversos_terminados;
         if(terminada){
             //Cargar tabla con datos
             var datos_diversos = [];
@@ -120,7 +120,9 @@ $("#" + id_diverso_ddl_diversos).change(function(){
                     obraSnap.child("trabajadores").forEach(function(trabSnap){
                         trabSnap.child("diversos").forEach(function(childSnap){
                             var entrada = childSnap.val();
-                            datos_diversos.push([trabSnap.key,trabSnap.val().nombre,obraSnap.val().nombre,entrada.proceso,entrada.cantidad]);
+                            console.log(obraSnap.key);
+                            console.log(obraSnap.val());
+                            datos_diversos.push([trabSnap.key,obraSnap.key,entrada.proceso,entrada.cantidad]);
                         });
                     });
                 }
@@ -134,7 +136,6 @@ $("#" + id_diverso_ddl_diversos).change(function(){
                 buttons: ['excel'],
                 columns: [
                     {title: "ID",width: 70},
-                    {title: "NOMBRE",width: 150},
                     {title: "OBRA",width: 70},
                     {title: "PROCESO",width: 70},
                     {title: "CANTIDAD",width: 70}
@@ -259,30 +260,14 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
             cell_obra.id = "cell_obra_" + consec;
             var cell_proc = row.insertCell(5);
             cell_proc.id = "cell_proc_" + consec;
-            ddls = generateDdls(cell_obra, cell_proc);
-            var obra = ddls[0];
-            var proc = ddls[1];
-            for(var i = 0; i<obra.length;i++){
-                if(obra[i].text == obra_in){
-                    obra.selectedIndex = i;
-                }
-            }
-            if(obra_in == "Atencion a Clientes"){
-                $('#' + proc.id).val(proc_in);
-            } else {
-                for(var i = 0; i<proc.length;i++){
-                    if(proc[i].text == proc_in){
-                        proc.selectedIndex = i;
-                    }
-                }
-            }
+            generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in);
         }
     }
 
     entradas++;
 }
 
-function generateDdls(cell_obra, cell_proc){
+function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
     var obra_ddl = document.createElement('select');
     var option2 = document.createElement('option');
     option2.style = "display:none";
@@ -305,14 +290,60 @@ function generateDdls(cell_obra, cell_proc){
         obra_ddl.appendChild(option3);
         cell_obra.appendChild(obra_ddl);
         var proc_input;
-
+        if(!nuevo){
+            for(var i = 0; i<obra_ddl.length;i++){
+                if(obra_ddl[i].text == obra_in){
+                    obra_ddl.selectedIndex = i;
+                }
+            }
+            if(obra_in == "Atencion a Clientes"){
+                $('#' + proc_input.id).val(proc_in);
+            } else {
+                var proc_input = document.createElement('select');
+                proc_input.id = "proc_" + k;
+                var option2 = document.createElement('option');
+                option2.style = "display:none";
+                option2.text = option2.value = "";
+                proc_input.appendChild(option2);
+                var obra = snapshot.child(obra_in);
+                if(obra.val().num_procesos == 0){
+                    var option = document.createElement('OPTION');
+                    option.text = obra.val().nombre;
+                    option.value = obra.val().nombre;
+                    proc_input.appendChild(option);
+                } else {
+                    obra.child("procesos").forEach(function(procSnap){
+                        var proceso = procSnap.val();
+                        if(proceso.num_subprocesos == 0){
+                            var option = document.createElement('OPTION');
+                            option.text = proceso.clave;// + " (" + proceso.nombre + ")";
+                            option.value = proceso.clave;
+                            proc_input.appendChild(option);
+                        } else {
+                            procSnap.child("subprocesos").forEach(function(subpSnap){
+                                var subproc = subpSnap.val();
+                                var option = document.createElement('OPTION');
+                                option.text = subproc.clave;// + " (" + subproc.nombre + ")";
+                                option.value = subproc.clave;
+                                proc_input.appendChild(option);
+                            });
+                        }
+                    });
+                }
+                for(var i = 0; i<proc_input.length;i++){
+                    if(proc_input[i].text == proc_in){
+                        proc_input.selectedIndex = i;
+                    }
+                }
+            }
+        }
         $('#' + obra_ddl.id).change(function(){
+            console.log("change");
             $('#' + cell_proc.id).empty();
             if($('#' + obra_ddl.id + " option:selected").val() == "Atencion a Clientes"){
                 var proc_input = document.createElement('input');
                 proc_input.type = "text";
                 proc_input.id = "proc_" + k;
-                cell_proc.appendChild(proc_input);
             } else {
                 var proc_input = document.createElement('select');
                 proc_input.id = "proc_" + k;
@@ -345,10 +376,10 @@ function generateDdls(cell_obra, cell_proc){
                         }
                     });
                 }
-                cell_proc.appendChild(proc_input);
             }
+            cell_proc.appendChild(proc_input);    
         });
-        return [obra_ddl, proc_input];
+        cell_proc.appendChild(proc_input);
     });
 }
 
@@ -450,9 +481,12 @@ $('#' + id_terminar_button_diversos).click(function(){
                 snapshot.forEach(function(trabSnap){
                     var trab = trabSnap.val().nomina;
                     if(trab != undefined){
-                        if(trab[year]){
-                            if(trab[week]){
+                        if(trab[year] != undefined){
+                            console.log(trab[year][week]);
+                            if(trab[year][week] != undefined){
+                                console.log("hola");
                                 trabSnap.child("nomina/" + year + "/" + week + "/diversos").forEach(function(diversoSnap){
+                                    console.log("3");
                                     var diver = diversoSnap.val();
                                     if(diver.distribuible){
                                         distribuyeEnAsistencias(diver.cantidad,trabSnap,year,week,diver.diverso);
@@ -482,7 +516,8 @@ $('#' + id_terminar_button_diversos).click(function(){
                                             if(valor_anterior == null){
                                                 valor_anterior = 0;
                                             }
-                                            var nuevo_valor = valor_anterior + diver.cantidad;
+                                            var nuevo_valor = parseFloat(valor_anterior) + parseFloat(diver.cantidad);
+                                            console.log(nuevo_valor)
                                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
                                             var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
                                             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
@@ -507,7 +542,7 @@ $('#' + id_terminar_button_diversos).click(function(){
 function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
     var asistencias = {asistencias: 0};
     var lastDay = new Date(year,11,31);
-    if(week == getWeek(lastDay.getTime().getTime())[0] && lastDay.getDay() != 3){
+    if(week == getWeek(lastDay.getTime())[0] && lastDay.getDay() != 3){
         var year_siguiente = year + 1;
         asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/lunes").val());
         asistenciaSimpleDiversos(asistencias, trabSnap.child("nomina/" + year_siguiente + "/1/martes").val());
@@ -560,7 +595,8 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
                     }
 
                     console.log(keyObra + "/" + key + ": " + monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]);
-                    totales[keyObra] = totales[keyObra] + cant;
+                    totales[keyObra] = parseFloat(totales[keyObra]) + parseFloat(cant);
+                    console.log(totales);
                 }
             } else {
                 var cant = (monto * asistencias[keyObra] / asistencias["asistencias"]).toFixed(2);
@@ -577,14 +613,14 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
             }
         }
     }
-    //AQUI aguas con la asincronía
+    //AQUI Meter el key en forEach, para cuidar asincronía
     for(key in totales){
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
             var valor_anterior = snapshot.val();
             if(valor_anterior == null){
                 valor_anterior = 0;
             }
-            var nuevo_valor = valor_anterior + totales[key];
+            var nuevo_valor = parseFloat(valor_anterior) + parseFloat(totales[key]);
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
             var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
