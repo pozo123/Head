@@ -23,9 +23,10 @@ $('#' + id_table_pago_nomina).click(function(){
     $('#' + id_table_pago_nomina).empty();
 
     var year_actual = getWeek(new Date().getTime())[1];
-
+    console.log(year_actual);
     var select = document.getElementById(id_year_ddl_pago_nomina);
     for(i=year_actual;i>2017;i--){
+    	console.log(i);
         var option = document.createElement('option');
         option.text = option.value = i;
         select.appendChild(option);
@@ -44,7 +45,12 @@ $('#' + id_year_ddl_pago_nomina).change(function(){
 });
 
 function loadSemanasPagoNomina(year){
-    var semana_actual = getWeek(new Date().getTime())[0];
+	var semana_actual;
+	if(year == getWeek(new Date().getTime())[1]){
+	    semana_actual = getWeek(new Date().getTime())[0];	
+	} else {
+		semana_actual = getWeek(new Date(year,11,31).getTime())[0];
+	}
     var select = document.getElementById(id_semana_ddl_pago_nomina);
     for(i=semana_actual;i>0;i--){
     	firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + i).once('value').then(function(snapshot){
