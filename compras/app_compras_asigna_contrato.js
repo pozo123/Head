@@ -39,6 +39,7 @@ $("#" + id_obra_ddl_asigna_contrato).change(function(){
 	    	$('#' + id_group_proc_asigna_contrato).addClass('hidden');
 	    	caso = "obra";
 	    } else {
+			caso = "proc";
 	    	$('#' + id_group_proc_asigna_contrato).removeClass('hidden');
 
 		    var select = document.getElementById(id_proc_ddl_asigna_contrato);
@@ -48,16 +49,14 @@ $("#" + id_obra_ddl_asigna_contrato).change(function(){
 		    select.appendChild(option);
 
 		    snapshot.child('procesos').forEach(function(childSnap){
-		    	var proc = childSnap.val();
+				var proc = childSnap.val();
 		    	if(proc.num_subprocesos == 0 || obra.nombre == "MARINA NACIONAL 385"){
-		    		caso = "proc";
 			    	var option2 = document.createElement('OPTION');
 			        option2.text = proc.clave + " (" + proc.nombre + ")";
 			        option2.value = proc.clave;
 			        select.appendChild(option2);
 		    	} else {
 		    		childSnap.child('subprocesos').forEach(function(subpSnap){
-		    			caso = "subp";
 		    			var subp = subpSnap.val();
 		    			var option2 = document.createElement('OPTION');
 				        option2.text = subp.clave + " (" + subp.nombre + ")";
@@ -70,10 +69,24 @@ $("#" + id_obra_ddl_asigna_contrato).change(function(){
     });
 });
 
+$("#" + id_proc_ddl_asigna_contrato).change(function(){
+	if(caso != "obra"){
+		var path = $('#' + id_proc_ddl_asigna_contrato + " option:selected").val().split("-");
+		if(path.length > 1){
+			caso = "subp";
+		} else {
+			caso = "proc";
+		}
+		console.log(path)
+		console.log(caso)
+	}
+});
+
 $('#' + id_guardar_button_asigna_contrato).click(function(){
 	if($('#' + id_contrato_asigna_contrato).val() == "" || $('#' + id_obra_ddl_asigna_contrato + " option:selected").val() == "" || (caso != "obra" && $('#' + id_proc_ddl_asigna_contrato + " option:selected").val() == "")){
 		alert("Llena todos los campos");
 	} else {
+		console.log(caso);
 		var contrato = $('#' + id_contrato_asigna_contrato).val();
 		if(caso == "obra"){
 			firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_asigna_contrato + " option:selected").val() + "/contrato").set(contrato);
