@@ -449,46 +449,48 @@ $('#' + id_terminar_button_diversos).click(function(){
                 //checar si tienen esta semana
                 snapshot.forEach(function(trabSnap){
                     var trab = trabSnap.val().nomina;
-                    if(trab[year]){
-                        if(trab[week]){
-                            trabSnap.child("nomina/" + year + "/" + week + "/diversos").forEach(function(diversoSnap){
-                                var diver = diversoSnap.val();
-                                if(diver.distribuible){
-                                    distribuyeEnAsistencias(diver.cantidad,trabSnap,year,week,diver.diverso);
-                                } else {
-                                    var diverso = {
-                                        cantidad: diver.cantidad,
-                                        diverso: diver.diverso,
-                                        proceso: diver.proceso,
-                                    }
-                                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
-                                    var query = diver.obra;
-                                    if(diver.obra != "Atencion a Clientes"){
-                                        sumaMOKaizen(query,diver.cantidad);
-                                        if(diver.obra != diver.proceso){
-                                            var path = diver.proceso.split("-");
-                                            query = query + "/procesos/" + path[0];
+                    if(trab != undefined){
+                        if(trab[year]){
+                            if(trab[week]){
+                                trabSnap.child("nomina/" + year + "/" + week + "/diversos").forEach(function(diversoSnap){
+                                    var diver = diversoSnap.val();
+                                    if(diver.distribuible){
+                                        distribuyeEnAsistencias(diver.cantidad,trabSnap,year,week,diver.diverso);
+                                    } else {
+                                        var diverso = {
+                                            cantidad: diver.cantidad,
+                                            diverso: diver.diverso,
+                                            proceso: diver.proceso,
+                                        }
+                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
+                                        var query = diver.obra;
+                                        if(diver.obra != "Atencion a Clientes"){
                                             sumaMOKaizen(query,diver.cantidad);
-                                            if(path.length>1){
-                                                query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                            if(diver.obra != diver.proceso){
+                                                var path = diver.proceso.split("-");
+                                                query = query + "/procesos/" + path[0];
                                                 sumaMOKaizen(query,diver.cantidad);
+                                                if(path.length>1){
+                                                    query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                                    sumaMOKaizen(query,diver.cantidad);
+                                                }
                                             }
                                         }
+                                        //AQUI checar asincronia
+                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
+                                            var valor_anterior = snapshot.val();
+                                            if(valor_anterior == null){
+                                                valor_anterior = 0;
+                                            }
+                                            var nuevo_valor = valor_anterior + diver.cantidad;
+                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
+                                            var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
+                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
+                                        });
                                     }
-                                    //AQUI checar asincronia
-                                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
-                                        var valor_anterior = snapshot.val();
-                                        if(valor_anterior == null){
-                                            valor_anterior = 0;
-                                        }
-                                        var nuevo_valor = valor_anterior + diver.cantidad;
-                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
-                                        var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
-                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
-                                    });
-                                }
-                            });
-                        }
+                                });
+                            }
+                        }               
                     }
                 });
             });
