@@ -105,7 +105,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     $('#' + id_table_diversos).empty();
     entradas = 0;
     headersDiversos();
-    nuevo = tableDiversos.insertRow(1);
+    nuevo = tableDiversos.insertRow(entradas + 1);
     nuevo.id = "nuevo_trabajador_diversos";
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
@@ -198,7 +198,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
 });
 
 function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_in,proc_in){
-    var row = tableDiversos.insertRow(1);
+    var row = tableDiversos.insertRow(entradas + 1);
     row.id = "row_" + entradas;
     var cell_id = row.insertCell(0);
     var cell_nombre = row.insertCell(1);
