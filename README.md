@@ -74,6 +74,7 @@ ARTURO:
  - Actualizar:
     
 DIEGO:
+ - Diversos: no guardar repetidos, y está sumando nada mas una entrada, en vez de todas
  - desplegar kaizen lo del cambio de obra
  - Definir Adic en obras simples
  - app_prod_entrada_estimacion
