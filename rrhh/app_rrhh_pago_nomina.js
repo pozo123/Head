@@ -15,7 +15,7 @@ var tablePagoNomina = document.getElementById(id_table_pago_nomina);
 
 var trabajadores = [];
 
-$('#' + id_table_pago_nomina).click(function(){
+$('#' + id_tab_pago_nomina).click(function(){
 	$('#' + id_semana_ddl_pago_nomina).empty();
     $('#' + id_year_ddl_pago_nomina).empty();
     $('#' + id_datatable_pago_nomina).empty();
@@ -23,10 +23,8 @@ $('#' + id_table_pago_nomina).click(function(){
     $('#' + id_table_pago_nomina).empty();
 
     var year_actual = getWeek(new Date().getTime())[1];
-    console.log(year_actual);
     var select = document.getElementById(id_year_ddl_pago_nomina);
     for(i=year_actual;i>2017;i--){
-    	console.log(i);
         var option = document.createElement('option');
         option.text = option.value = i;
         select.appendChild(option);
