@@ -1,26 +1,10 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
-hoy:
-funciones.
-desplegar_kaizen.
-Dash prod bonito
-rrhh funcional al 100%
-compras solo actualizar
-
  actualizados/nuevos(11/4/19):
  - app_proy_cuant_kaizen -> NECESITA UN TEXTFIELD NUEVO (id = "descripcionCuant") pda, rama_bd_cuantificaciones y totales
- - app_funciones -> deformatMoney robusto a $
- - app_desplegar_kaizen -> si haces click en proy se pone el valor en horas, no en $, format y deformatMoney, deshabilitar pag de admon
- - app_rrhh_importar_trabajadores -> num_id? no jalaba y alert
  - app_compras_asigna_contrato -> nueva app
- - app_compras_pag_kaizen -> groups en vez de ddls, pad
- - app_compras_odec_kaizen -> groups en vez de ddls, num contrato en ddl, pad
- - app_asistencia -> carga también a los que tengan la obra como asingada
- - app_rrhh_horas_extra -> Había espacios en un query, "obraS_asignadaS" -> obra_asignada, asincronía totales. console para ver por que No se cargan totales ni impuestos.
- - app_rrhh_pagos_diversos -> crear los ddls tenían un _ extra, if(bool) -> if(bool == true)
  - app_admon_pago_kaizen -> nueva app + pad
- - app_rrhh_pago_nomina -> datatable if terminada
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
