@@ -2,7 +2,7 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(15/4/19):
- - app_rrhh_pagos_diversos -> snapshot -> trabSnap al generar ddls que no son nuevos, insertRow al final de la tabla
+ - app_rrhh_pagos_diversos -> snapshot -> trabSnap al generar ddls que no son nuevos, insertRow al final de la tabla, revisa si existe nom en el trabajador
 
  actualizados/nuevos(11/4/19):
  - app_compras_asigna_contrato -> nueva app
