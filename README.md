@@ -2,11 +2,11 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(15/4/19):
- - app_rrhh_pago_nomina -> semana depende de año, id_table -> id_tab
- - app_rrhh_pagos_diversos -> snapshot -> trabSnap al generar ddls que no son nuevos, insertRow al final de la tabla, revisa si existe nom en el trabajador
+ - app_rrhh_pago_nomina -> CHECK semana depende de año, id_table -> id_tab
+ - app_rrhh_pagos_diversos -> snapshot -> CHECK trabSnap al generar ddls que no son nuevos, insertRow al final de la tabla, revisa si existe nom en el trabajador
 
  actualizados/nuevos(11/4/19):
- - app_compras_asigna_contrato -> nueva app
+ - app_compras_asigna_contrato -> CHECK nueva app
  - app_admon_pago_kaizen -> nueva app + pad
    
  actualizados/nuevos(2/4/19):
