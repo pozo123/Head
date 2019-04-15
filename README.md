@@ -2,7 +2,6 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(11/4/19):
- - app_proy_cuant_kaizen -> NECESITA UN TEXTFIELD NUEVO (id = "descripcionCuant") pda, rama_bd_cuantificaciones y totales
  - app_compras_asigna_contrato -> nueva app
  - app_admon_pago_kaizen -> nueva app + pad
    
@@ -45,7 +44,7 @@ Depto. de Innovacion y Optimizacion
  - falta empty a muchos ddls antes de cargarlos
 
 ARTURO:
- - en app_principal.js linea 115 cambiar rama_bd_inges por rama_bd_personal
+ - en app_pryo_cuant_kaizen cambiar el placeholder de descripcion
  - mover gantt abajo de kaizen
  - Desplegar Kaizen: TODO en colores por columna, sin el negro
  - Titulos de obra en catalogo de proceso en negritas y mas grandes
