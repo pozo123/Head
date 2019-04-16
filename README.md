@@ -1,12 +1,11 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
- actualizados/nuevos(15/4/19):
- - app_rrhh_pago_nomina -> CHECK semana depende de año, id_table -> id_tab
- - app_rrhh_pagos_diversos -> snapshot -> CHECK trabSnap al generar ddls que no son nuevos, insertRow al final de la tabla, revisa si existe nom en el trabajador
+ actualizados/nuevos(16/4/19):
+ - app_rrhh_horas_extra -> si week en pagos nomina no existe permite crear nuevos
+ - app_rrhh_pagos_diversos -> checo si terminada en week change. No guardo repetidos (checo en la bd y entre los renglones). guardo al terminar. Cosas de asincronía y orden
 
  actualizados/nuevos(11/4/19):
- - app_compras_asigna_contrato -> CHECK nueva app
  - app_admon_pago_kaizen -> nueva app + pad
    
  actualizados/nuevos(2/4/19):
@@ -29,8 +28,7 @@ Depto. de Innovacion y Optimizacion
    
  Por probar:
  - app_pagos_nomina
- - app_rrhh_horas_extra ->terminar, sumar en totales, impuestos, atencion a clientes
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN y meter ppr en misc, terminada con nuevo uml, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada, que carguen los ddls
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
