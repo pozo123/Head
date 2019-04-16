@@ -4,12 +4,11 @@ var id_obra_ddl_trabajador = "trabajadorObra";//ddl
 var id_id_trabajador = "trabajadorId";//textfield
 var id_generar_id_trabajador = "trabajadorGenerarId";//checkbox
 var id_sueldo_base_trabajador = "trabajadorSueldoBase";//textfield *necesario
-var id_jefe_trabajador = "trabajadorJefe";//textfield / destajistas + HEAD (pero habría que darlos de alta) *necesario
+var id_destajista_ddl_trabajador = "trabajadorDestajista";//NUEVO ddl
 var id_fecha_antiguedad_trabajador = "trabajadorFechaAntiguedad";//datepicker
 var id_especialidad_ddl_trabajador = "trabajadorEspecialidad";//ddl *necesario
 var id_activo_trabajador = "trabajadorActivo";//checkbox
 var id_clave_pagadora_trabajador = "trabajadorClavePagadora";//textfield *necesario
-var id_jefe_trabajador = "trabajadorJefe";//textfield *necesario
 //claves
 var id_RFC_trabajador = "trabajadorRFC";//textfield *necesario
 var id_IMSS_trabajador = "trabajadorIMSS";//textfield *necesario
@@ -32,6 +31,8 @@ var id_groupId_trabajador = "groupIdTrabajador"
 var id_registrar_button_trabajador = "registrarTrabajador";//button
 
 var rama_bd_trabajadores = "produccion/trabajadores";
+var rama_bd_destajistas = "produccion/destajistas";
+var rama_bd_obras_prod = "produccion/obras";
 
 var id_tab_trabajadores = "tabTrabajadores";
 
@@ -52,20 +53,12 @@ $('#' + id_tab_trabajadores).click(function(){
 	jQuery('#' + id_fecha_nacimiento_trabajador).datetimepicker(
         {timepicker:false, weeks:true,format:'m.d.Y'}
     );
-
-	var option_blank = document.createElement('option');
-    option_blank.style = "display:none";
-    option_blank.text = option_blank.value = "";
     
     var select_obra = document.getElementById(id_obra_ddl_trabajador); 
 	var select_esp = document.getElementById(id_especialidad_ddl_trabajador); 
 	var select_puesto = document.getElementById(id_puesto_ddl_trabajador); 
 	var select_edoc = document.getElementById(id_estado_civil_ddl_trabajador); 
-	
-    select_obra.appendChild(option_blank);
-    select_esp.appendChild(option_blank);
-    select_puesto.appendChild(option_blank);
-    select_edoc.appendChild(option_blank);
+	var select_dest = document.getElementById(id_destajista_ddl_trabajador); 
 
 	var options_esp = ["ALM", "EMP", "IE", "IHS", "OE", "RTC", "UHS"]; 
 	var options_puesto = ["Almacenista", "Ayudante", "Ayudante General", "Empacadora", "Encargado", "Medio Oficial", "Oficial", "Supervisor", "Supervisor de Obra"]; 
@@ -87,6 +80,10 @@ $('#' + id_tab_trabajadores).click(function(){
 	option6.style = "display:none";
 	option6.text = option6.value = "";
 	select_edoc.appendChild(option6);
+	var option7 = document.createElement('option');
+	option7.style = "display:none";
+	option7.text = option7.value = "";
+	select_dest.appendChild(option7);
 
 	for(var i=0; i<options_esp.length; i++){
 		var opt = options_esp[i];
@@ -114,10 +111,18 @@ $('#' + id_tab_trabajadores).click(function(){
 
     firebase.database().ref(rama_bd_obras_prod).orderByChild('nombre').on('child_added',function(snapshot){
         var obra = snapshot.val();
-        var option7 = document.createElement('OPTION');
-        option7.text = obra.nombre;
-        option7.value = obra.nombre;
-        select_obra.appendChild(option7);
+        var option8 = document.createElement('OPTION');
+        option8.text = obra.nombre;
+        option8.value = obra.nombre;
+        select_obra.appendChild(option8);
+    });
+
+    firebase.database().ref(rama_bd_destajistas).orderByChild('nombre').on('child_added',function(snapshot){
+        var dest = snapshot.val();
+        var option9 = document.createElement('OPTION');
+        option9.text = dest.nombre;
+        option9.value = dest.nombre;
+        select_dest.appendChild(option9);
     });
 });
 
@@ -131,7 +136,7 @@ $('#' + id_generar_id_trabajador).change(function(){
 });
 
 $('#' + id_registrar_button_trabajador).click(function () {
-    if($('#' + id_jefe_trabajador).val() == "" ||($('#' + id_id_trabajador).val() == "" && $('#' + id_generar_id_trabajador).is(':checked')) ||$('#' + id_clabe_trabajador).val() == "" ||$('#' + id_cuenta_trabajador).val() == "" ||$('#' + id_banco_trabajador).val() == "" ||$('#' + id_CURP_trabajador).val() == "" ||$('#' + id_IMSS_trabajador).val() == "" ||$('#' + id_RFC_trabajador).val() == "" ||$('#' + id_clave_pagadora_trabajador).val() == "" ||$('#' + id_especialidad_ddl_trabajador + " option:selected").val() == "" ||$('#' + id_sueldo_base_trabajador).val() == "" ||$('#' + id_puesto_ddl_trabajador + " option:selected").val() == "" || $('#' + id_nombre_trabajador).val() == ""){
+    if($('#' + id_destajista_ddl_trabajador + " option:selected").val() == "" ||($('#' + id_id_trabajador).val() == "" && $('#' + id_generar_id_trabajador).is(':checked')) ||$('#' + id_clabe_trabajador).val() == "" ||$('#' + id_cuenta_trabajador).val() == "" ||$('#' + id_banco_trabajador).val() == "" ||$('#' + id_CURP_trabajador).val() == "" ||$('#' + id_IMSS_trabajador).val() == "" ||$('#' + id_RFC_trabajador).val() == "" ||$('#' + id_clave_pagadora_trabajador).val() == "" ||$('#' + id_especialidad_ddl_trabajador + " option:selected").val() == "" ||$('#' + id_sueldo_base_trabajador).val() == "" ||$('#' + id_puesto_ddl_trabajador + " option:selected").val() == "" || $('#' + id_nombre_trabajador).val() == ""){
         alert("Llena todos los campos requeridos");
     } else {
     	var trabajador = {
@@ -142,7 +147,7 @@ $('#' + id_registrar_button_trabajador).click(function () {
 			},
 			puesto: $('#' + id_puesto_ddl_trabajador + " option:selected").val(),
 			sueldo_base: $('#' + id_sueldo_base_trabajador).val(),
-			jefe: $('#' + id_jefe_trabajador).val(),
+			jefe: $('#' + id_destajista_ddl_trabajador + " option:selected").val(),
 			fecha_antiguedad: new Date($('#' + id_fecha_antiguedad_trabajador).val()).getTime(),
 			especialidad: $('#' + id_especialidad_ddl_trabajador + " option:selected").val(),
 			activo: $('#' + id_activo_trabajador).is(':checked'),
