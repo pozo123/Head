@@ -69,6 +69,7 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
+ - Desplegar OdeCs para que Taba pueda saber si sí entraron
  - Terminado en procs, subprocs y obras, tanto en altas como con atributo, y revisarlo en todos los ddls que alimentan kaizen
  - Cambiar "MARINA NACIONAL 385" por "IQONO MEXICO" en TOOOOOOODOOOOOOOS LAAAAAADOOOOOS
     - Compras -> Obras
