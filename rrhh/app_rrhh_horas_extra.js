@@ -326,15 +326,10 @@ function guardarHorasExtra(){
     firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
 
         for(i=0;i<entradas;i++){
-            if($('#horas_' + i).val() != ""){
+            var proc = $('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes" ? proc = $('#proc_' + i).val() : proc = $('#proc_' + i + " option:selected").text();
+            if($('#horas_' + i).val() != "" && proc != ""){
 
                 var id_trabajador = document.getElementById("id_" + i).innerHTML;
-                var proc;
-                if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
-                    proc = $('#proc_' + i).val()
-                } else {
-                    proc = $('#proc_' + i + " option:selected").text();
-                }
                 var he = {
                     horas: parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48,
                     proceso: proc, 
