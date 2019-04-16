@@ -50,7 +50,7 @@ $("#" + id_obra_ddl_asigna_contrato).change(function(){
 
 		    snapshot.child('procesos').forEach(function(childSnap){
 				var proc = childSnap.val();
-		    	if(proc.num_subprocesos == 0 || obra.nombre == "MARINA NACIONAL 385"){
+		    	if(proc.num_subprocesos == 0 || obra.nombre == "MARINA NACIONAL 385" || obra.nombre == "IQONO MEXICO"){
 			    	var option2 = document.createElement('OPTION');
 			        option2.text = proc.clave + " (" + proc.nombre + ")";
 			        option2.value = proc.clave;
