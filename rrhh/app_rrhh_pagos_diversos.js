@@ -9,6 +9,7 @@ var id_guardar_button_diversos = "guardarButtonDiversos";
 var id_terminar_button_diversos = "terminarButtonDiversos";
 
 var id_datatable_diversos = "dataTableDiversos";
+var id_datatable_div_diversos = "dataTableGroup1"
 var id_table_diversos = "tableDiversos";
 var id_tab_diversos = "tabDiversos";
 
@@ -25,8 +26,8 @@ $('#' + id_tab_diversos).click(function(){
     $('#' + id_semana_ddl_diversos).empty();
     $('#' + id_year_ddl_diversos).empty();
     $('#' + id_diverso_ddl_diversos).empty();
-    $('#' + id_datatable_diversos).empty();
-    $('#' + id_datatable_diversos).addClass('hidden');
+    $('#' + id_datatable_div_diversos).empty();
+    $('#' + id_datatable_div_diversos).addClass('hidden');
     $('#' + id_table_diversos).empty();
     entradas = 0;
 
@@ -69,8 +70,8 @@ $('#' + id_tab_diversos).click(function(){
 $('#' + id_year_ddl_diversos).change(function(){
     document.getElementById(id_diverso_ddl_diversos).selectedIndex = 0;
     $('#' + id_semana_ddl_diversos).empty();
-    $('#' + id_datatable_diversos).empty();
-    $('#' + id_datatable_diversos).addClass('hidden');
+    $('#' + id_datatable_div_diversos).empty();
+    $('#' + id_datatable_div_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
 
@@ -94,14 +95,17 @@ $('#' + id_year_ddl_diversos).change(function(){
 });
 
 $('#' + id_semana_ddl_diversos).change(function(){
-    $('#' + id_datatable_diversos).empty();
-    $('#' + id_datatable_diversos).addClass('hidden');
+    $('#' + id_datatable_div_diversos).empty();
+    $('#' + id_datatable_div_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
     entradas = 0;
+    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
+
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
-        var terminada = nomina ? diversos_terminados : false;
+        var terminada = nomina ? nomina.diversos_terminados : false;
         if(terminada){
             $('#' + id_diverso_group_diversos).addClass('hidden');
             //Cargar tabla con datos
@@ -119,7 +123,7 @@ $('#' + id_semana_ddl_diversos).change(function(){
                 }
             });
             //Asincronía? :S
-            $('#' + id_datatable_diversos).removeClass('hidden');
+            $('#' + id_datatable_div_diversos).removeClass('hidden');
             var tabla_procesos = $('#'+ id_datatable_diversos).DataTable({
                 destroy: true,
                 data: datos_diversos,
@@ -337,6 +341,9 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
                 }
             }
             if(obra_in == "Atencion a Clientes"){
+                var proc_input = document.createElement('input');
+                proc_input.type = "text";
+                proc_input.id = "proc_" + k;
                 $('#' + proc_input.id).val(proc_in);
             } else {
                 var proc_input = document.createElement('select');
@@ -378,6 +385,7 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
                     }
                 }
             }
+            cell_proc.appendChild(proc_input);
         }
         $('#' + obra_ddl.id).change(function(){
             console.log("change");
@@ -421,7 +429,6 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
             }
             cell_proc.appendChild(proc_input);
         });
-        cell_proc.appendChild(proc_input);
     });
 }
 
@@ -429,18 +436,20 @@ function checkProcDdl(){
     var repetida = false;
     var i = 0;
     while(i<entradas && !repetida){
+        console.log(i)
         var id_actual = document.getElementById("id_" + i).innerHTML;
         var dist_actual = document.getElementById("check_" + i).checked;
         var obra_actual = dist_actual ? "NA" : $('#obra_' + i + ' option:selected').val();
         var proc_actual = dist_actual ? "NA" : (obra_actual == "Atencion a Clientes" ? $('#proc_' + i).val() : $('#proc_' + i + ' option:selected').val());
         var j = i + 1;
+        console.log(j)
         while(j<entradas && !repetida){
             var id_comp = document.getElementById("id_" + j).innerHTML;
             var dist_comp = document.getElementById("check_" + j).checked;
             var obra_comp = dist_comp ? "NA" : $('#obra_' + j + ' option:selected').val();
             var proc_comp = dist_comp ? "NA" : (obra_comp == "Atencion a Clientes" ? $('#proc_' + j).val() : $('#proc_' + j + ' option:selected').val());
             if(id_comp == id_actual && dist_comp == dist_actual && obra_comp == obra_actual && proc_comp == proc_actual){
-                repetida == true;
+                repetida = true;
             } else {
                 j++;
             }
@@ -490,7 +499,7 @@ function guardarDiversos(){
                 }
                 var div = {
                     cantidad: $('#cant_' + i).val(),
-                    distribuilble: dist,
+                    distribuible: dist,
                     obra: obr, 
                     proceso: pro, 
                     diverso: diverso,
@@ -498,31 +507,33 @@ function guardarDiversos(){
                 var existe_div = false;
                 snapshot.child(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").forEach(function(divSnap){
                     var diver = divSnap.val();
-                    console.log(diver);
-                    console.log(div);
-                    if(div.diverso == diver.diverso && ((diver.distribuible && dist) || (diver.obra == div.obr && diver.proceso == div.proceso))){
+                    if(div.diverso == diver.diverso && ((diver.distribuible == div.distribuible) && (diver.obra == div.obra && diver.proceso == div.proceso))){
                         existe_div = true;
                     }
                 });
                 if(!existe_div){
-                    var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
-                    updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
-
-                    //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
-                    if(obr != "NA"){
-                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
-                            var existe = false;
-                            var i = 0;
-                            snapshot.forEach(function(childSnap){
-                                i++;
-                                if(childSnap.val() == obr)
-                                    existe = true;
+                    if(!dist && (obr == "" || pro == "")){
+                        alert("El registro del renglón: " + parseInt(i + 1) + " no se registró")
+                    } else {
+                        var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
+                        updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
+    
+                        //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
+                        if(obr != "NA"){
+                            firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
+                                var existe = false;
+                                var i = 0;
+                                snapshot.forEach(function(childSnap){
+                                    i++;
+                                    if(childSnap.val() == obr)
+                                        existe = true;
+                                });
+                                if(!existe){
+                                    //si es nuevo pero no le metí ninguna chamba no lo guardo
+                                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obr);
+                                }
                             });
-                            if(!existe){
-                                //si es nuevo pero no le metí ninguna chamba no lo guardo
-                                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obr);
-                            }
-                        });
+                        }
                     }
                 }
                 console.log("updates: ");
