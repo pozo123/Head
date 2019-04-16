@@ -477,12 +477,6 @@ function guardarDiversos(){
         for(i=0;i<entradas;i++){
             if($('#cant_' + i).val() != ""){
                 var id_trabajador = document.getElementById("id_" + i).innerHTML;
-                console.log(id_trabajador);
-                if(!suma_diversos[id_trabajador]){
-                    suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val());
-                } else {
-                    suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
-                }
                 var dist = true;
                 var obr = "NA";
                 var pro = "NA";
@@ -515,6 +509,11 @@ function guardarDiversos(){
                     if(!dist && (obr == "" || pro == "")){
                         alert("El registro del renglón: " + parseInt(i + 1) + " no se registró")
                     } else {
+                        if(!suma_diversos[id_trabajador]){
+                            suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val());
+                        } else {
+                            suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
+                        }
                         var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
                         updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
     
