@@ -17,7 +17,7 @@ $('#' + id_cerrar_button_cierre).click(function(){
 function checkTime(){
 	var hora = new Date().getHours();
 	var minutos;
-	if(hora >= 16){
+	if(hora >= 17){
 		minutos = new Date().getMinutes();
 		var ms_que_faltan = (60 - minutos)*60000;
 		interval = setInterval(endDay, ms_que_faltan);
