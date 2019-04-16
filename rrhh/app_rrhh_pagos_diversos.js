@@ -1,6 +1,9 @@
+// revisar si funciona con entradas de multiples tipos
+// Checar kaizen
 var id_semana_ddl_diversos = "semanaDdlDiversos";
 var id_year_ddl_diversos = "yearDdlDiversos";
 var id_diverso_ddl_diversos = "diversoDdlDiversos";
+var id_diverso_group_diversos = "dicersoGroupDiversos";//Nuevo!
 
 var id_guardar_button_diversos = "guardarButtonDiversos";
 var id_terminar_button_diversos = "terminarButtonDiversos";
@@ -96,6 +99,45 @@ $('#' + id_semana_ddl_diversos).change(function(){
     $('#' + nuevo.id).empty();
     $('#' + id_table_diversos).empty();
     entradas = 0;
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
+        var nomina = snapshot.val();
+        var terminada = nomina ? diversos_terminados : false;
+        if(terminada){
+            $('#' + id_diverso_group_diversos).addClass('hidden');
+            //Cargar tabla con datos
+            var datos_diversos = [];
+            snapshot.forEach(function(obraSnap){
+                if(obraSnap.key != "terminada"){
+                    obraSnap.child("trabajadores").forEach(function(trabSnap){
+                        trabSnap.child("diversos").forEach(function(childSnap){
+                            var entrada = childSnap.val();
+                            console.log(obraSnap.key);
+                            console.log(obraSnap.val());
+                            datos_diversos.push([trabSnap.key,obraSnap.key,entrada.diverso,entrada.proceso,entrada.cantidad]);
+                        });
+                    });
+                }
+            });
+            //Asincronía? :S
+            $('#' + id_datatable_diversos).removeClass('hidden');
+            var tabla_procesos = $('#'+ id_datatable_diversos).DataTable({
+                destroy: true,
+                data: datos_diversos,
+                dom: 'Bfrtip',
+                buttons: ['excel'],
+                columns: [
+                    {title: "ID",width: 70},
+                    {title: "OBRA",width: 70},
+                    {title: "DIVERSO",width: 70},
+                    {title: "PROCESO",width: 70},
+                    {title: "CANTIDAD",width: 70}
+                ],
+                language: idioma_espanol,
+            });
+        } else{
+            $('#' + id_diverso_group_diversos).removeClass('hidden');
+        }
+    });
 });
 
 $("#" + id_diverso_ddl_diversos).change(function(){
@@ -109,7 +151,7 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     nuevo.id = "nuevo_trabajador_diversos";
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
+    /*firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var nomina = snapshot.val();
         var terminada = snapshot.val().diversos_terminados;
         if(terminada){
@@ -142,14 +184,12 @@ $("#" + id_diverso_ddl_diversos).change(function(){
                 ],
                 language: idioma_espanol,
             }); 
-        } else {
+        } else {*/
             //Carga todos los registros hechos
             firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
                 snapshot.forEach(function(trabSnap){
                     trabSnap.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
                         var diver = diverSnap.val();
-                        console.log(diver);
-                        console.log(diver.diverso);
                         if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
                             cargaRenglonDiversos(trabSnap.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
                         }
@@ -194,8 +234,8 @@ $("#" + id_diverso_ddl_diversos).change(function(){
                     }
                 });
             });
-        }
-    });
+        /*}
+    });*/
 });
 
 function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_in,proc_in){
@@ -239,7 +279,7 @@ function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_
             cell_obra.id = "cell_obra_" + consec;
             var cell_proc = row.insertCell(5);
             cell_proc.id = "cell_proc_" + consec;
-            generateDdls(cell_obra, cell_proc); 
+            generateDdls(cell_obra, cell_proc, true, obra_in, proc_in); 
         } else {
             row.deleteCell(4);
             row.deleteCell(4);
@@ -305,6 +345,8 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
                 option2.style = "display:none";
                 option2.text = option2.value = "";
                 proc_input.appendChild(option2);
+                console.log(snapshot);
+                console.log(obra_in);
                 var obra = snapshot.child(obra_in);
                 if(obra.val().num_procesos == 0){
                     var option = document.createElement('OPTION');
@@ -377,166 +419,213 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
                     });
                 }
             }
-            cell_proc.appendChild(proc_input);    
+            cell_proc.appendChild(proc_input);
         });
         cell_proc.appendChild(proc_input);
     });
 }
 
+function checkProcDdl(){
+    var repetida = false;
+    var i = 0;
+    while(i<entradas && !repetida){
+        var id_actual = document.getElementById("id_" + i).innerHTML;
+        var dist_actual = document.getElementById("check_" + i).checked;
+        var obra_actual = dist_actual ? "NA" : $('#obra_' + i + ' option:selected').val();
+        var proc_actual = dist_actual ? "NA" : (obra_actual == "Atencion a Clientes" ? $('#proc_' + i).val() : $('#proc_' + i + ' option:selected').val());
+        var j = i + 1;
+        while(j<entradas && !repetida){
+            var id_comp = document.getElementById("id_" + j).innerHTML;
+            var dist_comp = document.getElementById("check_" + j).checked;
+            var obra_comp = dist_comp ? "NA" : $('#obra_' + j + ' option:selected').val();
+            var proc_comp = dist_comp ? "NA" : (obra_comp == "Atencion a Clientes" ? $('#proc_' + j).val() : $('#proc_' + j + ' option:selected').val());
+            if(id_comp == id_actual && dist_comp == dist_actual && obra_comp == obra_actual && proc_comp == proc_actual){
+                repetida == true;
+            } else {
+                j++;
+            }
+        }
+        i++;
+    }
+    return repetida;
+}
+
 $('#' + id_guardar_button_diversos).click(function(){
+    if(!checkProcDdl()){
+        guardarDiversos();
+    } else {
+        alert("Existe un registro repetido (mismo trabajador y mismo proceso/distribuible)");
+    }
+});
+
+function guardarDiversos(){
     var year = $('#' + id_year_ddl_diversos + " option:selected").val();
     var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
     var diverso = $('#' + id_diverso_ddl_diversos + " option:selected").val();
     var suma_diversos = {};
     var updates = {};
-    for(i=0;i<entradas;i++){
-        if($('#cant_' + i).val() != ""){
-            var id_trabajador = document.getElementById("id_" + i).innerHTML;
-            console.log(id_trabajador);
-            if(!suma_diversos[id_trabajador]){
-                suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val());
-            } else {
-                suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
-            }
-            var dist = true;
-            var obr = "NA";
-            var pro = "NA";
-            console.log(!document.getElementById("check_" + i).checked)
-            if(!document.getElementById("check_" + i).checked){
-                dist = false;
-                obr = $('#obra_' + i + " option:selected").val();
-                if(obr == "Atencion a Clientes"){
-                    pro = $('#proc_' + i).val();
+    firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+        for(i=0;i<entradas;i++){
+            if($('#cant_' + i).val() != ""){
+                var id_trabajador = document.getElementById("id_" + i).innerHTML;
+                console.log(id_trabajador);
+                if(!suma_diversos[id_trabajador]){
+                    suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val());
                 } else {
-                    pro = $('#proc_' + i + " option:selected").val();
+                    suma_diversos[id_trabajador] = parseFloat($('#' + "cant_" + i).val()) + suma_diversos[id_trabajador];
                 }
-                console.log(obr)
-            }
-            var div = {
-                cantidad: $('#cant_' + i).val(),
-                distribuilble: dist,
-                obra: obr, 
-                proceso: pro, 
-                diverso: diverso,
-            }
-            //Creo que asincronía
-            //AQUI nuevo, con update
-            var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
-            updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
-            //firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push(div);
-
-            //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
-            if(obr != "NA"){
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
-                    var existe = false;
-                    var i = 0;
-                    snapshot.forEach(function(childSnap){
-                        i++;
-                        if(childSnap.val() == obr)
-                            existe = true;
-                    });
-                    if(!existe){
-                        //si es nuevo pero no le metí ninguna chamba no lo guardo
-                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obr);
+                var dist = true;
+                var obr = "NA";
+                var pro = "NA";
+                console.log(!document.getElementById("check_" + i).checked)
+                if(!document.getElementById("check_" + i).checked){
+                    dist = false;
+                    obr = $('#obra_' + i + " option:selected").val();
+                    if(obr == "Atencion a Clientes"){
+                        pro = $('#proc_' + i).val();
+                    } else {
+                        pro = $('#proc_' + i + " option:selected").val();
+                    }
+                    console.log(obr)
+                }
+                var div = {
+                    cantidad: $('#cant_' + i).val(),
+                    distribuilble: dist,
+                    obra: obr, 
+                    proceso: pro, 
+                    diverso: diverso,
+                }
+                var existe_div = false;
+                snapshot.child(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").forEach(function(divSnap){
+                    var diver = divSnap.val();
+                    console.log(diver);
+                    console.log(div);
+                    if(div.diverso == diver.diverso && ((diver.distribuible && dist) || (diver.obra == div.obr && diver.proceso == div.proceso))){
+                        existe_div = true;
                     }
                 });
+                if(!existe_div){
+                    var newPostKey = firebase.database().ref(id_trabajador + "/nomina/" + year + "/" + semana + "/diversos").push().key;
+                    updates[id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + newPostKey] = div;
+
+                    //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana.
+                    if(obr != "NA"){
+                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada").once('value').then(function(snapshot){
+                            var existe = false;
+                            var i = 0;
+                            snapshot.forEach(function(childSnap){
+                                i++;
+                                if(childSnap.val() == obr)
+                                    existe = true;
+                            });
+                            if(!existe){
+                                //si es nuevo pero no le metí ninguna chamba no lo guardo
+                                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/obra_asignada/" + i).set(obr);
+                            }
+                        });
+                    }
+                }
+                console.log("updates: ");
+                console.log(updates);
+                console.log("suma_diversos: ");
+                console.log(suma_diversos);
             }
-            console.log("updates: ");
-            console.log(updates);
-            console.log("suma_diversos: ");
-            console.log(suma_diversos);
         }
-    }
-    firebase.database().ref(rama_bd_trabajadores).update(updates);
-    var updates_tot = {};
-    firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
-        for(key in suma_diversos){
-            console.log(key + ": " + suma_diversos[key]);
-            var val_ant = snapshot.child(key + "/nomina/" + year + "/" + semana + "/total_diversos").val();
-            var diversos_nuevos = suma_diversos[key];
-            if(val_ant != null){
-                diversos_nuevos += parseFloat(val_ant);
+        firebase.database().ref(rama_bd_trabajadores).update(updates);
+        var updates_tot = {};
+        firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+            for(key in suma_diversos){
+                console.log(key + ": " + suma_diversos[key]);
+                var val_ant = snapshot.child(key + "/nomina/" + year + "/" + semana + "/total_diversos").val();
+                var diversos_nuevos = suma_diversos[key];
+                if(val_ant != null){
+                    diversos_nuevos += parseFloat(val_ant);
+                }
+                updates_tot[key + "/nomina/" + year + "/" + semana + "/total_diversos"] = diversos_nuevos;
+                //firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").set(diversos_nuevos);
+                var impuestos_diversos = (diversos_nuevos * 0.16).toFixed(2);
+                updates_tot[key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos"] = impuestos_diversos;
+                //firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos").set(impuestos_diversos);
             }
-            updates_tot[key + "/nomina/" + year + "/" + semana + "/total_diversos"] = diversos_nuevos;
-            //firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_diversos").set(diversos_nuevos);
-            var impuestos_diversos = (diversos_nuevos * 0.16).toFixed(2);
-            updates_tot[key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos"] = impuestos_diversos;
-            //firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos").set(impuestos_diversos);
-        }
-        console.log("updates_tot: ");
-        console.log(updates_tot);
-        firebase.database().ref(rama_bd_trabajadores).update(updates_tot);
+            console.log("updates_tot: ");
+            console.log(updates_tot);
+            firebase.database().ref(rama_bd_trabajadores).update(updates_tot);
+        });
+        alert("Datos actualizados");
     });
-    alert("Datos actualizados");
-});
+}
 
 $('#' + id_terminar_button_diversos).click(function(){
-    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
-    var week = $('#' + id_semana_ddl_diversos + " option:selected").val();
-    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/asistencias_terminadas").once('value').then(function(snapshot){
-        if(snapshot.val()){
-            //Entro a trabajadores y registro los diversos en pagos_nomina, tengo que esperar hasta acá por los distribuibles
-            firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
-                //checar si tienen esta semana
-                snapshot.forEach(function(trabSnap){
-                    var trab = trabSnap.val().nomina;
-                    if(trab != undefined){
-                        if(trab[year] != undefined){
-                            console.log(trab[year][week]);
-                            if(trab[year][week] != undefined){
-                                console.log("hola");
-                                trabSnap.child("nomina/" + year + "/" + week + "/diversos").forEach(function(diversoSnap){
-                                    console.log("3");
-                                    var diver = diversoSnap.val();
-                                    if(diver.distribuible){
-                                        distribuyeEnAsistencias(diver.cantidad,trabSnap,year,week,diver.diverso);
-                                    } else {
-                                        var diverso = {
-                                            cantidad: diver.cantidad,
-                                            diverso: diver.diverso,
-                                            proceso: diver.proceso,
-                                        }
-                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
-                                        var query = diver.obra;
-                                        if(diver.obra != "Atencion a Clientes"){
-                                            sumaMOKaizen(query,diver.cantidad);
-                                            if(diver.obra != diver.proceso){
-                                                var path = diver.proceso.split("-");
-                                                query = query + "/procesos/" + path[0];
+    if(!checkProcDdl()){
+        guardarDiversos();
+        var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+        var week = $('#' + id_semana_ddl_diversos + " option:selected").val();
+        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/asistencias_terminadas").once('value').then(function(snapshot){
+            if(snapshot.val()){
+                //Entro a trabajadores y registro los diversos en pagos_nomina, tengo que esperar hasta acá por los distribuibles
+                firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+                    //checar si tienen esta semana
+                    snapshot.forEach(function(trabSnap){
+                        var trab = trabSnap.val().nomina;
+                        if(trab != undefined){
+                            if(trab[year] != undefined){
+                                console.log(trab[year][week]);
+                                if(trab[year][week] != undefined){
+                                    console.log("hola");
+                                    trabSnap.child("nomina/" + year + "/" + week + "/diversos").forEach(function(diversoSnap){
+                                        console.log("3");
+                                        var diver = diversoSnap.val();
+                                        if(diver.distribuible){
+                                            distribuyeEnAsistencias(diver.cantidad,trabSnap,year,week,diver.diverso);
+                                        } else {
+                                            var diverso = {
+                                                cantidad: diver.cantidad,
+                                                diverso: diver.diverso,
+                                                proceso: diver.proceso,
+                                            }
+                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/diversos").push(diverso);
+                                            var query = diver.obra;
+                                            if(diver.obra != "Atencion a Clientes"){
                                                 sumaMOKaizen(query,diver.cantidad);
-                                                if(path.length>1){
-                                                    query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                                if(diver.obra != diver.proceso){
+                                                    var path = diver.proceso.split("-");
+                                                    query = query + "/procesos/" + path[0];
                                                     sumaMOKaizen(query,diver.cantidad);
+                                                    if(path.length>1){
+                                                        query = query + "/procesos/" + path[0] + "/subprocesos/" + path[1];
+                                                        sumaMOKaizen(query,diver.cantidad);
+                                                    }
                                                 }
                                             }
+                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
+                                                var valor_anterior = snapshot.val();
+                                                if(valor_anterior == null){
+                                                    valor_anterior = 0;
+                                                }
+                                                var nuevo_valor = parseFloat(valor_anterior) + parseFloat(diver.cantidad);
+                                                console.log(nuevo_valor)
+                                                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
+                                                var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
+                                                firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
+                                            });
                                         }
-                                        //AQUI checar asincronia
-                                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
-                                            var valor_anterior = snapshot.val();
-                                            if(valor_anterior == null){
-                                                valor_anterior = 0;
-                                            }
-                                            var nuevo_valor = parseFloat(valor_anterior) + parseFloat(diver.cantidad);
-                                            console.log(nuevo_valor)
-                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
-                                            var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
-                                            firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + diver.obra + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
-                                        });
-                                    }
-                                });
-                            }
-                        }               
-                    }
+                                    });
+                                }
+                            }               
+                        }
+                    });
                 });
-            });
 
-            var tru = true;
-            firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_diversos + " option:selected").val() + "/" + $('#' + id_semana_ddl_diversos + " option:selected").val() + "/diversos_terminados").set(tru);
-            alert("Pagos diversos de esta semana terminados");
-        } else {
-            alert("No se han terminado las asistencias");
-        }
-    });
+                var tru = true;
+                firebase.database().ref(rama_bd_pagos_nomina + "/" + $('#' + id_year_ddl_diversos + " option:selected").val() + "/" + $('#' + id_semana_ddl_diversos + " option:selected").val() + "/diversos_terminados").set(tru);
+                alert("Pagos diversos de esta semana terminados");
+            } else {
+                alert("No se han terminado las asistencias");
+            }
+        });
+    } else {
+        alert("Existe un registro repetido (mismo trabajador y mismo proceso/distribuible)");
+    }
 });
 
 function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
@@ -566,7 +655,7 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
     asistenciaDia(asistencias, trabSnap.child("nomina/" + year + "/" + week + "/jueves").val());
     asistenciaDia(asistencias, trabSnap.child("nomina/" + year + "/" + week + "/viernes").val());
     console.log(asistencias);
-    var totales = {};
+    var totales = {};//AQUI se redefine por cada entrada y por eso se muere para siempre
     for(key in asistencias){
         if(key != "asistencias"){
             var keyObra = key;
@@ -593,7 +682,6 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
                             sumaMOKaizen(keyObra + "/procesos/" + key,cant);
                         }
                     }
-
                     console.log(keyObra + "/" + key + ": " + monto * asistencias[keyObra]["procesos"][key] / asistencias["asistencias"]);
                     totales[keyObra] = parseFloat(totales[keyObra]) + parseFloat(cant);
                     console.log(totales);
@@ -609,23 +697,22 @@ function distribuyeEnAsistencias(monto,trabSnap,year,week,diverso){
                 //AQUI tiene que entrar al kaizen... pero me da miedo la asincronía
                 sumaMOKaizen(keyObra,cant);
                 console.log(keyObra + ": " + cant);
-                totales[keyObra] = cant;
+                totales[keyObra] = totales[keyObra] ? parseFloat(cant) + parseFloat(totales[keyObra]) : parseFloat(cant);
             }
         }
     }
-    //AQUI Meter el key en forEach, para cuidar asincronía
-    for(key in totales){
-        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/total_diversos").once('value').then(function(snapshot){
-            var valor_anterior = snapshot.val();
-            if(valor_anterior == null){
-                valor_anterior = 0;
-            }
+    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
+        for(key in totales){
+            var snap = snapshot.child(key + "/trabajadores/" + trabSnap.key + "/total_diversos");
+            var valor_anterior = snap.exists() ? snap.val() : 0;
+            console.log("val_ant: " + valor_anterior);
             var nuevo_valor = parseFloat(valor_anterior) + parseFloat(totales[key]);
+            console.log("val_new: " + nuevo_valor)
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/total_diversos").set(nuevo_valor);
             var impuestos_diversos = (nuevo_valor * 0.16).toFixed(2);
             firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + key + "/trabajadores/" + trabSnap.key + "/impuestos/impuestos_diversos").set(impuestos_diversos);
-        });
-    }
+        }
+    });
 }
 
 function sumaMOKaizen(query,cantidad){
