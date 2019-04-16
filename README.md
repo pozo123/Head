@@ -2,7 +2,8 @@
 Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(16/4/19):
- - app_rrhh_horas_extra -> CHECK si week en pagos nomina no existe permite crear nuevos
+ - app_cierre_maestro -> cambié el cierre a las 6 porque diario hay miles de cierres maestros y pos no
+ - app_rrhh_horas_extra -> No mete si no hay proc
  - app_rrhh_pagos_diversos -> No sumar totales ni impuestos si repetido, falta esconder group diversos y desesconder datatable
 
  actualizados/nuevos(11/4/19):
