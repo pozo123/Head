@@ -4,6 +4,8 @@ Depto. de Innovacion y Optimizacion
  actualizados/nuevos(16/4/19):
  - app_rrhh_horas_extra -> si week en pagos nomina no existe permite crear nuevos
  - app_rrhh_pagos_diversos -> checo si terminada en week change. No guardo repetidos (checo en la bd y entre los renglones). guardo al terminar. Cosas de asincronía y orden
+ - app_rrhh_trabajadores -> cambie destajistas de textfield a ddl
+ - app_compras_asigna_contrato -> MARINA NACIONAL 385 hardcodeado, añadí IQONO MEXICO
 
  actualizados/nuevos(11/4/19):
  - app_admon_pago_kaizen -> nueva app + pad
@@ -70,6 +72,19 @@ ARTURO:
 DIEGO:
  - Terminado en procs, subprocs y obras, tanto en altas como con atributo, y revisarlo en todos los ddls que alimentan kaizen
  - Cambiar "MARINA NACIONAL 385" por "IQONO MEXICO" en TOOOOOOODOOOOOOOS LAAAAAADOOOOOS
+    - Compras -> Obras
+    - Obras_magico -> Nada más clave, nombre y key
+    - producción:
+       - Colaboradores -> obras (checar en todos)
+       - Obras -> nombre, clave y key
+       - pagos_nomina -> en todas las semanas de todos los años
+       - trabajadores
+          - obra_asignada
+          - nomina -> en todo año, toda semana, todos los diversos, todos los dias, todas las horas extra
+    - proyectos: (con bibliotecas sirve para todo)
+       - inges -> obras
+       - obras -> nombre, key, clave, pptos.clave?
+       - registros
  - Diversos: no guardar repetidos, y está sumando nada mas una entrada, en vez de todas
  - desplegar kaizen lo del cambio de obra
  - Definir Adic en obras simples
