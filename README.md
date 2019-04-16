@@ -25,6 +25,7 @@ Depto. de Innovacion y Optimizacion
   
  actualizados/nuevos(26/2/19):
  - app_atributo
+ - app_reporte_obras
    
  Por probar:
  - app_pagos_nomina
@@ -47,17 +48,14 @@ Depto. de Innovacion y Optimizacion
 
 ARTURO:
  - en app_pryo_cuant_kaizen cambiar el placeholder de descripcion
- - mover gantt abajo de kaizen
+ - clase rojo y gris en desplegar kaizen
  - Desplegar Kaizen: TODO en colores por columna, sin el negro
  - Titulos de obra en catalogo de proceso en negritas y mas grandes
  - Poner los labels de anterior y nuevo separados en proy_cuant_kaizen
- - cambiar avance "prog" por "pag" en desplegar kaizen
  - En producción revisar qué cosas pueden ver/usar supervisores. Bloquear tabs y cargar ddls sólo con las asignadas
- - Clases en css para avance en rojo y prec/cuant en gris
  - Poner el filtro de areas adentro de las paginas para que te saque si metes el link directo
  - Ddl para navegar entre pestañas de areas
  - Poner filtros para pestañas en prod (gerente/supervisor)
- - Kaizen bonito
  - HTMLs de:
     - reporte_obras
     - app_admin_registro
@@ -66,12 +64,12 @@ ARTURO:
     - app_prod_gestionar_pptos -> Que solo salga el tab si eres gerente!
     - app_distribucion_supervisores (los pagos de la pagadora)
     - app_gestionar_supervisores (las obras asignadas)
-    - app_rrhh_trabajadores
-    - app_destajista
-    - app_pago_nomina
- - Actualizar:
+    - app_rrhh_editar_trabajadores
+    - app_admon_pago_kaizen
     
 DIEGO:
+ - Terminado en procs, subprocs y obras, tanto en altas como con atributo, y revisarlo en todos los ddls que alimentan kaizen
+ - Cambiar "MARINA NACIONAL 385" por "IQONO MEXICO" en TOOOOOOODOOOOOOOS LAAAAAADOOOOOS
  - Diversos: no guardar repetidos, y está sumando nada mas una entrada, en vez de todas
  - desplegar kaizen lo del cambio de obra
  - Definir Adic en obras simples
@@ -81,7 +79,6 @@ DIEGO:
  - Desplegar CC
  - Botón respaldo (aunque baje sólo el json)
  - Manual de usuario
- - Agregar terminado a obra_magico (en el alta pero tambien usar app_atributo)
  - diversos en bd, alta, editar, etc, hacer todo en una tabla
  - app_cuenta_cc 
     - crear los fields necesarios para el UML
