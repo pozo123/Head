@@ -3,7 +3,7 @@ Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(16/4/19):
  - app_rrhh_horas_extra -> si week en pagos nomina no existe permite crear nuevos
- - app_rrhh_pagos_diversos -> checo si terminada en week change. No guardo repetidos (checo en la bd y entre los renglones). guardo al terminar. Cosas de asincronía y orden
+ - app_rrhh_pagos_diversos -> checo si terminada en week change. No guardo repetidos (checo en la bd y entre los renglones). guardo al terminar. Cosas de asincronía y orden. Hideo un group (NUEVO)
  - app_rrhh_trabajadores -> cambie destajistas de textfield a ddl
  - app_compras_asigna_contrato -> MARINA NACIONAL 385 hardcodeado, añadí IQONO MEXICO
 
