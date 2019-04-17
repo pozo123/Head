@@ -3,6 +3,7 @@
 var rama_bd_obras_magico = "obras";
 
 
+
 //Recibe un string viejo y uno nuevo para cambiarlo en toda la bd
 function replaceStringsInKeysAndValues(oldString, newString){
     firebase.database().ref().once('value').then(function(snapshot){
@@ -10,14 +11,15 @@ function replaceStringsInKeysAndValues(oldString, newString){
         recorreRamaReplaceString(snapshot,snapshot,updates,oldString,newString);        
         console.log(snapshot.val());
         console.log(updates);
-        //firebase.database().ref().update(updates);
+        firebase.database().ref().update(updates);
     });
 }
 function recorreRamaReplaceString(snapshot,originalSnap,updates,oldString,newString){
     if(snapshot.hasChildren()){
         snapshot.forEach(function(childSnap){
-            recorreRamaReplaceString(snapshot,originalSnap,updates);
+            recorreRamaReplaceString(childSnap,originalSnap,updates, oldString, newString);
         });
+        //console.log(snapshot.key);
         replaceStringInKey(oldString,newString,updates,snapshot,originalSnap);
     } else {
         //Es hoja
@@ -27,17 +29,34 @@ function recorreRamaReplaceString(snapshot,originalSnap,updates,oldString,newStr
 }
 
 function replaceStringInValue(oldString,newString,updates,snapshot){
+    //console.log(snapshot.val());
+    //console.log(oldString);
     if(snapshot.val() == oldString){
-        updates[snapshot.ref] = newString;
+      var path = updates;
+      var i = 0;
+        for(i=0;i<snapshot.ref.path.pieces_.length - 1;i++){
+          path = path[snapshot.ref.path.pieces_[i]];
+          //console.log(path);
+        }
+        path[snapshot.ref.path.pieces_[i]] = newString;
+        //console.log(path[snapshot.ref.path.pieces_[i]])
     }
 }
 
 function replaceStringInKey(oldString,newString,updates,snapshot,originalSnap){
     if(snapshot.key == oldString){
-        var ref_minus_key = snapshot.ref.substring(0,snapshot.ref.length - snapshot.key.length);
-        updates[ref_minus_key + newString] = originalSnap.child(snapshot.ref).val();
-        updates[snapshot.ref] = null;
+        var ref_minus_key = "";
+        //console.log(snapshot.ref.path.pieces_);
+        var path = updates;
+        for(i=0;i<snapshot.ref.path.pieces_.length - 1;i++){
+          path = path[snapshot.ref.path.pieces_[i]];
+          ref_minus_key = ref_minus_key.concat(snapshot.ref.path.pieces_[i] + "/");
+          //console.log(ref_minus_key);
+        }
+        path[newString] = originalSnap.child(ref_minus_key + oldString).val();
+        path[oldString] = null;
     }
+
 }
 
 
