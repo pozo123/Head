@@ -345,9 +345,7 @@ function guardarHorasExtra(){
                 
                 var existe_tra = false;
                 snapshot.child(id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").forEach(function(heSnap){
-                    console.log(heSnap.val());
-                    console.log(he);
-                    if(_.isEqual(heSnap.val(), he_con_obra)){
+                    if(heSnap.val().fecha == he_con_obra.fecha && heSnap.val().horas == he_con_obra.horas && heSnap.val().obra == he_con_obra.obra && heSnap.val().proceso == he_con_obra.proceso){
                         existe_tra = true;
                     }
                 })
@@ -419,6 +417,8 @@ function guardarHorasExtra(){
 };
 
 $('#' + id_terminar_button_horasExtra).click(function(){
+    var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
         var terminada = snapshot.val().horas_extra_terminadas;
         if(!terminada){
