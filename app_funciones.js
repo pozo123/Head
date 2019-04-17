@@ -2,6 +2,45 @@
 
 var rama_bd_obras_magico = "obras";
 
+
+//Recibe un string viejo y uno nuevo para cambiarlo en toda la bd
+function replaceStringsInKeysAndValues(oldString, newString){
+    firebase.database().ref().once('value').then(function(snapshot){
+        var updates = snapshot.val();
+        recorreRamaReplaceString(snapshot,snapshot,updates,oldString,newString);        
+        console.log(snapshot.val());
+        console.log(updates);
+        //firebase.database().ref().update(updates);
+    });
+}
+function recorreRamaReplaceString(snapshot,originalSnap,updates,oldString,newString){
+    if(snapshot.hasChildren()){
+        snapshot.forEach(function(childSnap){
+            recorreRamaReplaceString(snapshot,originalSnap,updates);
+        });
+        replaceStringInKey(oldString,newString,updates,snapshot,originalSnap);
+    } else {
+        //Es hoja
+        replaceStringInValue(oldString,newString,updates,snapshot);
+        replaceStringInKey(oldString,newString,updates,snapshot,originalSnap);
+    }
+}
+
+function replaceStringInValue(oldString,newString,updates,snapshot){
+    if(snapshot.val() == oldString){
+        updates[snapshot.ref] = newString;
+    }
+}
+
+function replaceStringInKey(oldString,newString,updates,snapshot,originalSnap){
+    if(snapshot.key == oldString){
+        var ref_minus_key = snapshot.ref.substring(0,snapshot.ref.length - snapshot.key.length);
+        updates[ref_minus_key + newString] = originalSnap.child(snapshot.ref).val();
+        updates[snapshot.ref] = null;
+    }
+}
+
+
 //Recibe el nombre de la hora y regresa un json SCORE:{clave_proceso: horas_trabajadas}
 function loadScoreKaizen(obra){
   var procesos = {};
