@@ -69,6 +69,9 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
+ - Meter proveedores a bd (por excel e individual)
+ - manejo de proveedores en odec_compras, al cambiar sustituir clave por nombre, o meter por nombre? pero al salir alert si no existe y borrarlo? discutir con Taba
+ - Al dar alta odec, borrar todos los campos menos obra
  - Desplegar OdeCs para que Taba pueda saber si sí entraron
  - Terminado en procs, subprocs y obras, tanto en altas como con atributo, y revisarlo en todos los ddls que alimentan kaizen
  - Cambiar "MARINA NACIONAL 385" por "IQONO MEXICO" en TOOOOOOODOOOOOOOS LAAAAAADOOOOOS
