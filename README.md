@@ -69,6 +69,7 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
+ - Si div ya existe, actualiza el valor. -> eal hacer existe = true guarda el uid y haces un query simple
  - Meter adicionales a obra simple. Obra simple no solo depende de num_procesos sino de adic.num_subprocesos
  - Meter proveedores a bd (por excel e individual)
  - manejo de proveedores en odec_compras, al cambiar sustituir clave por nombre, o meter por nombre? pero al salir alert si no existe y borrarlo? discutir con Taba
