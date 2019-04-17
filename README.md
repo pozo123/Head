@@ -69,6 +69,7 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
+ - Meter adicionales a obra simple. Obra simple no solo depende de num_procesos sino de adic.num_subprocesos
  - Meter proveedores a bd (por excel e individual)
  - manejo de proveedores en odec_compras, al cambiar sustituir clave por nombre, o meter por nombre? pero al salir alert si no existe y borrarlo? discutir con Taba
  - Al dar alta odec, borrar todos los campos menos obra
@@ -176,9 +177,43 @@ TO DO:
    - En ppto si algo está vacio (req/exc/anexo) poner "no aplica"
    - Los editar en bibliotecas ya no solo afectan la bd de proyectos. Checar que si se cambia el nombre de cliente, por ejemplo, se cambie también en obra magico y en todos los lugares que sean correspondientes
 
-  
-- EMAIL
-  - Todos pueden subir su foto! (click en seleccionar, seleccionas archivo, y luego click en SUBIR imagen)
-  - Cierre maestro a las 5 y de ahí una por hora.
-  - Si no está su obra/ppto díganle a Eric. Para medir bien las horas trabajadas necesitamos evitar Otros y Misceláneos lo más posible.
-  - Si salen igual, desde el cel  
+dudas:
+Obras divididas ya existentes
+   - CPBR -> Son el mismo
+   - zentral -> Partirla en t1 y t2, todo lo que ya va a torre 1
+   - via -> Partirla en comercios y oficinas, todo lo ya trabajado va en com
+Ya terminadas? 
+   - Amira -> cerrada
+   - Blume -> cerrada
+   - Box Metepec -> cerrada
+   - LA CITE (td y te) -> clausurada
+   - Periferico 2840 -> = pc00
+Cambiar UNICO por EJE 8
+
+OBRAS:
+ - Kaizen:
+   - FOR US -> :S
+   - MARINA 196-48
+   - UNICO 149
+   - ACANTO
+   - AVERANDA T-A
+   - ENTTORNO T-F
+   - NEO
+   - VIA 515 oficinas
+   - ZENTRAL T2
+ - Terminator:
+   - Mayo:
+      - ICON
+      - EPIC
+      - WEST PARK
+      - COSMOCRAT
+      - AVERANDA T-B
+      - ENTTORNO T-E
+      - ZENTRAL T1
+   - Junio:
+      - SAN ANTONIO 88 / 95
+      - VIA 515 COM
+   - Agosto:
+      - MINAS
+      - LAS VENTANAS
+      - CENTRAL PARK T-A/T-B
