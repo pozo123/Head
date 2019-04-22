@@ -1,6 +1,9 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(22/4/19):
+ - app_rrhh_horas_extra -> cree div datatable para los hidden, en guardar puse var a totales y quité el resetearlosen los firebase, a ver si ahora sí se suben bien totales e impuestos
+
  actualizados/nuevos(16/4/19):
  - app_cierre_maestro -> cambié el cierre a las 6 porque diario hay miles de cierres maestros y pos no
 
