@@ -119,20 +119,20 @@
             - terminado
             - nombre (ya lo llamo en registros)
             - SCORE
-               - total_ie_prog
-               - total_ihs_prog
-               - total_prog
-               - total_ihs_trabajado
-               - total_ie_trabajado
-               - total_trabajado
+               - total_ie_prog (en horas)
+               - total_ihs_prog (en horas)
+               - total_prog (en horas)
+               - total_ihs_trabajado (en horas)
+               - total_ie_trabajado (en horas)
+               - total_trabajado (en horas)
                - ie
                   - trabajador (por uid)
-                     - horas_trabajadas
-                     - horas_programadas
+                     - horas_trabajadas (en horas)
+                     - horas_programadas (en horas)
                - ihs
                   - trabajador (por uid)
-                     - horas_trabajadas
-                     - horas_programadas
+                     - horas_trabajadas (en horas)
+                     - horas_programadas (en horas)
             - Todo lo de presupuestos??? Definir
       - procesos:
          - proceso (por clave):
@@ -358,7 +358,7 @@
             - registro (por cu)
                - checkin
                - esp
-               - horas
+               - horas (en ms)
                - inge (uid)
                - obra
                - proceso (este es nuevo)
