@@ -314,6 +314,9 @@ function asistenciaDiaPN(dia, asistencias, asis){
     }
     if(dia.asistencia){
         asis += 0.2;
+        if(!asistencias[dia.obra]){
+        	asistencias[dia.obra] = {};
+		}
     	if(asistencias[dia.obra]["total"]) {
             asistencias[dia.obra]["total"] = asistencias[dia.obra]["total"] + 0.2;
         } else {
