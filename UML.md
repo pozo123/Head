@@ -2,12 +2,15 @@
       - AFECTAN: app_personal, app_inges, app_colaboradores_produccion/admin/rrhh/compras
       - SUSCRIBEN: 
   - uid (como key):
-    - areas:
+    - areas:   
       - proyectos: boolean
       - produccion: boolean
       - compras: boolean
       - administracion: boolean
       - rrhh: bool
+    - credenciales: (0 sisadmin, 1 director, 2 lider de area, 3 los demas, 4 bajas/glitches)
+    - esp (si tienes area proy, "ie", "ihs", "neutra")
+    - status (si tienes area proy, true si trabajando)
     - uid: uid
     - nombre: string
     - nickname: ? string
@@ -111,8 +114,14 @@
          - supervisor (por id)
             - nombre
             - activo: bool
+      - presupuestos:
+         - presupuesto (por nombre(?))
+            - terminado
+            - nombre (ya lo llamo en registros)
+            - Todo lo de presupuestos??? Definir
       - procesos:
          - proceso (por clave):
+            - terminado
             - nombre
             - alcance
             - clave
@@ -125,6 +134,7 @@
             - num_subprocesos
             - subprocesos:
                - subproceso (por clave):
+                  - terminado
                   - nombre
                   - alcance
                   - calve
@@ -327,6 +337,18 @@
             - fecha_final_teorica
 - clientes
 - proyectos
+   - registros
+      - year
+         - semana
+            - registro (por cu)
+               - checkin
+               - esp
+               - horas
+               - inge (uid)
+               - obra
+               - proceso (este es nuevo)
+               - presupuesto
+               - status
    - cuantificaciones
       - obra (por nombre)
          - year
