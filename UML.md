@@ -118,6 +118,21 @@
          - presupuesto (por nombre(?))
             - terminado
             - nombre (ya lo llamo en registros)
+            - SCORE
+               - total_ie_prog
+               - total_ihs_prog
+               - total_prog
+               - total_ihs_trabajado
+               - total_ie_trabajado
+               - total_trabajado
+               - ie
+                  - trabajador (por uid)
+                     - horas_trabajadas
+                     - horas_programadas
+               - ihs
+                  - trabajador (por uid)
+                     - horas_trabajadas
+                     - horas_programadas
             - Todo lo de presupuestos??? Definir
       - procesos:
          - proceso (por clave):
