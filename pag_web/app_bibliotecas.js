@@ -1132,7 +1132,7 @@ $('#' + id_editar_pagos_button_bibliotecas).click(function(){
 	firebase.database().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos/" + ppto_pago + "/pagos/" + cu_pago).update(pago);
 	//AQUI meter imagen
 	if($('#' + id_monto_pagos_editar_bibliotecas).val() != monto_pagos){
-		firebase.data().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos")orderByKey().equalTo(ppto_pago).once("child_added").then(function(snapshot){
+		firebase.data().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos").orderByKey().equalTo(ppto_pago).once("child_added").then(function(snapshot){
 			var ppto = snapshot.val();
 			var nuevo_cash = parseFloat(ppto.cash_pagado) - parseFloat(monto_pagos) + parseFloat($('#' + id_monto_pagos_editar_bibliotecas).val());
 			firebase.database().ref(rama_bd_obras + "/" + obra_pago + "/presupuestos/" + ppto_pago + "/cash_pagado").update(nuevo_cash);
