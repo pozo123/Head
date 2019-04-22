@@ -1,13 +1,31 @@
+var rama_bd_personal = "personal";
+var id_dropdownMenu = "dropdownMenu";
 
 $(document).ready(function() {
 
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
+            // Necesito revisar esto (aqui poner un query por areas)
             $("#navComunidad").removeClass("hidden");
             $("#loginEmail").addClass("hidden");
             $("#loginPassword").addClass("hidden");
             $("#loginAceptar").addClass("hidden");
             $("#cerrar").removeClass("hidden");
+
+            firebase.database().ref(rama_bd_personal + "/" + user.uid + "/areas").once('value').then(function(snapshot){
+                snapshot.forEach(function(childSnapshot){
+                    if(childSnapshot.val()){
+                        var area = childSnapshot.key;
+                        var a = document.createElement('a');
+                        a.className = "dropdown-item";
+                        a.href = "" + area + ".html";
+                        var t = document.createTextNode(area);
+                        a.appendChild(t);
+                        var div = document.getElementById(id_dropdownMenu);
+                        div.appendChild(a);
+                    }
+                });
+            });
 
         } else {
             $("#cerrar").addClass("hidden");
@@ -16,8 +34,6 @@ $(document).ready(function() {
     
 
 });
-
-
 
 $("#forgot").click(function () { 
     var auth = firebase.auth();
