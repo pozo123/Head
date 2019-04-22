@@ -8,7 +8,7 @@ var id_pres_ddl_reporte = "reporte_DDL_presupuesto";
 var id_presupuestosgroup_reporte = "id_presupuestosgroup_reporte";
 var id_tabla_button_reporte = "llenarTabla";
 var id_fecha_inicio_reporte = "fechaInicio";
-var id_fecha_final_reporte = "fichaFinal";
+var id_fecha_final_reporte = "fechaFinal";
 var id_datatable_reporte =  "dataTableReporte"
 
 var regs = new Array();
@@ -184,10 +184,22 @@ $('#' + id_imprime_button_reporte).click(function () {
         var fecha_f_timestamp;
         var horas_totales = 0;
         if($('#' + id_fecha_final_reporte).val() === ""){
-            fecha_f ="";
-            fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
-            prueba = new Date(fecha_f_timestamp);
+            if($('#' + id_fecha_inicio_reporte).val() === ""){
+                //Si no se selecciona ninguna fecha se hacen los reportes con todos los valores
+                fecha_i = new Date(2018,8,1);
+                fecha_i_timestamp = fecha_i.getTime();
+                fecha_f = new Date();
+                fecha_f_timestamp = fecha_f.getTime();
+            } else {
+                //Si sólo se selecciona un día se utiliza la info de ese día en particular
+                fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
+                fecha_i_timestamp = fecha_i.getTime();
+                fecha_f = "";
+                fecha_f_timestamp = fecha_i_timestamp + (24*3600*1000);
+            }
         } else {
+            fecha_i = new Date($('#' + id_fecha_inicio_reporte).val());
+            fecha_i_timestamp = fecha_i.getTime();
             fecha_f = new Date($('#' + id_fecha_final_reporte).val());
             fecha_f_timestamp = fecha_f.getTime() + (24*3600*1000); 
         }
