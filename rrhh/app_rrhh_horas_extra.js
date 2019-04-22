@@ -20,6 +20,8 @@ var tableHorasExtra = document.getElementById(id_table_horasExtra)
 
 var sueldos_base = [];
 
+var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
 jQuery.datetimepicker.setLocale('es');
 var total_horas = {};
 
@@ -132,28 +134,33 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
         }   
         if(terminada){
             //Cargar tabla con datos
-            $('#' + id_datatable_div_horasExtra).removeClass('hidden');
-            var datos_horasExtra = [];
-            snapshot.child(year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(trabSnap){
-                trabSnap.child("horas_extra").forEach(function(childSnap){
-                    var entrada = childSnap.val();
-                    datos_horasExtra.push([trabSnap.key,trabSnap.val().nombre,entrada.fecha,entrada.proceso,entrada.horas]);
+            console.log(terminada);
+            firebase.database().ref(rama_bd_trabajadores).once('value').then(function(tSnap){
+                $('#' + id_datatable_div_horasExtra).removeClass('hidden');
+                var datos_horasExtra = [];
+                snapshot.child($("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(trabSnap){
+                    console.log(trabSnap)
+                    trabSnap.child("horas_extra").forEach(function(childSnap){
+                        console.log("1");
+                        var entrada = childSnap.val();
+                        datos_horasExtra.push([trabSnap.key,tSnap.child(trabSnap.key).val().nombre,new Date(entrada.fecha).toLocaleDateString("es-ES",options),entrada.proceso,formatMoney(entrada.horas)]);
+                    });
+                    //Asincronía? :S
+                    var tabla_procesos = $('#'+ id_datatable_horasExtra).DataTable({
+                        destroy: true,
+                        data: datos_horasExtra,
+                        dom: 'Bfrtip',
+                        buttons: ['excel'],
+                        columns: [
+                            {title: "ID",width: 70},
+                            {title: "NOMBRE",width: 350},
+                            {title: "FECHA",width: 70},
+                            {title: "PROCESO",width: 70},
+                            {title: "PRECIO TOTAL POR HORAS EXTRA"}
+                        ],
+                        language: idioma_espanol,
+                    }); 
                 });
-                //Asincronía? :S
-                var tabla_procesos = $('#'+ id_datatable_horasExtra).DataTable({
-                    destroy: true,
-                    data: datos_horasExtra,
-                    dom: 'Bfrtip',
-                    buttons: ['excel'],
-                    columns: [
-                        {title: "ID",width: 70},
-                        {title: "NOMBRE",width: 150},
-                        {title: "FECHA",width: 70},
-                        {title: "PROCESO",width: 70},
-                        {title: "HORAS",width: 70}
-                    ],
-                    language: idioma_espanol,
-                }); 
             });
         } else {
             if($('#' + id_obra_ddl_horasExtra + " option:selected").val() == "Atencion a Clientes"){
@@ -396,9 +403,9 @@ function guardarHorasExtra(){
                 }
                 var horas_nuevas = parseFloat(horas_previas) + total_horas_tra[key];
                 console.log("horas_nuevas_tra: " + horas_nuevas);
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
+                firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
                 var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
-                firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
+                firebase.database().ref(rama_bd_trabajadores + "/" + key + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
             }
             total_horas_tra = {};
         });
