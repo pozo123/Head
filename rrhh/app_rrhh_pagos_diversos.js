@@ -123,7 +123,7 @@ $('#' + id_semana_ddl_diversos).change(function(){
                             var entrada = childSnap.val();
                             //console.log(obraSnap.key);
                             //console.log(obraSnap.val());
-                            datos_diversos.push([trabSnap.key,obraSnap.key,entrada.diverso,entrada.proceso,entrada.cantidad]);
+                            datos_diversos.push([trabSnap.key,obraSnap.key,entrada.diverso,entrada.proceso,formatMoney(entrada.cantidad)]);
                         });
                     });
                 }
