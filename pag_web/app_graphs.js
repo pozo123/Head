@@ -70,7 +70,7 @@ function loadGraphs(){
                             }]
                         };
                         var canvas_container = document.createElement('canvas');
-                        canvas_container.id = presu_snapshot.child("nombre").val()
+                        canvas_container.id = presu_snapshot.child("clave").val() + presu_snapshot.child("nombre").val()
                         var canvas_div = document.createElement('div');
                         canvas_div.appendChild(canvas_container);
                         
@@ -96,6 +96,7 @@ function loadGraphs(){
                                         }
                                     }]
                                 },
+                                
                                 responsive: true,
                                 maintainAspectRatio: false,
                                 legend: {
