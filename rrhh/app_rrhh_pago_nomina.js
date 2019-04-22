@@ -40,25 +40,37 @@ $('#' + id_year_ddl_pago_nomina).change(function(){
     $('#' + id_datatable_pago_nomina).addClass('hidden');
     $('#' + id_table_pago_nomina).empty();
 	loadSemanasPagoNomina($('#' + id_year_ddl_pago_nomina + " option:selected").val());
+
 });
 
 function loadSemanasPagoNomina(year){
+
+	var optionBlank = document.createElement("option");
+	optionBlank.style = "display:none";
+	optionBlank.text = optionBlank.value = "";
+
+
 	var semana_actual;
 	if(year == getWeek(new Date().getTime())[1]){
 	    semana_actual = getWeek(new Date().getTime())[0];	
 	} else {
 		semana_actual = getWeek(new Date(year,11,31).getTime())[0];
 	}
-    var select = document.getElementById(id_semana_ddl_pago_nomina);
+	var select = document.getElementById(id_semana_ddl_pago_nomina);
+	select.appendChild(optionBlank);
+
     for(i=semana_actual;i>0;i--){
     	firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + i).once('value').then(function(snapshot){
-    		var semana = snapshot.val();
-    		if(semana.diversos_terminados && semana.asistencias_terminadas && semana.horas_extra_terminadas){
-		        var option = document.createElement('option');
-		        option.text = i;
-		        option.value = semana.terminada;
-		        select.appendChild(option);
-    		}
+			if(snapshot.exists()){
+				var semana = snapshot.val();
+				if(semana.diversos_terminados && semana.asistencias_terminadas && semana.horas_extra_terminadas){
+					console.log("2")
+					var option = document.createElement('option');
+					option.text = snapshot.key;
+					option.value = semana.terminada;
+					select.appendChild(option);
+				}
+			}
     	});
     }
 }
@@ -66,9 +78,12 @@ function loadSemanasPagoNomina(year){
 $('#' + id_semana_ddl_pago_nomina).change(function(){
 	trabajadores = [];
     var year = $('#' + id_year_ddl_pago_nomina + " option:selected").val();
-    var semana = $('#' + id_semana_ddl_pago_nomina + " option:selected").val();
+	var semana = $('#' + id_semana_ddl_pago_nomina + " option:selected").text();
+	console.log(year)
+	console.log(semana)
 	firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
 		var terminada = snapshot.val().terminada;
+		console.log(terminada)
 		if(terminada){
 			//DataTable
 			var datos_pagoNomina = [];
@@ -104,16 +119,19 @@ $('#' + id_semana_ddl_pago_nomina).change(function(){
 			headersPagoNomina();
 			var year = $('#' + id_year_ddl_pago_nomina + " option:selected").val();
 			var week = $('#' + id_semana_ddl_pago_nomina + " option:selected").text();
-			firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
-				snapshot.forEach(function(obraSnap){
-					if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "asistencias_terminadas" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
-						obraSnap.child("trabajadores").forEach(function(trabSnap){
-							//Si no existe ya, crealo.
-							if(!trabajadores[trabSnap.key]){
-								cargaRenglonPagoNomina(trabSnap);
-							}
-						});
-					}
+			firebase.database().ref(rama_bd_trabajadores).once('value').then(function(tSnap){
+				firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
+					snapshot.forEach(function(obraSnap){
+						if(obraSnap.key != "total" && obraSnap.key != "terminada" && obraSnap.key != "asistencias_terminadas" && obraSnap.key != "horas_extra_terminadas" && obraSnap.key != "diversos_terminados"){
+							obraSnap.child("trabajadores").forEach(function(trabSnap){
+
+								//Si no existe ya, crealo.
+								if(!trabajadores[trabSnap.key]){
+									cargaRenglonPagoNomina(tSnap.child(trabSnap.key));
+								}
+							});
+						}
+					});
 				});
 			});
 		}
@@ -135,7 +153,7 @@ function cargaRenglonPagoNomina(trabSnap){
 
     var cant = document.createElement('input');
     cant.type = "text";
-    cant.id = "cant_pagada_" + trabajadores.length;
+    cant.id = "cant_pagada_" + trabSnap.key;
     cant.placeholder = "Cantidad pagada";
     cell_pago.appendChild(cant);
 
@@ -158,14 +176,16 @@ $('#' + id_terminar_button_pago_nomina).click(function(){
 	$('[id^=cant_pagada_]').each(function(){
 		var split = this.id.split("_");
 		var id_trabajador = split[split.length - 1];
+		console.log(id_trabajador);
+		console.log(split)
 		firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador).once('value').then(function(snapshot){
 			var sueldo_base = parseFloat(snapshot.val().sueldo_base);
-			var total = parseFloat($(this).val());
+			var total = parseFloat($("#" + "cant_pagada_" + id_trabajador).val());
 			if(week == 1 && new Date(year,0,1).getDay() != 4){
-				distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,"first");
-				distribuyeEnAsistenciasPagoNomina(total,getWeek(new Date(year-1,11,31).getTime())[0],year - 1,snapshot,"last");
+				distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,"first", sueldo_base);
+				distribuyeEnAsistenciasPagoNomina(total,getWeek(new Date(year-1,11,31).getTime())[0],year - 1,snapshot,"last", sueldo_base);
 			} else {
-				distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,"NA");
+				distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,"NA", sueldo_base);
 			}
 		});
 	});
@@ -181,6 +201,7 @@ $('#' + id_terminar_button_pago_nomina).click(function(){
 });
 
 function sumaTotalesPN(week, year){
+	console.log("adios")
 	firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week).once('value').then(function(snapshot){
 		var total_week = 0;
 		snapshot.forEach(function(childSnap){
@@ -188,6 +209,7 @@ function sumaTotalesPN(week, year){
 				var total_obra = 0;
 				childSnap.child("trabajadores").forEach(function(trabSnap){
 					var trab = trabSnap.val();
+					console.log(trab)
 					var total_trab = parseFloat(trab.total_horas_extra) + parseFloat(trab.total_asistencia) + parseFloat(trab.total_diversos) + parseFloat(trab.impuestos.impuestos_asistencia_obra) + parseFloat(trab.impuestos.impuestos_diversos) + parseFloat(trab.impuestos.impuestos_horas_extra);
 					total_obra = total_obra + total_trab;
 					firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/" + childSnap.key + "/trabajadores/" + trabSnap.key + "/total").set(total_trab);
@@ -199,7 +221,8 @@ function sumaTotalesPN(week, year){
 		firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + week + "/total").set(total_week);
 	});
 }
-function distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,semanaQuebrada){
+function distribuyeEnAsistenciasPagoNomina(total,week,year,snapshot,semanaQuebrada, sueldo_base){
+	console.log("hola")
 	semSnap = snapshot.child("nomina/" + year + "/" + week);
 	var sem_trab = semSnap.val();
 	var asis = 0;
