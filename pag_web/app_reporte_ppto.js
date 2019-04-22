@@ -38,21 +38,6 @@ function loadDDLPresupuestosReportePpto(){
         select.appendChild(option2);
     });    
 }
-
-function loadDDLPresupuestosGestionar(){
-    $('#' + id_presupuestos_ddl_gestionar).empty();
-    var select = document.getElementById(id_presupuestos_ddl_gestionar);
-    var option = document.createElement('option');
-    option.style = "display:none";
-    option.text = option.value = "";
-    select.appendChild(option);
-    firebase.database().ref(rama_bd_obras + "/" + $('#' + id_obra_ddl_gestionar + " option:selected").val() + "/presupuestos").orderByKey().on('child_added',function(snapshot){
-        var presu = snapshot.key;
-        var option2 = document.createElement('option');
-        option2.text = option2.value = presu; 
-        select.appendChild(option2);
-    });
-};
 // Queries para obtener variables
 $('#' + id_generar_button_reportePpto).click(function() {
 // Datos Generales
