@@ -3,6 +3,7 @@ Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(22/4/19):
  - app_rrhh_horas_extra -> cree div datatable para los hidden, en guardar no sé por qué no guarda impuestos de los primeros en trabajadores pero sí en nomina, le moví para que estén exactamente igual
+ - app_proy_registros -> nuevos registros usando el nuevo uml
 
  actualizados/nuevos(16/4/19):
  - app_cierre_maestro -> cambié el cierre a las 6 porque diario hay miles de cierres maestros y pos no
