@@ -28,6 +28,7 @@ var username;
 				} else {
 					firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
 						var col = snapshot.val();
+						console.log(col);
                         if(col.tipo == "supervisor"){
                             aut = "supervisor";
                         } else if(col.tipo == "gerente"){
@@ -35,7 +36,8 @@ var username;
                         } else {
                             aut = "nope";
                             alert("Usuario sin autorización");
-                        }
+						}
+						console.log(aut);
 					});
                 }
                 console.log(aut)
@@ -75,17 +77,18 @@ $('#' + id_tab_datos_kaizen).click(function(){
 });
 
 $("#" + id_obra_ddl_datos_kaizen).change(function(){
-	loadTableKaizen();
+    loadTableKaizen();
 });
 
 $('#' + id_reset_button).click(loadTableKaizen());
 
 function loadTableKaizen(){
 	datos_kaizen = [];
-	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_datos_kaizen + " option:selected").val()).once('value').then(function(snapshot){
-		snapshot.forEach(function(childSnap){
-			childSnap.child("procesos").forEach(function(procSnap){
-				var proc = procSnap.val();
+	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_datos_kaizen + " option:selected").val()  + "/procesos").once('value').then(function(snapshot){
+        console.log(snapshot.val())
+        snapshot.forEach(function(childSnap){
+            console.log(childSnap.val());
+				var proc = childSnap.val();
 				var avance_est;
 				var avance_real;
 
@@ -113,33 +116,33 @@ function loadTableKaizen(){
 				textfield6.type = "text";
 				textfield6.id = proc.clave + "_copeo_prec";
 
-				var textfield7 = document.createElement('input');
+/* 				var textfield7 = document.createElement('input');
 				textfield7.type = "text";
 				textfield7.id = proc.clave + "_copeo_copeo";
-				textfield7.change(function(){
+				$('$' + textfield7.id).change(function(){
 					avance_est = "%" + (100*parseFloat($('#' + proc.clave + "_copeo_pag").val())/parseFloat($('#' + proc.clave + "_copeo_copeo").val()));
 				});
 
 				var textfield8 = document.createElement('input');
 				textfield8.type = "text";
 				textfield8.id = proc.clave + "_copeo_pag";
-				textfield8.change(function(){
+				$('$' + textfield8.id).change(function(){
 					avance_est = "%" + (100*parseFloat($('#' + proc.clave + "_copeo_pag").val())/parseFloat($('#' + proc.clave + "_copeo_copeo").val()));
 				});
 
 				var textfield9 = document.createElement('input');
 				textfield9.type = "text";
 				textfield9.id = proc.clave + "_est_ppto";
-				textfield9.change(function(){
+				$('$' + textfield9.id).change(function(){
 					avance_real = "%" + (100*parseFloat($('#' + proc.clave + "_est_est").val())/parseFloat($('#' + proc.clave + "_est_ppto").val()));
 				});
 
 				var textfield10 = document.createElement('input');
 				textfield10.type = "text";
 				textfield10.id = proc.clave + "_est_est";
-				textfield10.change(function(){
+				$('$' + textfield10.id).change(function(){
 					avance_real = "%" + (100*parseFloat($('#' + proc.clave + "_est_est").val())/parseFloat($('#' + proc.clave + "_est_ppto").val()));
-				});
+				}); */
 
 				var textfield11 = document.createElement('input');
 				textfield11.type = "text";
@@ -174,7 +177,9 @@ function loadTableKaizen(){
 					$('#' + proc.clave + "_est_pag").val(proc.ADMINISTRACION.ESTIMACIONES.PAG),
 					$('#' + proc.clave + "_ant_ppto").val(proc.ADMINISTRACION.ANTICIPOS.PPTO),
 					$('#' + proc.clave + "_ant_pag").val(proc.ADMINISTRACION.ANTICIPOS.PAG),
-				]);
+                ]);
+                
+                console.log(datos_kaizen)
 						
 				var tabla_procesos = $('#'+ id_datatable_asistencia).DataTable({
 			 		destroy: true,
@@ -234,7 +239,6 @@ function loadTableKaizen(){
 				   	],
 				   	language: idioma_espanol,
 				});            
-			});
 		})
 	});
 };
@@ -309,7 +313,7 @@ $('#' + id_actualizar_button_datos_kaizen).click(function(){
 	});
 });
 
-var idioma_espanol = {
+var idioma_espanol = {	
     "sProcessing":     "Procesando...",
     "sLengthMenu":     "Mostrar _MENU_ registros",
     "sZeroRecords":    "No se encontraron resultados",
