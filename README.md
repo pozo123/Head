@@ -28,7 +28,7 @@ Depto. de Innovacion y Optimizacion
    
  Por probar:
  - app_pagos_nomina
- - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada, que carguen los ddls
+ - app_rrhh_pagos_diversos -> terminar: sumar, distribuir, y KAIZEN, ya no al kaizen si atencion a clientes, distribuir horas si semana quebrada, que carguen los ddls, si funciona con multiples diversos
  - app_reporte_obras ->(edité, ahora tiene checkboxes... creo :S)
  - loadScoreKaizen (en app_funciones)
  - app_gestionar_supervisores
@@ -68,29 +68,11 @@ ARTURO:
     
 DIEGO:
  - Si div ya existe, actualiza el valor. -> eal hacer existe = true guarda el uid y haces un query simple
- - Meter adicionales a obra simple. Obra simple no solo depende de num_procesos sino de adic.num_subprocesos
  - Meter proveedores a bd (por excel e individual)
  - manejo de proveedores en odec_compras, al cambiar sustituir clave por nombre, o meter por nombre? pero al salir alert si no existe y borrarlo? discutir con Taba
  - Al dar alta odec, borrar todos los campos menos obra
  - Desplegar OdeCs para que Taba pueda saber si sí entraron
- - Terminado en procs, subprocs y obras, tanto en altas como con atributo, y revisarlo en todos los ddls que alimentan kaizen
- - Cambiar "MARINA NACIONAL 385" por "IQONO MEXICO" en TOOOOOOODOOOOOOOS LAAAAAADOOOOOS
-    - Compras -> Obras
-    - Obras_magico -> Nada más clave, nombre y key
-    - producción:
-       - Colaboradores -> obras (checar en todos)
-       - Obras -> nombre, clave y key
-       - pagos_nomina -> en todas las semanas de todos los años
-       - trabajadores
-          - obra_asignada
-          - nomina -> en todo año, toda semana, todos los diversos, todos los dias, todas las horas extra
-    - proyectos: (con bibliotecas sirve para todo)
-       - inges -> obras
-       - obras -> nombre, key, clave, pptos.clave?
-       - registros
- - Diversos: no guardar repetidos, y está sumando nada mas una entrada, en vez de todas
  - desplegar kaizen lo del cambio de obra
- - Definir Adic en obras simples
  - app_prod_entrada_estimacion
  - app_presupuesto -> cargar datos a kaizen/proy/ppto (subp, proc y obra) y manejo correcto de ddls y hiddens (empty y hide proc y clase de ppto cuando cambio de obra). Simplificación de formato si clase == prod?
  - Todo lo de Gantt
