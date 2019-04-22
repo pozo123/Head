@@ -122,7 +122,7 @@ $('#' + id_entrada_button_registroAdmin).change(function(){
 		subfamilia: $('#' + id_subfamilia_ddl_registroAdmin + " option:selected").val(),
 		actividad: actividad,
 		activo: true,
-		checkin: now;
+		checkin: now,
 		checkout: 0,
 		colaborador: firebase.auth().currentUser.uid,
 		status_obra: status_obra,
