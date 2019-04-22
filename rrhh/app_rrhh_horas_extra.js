@@ -6,6 +6,7 @@ var id_guardar_button_horasExtra = "guardarButtonHorasExtra";
 var id_terminar_button_horasExtra = "terminarButtonHorasExtra";
 
 var id_datatable_horasExtra = "dataTableHorasExtra";
+var id_datatable_div_horasExtra = "dataTableDivHorasExtra";
 var id_table_horasExtra = "tableHorasExtra";
 var id_tab_horasExtra = "tabHorasExtra";
 
@@ -25,7 +26,7 @@ var total_horas = {};
 $('#' + id_tab_horasExtra).click(function(){
     sueldos_base = [];
     $('#' + id_datatable_horasExtra).empty();
-    $('#' + id_datatable_horasExtra).addClass('hidden');
+    $('#' + id_datatable_div_horasExtra).addClass('hidden');
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
     $('#' + id_semana_ddl_horasExtra).empty();
@@ -77,7 +78,7 @@ $('#' + id_year_ddl_horasExtra).change(function(){
     sueldos_base = [];
     $('#' + id_semana_ddl_horasExtra).empty();
     $('#' + id_datatable_horasExtra).empty();
-    $('#' + id_datatable_horasExtra).addClass('hidden');
+    $('#' + id_datatable_div_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
@@ -103,7 +104,7 @@ $('#' + id_year_ddl_horasExtra).change(function(){
 $('#' + id_semana_ddl_horasExtra).change(function(){
     sueldos_base = [];
     $('#' + id_datatable_horasExtra).empty();
-    $('#' + id_datatable_horasExtra).addClass('hidden');
+    $('#' + id_datatable_div_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
@@ -114,7 +115,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     sueldos_base = [];
     $('#' + nuevo.id).empty();
     $('#' + id_datatable_horasExtra).empty();
-    $('#' + id_datatable_horasExtra).addClass('hidden');
+    $('#' + id_datatable_div_horasExtra).addClass('hidden');
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
     headersHorasExtra();
@@ -131,6 +132,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
         }   
         if(terminada){
             //Cargar tabla con datos
+            $('#' + id_datatable_div_horasExtra).removeClass('hidden');
             var datos_horasExtra = [];
             snapshot.child(year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val() + "/trabajadores").forEach(function(trabSnap){
                 trabSnap.child("horas_extra").forEach(function(childSnap){
@@ -138,7 +140,6 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                     datos_horasExtra.push([trabSnap.key,trabSnap.val().nombre,entrada.fecha,entrada.proceso,entrada.horas]);
                 });
                 //Asincronía? :S
-                $('#' + id_datatable_horasExtra).removeClass('hidden');
                 var tabla_procesos = $('#'+ id_datatable_horasExtra).DataTable({
                     destroy: true,
                     data: datos_horasExtra,
@@ -302,7 +303,7 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
     if(!nuevo){
         var date = new Date(fecha_in);
         $("#" + fecha.id).val((date.getMonth() + 1) + "." + date.getDate() + "." + date.getFullYear());
-        $('#' + horas.id).val(parseFloat(horas_in));
+        $('#' + horas.id).val((parseFloat(horas_in) / parseFloat(trabajador.sueldo_base)).toFixed(2));
         for(var i = 0; i<proc.length;i++){
             if(proc[i].text == proc_in){
                 proc.selectedIndex = i;
@@ -321,8 +322,8 @@ function guardarHorasExtra(){
     var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
     var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
     var obra = $('#' + id_obra_ddl_horasExtra + " option:selected").val();
-    total_horas_tra = {};
-    total_horas_nom = {};
+    var total_horas_tra = {};
+    var total_horas_nom = {};
     firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
 
         for(i=0;i<entradas;i++){
@@ -355,13 +356,13 @@ function guardarHorasExtra(){
                     } else {
                         total_horas_nom[id_trabajador] = total_horas_nom[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
                     }
-                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);   
-                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
                     if(!total_horas_tra[id_trabajador]){
                         total_horas_tra[id_trabajador] = parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
                     } else {
                         total_horas_tra[id_trabajador] = total_horas_tra[id_trabajador] + parseFloat($('#horas_' + i).val()) * sueldos_base[i] * 2/48;//En $$ y no en horas
                     }
+                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + id_trabajador + "/horas_extra").push(he);   
+                    firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/horas_extra").push(he_con_obra);
                 }
                 
                 //Actualiza las obras asignadas para que siempre salga este trabajador en esta semana. 
@@ -387,8 +388,14 @@ function guardarHorasExtra(){
             console.log(total_horas_tra);
             for(key in total_horas_tra){
                 var horas_previas = snapshot.child(key + "/nomina/" + year + "/" + semana + "/total_horas_extra");
-                horas_previas = horas_previas.exists() ? horas_previas.val() : 0;
+                //horas_previas = horas_previas.exists() ? horas_previas.val() : 0;
+                if(!horas_previas.exists()){
+                    horas_previas = 0;
+                } else {
+                    horas_previas = horas_previas.val();
+                }
                 var horas_nuevas = parseFloat(horas_previas) + total_horas_tra[key];
+                console.log("horas_nuevas_tra: " + horas_nuevas);
                 firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_horas_extra").set(horas_nuevas);
                 var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
                 firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
@@ -398,6 +405,7 @@ function guardarHorasExtra(){
         //Sumar total_horas a lo que ya está en total horas en la base de datos (nomina)
         //Checar asincronia
         firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores").once('value').then(function(snapshot){
+            console.log(total_horas_nom);
             for(key in total_horas_nom){
                 var horas_previas = snapshot.child(key + "/total_horas_extra");
                 if(!horas_previas.exists()){
@@ -406,6 +414,7 @@ function guardarHorasExtra(){
                     horas_previas = horas_previas.val();
                 }
                 var horas_nuevas = parseFloat(horas_previas) + total_horas_nom[key];
+                console.log("horas_nuevas_nom: " + horas_nuevas);
                 firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/total_horas_extra").set(horas_nuevas);
                 var impuestos_horas = (horas_nuevas * 0.16).toFixed(2);
                 firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + obra + "/trabajadores/" + key + "/impuestos/impuestos_horas_extra").set(impuestos_horas);
