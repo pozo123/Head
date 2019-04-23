@@ -3,21 +3,36 @@
 var rama_bd_obras_magico = "obras";
 var rama_bd_obras = "obras";
 
-function calculaKaizen(obra,proceso,subproceso){
+//tipo = "global" -> todo el kaizen (proceso y subproceso no son necesarios) o "unico" (sólo se calcula de uno);
+function calculaKaizen(obra,tipo,proceso,subproceso){
   firebase.database().ref(rama_bd_obras + "/" + obra).once('value').then(function(snapshot){
     if(snapshot.exists()){
-      var json_obra = snapshot.val();K
-      if(proceso != undefined){
-        if(json_obra["procesos"][proceso]["num_subprocesos"] == 0){
-          calculaProfitKaiz(json_obra["procesos"][proceso]);
-        } else {
-          if(subproceso != undefined){
-            calculaProfitKaiz(json_obra["procesos"][proceso]["subprocesos"][subproceso]);
+      var json_obra = snapshot.val();
+      if(tipo == "global"){
+        snapshot.child("procesos").forEach(function(procSnap){
+          if(procSnap.child("num_subprocesos").val() == 0){
+            calculaProfitKaiz(json_obra["procesos"][procSnap.key]);
+          } else {
+            procSnap.child("subprocesos").forEach(function(subpSnap){
+              calculaProfitKaiz(json_obra["procesos"][procSnap.key]["subprocesos"][subpSnap.key]);
+            });
+            sumaValoresKaiz(json_obra["procesos"][procSnap],"proceso");
           }
-          sumaValoresKaiz(json_obra["procesos"][proceso],"proceso");
+        });
+        sumaValoresKaiz(json_obra,"obra");
+      } else {
+        if(proceso != undefined){
+          if(json_obra["procesos"][proceso]["num_subprocesos"] == 0){
+            calculaProfitKaiz(json_obra["procesos"][proceso]);
+          } else {
+            if(subproceso != undefined){
+              calculaProfitKaiz(json_obra["procesos"][proceso]["subprocesos"][subproceso]);
+            }
+            sumaValoresKaiz(json_obra["procesos"][proceso],"proceso");
+          }
         }
+        sumaValoresKaiz(json_obra,"obra");
       }
-      sumaValoresKaiz(json_obra,"obra");
       console.log(json_obra);
       //firebase.database().ref(rama_bd_obras + "/" + obra).update(json_obra);
     } else { 
