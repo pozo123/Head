@@ -171,7 +171,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                     var procesos = [];
                     var count_proc = 0;
                     if(snapshot.child("num_procesos").val() == 0){
-                        procesos[0] = snapshot.child("nombre").val();
+                        procesos[0] = "MISC";
                     } else {
                         snapshot.child("procesos").forEach(function(childSnapshot){
                             var proc = childSnapshot.val();
