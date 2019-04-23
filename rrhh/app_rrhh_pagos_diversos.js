@@ -8,6 +8,8 @@ var id_diverso_group_diversos = "diversoGroupDiversos";//Nuevo!
 var id_guardar_button_diversos = "guardarButtonDiversos";
 var id_terminar_button_diversos = "terminarButtonDiversos";
 
+var id_carga_semana_anterior_button_diversos = "semanaAnteriorButtonDiversos";
+
 var id_datatable_diversos = "dataTableDiversos";
 var id_datatable_div_diversos = "dataTableGroup1"
 var id_table_diversos = "tableDiversos";
@@ -27,6 +29,7 @@ $('#' + id_tab_diversos).click(function(){
 });
 
 function resetDiversos(){
+    $('#' + id_carga_semana_anterior_button_diversos).addClass('hidden');
     $('#' + id_semana_ddl_diversos).empty();
     $('#' + id_year_ddl_diversos).empty();
     $('#' + id_diverso_ddl_diversos).empty();
@@ -73,6 +76,7 @@ function resetDiversos(){
 
 $('#' + id_year_ddl_diversos).change(function(){
     document.getElementById(id_diverso_ddl_diversos).selectedIndex = 0;
+    $('#' + id_carga_semana_anterior_button_diversos).addClass('hidden');
     $('#' + id_semana_ddl_diversos).empty();
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_div_diversos).addClass('hidden');
@@ -99,6 +103,7 @@ $('#' + id_year_ddl_diversos).change(function(){
 });
 
 $('#' + id_semana_ddl_diversos).change(function(){
+    $('#' + id_carga_semana_anterior_button_diversos).addClass('hidden');
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_div_diversos).addClass('hidden');
     $('#' + nuevo.id).empty();
@@ -151,6 +156,22 @@ $('#' + id_semana_ddl_diversos).change(function(){
 });
 
 $("#" + id_diverso_ddl_diversos).change(function(){
+    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
+    cargaEntradasDiversos(year,semana);
+});
+
+$('#' + id_carga_semana_anterior_button_diversos).click(function(){
+    var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
+    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
+    if(parseFloat(semana) == 1){
+        alert("No se puede realizar esta acción en la primera semana del año");
+    } else {
+        cargaEntradasDiversos(year, semana-1);
+    }
+});
+
+function cargaEntradasDiversos(year,semana){
     $('#' + nuevo.id).empty();
     $('#' + id_datatable_diversos).empty();
     $('#' + id_datatable_diversos).addClass('hidden');
@@ -159,94 +180,62 @@ $("#" + id_diverso_ddl_diversos).change(function(){
     headersDiversos();
     nuevo = tableDiversos.insertRow(entradas + 1);
     nuevo.id = "nuevo_trabajador_diversos";
-    var year = $('#' + id_year_ddl_diversos + " option:selected").val();
-    var semana = $('#' + id_semana_ddl_diversos + " option:selected").val();
-    /*firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana).once('value').then(function(snapshot){
-        var nomina = snapshot.val();
-        var terminada = snapshot.val().diversos_terminados;
-        if(terminada){
-            //Cargar tabla con datos
-            var datos_diversos = [];
-            snapshot.forEach(function(obraSnap){
-                if(obraSnap.key != "terminada"){
-                    obraSnap.child("trabajadores").forEach(function(trabSnap){
-                        trabSnap.child("diversos").forEach(function(childSnap){
-                            var entrada = childSnap.val();
-                            console.log(obraSnap.key);
-                            console.log(obraSnap.val());
-                            datos_diversos.push([trabSnap.key,obraSnap.key,entrada.proceso,entrada.cantidad]);
-                        });
-                    });
+    firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
+        var vacio = true;
+        snapshot.forEach(function(trabSnap){
+            trabSnap.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
+                var diver = diverSnap.val();
+                if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
+                    vacio = false;
+                    cargaRenglonDiversos(trabSnap.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
                 }
             });
-            //Asincronía? :S
-            $('#' + id_datatable_diversos).removeClass('hidden');
-            var tabla_procesos = $('#'+ id_datatable_diversos).DataTable({
-                destroy: true,
-                data: datos_diversos,
-                dom: 'Bfrtip',
-                buttons: ['excel'],
-                columns: [
-                    {title: "ID",width: 70},
-                    {title: "OBRA",width: 70},
-                    {title: "PROCESO",width: 70},
-                    {title: "CANTIDAD",width: 70}
-                ],
-                language: idioma_espanol,
-            }); 
-        } else {*/
-            //Carga todos los registros hechos
-            firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
-                snapshot.forEach(function(trabSnap){
-                    trabSnap.child('nomina/' + year + "/" + semana + "/diversos").forEach(function(diverSnap){
-                        var diver = diverSnap.val();
-                        if(diver.diverso == $('#' + id_diverso_ddl_diversos + " option:selected").val()){
-                            cargaRenglonDiversos(trabSnap.val(),false,diver.cantidad,diver.distribuible,diver.obra,diver.proceso);
+        });
+        if(vacio){
+            $('#' + id_carga_semana_anterior_button_diversos).removeClass('hidden');
+        } else {
+            $('#' + id_carga_semana_anterior_button_diversos).addClass('hidden');
+        }
+        var cell_id = nuevo.insertCell(0);
+        var t_id = document.createElement('input');
+        t_id.id = "t_id_diver";
+        t_id.placeholder = "ID";
+        cell_id.appendChild(t_id);
+        $('#' + t_id.id).change(function(){
+            if($('#' + t_id.id).val() != ""){
+                firebase.database().ref(rama_bd_trabajadores + "/" + $('#' + t_id.id).val()).once('value').then(function(snapshot){
+                    var trabajador = snapshot.val();
+                    if(trabajador != null){
+                        cargaRenglonDiversos(trabajador, true,"","","","");
+                        $('#' + t_id.id).val("");
+                    } else {
+                        alert("No existe un trabajador con ese ID");
+                    }
+                });
+            }
+        });
+        var cell_nombre = nuevo.insertCell(1);
+        var t_nombre = document.createElement('input');
+        t_nombre.id = "t_nombre_diver"
+        t_nombre.placeholder = "Nombre";
+        cell_nombre.appendChild(t_nombre);
+        $('#' + t_nombre.id).change(function(){
+            if($('#' + t_nombre.id).val() != ""){
+                firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo($('#' + t_nombre.id).val()).once('value').then(function(snapshot){
+                    snapshot.forEach(function(childSnap){
+                        var trabajador = childSnap.val();
+                        if(trabajador != null){
+                            cargaRenglonDiversos(trabajador, true,"","","","");
+                            $('#' + t_nombre.id).val("");
+                        } else {
+                            alert("No existe un trabajador con ese nombre");
                         }
                     });
                 });
-                var cell_id = nuevo.insertCell(0);
-                var t_id = document.createElement('input');
-                t_id.id = "t_id_diver";
-                t_id.placeholder = "ID";
-                cell_id.appendChild(t_id);
-                $('#' + t_id.id).change(function(){
-                    if($('#' + t_id.id).val() != ""){
-                        firebase.database().ref(rama_bd_trabajadores + "/" + $('#' + t_id.id).val()).once('value').then(function(snapshot){
-                            var trabajador = snapshot.val();
-                            if(trabajador != null){
-                                cargaRenglonDiversos(trabajador, true,"","","","");
-                                $('#' + t_id.id).val("");
-                            } else {
-                                alert("No existe un trabajador con ese ID");
-                            }
-                        });
-                    }
-                });
-                var cell_nombre = nuevo.insertCell(1);
-                var t_nombre = document.createElement('input');
-                t_nombre.id = "t_nombre_diver"
-                t_nombre.placeholder = "Nombre";
-                cell_nombre.appendChild(t_nombre);
-                $('#' + t_nombre.id).change(function(){
-                    if($('#' + t_nombre.id).val() != ""){
-                        firebase.database().ref(rama_bd_trabajadores).orderByChild("nombre").equalTo($('#' + t_nombre.id).val()).once('value').then(function(snapshot){
-                            snapshot.forEach(function(childSnap){
-                                var trabajador = childSnap.val();
-                                if(trabajador != null){
-                                    cargaRenglonDiversos(trabajador, true,"","","","");
-                                    $('#' + t_nombre.id).val("");
-                                } else {
-                                    alert("No existe un trabajador con ese nombre");
-                                }
-                            });
-                        });
-                    }
-                });
-            });
-        /*}
-    });*/
-});
+            }
+        });
+    });
+};
 
 function cargaRenglonDiversos(trabajador,nuevo,cantidad_in,distribuible_in,obra_in,proc_in){
     var row = tableDiversos.insertRow(entradas + 1);
