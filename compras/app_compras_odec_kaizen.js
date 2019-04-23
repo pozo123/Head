@@ -45,7 +45,7 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var obra = snapshot.val();
-	    if(obra.num_procesos == 0){
+	    if(obra.num_procesos == 0 && obra.procesos.ADIC.num_subprocesos == 0){
 	    	$('#' + id_group_proc_odec_kaizen).addClass('hidden');
 	    	caso = "obra";
 	    } else {
@@ -74,7 +74,7 @@ $("#" + id_proc_ddl_odec_kaizen).change(function(){
 
     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 	    var proc = snapshot.val();
-	    if(proc.num_subprocesos == 0){
+	    if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
 	    	$('#' + id_group_subp_odec_kaizen).addClass('hidden');
 	    	caso = "proc";
 	    } else {
@@ -123,7 +123,8 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 		var query_s = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
 		sumaOdeCKaizen(query_o);
 		if(caso == "obra"){
-			query = query_o;
+			query = query_o + "/procesos/" + MISC;
+			sumaOdeCKaizen(query);
 		} else if(caso == "proc"){
 			query = query_p;
 			sumaOdeCKaizen(query_p);
@@ -134,6 +135,14 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 		}
 		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + hoy[1] + "/" + hoy[0] + "/" + $('#' + id_clave_odec_kaizen).val()).set(odec);
 		alert("Actualizado");
+		$('#' + id_proc_ddl_odec_kaizen).empty();
+	    $('#' + id_subp_ddl_odec_kaizen).empty();
+	    $('#' + id_group_proc_odec_kaizen).addClass('hidden');
+	    $('#' + id_group_subp_odec_kaizen).addClass('hidden');
+	    $('#' + id_clave_odec_kaizen).val("");
+	    $('#' + id_proveedor_odec_kaizen).val("");
+	    $('#' + id_cantidad_odec_kaizen).val("");
+	    $('#' + id_fecha_odec_kaizen).val("");
 	}
 });
 
