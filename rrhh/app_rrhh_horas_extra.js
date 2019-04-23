@@ -5,6 +5,8 @@ var id_obra_ddl_horasExtra = "obraDdlHorasExtra";
 var id_guardar_button_horasExtra = "guardarButtonHorasExtra";
 var id_terminar_button_horasExtra = "terminarButtonHorasExtra";
 
+var id_carga_semana_anterior_button_horasExtra = "semanaAnteriorButtonHorasExtra";
+
 var id_datatable_horasExtra = "dataTableHorasExtra";
 var id_datatable_div_horasExtra = "dataTableDivHorasExtra";
 var id_table_horasExtra = "tableHorasExtra";
@@ -32,6 +34,7 @@ $('#' + id_tab_horasExtra).click(function(){
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
     $('#' + id_semana_ddl_horasExtra).empty();
+    $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
     $('#' + id_year_ddl_horasExtra).empty();
     $('#' + id_obra_ddl_horasExtra).empty();
 
@@ -81,6 +84,7 @@ $('#' + id_year_ddl_horasExtra).change(function(){
     $('#' + id_semana_ddl_horasExtra).empty();
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_div_horasExtra).addClass('hidden');
+    $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
@@ -107,6 +111,7 @@ $('#' + id_semana_ddl_horasExtra).change(function(){
     sueldos_base = [];
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_div_horasExtra).addClass('hidden');
+    $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
@@ -118,6 +123,7 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
     $('#' + nuevo.id).empty();
     $('#' + id_datatable_horasExtra).empty();
     $('#' + id_datatable_div_horasExtra).addClass('hidden');
+    $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
     $('#' + id_table_horasExtra).empty();
     entradas = 0;
     headersHorasExtra();
@@ -167,45 +173,66 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                 loadHorasExtra(year,semana,[],0);
             } else {
                 //Cargar matriz (no necesariamente tabla) con ddls y textfield
-                firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
-                    var procesos = [];
-                    var count_proc = 0;
-                    if(snapshot.child("num_procesos").val() == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
-                        procesos[0] = "MISC";
-                    } else {
-                        snapshot.child("procesos").forEach(function(childSnapshot){
-                            var proc = childSnapshot.val();
-                            if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
-                                procesos[count_proc] = childSnapshot.val().clave;
-                                count_proc++;
-                            } else {
-                                childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
-                                    procesos[count_proc] = grandChildSnapshot.val().clave;
-                                    count_proc++;
-                                });
-                            }
-                        });
-                    }
-                    loadHorasExtra(year,semana,procesos,count_proc);                    
-                    console.log(sueldos_base)
-                });
+                cargaEntradasHorasExtra(year,semana);
             }
         }
     });
 });
 
+function cargaEntradasHorasExtra(year,semana){
+    firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
+        var procesos = [];
+        var count_proc = 0;
+        if(snapshot.child("num_procesos").val() == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
+            procesos[0] = "MISC";
+        } else {
+            snapshot.child("procesos").forEach(function(childSnapshot){
+                var proc = childSnapshot.val();
+                if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
+                    procesos[count_proc] = childSnapshot.val().clave;
+                    count_proc++;
+                } else {
+                    childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                        procesos[count_proc] = grandChildSnapshot.val().clave;
+                        count_proc++;
+                    });
+                }
+            });
+        }
+        loadHorasExtra(year,semana,procesos,count_proc);                    
+        //console.log(sueldos_base)
+    });
+}
+
+$('#' + id_carga_semana_anterior_button_horasExtra).click(function(){
+    var year = $('#' + id_year_ddl_horasExtra + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_horasExtra + " option:selected").val();
+    if(parseInt(semana) == 1){
+        alert("No se puede realizar esta acción en la primera semana del año");
+    } else {
+        cargaEntradasHorasExtra(year,parseInt(semana)-1);
+        $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
+    }
+});
+
 function loadHorasExtra(year,semana,procesos,count_proc){
     //Carga todos los registros hechos
     firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + $("#" + id_obra_ddl_horasExtra + " option:selected").val()).once('value').then(function(snapshot){  
+        var vacio = true;
         if(snapshot.exists()){
             snapshot.child("trabajadores").forEach(function(childSnapshot){
                 childSnapshot.child('horas_extra').forEach(function(horasSnap){
-                    //AQUI asincronia?
+                    vacio = false;
                     firebase.database().ref(rama_bd_trabajadores + "/" + childSnapshot.key).once('value').then(function(trabSnap){
                         cargaRenglonHorasExtra(trabSnap.val(), procesos, false, horasSnap.val().fecha, horasSnap.val().horas, horasSnap.val().proceso);
                     });
                 });
             });
+        }
+        if(vacio){
+            $('#' + id_carga_semana_anterior_button_horasExtra).removeClass('hidden');
+        } else {
+            $('#' + id_carga_semana_anterior_button_horasExtra).addClass('hidden');
         }
     });
 
