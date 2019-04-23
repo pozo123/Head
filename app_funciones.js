@@ -3,6 +3,21 @@
 var rama_bd_obras_magico = "obras";
 
 
+function sumaEnFirebase(query, cantidad){
+    firebase.database().ref(query).once('value').then(function(snapshot){
+        if(snapshot.exists()){
+            var anterior = parseFloat(snapshot.val());
+            if(isNaN(anterior)){
+                console.log("Valor anterior es NaN");
+            } else {
+                var nuevo = anterior + parseFloat(cantidad);
+                firebase.database().ref(query).set(nuevo);
+            }
+        } else {
+            console.log("El snapshot de " + query + " no existe");
+        }
+    });
+}
 
 //Recibe un string viejo y uno nuevo para cambiarlo en toda la bd
 function replaceStringsInKeysAndValues(oldString, newString){
