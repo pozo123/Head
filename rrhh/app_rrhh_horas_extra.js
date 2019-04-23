@@ -170,12 +170,12 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
                 firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
                     var procesos = [];
                     var count_proc = 0;
-                    if(snapshot.child("num_procesos").val() == 0){
+                    if(snapshot.child("num_procesos").val() == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
                         procesos[0] = "MISC";
                     } else {
                         snapshot.child("procesos").forEach(function(childSnapshot){
                             var proc = childSnapshot.val();
-                            if(proc.num_subprocesos == 0){
+                            if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
                                 procesos[count_proc] = childSnapshot.val().clave;
                                 count_proc++;
                             } else {
