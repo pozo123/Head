@@ -9,6 +9,7 @@ Depto. de Innovacion y Optimizacion
  - app_asistencia -> lo meehmo, botón carga
  - app_compras_odec_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_compras_pag_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
+ - app_desplegar_kaizen -> actualizar kaizen al abrirlo, obra simple despliega misc y adic
 
  actualizados/nuevos(22/4/19):
  - app_rrhh_pago_nomina -> array asistencias si vacío llénalo con la obra, ya debería jalar
