@@ -4,6 +4,8 @@ var id_obra_ddl_asistencia = "obraDdlAsistencia";
 var id_guardar_button_asistencia = "guardarButtonAsistencia";
 var id_terminar_button_asistencia = "terminarButtonAsistencia";
 
+var id_carga_semana_anterior_button_Asistencia = "semanaAnteriorButtonAsistencia";
+
 var id_datatable_asistencia = "dataTableAsistencia";
 
 var id_lista_table_asistencia = "divAsistencia";
@@ -27,6 +29,7 @@ $('#' + id_tab_asistencia).click(function(){
     $('#' + id_semana_ddl_asistencia).empty();
     $('#' + id_year_ddl_asistencia).empty();
     $('#' + id_obra_ddl_asistencia).empty();
+    $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
     //getWeek() definido en app_funciones
     var semana_actual = getWeek(new Date().getTime())[0];
     var year_actual = getWeek(new Date().getTime())[1];
@@ -75,6 +78,7 @@ $('#' + id_year_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_lista_table_asistencia).empty();
+    $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
     trabajadores = [];
     var select = document.getElementById(id_semana_ddl_asistencia);
     var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
@@ -100,6 +104,7 @@ $('#' + id_semana_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + nuevo.id).empty();
     $('#' + id_lista_table_asistencia).empty();
+    $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
     trabajadores = [];
 });
 
@@ -108,6 +113,7 @@ $("#" + id_obra_ddl_asistencia).change(function(){
     $('#' + id_datatable_asistencia).empty();
     $('#' + id_datatable_asistencia).addClass('hidden');
     $('#' + id_lista_table_asistencia).empty();
+    $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
     trabajadores = [];
     headersAsistencia();
     nuevo = tableAsistencia.insertRow(1);
@@ -193,49 +199,66 @@ $("#" + id_obra_ddl_asistencia).change(function(){
             if($('#' + id_obra_ddl_asistencia + " option:selected").val() == "Atencion a Clientes"){
                 loadAsistencias(semana,year,[],0);
             } else {
-                firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
-                    var procesos = [];
-                    var count_proc = 0;
-                    if(snapshot.val().num_procesos == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
-                        procesos[count_proc] = "MISC"; 
-                        count_proc++;
-                    } else {
-                        snapshot.child("procesos").forEach(function(childSnapshot){
-                            var proc = childSnapshot.val();
-                            if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
-                                procesos[count_proc] = childSnapshot.val().clave;
-                                count_proc++;
-                            } else {
-                                childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
-                                    procesos[count_proc] = grandChildSnapshot.val().clave;
-                                    count_proc++;
-                                });
-                            }
-                        });
-                    }
-                    
-                    loadAsistencias(semana,year,procesos,count_proc);
-                });
+                cargaEntradasAsistencia(year,semana);
             }
         }
     });
 });
 
+$('#' + id_carga_semana_anterior_button_Asistencia).click(function(){
+    var year = $('#' + id_year_ddl_asistencia + " option:selected").val();
+    var semana = $('#' + id_semana_ddl_asistencia + " option:selected").val();
+    if(parseInt(semana) == 1){
+        alert("No se puede realizar esta acción en la primera semana del año");
+    } else {
+        cargaEntradasAsistencia(year,parseInt(semana)-1);
+        $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
+    }
+});
+
+function cargaEntradasAsistencia(year,semana){
+    firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
+        var procesos = [];
+        var count_proc = 0;
+        if(snapshot.val().num_procesos == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
+            procesos[count_proc] = "MISC"; 
+            count_proc++;
+        } else {
+            snapshot.child("procesos").forEach(function(childSnapshot){
+                var proc = childSnapshot.val();
+                if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
+                    procesos[count_proc] = childSnapshot.val().clave;
+                    count_proc++;
+                } else {
+                    childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                        procesos[count_proc] = grandChildSnapshot.val().clave;
+                        count_proc++;
+                    });
+                }
+            });
+        }
+        loadAsistencias(semana,year,procesos,count_proc);
+    });
+}
+
 function loadAsistencias(semana,year,procesos,count_proc){
     //Carga todos los trabajadores
     firebase.database().ref(rama_bd_trabajadores).once('value').then(function(snapshot){
         //revisa si tienen esta obra asignada
+        var vacio = true;
         snapshot.forEach(function(childSnapshot){
             var asignado = false;
             childSnapshot.child("obra_asignada").forEach(function(obraSnap){
                 if(obraSnap.val() == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
                     asignado = true;
+                    vacio = false;
                 }
             });
             if(!asignado){
                 childSnapshot.child("nomina/" + year + "/" + semana).forEach(function(obraSnap){
                     if(obraSnap.val().obra == $("#" + id_obra_ddl_asistencia + " option:selected").val()){
                         asignado = true;
+                        vacio = false;
                     }
                 });
             }
@@ -244,6 +267,11 @@ function loadAsistencias(semana,year,procesos,count_proc){
                 cargaRenglon(trabajador,count_proc,procesos,semana,year);
             }
         });
+        if(vacio){
+            $('#' + id_carga_semana_anterior_button_Asistencia).removeClass('hidden');
+        } else {
+            $('#' + id_carga_semana_anterior_button_Asistencia).addClass('hidden');
+        }
     });
     //Crea 2 textfields para añadir trabajadores que no tengan la obra registrada
     var cell_id = nuevo.insertCell(0);
