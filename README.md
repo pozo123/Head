@@ -4,8 +4,8 @@ Depto. de Innovacion y Optimizacion
  actualizados/nuevos(23/4/19):
  - app_proy_registros -> Nueva app, bien hecha y con elnuevo UML. Falta probar.
  - app_funciones -> sumaEnFirebase (porque siempre lo uso y lo odio);
- - app_rrhh_pagos_diversos -> si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y lo mismo que horas_extra
- - app_rrhh_horas_extra -> si obra simple mete a misc, simple también considera adicionales
+ - app_rrhh_pagos_diversos -> si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y lo mismo que horas_extra, botón "Carga semana anterior" con id = "semanaAnteriorButtonDiversos" en hidden
+ - app_rrhh_horas_extra -> si obra simple mete a misc, simple también considera adicionales, botón carga semana anterior
  - app_asistencia -> lo meehmo
  - app_compras_odec_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_compras_pag_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
