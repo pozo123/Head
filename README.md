@@ -1,6 +1,13 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+ actualizados/nuevos(23/4/19):
+ - app_proy_registros -> Nueva app, bien hecha y con elnuevo UML. Falta probar.
+ - app_funciones -> sumaEnFirebase (porque siempre lo uso y lo odio);
+ - app_rrhh_pagos_diversos -> si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y l miso que horas_extra
+ - app_rrhh_horas_extra -> si obra simple mete a misc, simple también considera adicionales
+ - app_asistencia -> lo meehmo
+
  actualizados/nuevos(22/4/19):
  - app_rrhh_pago_nomina -> array asistencias si vacío llénalo con la obra, ya debería jalar
  - app_proy_registros -> nuevos registros usando el nuevo uml
@@ -71,11 +78,6 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
- - Si div ya existe, actualiza el valor. -> eal hacer existe = true guarda el uid y haces un query simple
- - Meter proveedores a bd (por excel e individual)
- - manejo de proveedores en odec_compras, al cambiar sustituir clave por nombre, o meter por nombre? pero al salir alert si no existe y borrarlo? discutir con Taba
- - Al dar alta odec, borrar todos los campos menos obra
- - Desplegar OdeCs para que Taba pueda saber si sí entraron
  - desplegar kaizen lo del cambio de obra
  - app_prod_entrada_estimacion
  - app_presupuesto -> cargar datos a kaizen/proy/ppto (subp, proc y obra) y manejo correcto de ddls y hiddens (empty y hide proc y clase de ppto cuando cambio de obra). Simplificación de formato si clase == prod?
