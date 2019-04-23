@@ -65,6 +65,7 @@ $(document).ready(function(){
 });
 
 $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
+	calculaKaizen($('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val(),"global");
 	$('.celda').remove();
     $(".row_data").remove();
 	const editor = new SimpleTableCellEditor(id_datatable_desplegar_kaizen);
@@ -110,6 +111,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			var sub = false;
 			var pointer_kaiz_padre;
 			var clave_proc;
+			//Si es row subproceso
 			if(path[0] == "sub"){
 				sub = true;
 				clave_proc = path[1].split("-")[0];
@@ -132,6 +134,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML = formatMoney(parseFloat(document.getElementById(clave_proc + id_elem.substring(clave_elem.length, id_elem.length)).innerHTML) - parseFloat(oV) + parseFloat(nV));
 			} else {
 				clave_elem = path[0];
+				//Si es proy multiplicalo por precio hora
 				if(id_elem == clave_elem + "_PROYECTOS_PAG" || id_elem == clave_elem + "_PROYECTOS_PPTO"){
 					nV = parseFloat(nV) * parseFloat($('#' + id_precio_score_desplegar_kaizen).val());
 					console.log("Nv: " + nV)
@@ -147,6 +150,8 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			}
 			pointer[path[path.length - 1]] = nV;
 			pointer_obra[path[path.length - 1]] = parseFloat(pointer_obra[path[path.length - 1]]) - parseFloat(oV) + parseFloat(nV);
+			console.log("TOTALES");
+			console.log(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length) + ": " + (parseFloat(parseFloat(nV)- parseFloat(oV))));
 			document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML = formatMoney(parseFloat(document.getElementById(obra_clave + "_" + id_elem.substring(clave_elem.length + 1, id_elem.length)).innerHTML) - parseFloat(oV) + parseFloat(nV));
 			
 			if(id_elem == clave_elem + "_PRODUCCION_COPEO_PAG" || id_elem == clave_elem + "_PRODUCCION_COPEO_COPEO"){
@@ -206,9 +211,9 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 		obra_clave = snapshot.val().clave;
 		var table = document.getElementById(id_datatable_desplegar_kaizen);
 		var num_procesos = snapshot.val().num_procesos;
-		if(num_procesos == 0){
+		/*if(num_procesos == 0){
 			createRow(snapshot.val(),table,"obraSimple");
-		} else {
+		} else {*/
 			var procesos = [];
 			var adic;
 			var misc;
@@ -247,7 +252,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 				}
 			}
 			createRow(snapshot.val(),table,"obra");
-		}
+		//}
 		addProfitNeto(snapshot.val(),table);
 
 		var x = document.getElementsByClassName("proceso")
@@ -299,11 +304,7 @@ function createRow(proc,table,tipo){
 		titulo.colSpan = 2;
 		row.appendChild(titulo);
 		profitProgClass = "";
-		if(tipo == "obra"){
-			editClass = "";
-		} else {
-			editClass = editable;
-		}
+		editClass = "";
 	} else {
 		var proc_clave = document.createElement('td');
 		proc_clave.innerHTML = cl;
@@ -516,14 +517,14 @@ $('#' + id_colapsar_subprocesos_button_kaizen).on('click', function(){
 	$('.subproc_row').removeClass('fadeIn');
 });
 $('#' + id_actualizar_button_kaizen).click(function(){
-	var utilidad_semanal = parseFloat(json_kaizen_obra["PROFIT"]["PROG"]["BRUTO"]) / (duracion_obra/604800000)
+	var utilidad_semanal = parseFloat(json_kaizen_obra["PROFIT"]["PROG"]["BRUTO"]) / (parseFloat(duracion_obra)/604800000);
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos:");
 	console.log(json_kaizen);
 	console.log("Updating " + rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen:");
 	console.log(json_kaizen_obra);
-	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/utilidad_semanal").set(utilidad_semanal);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/procesos").update(json_kaizen);
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/kaizen").update(json_kaizen_obra);
+	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val() + "/utilidad_semanal").set(utilidad_semanal);
 	alert("Operación exitosa");
 });
 //FALTA
