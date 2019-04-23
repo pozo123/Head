@@ -196,13 +196,13 @@ $("#" + id_obra_ddl_asistencia).change(function(){
                 firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
                     var procesos = [];
                     var count_proc = 0;
-                    if(snapshot.val().num_procesos == 0){
-                        procesos[count_proc] = snapshot.val().nombre; 
+                    if(snapshot.val().num_procesos == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
+                        procesos[count_proc] = "MISC"; 
                         count_proc++;
                     } else {
                         snapshot.child("procesos").forEach(function(childSnapshot){
                             var proc = childSnapshot.val();
-                            if(proc.num_subprocesos == 0){
+                            if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
                                 procesos[count_proc] = childSnapshot.val().clave;
                                 count_proc++;
                             } else {
