@@ -498,7 +498,7 @@ function guardarDiversos(){
                     //console.log(obr)
                 }
                 var div = {
-                    cantidad: $('#cant_' + i).val(),
+                    cantidad: parseFloat($('#cant_' + i).val()),
                     distribuible: dist,
                     obra: obr, 
                     proceso: pro, 
@@ -509,6 +509,21 @@ function guardarDiversos(){
                     var diver = divSnap.val();
                     if(div.diverso == diver.diverso && ((diver.distribuible == div.distribuible) && (diver.obra == div.obra && diver.proceso == div.proceso))){
                         existe_div = true;
+                        var diferencia = div.cantidad - parseFloat(diver.cantidad);
+                        firebase.database().ref(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/diversos/" + divSnap.key + "/cantidad").set(div.cantidad);
+                        var dif_impuestos = diferencia * 0.16;
+                        sumaEnFirebase(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/impuestos/impuestos_diversos", dif_impuestos);
+                        sumaEnFirebase(rama_bd_trabajadores + "/" + id_trabajador + "/nomina/" + year + "/" + semana + "/total_diversos", diferencia);
+                        sumaEnFirebase(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + div.obr + "/trabajadores/" + id_trabajador + "/impuestos/impuestos_diversos", dif_impuestos);
+                        sumaEnFirebase(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + div.obr + "/trabajadores/" + id_trabajador + "/total_diversos", diferencia);
+                        firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + div.obr + "/trabajadores/" + id_trabajador + "/diversos").once('value').then(function(dSnap){
+                            dSnap.forEach(function(childSnap){
+                                diver = childSnap.val();
+                                if(div.diverso == diver.diverso && ((diver.distribuible == div.distribuible) && (diver.obra == div.obra && diver.proceso == div.proceso))){
+                                    firebase.database().ref(rama_bd_pagos_nomina + "/" + year + "/" + semana + "/" + div.obr + "/trabajadores/" + id_trabajador + "/diversos/" + childSnap.key + "/cantidad").set(div.cantidad);
+                                }
+                            });
+                        });
                     }
                 });
                 if(!existe_div){
