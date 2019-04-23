@@ -167,7 +167,8 @@ $('#' + id_carga_semana_anterior_button_diversos).click(function(){
     if(parseFloat(semana) == 1){
         alert("No se puede realizar esta acción en la primera semana del año");
     } else {
-        cargaEntradasDiversos(year, semana-1);
+        cargaEntradasDiversos(year, parseInt(semana)-1);
+        $('#' + id_carga_semana_anterior_button_diversos).addClass('hidden');
     }
 });
 
