@@ -141,6 +141,7 @@
             - alcance
             - clave
             - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
+            - SCORE (igual que arriba)
             - fechas: 
                - fecha_inicio_real
                - fecha_inicio_teorica
