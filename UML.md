@@ -155,7 +155,6 @@
                         - proveedor
                         - pagos:
                            - pago (por push)
-                              - pagada
                               - precio_pag
                               - pad: pad*
                               - timestamps:
