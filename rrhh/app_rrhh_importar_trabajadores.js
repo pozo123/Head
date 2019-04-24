@@ -2,7 +2,7 @@ var id_file_importarTrabajadores = "importarTrabajadoresFile";
 var id_button_guardar_importarTrabajadores = "importarTrabajadoresButton";
 var id_filename_importarTrabajadores = "importarTrabajadoresLabelFile";
 
-var rama_bd_trabajadores = "produccion/trabajadores";
+var rama_bd_trabajadores = "rrhh/trabajadores";
 
 var excelSeleccionado = "";
 var fileName = "";
