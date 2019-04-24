@@ -13,12 +13,12 @@ var id_lista_table_asistencia = "divAsistencia";
 var id_tab_asistencia = "tabAsistencia";
 
 var rama_bd_pagos_nomina = "produccion/pagos_nomina";
-var rama_bd_obras_prod = "produccion/obras";
+var rama_bd_obras_magico = "obras";
 var rama_bd_trabajadores = "produccion/trabajadores";
 
 var nuevo;
 var trabajadores = [];
-
+var terminados = [];
 var tableAsistencia = document.getElementById(id_lista_table_asistencia)
 
 $('#' + id_tab_asistencia).click(function(){
@@ -54,12 +54,14 @@ $('#' + id_tab_asistencia).click(function(){
     option3.text = option3.value = "";
     select3.appendChild(option3);
 
-    firebase.database().ref(rama_bd_obras_prod).orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico).orderByChild('nombre').on('child_added',function(snapshot){
         var obra = snapshot.val();
-        var option4 = document.createElement('OPTION');
-        option4.text = obra.nombre;
-        option4.value = obra.nombre;
-        select3.appendChild(option4);
+        if(!obra.terminada){
+            var option4 = document.createElement('OPTION');
+            option4.text = obra.nombre;
+            option4.value = obra.nombre;
+            select3.appendChild(option4);
+        }
     });
 
     var option5 = document.createElement('option');
@@ -217,8 +219,9 @@ $('#' + id_carga_semana_anterior_button_Asistencia).click(function(){
 });
 
 function cargaEntradasAsistencia(year,semana){
-    firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico).orderByChild("nombre").equalTo($('#' + id_obra_ddl_asistencia + " option:selected").val()).once('child_added').then(function(snapshot){
         var procesos = [];
+        terminados = [];
         var count_proc = 0;
         if(snapshot.val().num_procesos == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
             procesos[count_proc] = "MISC"; 
@@ -227,10 +230,16 @@ function cargaEntradasAsistencia(year,semana){
             snapshot.child("procesos").forEach(function(childSnapshot){
                 var proc = childSnapshot.val();
                 if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
+                    if(proc.terminado){
+                        terminados[count_proc] = true;
+                    }
                     procesos[count_proc] = childSnapshot.val().clave;
                     count_proc++;
                 } else {
                     childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                        if(grandChildSnapshot.child("terminado").val()){
+                            terminados[count_proc] = true;
+                        }
                         procesos[count_proc] = grandChildSnapshot.val().clave;
                         count_proc++;
                     });
@@ -467,6 +476,9 @@ function ddlDia(dia,row,id_trabajador,bool_nom,nom,count_proc,procesos,bool_otro
             for(i=0;i<count_proc;i++){
                 var option2 = document.createElement('OPTION');
                 option2.text = procesos[i];
+                if(terminados[i]){
+                    option3.style = "display:none";
+                }
                 option2.value = 0.2;
                 ddl.appendChild(option2);
             }
