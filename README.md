@@ -6,7 +6,15 @@ REESTRUCTURA_BD:
  - compras: check
  - rrhh: check
  - prod
-    - todo
+    - desplegar kaizen
+    - distribucion_supervisores
+    - editar_proceso
+    - gestionar_supervisores
+    - kaizen_global
+    - obra_prod -> obsoletos?
+    - procesos
+    - prod_gestionar_pptos -> si? no obsoletos porque ya no van a haber pptos para prod?
+    - app_utilidad
  - proy
     - todo
 
@@ -97,6 +105,7 @@ ARTURO:
     - app_admon_pago_kaizen
     
 DIEGO:
+ - Definir quién llena las horas ppto de SCORE en los procs/pptos, y cómo (no sólo en kaizen)
  - desplegar kaizen lo del cambio de obra
  - desplegar kaizen si solo una obra quitar ddl y cargar automatico. Si no subprocesos quitar botones desplegar
  - app_prod_entrada_estimacion
