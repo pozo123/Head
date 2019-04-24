@@ -11,7 +11,6 @@ var id_actualizar_valor_odec_kaizen = "actualizarOdeC";
 
 var tab_odec_kaizen = "tabOdeC";
 var rama_bd_obras_magico = "obras";
-var rama_bd_obras_compras = "compras/obras";
 var caso;
 
 $('#' + tab_odec_kaizen).click(function(){
@@ -31,10 +30,12 @@ $('#' + tab_odec_kaizen).click(function(){
 
     firebase.database().ref(rama_bd_obras_magico).orderByChild('nombre').on('child_added',function(snapshot){
         var obra = snapshot.val();
-        var option2 = document.createElement('OPTION');
-        option2.text = obra.nombre;
-        option2.value = obra.nombre;
-        select.appendChild(option2);
+        if(!obra.terminada){
+	        var option2 = document.createElement('OPTION');
+	        option2.text = obra.nombre;
+	        option2.value = obra.nombre;
+	        select.appendChild(option2);
+	    }
     });
 });
 
@@ -50,6 +51,7 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 	    	caso = "obra";
 	    } else {
 	    	$('#' + id_group_proc_odec_kaizen).removeClass('hidden');
+	    	caso = "proc";
 
 		    var select = document.getElementById(id_proc_ddl_odec_kaizen);
 		    var option = document.createElement('option');
@@ -59,11 +61,26 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 
 		    snapshot.child('procesos').forEach(function(childSnap){
 		    	var proc = childSnap.val();
-		    	var contrato = proc.contrato ? proc.contrato : proc.nombre;
-		    	var option2 = document.createElement('OPTION');
-		        option2.text = proc.clave + " (" + contrato + ")";
-		        option2.value = proc.clave;
-		        select.appendChild(option2);
+		    	if(!proc.terminado){
+			    	if(proc.num_subprocesos == 0 || obra.nombre == "IQONO MEXICO"){
+				    	var contrato = proc.contrato ? proc.contrato : proc.nombre;
+				    	var option2 = document.createElement('OPTION');
+				        option2.text = proc.clave + " (" + contrato + ")";
+				        option2.value = proc.clave;
+				        select.appendChild(option2);
+				    } else {
+				    	childSnap.child('subprocesos').forEach(function(subpSnap){
+				    		var subp = subpSnap.val();
+				    		if(!subp.terminado){
+				    			var contrato = subp.contrato ? subp.contrato : subp.nombre;
+						    	var option2 = document.createElement('OPTION');
+						        option2.text = subp.clave + " (" + contrato + ")";
+						        option2.value = subp.clave;
+						        select.appendChild(option2);
+				    		}
+				    	});
+		    		}
+			    }
 		    });
 	    }
     });
@@ -71,14 +88,10 @@ $("#" + id_obra_ddl_odec_kaizen).change(function(){
 
 $("#" + id_proc_ddl_odec_kaizen).change(function(){
 	$('#' + id_subp_ddl_odec_kaizen).empty();
-
-    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
-	    var proc = snapshot.val();
-	    if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
-	    	$('#' + id_group_subp_odec_kaizen).addClass('hidden');
-	    	caso = "proc";
-	    } else {
-	    	caso = "subp";
+	if($('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "IQONO MEXICO"){
+		caso = "IQONO MEXICO";
+	    firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val()).once('value').then(function(snapshot){
+		    var proc = snapshot.val();
 	    	$('#' + id_group_subp_odec_kaizen).removeClass('hidden');
 	    	$('#' + id_subp_ddl_odec_kaizen).empty();
 		    var select = document.getElementById(id_subp_ddl_odec_kaizen);
@@ -88,18 +101,20 @@ $("#" + id_proc_ddl_odec_kaizen).change(function(){
 		    select.appendChild(option);
 		    snapshot.child('subprocesos').forEach(function(childSnap){
 		    	var subp = childSnap.val();
-		    	var contrato = subp.contrato ? subp.contrato : subp.nombre;
 		    	var option2 = document.createElement('OPTION');
-		        option2.text = subp.clave + " (" + contrato + ")";
+		        option2.text = subp.clave + " (" + subp.nombre + ")";
 		        option2.value = subp.clave;
 		        select.appendChild(option2);
 		    });
-	    }
-    });
+	    });
+	} else {
+		$('#' + id_group_subp_odec_kaizen).addClass('hidden');
+		$('#' + id_subp_ddl_odec_kaizen).empty();
+	}
 });
 
 $('#' + id_actualizar_valor_odec_kaizen).click(function(){
-	if($('#' + id_clave_odec_kaizen).val() == "" || $('#' + id_cantidad_odec_kaizen).val() == "" || $('#' + id_proveedor_odec_kaizen).val() == "" || $('#' + id_fecha_odec_kaizen).val() == "" || $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "" || (caso != "obra" && $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() == "") || (caso == "subp" && $('#' + id_subp_ddl_odec_kaizen + " option:selected").val() == "")){
+	if($('#' + id_clave_odec_kaizen).val() == "" || $('#' + id_cantidad_odec_kaizen).val() == "" || $('#' + id_proveedor_odec_kaizen).val() == "" || $('#' + id_fecha_odec_kaizen).val() == "" || $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() == "" || (caso != "obra" && $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() == "") || (caso == "IQONO MEXICO" && $('#' + id_subp_ddl_odec_kaizen + " option:selected").val() == "")){
 		alert("Llena todos los campos requeridos");
 	} else {
 		var hoy = getWeek(new Date($('#' + id_fecha_odec_kaizen).val()).getTime()); //hoy[0] = week, hoy[1] = year
@@ -119,21 +134,26 @@ $('#' + id_actualizar_valor_odec_kaizen).click(function(){
 		}
 		var query;
 		var query_o = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val();
-		var query_p = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val();
-		var query_s = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
+		var path = ($('#' + id_proc_ddl_odec_kaizen + " option:selected").val()).split("-");
+		var query_p = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + path[0];
 		sumaOdeCKaizen(query_o);
 		if(caso == "obra"){
 			query = query_o + "/procesos/" + MISC;
 			sumaOdeCKaizen(query);
 		} else if(caso == "proc"){
-			query = query_p;
+			if(path.length > 1){
+				query = query_o + "/procesos/" + path[0] + "/subprocesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val();
+			} else {
+				query = query_p;
+			}
 			sumaOdeCKaizen(query_p);
-		} else if(caso == "subp"){
+		} else if(caso == "IQONO MEXICO"){
+			var query_s = $('#' + id_obra_ddl_odec_kaizen + " option:selected").val() + "/procesos/" + $('#' + id_proc_ddl_odec_kaizen + " option:selected").val() + "/subprocesos/" + $('#' + id_subp_ddl_odec_kaizen + " option:selected").val();
 			query = query_s;
 			sumaOdeCKaizen(query_p);
 			sumaOdeCKaizen(query_s);
 		}
-		firebase.database().ref(rama_bd_obras_compras + "/" + query + "/OdeC/" + hoy[1] + "/" + hoy[0] + "/" + $('#' + id_clave_odec_kaizen).val()).set(odec);
+		firebase.database().ref(rama_bd_obras_magico + "/" + query + "/OdeC/" + hoy[1] + "/" + hoy[0] + "/" + $('#' + id_clave_odec_kaizen).val()).set(odec);
 		alert("Actualizado");
 		$('#' + id_proc_ddl_odec_kaizen).empty();
 	    $('#' + id_subp_ddl_odec_kaizen).empty();
