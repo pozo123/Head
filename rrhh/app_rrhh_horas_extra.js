@@ -12,9 +12,9 @@ var id_datatable_div_horasExtra = "dataTableDivHorasExtra";
 var id_table_horasExtra = "tableHorasExtra";
 var id_tab_horasExtra = "tabHorasExtra";
 
-var rama_bd_pagos_nomina = "produccion/pagos_nomina";
+var rama_bd_pagos_nomina = "rrhh/pagos_nomina";
 var rama_bd_obras_magico = "obras";
-var rama_bd_trabajadores = "produccion/trabajadores";
+var rama_bd_trabajadores = "rrhh/trabajadores";
 
 var nuevo;
 var entradas = 0;
