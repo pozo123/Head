@@ -7,11 +7,11 @@ REESTRUCTURA_BD:
  - rrhh:
     - horas_extra
     - pagos_diversos
-    - importar_trabajadores
-    - trabajadores
-    - pago_nomina
+    - pago_nomina -> también falta considerar adics para obra simple y meterlo a misc
  - prod
+    - todo
  - proy
+    - todo
 
 
  actualizados/nuevos(24/4/19):
@@ -23,6 +23,7 @@ REESTRUCTURA_BD:
  - app_compras_pag_kaizen -> reestructura_bd, solo un ddl, checo terminado, obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_desplegar_procesos -> contemplo terminada
  - app_asistencia -> boton carga, obra simple a misc y considera adic, reestructura_bd y contempla terminados
+ - app_rrhh_trabajadores -> reestructura_bd y contempla terminadas
  
  actualizados/nuevos(23/4/19):
  - app_proy_registros -> Nueva app, bien hecha y con elnuevo UML. Falta probar.
