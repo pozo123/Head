@@ -15,6 +15,7 @@
     - nombre: string
     - nickname: ? string
     - email: string
+    - activo
 - administracion:
    - flujos
       - obra (por nombre)
@@ -140,6 +141,29 @@
             - nombre
             - alcance
             - clave
+            - OdeC:
+               - year (por num)
+                  - semana (por num)
+                     - OdeC (por clave)
+                        - clave
+                        - pad: pad*
+                        - precio_ppto
+                        - precio_pag
+                        - pagada: bool
+                        - proveedor
+                        - pagos:
+                           - pago (por push)
+                              - pagada
+                              - precio_pag
+                              - pad: pad*
+                              - timestamps:
+                                 - pago
+                                 - registro_pago
+                        - timestamps:
+                           - OdeC
+                           - registro_OdeC
+                           - pago
+                           - registro_pago
             - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
             - SCORE (SOLO EN HOJA, formato igual que arriba)
             - fechas: 
@@ -148,17 +172,18 @@
                - fecha_final_real
                - fecha_final_teorica
             - num_subprocesos
+            - kaizen: *
             - subprocesos:
                - subproceso (por clave):
                   - terminado
                   - nombre
                   - alcance
-                  - calve
+                  - clave
+                  - OdeC: igual que proc
                   - categoria
                   - kaizen: *
                   - fechas:
                      - igual las 4 *
-            - kaizen: *
       - fechas:
          - fecha_inicio_real
          - fecha_inicio_teorica
@@ -265,6 +290,10 @@
             - total
             - obra: (por nombre) (Una es "Atencion a Clientes")
                - total (refleja TOTAL de kaizen)
+               - supervisores:
+                  - supervisor (por uid)
+                     - porcentaje (ej 30)
+                     - cantidad (= % * sueldo_base o pago nomina)
                - trabajadores:
                   - trabajador: (por id)
                      - nombre
@@ -302,29 +331,6 @@
                         - impuestos_diversos
                         - impuestos_asistencia (impuestos_asistencia_trabajador * asistencias_aqui/asistencias totales)
                      - total (subtotal + impuestos)
-  - colaboradores:
-      - AFECTAN: app_supervisores, app_obras_prod
-      - SUSCRIBEN: app_obras_prod
-      - colaborador (por uid):
-         - nombre
-         - telefono
-         - email
-         - uid
-         - nickname
-         - tipo (gerentes o supervisores. La única diferencia es que gerentes tiene obra vacío)
-         - nomina:
-            - year
-               - week
-                  - cantidad
-                  - distribucion:
-                     - obra: porcentaje (ej acanto: 80)
-                  - pda: (pista de auditoria)
-                     - uid
-                     - timestamp
-         - obras:
-            - obra (por nombre)
-               - nombre
-               - activa: bool
    - destajistas: 
       - AFECTAN: app_destajistas
       - SUSCRIBEN:
@@ -333,7 +339,7 @@
          - telefono
          - cuenta_bancaria
          - especialidad: ("IE"/"IHS"/"Ambas")
-  - obras: 
+  - obras: SE VA
       - AFECTAN: app_obras_prod app_procesos
       - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
       - obra: (por nombre)
@@ -376,66 +382,15 @@
                   - pad: pad*
 - info_web
 - rrhh
-   - colaboradores
-      - por uid:
-         - email
-         - nombre
-         - nickname
-         - uid
    - diversos
       - diverso (por nombre)
          - nombre
          - distribuible (generalmente, no forzoso)
 - compras
-   - colaboradores
-      - same shit
    - proveedores
       - Por definir
-   - obras
-      - obra: (por nombre)
-      - nombre
-      - cliente
-      - clave
-      - num_procesos
-      - OdeC:
-         - year (por num)
-            - semana (por num)
-               - OdeC (por clave)
-                  - clave
-                  - pad: pad*
-                  - precio_ppto
-                  - precio_pag
-                  - pagada: bool
-                  - proveedor
-                  - pagos:
-                     - pago (por push)
-                        - pagada
-                        - precio_pag
-                        - pad: pad*
-                        - timestamps:
-                           - pago
-                           - registro_pago
-                  - timestamps:
-                     - OdeC
-                     - registro_OdeC
-                     - pago
-                     - registro_pago
-      - procesos:
-         - proceso (por clave):
-            - OdeC
-               - Igual
-            - nombre
-            - alcance
-            - clave
-            - num_subprocesos
-            - subprocesos:
-               - subproceso (por clave):
-                  - OdeC
-                     - Igual
-                  - nombre
-                  - alcance
-                  - clave
-                  
+      
+      
 - pad:
   - uid
   - timestamp
