@@ -43,7 +43,7 @@ function loadTablaProcesos(){
 
     firebase.database().ref(rama_bd_obras_magico).once("value").then(function(snapshot){
         snapshot.forEach(function(obraSnap){
-            if(obraSnap.val().nombre != "ZObra Prueba"){
+            if(obraSnap.val().nombre != "ZObra Prueba" && !obraSnap.child("terminada").val()){
                 obraSnap.child("procesos").forEach(function(childSnapshot){
                     var proc = childSnapshot.val();
                     if(proc.tipo != "adicional" || proc.num_subprocesos != 0){
