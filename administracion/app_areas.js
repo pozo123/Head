@@ -62,7 +62,7 @@ $('#' + id_guardar_button_areas).click(function () {
         administracion: $('#' + id_administracion_checkbox_area).prop('checked'),
         rrhh: $('#' + id_rrhh_checkbox_area).prop('checked'),
     }
-https://console.firebase.google.com/u/1/project/ingenieriahead/database/ingenieriahead/data/personal/WCpLarWgMKfwGsvAdrqlqjQxy243/nickname
+
     firebase.database().ref(rama_bd_personal).orderByChild("nombre").equalTo($('#' + id_colaborador_ddl_areas + " option:selected").val()).once("child_added").then(function(snapshot){
         firebase.database().ref(rama_bd_personal + "/" + snapshot.val().uid + "/areas").set(areas);
     });
