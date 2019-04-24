@@ -10,7 +10,7 @@ REESTRUCTURA_BD:
     - distribucion_supervisores
     - editar_proceso
     - gestionar_supervisores
-    - kaizen_global
+    - kaizen_global -> checar cual es la ultima version
     - obra_prod -> obsoletos?
     - procesos
     - prod_gestionar_pptos -> si? no obsoletos porque ya no van a haber pptos para prod?
