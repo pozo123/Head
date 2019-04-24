@@ -7,8 +7,8 @@ var id_table_pago_nomina = "tablePagoNomina";
 
 var id_tab_pago_nomina = "tabPagoNomina";
 
-var rama_bd_pagos_nomina = "produccion/pagos_nomina";
-var rama_bd_trabajadores = "produccion/trabajadores";
+var rama_bd_pagos_nomina = "rrhh/pagos_nomina";
+var rama_bd_trabajadores = "rrhh/trabajadores";
 var rama_bd_obras_magico = "obras";
 
 var tablePagoNomina = document.getElementById(id_table_pago_nomina);
@@ -31,7 +31,6 @@ $('#' + id_tab_pago_nomina).click(function(){
     }
 
     loadSemanasPagoNomina(year_actual);
-
 });
 
 $('#' + id_year_ddl_pago_nomina).change(function(){
@@ -40,7 +39,6 @@ $('#' + id_year_ddl_pago_nomina).change(function(){
     $('#' + id_datatable_pago_nomina).addClass('hidden');
     $('#' + id_table_pago_nomina).empty();
 	loadSemanasPagoNomina($('#' + id_year_ddl_pago_nomina + " option:selected").val());
-
 });
 
 function loadSemanasPagoNomina(year){
@@ -48,7 +46,6 @@ function loadSemanasPagoNomina(year){
 	var optionBlank = document.createElement("option");
 	optionBlank.style = "display:none";
 	optionBlank.text = optionBlank.value = "";
-
 
 	var semana_actual;
 	if(year == getWeek(new Date().getTime())[1]){
