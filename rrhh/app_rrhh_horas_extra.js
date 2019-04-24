@@ -13,7 +13,7 @@ var id_table_horasExtra = "tableHorasExtra";
 var id_tab_horasExtra = "tabHorasExtra";
 
 var rama_bd_pagos_nomina = "produccion/pagos_nomina";
-var rama_bd_obras_prod = "produccion/obras";
+var rama_bd_obras_magico = "obras";
 var rama_bd_trabajadores = "produccion/trabajadores";
 
 var nuevo;
@@ -26,6 +26,7 @@ var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
 jQuery.datetimepicker.setLocale('es');
 var total_horas = {};
+var terminados = [];
 
 $('#' + id_tab_horasExtra).click(function(){
     sueldos_base = [];
@@ -61,12 +62,14 @@ $('#' + id_tab_horasExtra).click(function(){
     option3.text = option3.value = "";
     select3.appendChild(option3);
 
-    firebase.database().ref(rama_bd_obras_prod).orderByChild('nombre').on('child_added',function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico).orderByChild('nombre').on('child_added',function(snapshot){
         var obra = snapshot.val();
-        var option4 = document.createElement('OPTION');
-        option4.text = obra.nombre;
-        option4.value = obra.nombre;
-        select3.appendChild(option4);
+        if(!obra.terminada){
+            var option4 = document.createElement('OPTION');
+            option4.text = obra.nombre;
+            option4.value = obra.nombre;
+            select3.appendChild(option4);
+        }
     });
 
     var option5 = document.createElement('OPTION');
@@ -180,8 +183,9 @@ $("#" + id_obra_ddl_horasExtra).change(function(){
 });
 
 function cargaEntradasHorasExtra(year,semana){
-    firebase.database().ref(rama_bd_obras_prod).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico).orderByChild("nombre").equalTo($('#' + id_obra_ddl_horasExtra + " option:selected").val()).once('child_added').then(function(snapshot){
         var procesos = [];
+        terminados = [];
         var count_proc = 0;
         if(snapshot.child("num_procesos").val() == 0 && snapshot.child("procesos/ADIC/num_subprocesos").val() == 0){
             procesos[0] = "MISC";
@@ -189,10 +193,16 @@ function cargaEntradasHorasExtra(year,semana){
             snapshot.child("procesos").forEach(function(childSnapshot){
                 var proc = childSnapshot.val();
                 if(proc.num_subprocesos == 0 && proc.clave != "ADIC"){
+                    if(childSnapshot.child("terminado").val()){
+                        terminados[count_proc] = true;
+                    }
                     procesos[count_proc] = childSnapshot.val().clave;
                     count_proc++;
                 } else {
                     childSnapshot.child("subprocesos").forEach(function(grandChildSnapshot){
+                        if(grandChildSnapshot.child("terminado").val()){
+                            terminados[count_proc] = true;
+                        }
                         procesos[count_proc] = grandChildSnapshot.val().clave;
                         count_proc++;
                     });
@@ -325,10 +335,12 @@ function cargaRenglonHorasExtra(trabajador,procesos,nuevo,fecha_in,horas_in,proc
         option2.text = option2.value = "";
         proc.appendChild(option2);
         for(i=0;i<procesos.length;i++){
-            var option = document.createElement('OPTION');
-            option.text = procesos[i];
-            option.value = procesos[i];
-            proc.appendChild(option);
+            if(!terminados[i]){
+                var option = document.createElement('OPTION');
+                option.text = procesos[i];
+                option.value = procesos[i];
+                proc.appendChild(option);
+            }
         }
         proc.id = "proc_" + entradas;
         cell_proc.appendChild(proc);
