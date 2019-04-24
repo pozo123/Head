@@ -2,7 +2,11 @@
 Depto. de Innovacion y Optimizacion
 
 REESTRUCTURA_BD:
- admon: check
+ - admon: check
+ - compras: check
+ - rrhh
+ - prod
+ - proy
 
 
  actualizados/nuevos(24/4/19):
