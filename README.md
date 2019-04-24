@@ -1,13 +1,23 @@
 # Head
 Depto. de Innovacion y Optimizacion
 
+REESTRUCTURA_BD:
+ admon: check
+
+
+ actualizados/nuevos(24/4/19):
+ - app_admon_colaborador -> rename, y reestructura_bd (elementos nuevos)
+ - app_admon_areas -> rename, checo activo
+ - app_admon_pago_kaizen -> nueva app + pad + checo si obra terminada
+ - app_compras_asigna_contrato -> simple a misc, checo si terminada
+ - app_compras_odec_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple, reestructura_bd
+
  actualizados/nuevos(23/4/19):
  - app_proy_registros -> Nueva app, bien hecha y con elnuevo UML. Falta probar.
  - app_funciones -> sumaEnFirebase, calculaKaizen
  - app_rrhh_pagos_diversos -> si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y lo mismo que horas_extra, botón "Carga semana anterior" con id = "semanaAnteriorButtonDiversos" en hidden
  - app_rrhh_horas_extra -> si obra simple mete a misc, simple también considera adicionales, botón carga semana anterior
  - app_asistencia -> lo meehmo, botón carga
- - app_compras_odec_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_compras_pag_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_desplegar_kaizen -> actualizar kaizen al abrirlo, obra simple despliega misc y adic
 
@@ -17,9 +27,6 @@ Depto. de Innovacion y Optimizacion
 
  actualizados/nuevos(16/4/19):
  - app_cierre_maestro -> cambié el cierre a las 6 porque diario hay miles de cierres maestros y pos no
-
- actualizados/nuevos(11/4/19):
- - app_admon_pago_kaizen -> nueva app + pad
    
  actualizados/nuevos(2/4/19):
  - app_perfil -> chance reg 0?
@@ -34,7 +41,6 @@ Depto. de Innovacion y Optimizacion
  
  actualizados/nuevos(11/3/19):
  - app_admin_registro
- - app_areas
   
  actualizados/nuevos(26/2/19):
  - app_atributo
@@ -60,6 +66,7 @@ Depto. de Innovacion y Optimizacion
  - falta empty a muchos ddls antes de cargarlos
 
 ARTURO:
+ - Quitar todos los colaboradores de todo lo que no sea admin
  - en app_pryo_cuant_kaizen cambiar el placeholder de descripcion
  - clase rojo y gris en desplegar kaizen
  - Desplegar Kaizen: TODO en colores por columna, sin el negro
