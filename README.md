@@ -4,9 +4,7 @@ Depto. de Innovacion y Optimizacion
 REESTRUCTURA_BD:
  - admon: check
  - compras: check
- - rrhh:
-    - pagos_diversos
-    - pago_nomina -> también falta considerar adics para obra simple y meterlo a misc
+ - rrhh: check
  - prod
     - todo
  - proy
@@ -25,6 +23,7 @@ REESTRUCTURA_BD:
  - app_rrhh_horas_extra -> reestructura_bd, contemplo terminados, si obra simple mete a misc, simple también considera adicionales, botón carga semana anterior, trab y pagos a rrhh
   - app_rrhh_pagos_diversos -> si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y lo mismo que horas_extra, botón "Carga semana anterior" con id = "semanaAnteriorButtonDiversos" en hidden, contempla terminados, reestructura_bd, trab y pagos a rrhh
   - app_rrhh_importar_trabajadores ->trab a rrhh
+  - app_rrhh_pago_nomina -> array asistencias si vacío llénalo con la obra, ya debería jalar, trab y pagos a rrhh
  
  actualizados/nuevos(23/4/19):
  - app_proy_registros -> Nueva app, bien hecha y con elnuevo UML. Falta probar.
@@ -33,7 +32,6 @@ REESTRUCTURA_BD:
  - app_desplegar_kaizen -> actualizar kaizen al abrirlo, obra simple despliega misc y adic
 
  actualizados/nuevos(22/4/19):
- - app_rrhh_pago_nomina -> array asistencias si vacío llénalo con la obra, ya debería jalar, trab y pagos a rrhh
  - app_proy_registros -> nuevos registros usando el nuevo uml
 
  actualizados/nuevos(16/4/19):
