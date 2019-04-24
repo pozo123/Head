@@ -15,9 +15,8 @@ var id_datatable_div_diversos = "dataTableGroup1"
 var id_table_diversos = "tableDiversos";
 var id_tab_diversos = "tabDiversos";
 
-var rama_bd_pagos_nomina = "produccion/pagos_nomina";
-var rama_bd_obras_prod = "produccion/obras";
-var rama_bd_trabajadores = "produccion/trabajadores";
+var rama_bd_pagos_nomina = "rrhh/pagos_nomina";
+var rama_bd_trabajadores = "rrhh/trabajadores";
 var rama_bd_diversos = "rrhh/diversos";
 var rama_bd_obras_magico = "obras";
 var nuevo;
@@ -318,9 +317,12 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
         k = k.substring(1,2);
     }
     obra_ddl.id = "obra_" + k;
-    firebase.database().ref(rama_bd_obras_prod).once('value').then(function(snapshot){
+    firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
         snapshot.forEach(function(obraSnap){
             var obra = obraSnap.val();
+            if(obra.terminada){
+                option.style = "display:none";
+            }
             var option = document.createElement('OPTION');
             option.text = option.value = obra.nombre;
             obra_ddl.appendChild(option);
@@ -408,16 +410,20 @@ function generateDdls(cell_obra, cell_proc, nuevo, obra_in, proc_in){
                         var proceso = procSnap.val();
                         if(proceso.num_subprocesos == 0 && proceso.clave != "ADIC"){
                             var option = document.createElement('OPTION');
-                            option.text = proceso.clave;// + " (" + proceso.nombre + ")";
-                            option.value = proceso.clave;
-                            proc_input.appendChild(option);
+                            if(!proceso.terminado){
+                                option.text = proceso.clave;// + " (" + proceso.nombre + ")";
+                                option.value = proceso.clave;
+                                proc_input.appendChild(option);
+                            }
                         } else {
                             procSnap.child("subprocesos").forEach(function(subpSnap){
                                 var subproc = subpSnap.val();
-                                var option = document.createElement('OPTION');
-                                option.text = subproc.clave;// + " (" + subproc.nombre + ")";
-                                option.value = subproc.clave;
-                                proc_input.appendChild(option);
+                                if(!subproc.terminado){
+                                    var option = document.createElement('OPTION');
+                                    option.text = subproc.clave;// + " (" + subproc.nombre + ")";
+                                    option.value = subproc.clave;
+                                    proc_input.appendChild(option);
+                                }
                             });
                         }
                     });
