@@ -30,8 +30,8 @@ var id_zapatos_trabajador = "trabajadorZapatos";//textfield
 var id_groupId_trabajador = "groupIdTrabajador"
 var id_registrar_button_trabajador = "registrarTrabajador";//button
 
-var rama_bd_trabajadores = "produccion/trabajadores";
-var rama_bd_destajistas = "produccion/destajistas";
+var rama_bd_trabajadores = "rrhh/trabajadores";
+var rama_bd_destajistas = "rrhh/destajistas";
 var rama_bd_obras_magico = "obras";
 
 var id_tab_trabajadores = "tabTrabajadores";
