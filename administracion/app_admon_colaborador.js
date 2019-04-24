@@ -9,10 +9,9 @@ var id_areas_proy_checkbox_col_admin = "proyAreasCheckboxColAdmin";
 var id_areas_compras_checkbox_col_admin = "comprasAreasCheckboxColAdmin";
 var id_areas_rrhh_checkbox_col_admin = "rrhhAreasCheckboxColAdmin";
 var id_lider_checkbox_col_admin = "liderCheckboxColAdmin";
-var id_ie_rb_col_admin = "ieRbColAdmin";//Estos dos de la misma familia
-var id_ihs_rb_col_admin = "ihsRbColAdmin";//Estos dos de la misma familia
-//Si areas.proyectos then radiobuttons de esp, y ponerle status = false
-//activo = true
+var id_ie_rb_col_admin = "ieRbColAdmin";//Estos dos del mismo name
+var id_ihs_rb_col_admin = "ihsRbColAdmin";//Estos dos del mismo name
+var id_activo_checkbox_col_admin = "activoCheckboxAdmin";
 
 var id_registrar_button_col_admin = "registrarColaboradorAdmin";
 var id_editar_button_col_admin = "editarButtonColAdmin";
@@ -27,31 +26,69 @@ var existe_uid;
 $("#" + id_email_col_admin).change(function(){
     var existe = false;
     firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
-        //Poner tooooodos los campos y llenarlos con la info AQUI
-        var nombre = "";
-        var nickname = "";
+        var areas;
+        var nombre;
+        var nickname;
+        var credenciales;
+        var esp;
+        var activo;
         snapshot.forEach(function(child_snap){
             var pers = child_snap.val();
             if(pers.email == $("#" + id_email_col_admin).val()){
                 existe = true;
                 existe_uid = child_snap.key;
-                //Poner tooooodos los campos y llenarlos con la info AQUI
+                areas = child_snap.child("areas").val();
+                credenciales = pers.credenciales;
                 nombre = pers.nombre;
                 nickname = pers.nickname;
+                if(areas.proyectos){
+                    esp = pers.esp;
+                }
+                activo = pers.activo;
             }
         });
+
         if(existe){
-            //Poner tooooodos los campos y llenarlos con la info AQUI
             $('#' + id_nombre_col_admin).val(nombre);
             $('#' + id_nickname_col_admin).val(nickname);
+            document.getElementById(id_areas_proy_checkbox_col_admin).checked = areas.proyectos;
+            document.getElementById(id_areas_admin_checkbox_col_admin).checked = areas.administracion;
+            document.getElementById(id_areas_prod_checkbox_col_admin).checked = areas.produccion;
+            document.getElementById(id_areas_rrhh_checkbox_col_admin).checked = areas.rrhh;
+            document.getElementById(id_areas_compras_checkbox_col_admin).checked = areas.compras;
+            document.getElementById(id_activo_checkbox_col_admin).checked = activo;
+            if(credenciales == 2){
+                document.getElementById(id_lider_checkbox_col_admin).checked = true;
+                document.getElementById(id_lider_checkbox_col_admin).disabled = false;
+            } else if(credenciales == 3){
+                document.getElementById(id_lider_checkbox_col_admin).checked = false;
+                document.getElementById(id_lider_checkbox_col_admin).disabled = false;
+            } else {
+                document.getElementById(id_lider_checkbox_col_admin).checked = false;
+                document.getElementById(id_lider_checkbox_col_admin).disabled = true;
+            }
+            if(areas.proyectos){
+                $('#' + id_ie_rb_col_admin).removeClass('hidden');
+                $('#' + id_ihs_rb_col_admin).removeClass('hidden');
+                if(esp == "ie"){
+                    document.getElementById(id_ie_rb_col_admin).checked = true;
+                }
+                else if(esp == "ihs"){
+                    document.getElementById(id_ihs_rb_col_admin).checked = true;
+                }
+            }
 
             $('#' + id_editar_button_col_admin).removeClass('hidden');
+            $('#' + id_activo_checkbox_col_admin).removeClass('hidden');
             $('#' + id_registrar_button_col_admin).addClass('hidden');
             document.getElementById(id_password_col_admin).disabled = true;
+
         } else {
             $('#' + id_editar_button_col_admin).addClass('hidden');
+            $('#' + id_activo_checkbox_col_admin).addClass('hidden');
             $('#' + id_registrar_button_col_admin).removeClass('hidden');
             document.getElementById(id_password_col_admin).disabled = false;
+            document.getElementById(id_lider_checkbox_col_admin).disabled = false;
         }
     });
 });
@@ -128,8 +165,7 @@ $('#' + id_editar_button_col_admin).click(function(){
             email: user.email,
             nickname: $('#' + id_nickname_col_admin).val(),
             areas: areas,
-            credenciales: $('#' + id_lider_checkbox_col_admin).prop('checked') ? 2:3,
-            activo: true,
+            activo: $('#' + id_activo_checkbox_col_admin).prop('checked'),
         }
 
         if($('#' + id_areas_proy_checkbox_col_admin).prop('checked')){
@@ -139,6 +175,10 @@ $('#' + id_editar_button_col_admin).click(function(){
             } else {
                 persona["esp"] = "ihs";
             }
+        }
+
+        if(document.getElementById(id_lider_checkbox_col_admin).disabled == false){
+            persona["credenciales"] = $('#' + id_lider_checkbox_col_admin).prop('checked') ? 2:3,
         }
 
         firebase.database().ref(rama_bd_personal + "/" + existe_uid).update(persona);
