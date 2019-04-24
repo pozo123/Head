@@ -108,6 +108,7 @@
       - nombre
       - cliente
       - clave
+      - terminada
       - num_procesos
       - utilidad_semanal
       - PPR: ($)(Personal de producción de reserva)
@@ -138,6 +139,7 @@
       - procesos:
          - proceso (por clave):
             - terminado
+            - contrato (a menos que sea padre, excepcion con IQONO MEXICO)
             - nombre
             - alcance
             - clave
@@ -176,6 +178,7 @@
             - subprocesos:
                - subproceso (por clave):
                   - terminado
+                  - contrato
                   - nombre
                   - alcance
                   - clave
