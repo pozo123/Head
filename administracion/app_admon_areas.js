@@ -17,9 +17,11 @@ $('#tabAreas').click(function(){
 
     firebase.database().ref(rama_bd_personal).orderByChild('nombre').on('child_added',function(snapshot){
         var persona = snapshot.val();
-        var option2 = document.createElement('option');
-        option2.text = option2.value = persona.nombre; 
-        select.appendChild(option2);
+        if(persona.activo){
+            var option2 = document.createElement('option');
+            option2.text = option2.value = persona.nombre; 
+            select.appendChild(option2);
+        }
     });   
 });
 
