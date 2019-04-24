@@ -1,101 +1,147 @@
 // JavaScript source code
-var id_nombre_colaborador_admin = "colaboradorNombreAdmin";
-var id_nickname_colaborador_admin = "colaboradorNicknameAdmin";
-var id_email_colaborador_admin = "colaboradorEmailAdmin";
-var id_password_colaborador_admin = "colaboradorPwdAdmin";
+var id_nombre_col_admin = "colaboradorNombreAdmin";
+var id_nickname_col_admin = "colaboradorNicknameAdmin";
+var id_email_col_admin = "colaboradorEmailAdmin";
+var id_password_col_admin = "colaboradorPwdAdmin";
+var id_areas_admin_checkbox_col_admin = "adminAreasCheckboxColAdmin";
+var id_areas_prod_checkbox_col_admin = "prodAreasCheckboxColAdmin";
+var id_areas_proy_checkbox_col_admin = "proyAreasCheckboxColAdmin";
+var id_areas_compras_checkbox_col_admin = "comprasAreasCheckboxColAdmin";
+var id_areas_rrhh_checkbox_col_admin = "rrhhAreasCheckboxColAdmin";
+var id_lider_checkbox_col_admin = "liderCheckboxColAdmin";
+var id_ie_rb_col_admin = "ieRbColAdmin";//Estos dos de la misma familia
+var id_ihs_rb_col_admin = "ihsRbColAdmin";//Estos dos de la misma familia
+//Si areas.proyectos then radiobuttons de esp, y ponerle status = false
+//activo = true
 
-var id_registrar_button_colaborador_admin = "registrarColaboradorAdmin";
+var id_registrar_button_col_admin = "registrarColaboradorAdmin";
+var id_editar_button_col_admin = "editarButtonColAdmin";
 
-var rama_bd_colaboradores_admin = "administracion/colaboradores";
 var rama_bd_personal = "personal";
 
 $(document).ready(function(){
 });
 
+var existe_uid;
 
-var existe = false;
-$("#" + id_email_colaborador_admin).change(function(){
-    existe = false;
+$("#" + id_email_col_admin).change(function(){
+    var existe = false;
     firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
+        //Poner tooooodos los campos y llenarlos con la info AQUI
         var nombre = "";
         var nickname = "";
         snapshot.forEach(function(child_snap){
             var pers = child_snap.val();
-            if(pers.email == $("#" + id_email_colaborador_admin).val()){
+            if(pers.email == $("#" + id_email_col_admin).val()){
                 existe = true;
+                existe_uid = child_snap.key;
+                //Poner tooooodos los campos y llenarlos con la info AQUI
                 nombre = pers.nombre;
                 nickname = pers.nickname;
             }
         });
         if(existe){
-            $('#' + id_nombre_colaborador_admin).val(nombre);
-            $('#' + id_nickname_colaborador_admin).val(nickname);
-            document.getElementById(id_nombre_colaborador_admin).disabled = true;
-            document.getElementById(id_nickname_colaborador_admin).disabled = true;
-            document.getElementById(id_password_colaborador_admin).disabled = true;
+            //Poner tooooodos los campos y llenarlos con la info AQUI
+            $('#' + id_nombre_col_admin).val(nombre);
+            $('#' + id_nickname_col_admin).val(nickname);
+
+            $('#' + id_editar_button_col_admin).removeClass('hidden');
+            $('#' + id_registrar_button_col_admin).addClass('hidden');
+            document.getElementById(id_password_col_admin).disabled = true;
         } else {
-            if(document.getElementById(id_nombre_colaborador_admin).disabled == true){
-                $('#' + id_nombre_colaborador_admin).val("");
-                $('#' + id_nickname_colaborador_admin).val("");
-            }
-            document.getElementById(id_nombre_colaborador_admin).disabled = false;
-            document.getElementById(id_nickname_colaborador_admin).disabled = false;
-            document.getElementById(id_password_colaborador_admin).disabled = false;
+            $('#' + id_editar_button_col_admin).addClass('hidden');
+            $('#' + id_registrar_button_col_admin).removeClass('hidden');
+            document.getElementById(id_password_col_admin).disabled = false;
         }
     });
 });
 
-$('#' + id_registrar_button_colaborador_admin).click(function () {
-    if(!$('#' + id_nombre_colaborador_admin).val() || !$('#' + id_email_colaborador_admin).val() || (document.getElementById(id_password_colaborador_admin).disabled == false && !$('#' + id_password_colaborador_admin).val()) || !$('#' + id_nickname_colaborador_admin).val()){
-        alert("Llena todos los campos requeridos");
+$("#" + id_areas_proy_checkbox_col_admin).change(function(){
+    if(this.checked){
+        $('#' + id_ie_rb_col_admin).removeClass('hidden');
+        $('#' + id_ihs_rb_col_admin).removeClass('hidden');
     } else {
-        if(existe){
-            firebase.database().ref(rama_bd_personal).orderByChild('email').equalTo($('#' + id_email_colaborador_admin).val()).once('child_added').then(function(snapshot){
-                var pers = snapshot.val();
-                guardaDatosColAdmin(pers);
-                var tru = true;
-                firebase.database().ref(rama_bd_personal + "/" + pers.uid + "/areas/administracion").set(tru);
-            });
-        } else {
-            secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_colaborador_admin).val(), $('#' + id_password_colaborador_admin).val())
-                .then(function (result) {
-                    guardaDatosColAdmin(result.user);
-                    guardaDatosPersonalAdmin(result.user, $('#' + id_nombre_colaborador_admin).val(), $('#' + id_nickname_colaborador_admin).val());
-                    secondaryApp.auth().signOut();
-                }
-            );
-        }
+        $('#' + id_ie_rb_col_admin).addClass('hidden');
+        $('#' + id_ihs_rb_col_admin).addClass('hidden');
     }
 });
 
-function guardaDatosPersonalAdmin(user, nombre, nickname) {
+$('#' + id_registrar_button_col_admin).click(function () {
+    if(($('#' + id_areas_proy_checkbox_col_admin).prop('checked') && document.getElementById(id_ie_rb_col_admin).checked == false && document.getElementById(id_ihs_rb_col_admin).checked == false) || !$('#' + id_nombre_col_admin).val() || !$('#' + id_email_col_admin).val() || !$('#' + id_password_col_admin).val() || !$('#' + id_nickname_col_admin).val()){
+        alert("Llena todos los campos requeridos");
+    } else {
+        secondaryApp.auth().createUserWithEmailAndPassword($('#' + id_email_col_admin).val(), $('#' + id_password_col_admin).val())
+            .then(function (result) {
+                guardaDatosPersonalAdmin(result.user);
+                secondaryApp.auth().signOut();
+            }
+        );
+    }
+});
+
+function guardaDatosPersonalAdmin(user) {
     var areas = {
-        //proyectos: true,
-        //produccion: true,
-        //rrhh: true,
-        administracion: true,
+        proyectos: $('#' + id_areas_proy_checkbox_col_admin).prop('checked'),
+        produccion: $('#' + id_areas_prod_checkbox_col_admin).prop('checked'),
+        compras: $('#' + id_areas_compras_checkbox_col_admin).prop('checked'),
+        administracion: $('#' + id_areas_admin_checkbox_col_admin).prop('checked'),
+        rrhh: $('#' + id_areas_rrhh_checkbox_col_admin).prop('checked'),
     }
 
     var persona = {
         uid: user.uid,
-        nombre: nombre,
+        nombre: $('#' + id_nombre_col_admin).val(),
         email: user.email,
-        nickname: nickname,
+        nickname: $('#' + id_nickname_col_admin).val(),
         areas: areas,
+        credenciales: $('#' + id_lider_checkbox_col_admin).prop('checked') ? 2:3,
+        activo: true,
+    }
+
+    if($('#' + id_areas_proy_checkbox_col_admin).prop('checked')){
+        persona["status"] = false;
+        if(document.getElementById(id_ie_rb_col_admin).checked){
+            persona["esp"] = "ie";
+        } else {
+            persona["esp"] = "ihs";
+        }
     }
 
     firebase.database().ref(rama_bd_personal + "/" + user.uid).update(persona);
     alert("¡Alta exitosa!")
 }
 
-function guardaDatosColAdmin(user) {
-    var colaborador = {
-        uid: user.uid,
-        nombre: $('#' + id_nombre_colaborador_admin).val(),
-        email: user.email,
-        nickname: $('#' + id_nickname_colaborador_admin).val(),
-    }
+$('#' + id_editar_button_col_admin).click(function(){
+    if(($('#' + id_areas_proy_checkbox_col_admin).prop('checked') && document.getElementById(id_ie_rb_col_admin).checked == false && document.getElementById(id_ihs_rb_col_admin).checked == false) || !$('#' + id_nombre_col_admin).val() || !$('#' + id_email_col_admin).val() || !$('#' + id_nickname_col_admin).val()){
+        alert("Llena todos los campos requeridos");
+    } else {
+        var areas = {
+            proyectos: $('#' + id_areas_proy_checkbox_col_admin).prop('checked'),
+            produccion: $('#' + id_areas_prod_checkbox_col_admin).prop('checked'),
+            compras: $('#' + id_areas_compras_checkbox_col_admin).prop('checked'),
+            administracion: $('#' + id_areas_admin_checkbox_col_admin).prop('checked'),
+            rrhh: $('#' + id_areas_rrhh_checkbox_col_admin).prop('checked'),
+        }
 
-    firebase.database().ref(rama_bd_colaboradores_admin + "/" + user.uid).set(colaborador);
-    alert("¡Alta exitosa!")
-}
+        var persona = {
+            nombre: $('#' + id_nombre_col_admin).val(),
+            email: user.email,
+            nickname: $('#' + id_nickname_col_admin).val(),
+            areas: areas,
+            credenciales: $('#' + id_lider_checkbox_col_admin).prop('checked') ? 2:3,
+            activo: true,
+        }
+
+        if($('#' + id_areas_proy_checkbox_col_admin).prop('checked')){
+            persona["status"] = false;
+            if(document.getElementById(id_ie_rb_col_admin).checked){
+                persona["esp"] = "ie";
+            } else {
+                persona["esp"] = "ihs";
+            }
+        }
+
+        firebase.database().ref(rama_bd_personal + "/" + existe_uid).update(persona);
+        alert("Edición exitosa");
+    }
+});
