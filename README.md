@@ -82,6 +82,7 @@ ARTURO:
     
 DIEGO:
  - desplegar kaizen lo del cambio de obra
+ - desplegar kaizen si solo una obra quitar ddl y cargar automatico. Si no subprocesos quitar botones desplegar
  - app_prod_entrada_estimacion
  - app_presupuesto -> cargar datos a kaizen/proy/ppto (subp, proc y obra) y manejo correcto de ddls y hiddens (empty y hide proc y clase de ppto cuando cambio de obra). Simplificación de formato si clase == prod?
  - Todo lo de Gantt
