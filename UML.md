@@ -125,6 +125,9 @@
       - presupuestos:
          - presupuesto (por nombre(?))
             - terminado
+            - consec
+            - consecutivos
+               - pdf
             - nombre (ya lo llamo en registros)
             - SCORE
                - total_ie_prog (en horas)
