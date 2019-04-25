@@ -8,33 +8,33 @@ REESTRUCTURA_BD:
  - prod: check
  - proy
     - bibliotecas -> definir ediciones y eliminados, cambiar las ramas adecuadsa
-    - cierre_maestro -> nueva estructura registros e inges
     - dashboard -> checar cual es la ultima version
     - dashgrid -> obsoletos? hay que modificarlo
     - gestionar_presu
     - graphs
-    - obra -> checar obra_prod para ver que no falte nada
     - pagos
     - perfil
-    - permisos -> obsoleto... ? ver cómo manejarlo
     - presupuesto
     - proy_cuant_kaizen
     - reporte
     - reporte_obras
     - reporte_ppto
-    - score (permisos)
 
  actualizados/nuevos(25/4/19):
+ - app_proy_registros -> corregí error + nuevos registros usando el nuevo uml (REVISAR HTML)
  - app_utilidad -> carga sólo las obras asignadas
  - app_distribucion_supervisores -> reestructura_bd
  - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
  - app_procesos -> reestructura_bd, fechas, no obra_prod, kaiz en procesos
  - app_editar_proceso -> reestructura_bd
- - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal, app_inge
+ - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal, app_inge, app_permisos
  - app_desplegar_kaizen -> reestructura_bd, si sólo una obra se carga automático, si no subproc quito botones
  - app_imprimir_presupuesto -> reestructura_bd
  - app_proy_asigna_proc -> reestructura_bd
  - app_kaizen_global -> ya lo reestructure, pero sigue haciendo falta checar todo pq no jalaba
+ - score.js -> reestructura, permisos por credencial. Revisar si sobran/faltan pestañas
+ - app_cierre_maestro -> reestructura_bd
+ - app_obra -> reestructura_bd, el atributo SCORE lo dejo vacío
  
  actualizados/nuevos(24/4/19):
  - app_admon_colaborador -> (REVISAR HTML) rename, y reestructura_bd (elementos nuevos)
@@ -56,9 +56,6 @@ REESTRUCTURA_BD:
  - app_funciones -> sumaEnFirebase, calculaKaizen
 
  - app_desplegar_kaizen -> actualizar kaizen al abrirlo, obra simple despliega misc y adic
-
- actualizados/nuevos(22/4/19):
- - app_proy_registros -> nuevos registros usando el nuevo uml (REVISAR HTML)
 
  actualizados/nuevos(16/4/19):
  - app_cierre_maestro -> cambié el cierre a las 6 porque diario hay miles de cierres maestros y pos no
