@@ -78,6 +78,7 @@ $('#' + id_registrar_button_obra).click(function () {
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
+            SCORE: "",
         };
         procesos["PC00"] = {
             terminado: false,
@@ -90,6 +91,7 @@ $('#' + id_registrar_button_obra).click(function () {
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
+            SCORE: "",
         };
         procesos["ADIC"] = {
             terminado: false,
