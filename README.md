@@ -7,17 +7,19 @@ REESTRUCTURA_BD:
  - rrhh: check
  - prod
     - desplegar kaizen
-    - distribucion_supervisores
-    - editar_proceso
-    - gestionar_supervisores
     - kaizen_global -> checar cual es la ultima version
-    - obra_prod -> obsoletos?
-    - procesos
     - prod_gestionar_pptos -> si? no obsoletos porque ya no van a haber pptos para prod?
-    - app_utilidad
  - proy
     - todo
+    - obra -> checar obra_prod para ver que no falte nada
 
+ actualizados/nuevos(25/4/19):
+ - app_utilidad -> carga sólo las obras asignadas
+ - app_distribucion_supervisores -> reestructura_bd
+ - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
+ - app_procesos -> reestructura_bd, fechas, no obra_prod, kaiz en procesos
+ - app_editar_proceso -> reestructura_bd
+ 
  actualizados/nuevos(24/4/19):
  - app_admon_colaborador -> (REVISAR HTML) rename, y reestructura_bd (elementos nuevos)
  - app_admon_areas -> rename, checo activo
