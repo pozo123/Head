@@ -5,12 +5,24 @@ REESTRUCTURA_BD:
  - admon: check
  - compras: check
  - rrhh: check
- - prod
-    - desplegar kaizen
-    - kaizen_global -> checar cual es la ultima version
+ - prod: check
  - proy
-    - todo
+    - bibliotecas -> definir ediciones y eliminados, cambiar las ramas adecuadsa
+    - cierre_maestro -> nueva estructura registros e inges
+    - dashboard -> checar cual es la ultima version
+    - dashgrid -> obsoletos? hay que modificarlo
+    - gestionar_presu
+    - graphs
     - obra -> checar obra_prod para ver que no falte nada
+    - pagos
+    - perfil
+    - permisos -> obsoleto... ? ver cómo manejarlo
+    - presupuesto
+    - proy_cuant_kaizen
+    - reporte
+    - reporte_obras
+    - reporte_ppto
+    - score (permisos)
 
  actualizados/nuevos(25/4/19):
  - app_utilidad -> carga sólo las obras asignadas
@@ -18,7 +30,11 @@ REESTRUCTURA_BD:
  - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
  - app_procesos -> reestructura_bd, fechas, no obra_prod, kaiz en procesos
  - app_editar_proceso -> reestructura_bd
- - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal
+ - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal, app_inge
+ - app_desplegar_kaizen -> reestructura_bd, si sólo una obra se carga automático, si no subproc quito botones
+ - app_imprimir_presupuesto -> reestructura_bd
+ - app_proy_asigna_proc -> reestructura_bd
+ - app_kaizen_global -> ya lo reestructure, pero sigue haciendo falta checar todo pq no jalaba
  
  actualizados/nuevos(24/4/19):
  - app_admon_colaborador -> (REVISAR HTML) rename, y reestructura_bd (elementos nuevos)
@@ -85,6 +101,7 @@ REESTRUCTURA_BD:
  - falta empty a muchos ddls antes de cargarlos
 
 ARTURO:
+ - Falta el app_generos_tipos en proyectos
  - Quitar todos los colaboradores de todo lo que no sea admin
  - en app_pryo_cuant_kaizen cambiar el placeholder de descripcion
  - clase rojo y gris en desplegar kaizen
@@ -109,7 +126,6 @@ ARTURO:
 DIEGO:
  - Definir quién llena las horas ppto de SCORE en los procs/pptos, y cómo (no sólo en kaizen)
  - desplegar kaizen lo del cambio de obra
- - desplegar kaizen si solo una obra quitar ddl y cargar automatico. Si no subprocesos quitar botones desplegar
  - app_prod_entrada_estimacion
  - app_presupuesto -> cargar datos a kaizen/proy/ppto (subp, proc y obra) y manejo correcto de ddls y hiddens (empty y hide proc y clase de ppto cuando cambio de obra). Simplificación de formato si clase == prod?
  - Todo lo de Gantt
