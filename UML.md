@@ -106,12 +106,18 @@
    - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global app_presupuesto
    - obra: (por nombre)
       - nombre
-      - cliente
+      - cliente (nombre)
       - clave
       - terminada
+      - direccion
+         - calle
+         - numero
+         - colonia
+         - delegacion
+         - ciudad
+         - cp
       - num_procesos
       - utilidad_semanal
-      - PPR: ($)(Personal de producción de reserva)
       - fechas:
          - fecha_inicio_real
          - fecha_inicio_teorica
@@ -152,7 +158,25 @@
             - nombre
             - alcance
             - clave
-            - OdeC:
+            - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
+            - SCORE (SOLO EN HOJA, formato igual que arriba)
+            - fecha_inicio
+            - fecha_final
+            - num_subprocesos
+            - kaizen: *
+            - subprocesos:
+               - subproceso (por clave):
+                  - terminado
+                  - contrato
+                  - nombre
+                  - alcance
+                  - clave
+                  - OdeC: igual que proc
+                  - categoria
+                  - kaizen: *
+                  - fechas_inicio
+                  - fecha_final
+            - OdeC: (En hoja)
                - year (por num)
                   - semana (por num)
                      - OdeC (por clave)
@@ -174,24 +198,6 @@
                            - registro_OdeC
                            - pago
                            - registro_pago
-            - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
-            - SCORE (SOLO EN HOJA, formato igual que arriba)
-            - fecha_inicio
-            - fecha_final
-            - num_subprocesos
-            - kaizen: *
-            - subprocesos:
-               - subproceso (por clave):
-                  - terminado
-                  - contrato
-                  - nombre
-                  - alcance
-                  - clave
-                  - OdeC: igual que proc
-                  - categoria
-                  - kaizen: *
-                  - fechas_inicio
-                  - fecha_final
 - produccion
   - diversos:
       - AFECTAN: app_diversos
@@ -341,25 +347,25 @@
          - telefono
          - cuenta_bancaria
          - especialidad: ("IE"/"IHS"/"Ambas")
-  - obras: SE VA
-      - AFECTAN: app_obras_prod app_procesos
-      - SUSCRIBEN: app_procesos app_asistencia app_desplegar_procesos app_kaizen_global
-      - obra: (por nombre)
-         - nombre
-         - supervisor
-            - supervisor (por uid)
-               - nombre: 
-               - activo: bool
-         - clave
-         - PPR: ($)(Personal de producción de reserva)
-         - terminado 
-         - procesos: Todo lo mismo que en magico menos kaizen (tambien con subprocesos, esos igual todo menos kaizen)
-         - fechas:
-            - fecha_inicio_real
-            - fecha_inicio_teorica
-            - fecha_final_real
-            - fecha_final_teorica
 - clientes
+   - cliente (por nombre)
+      - clave
+      - nombre
+      - telefono
+      - atencion
+         - numero (por push pero de array, 0,1,2)
+            - area
+            - celular
+            - email
+            - extension
+            - nombre
+      - direccion
+         - calle
+         - ciudad
+         - colonia
+         - cp
+         - delegacion
+         - numero
 - proyectos
    - registros
       - year
