@@ -19,7 +19,7 @@ $('#' + tab_distribucionSupervisores).click(function{
 
   firebase.database().ref(rama_bd_personal).once('value').then(function(snapshot){
       var sup = snapshot.val();
-      if(snapshot.child("areas/produccion")){
+      if(snapshot.child("areas/produccion").val() && sup.activo){
 	      var option2 = document.createElement('option');
 	      option2.text = sup.nickname;
 	      option2.value = sup.uid; 
