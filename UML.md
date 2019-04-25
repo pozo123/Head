@@ -112,6 +112,12 @@
       - num_procesos
       - utilidad_semanal
       - PPR: ($)(Personal de producción de reserva)
+      - fechas:
+         - fecha_inicio_real
+         - fecha_inicio_teorica
+         - fecha_final_real
+         - fecha_final_teorica
+      - kaizen: *
       - supervisor 
          - supervisor (por id)
             - nombre
@@ -167,11 +173,8 @@
                            - registro_pago
             - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
             - SCORE (SOLO EN HOJA, formato igual que arriba)
-            - fechas: 
-               - fecha_inicio_real
-               - fecha_inicio_teorica
-               - fecha_final_real
-               - fecha_final_teorica
+            - fecha_inicio
+            - fecha_final
             - num_subprocesos
             - kaizen: *
             - subprocesos:
@@ -184,14 +187,8 @@
                   - OdeC: igual que proc
                   - categoria
                   - kaizen: *
-                  - fechas:
-                     - igual las 4 *
-      - fechas:
-         - fecha_inicio_real
-         - fecha_inicio_teorica
-         - fecha_final_real
-         - fecha_final_teorica
-      - kaizen: *
+                  - fechas_inicio
+                  - fecha_final
 - produccion
   - diversos:
       - AFECTAN: app_diversos
