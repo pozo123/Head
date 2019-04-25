@@ -8,7 +8,6 @@ REESTRUCTURA_BD:
  - prod
     - desplegar kaizen
     - kaizen_global -> checar cual es la ultima version
-    - prod_gestionar_pptos -> si? no obsoletos porque ya no van a haber pptos para prod?
  - proy
     - todo
     - obra -> checar obra_prod para ver que no falte nada
@@ -19,6 +18,7 @@ REESTRUCTURA_BD:
  - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
  - app_procesos -> reestructura_bd, fechas, no obra_prod, kaiz en procesos
  - app_editar_proceso -> reestructura_bd
+ - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal
  
  actualizados/nuevos(24/4/19):
  - app_admon_colaborador -> (REVISAR HTML) rename, y reestructura_bd (elementos nuevos)
