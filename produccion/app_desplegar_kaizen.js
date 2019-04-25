@@ -5,7 +5,6 @@ var id_actualizar_button_kaizen = "actualizarKaizenButton";
 var id_desplegar_subprocesos_button_kaizen = "desplegarSubButtonDesplegarKaizen";
 var id_colapsar_subprocesos_button_kaizen = "colapsarSubButtonDesplegarKaizen";
 var rama_bd_personal = "personal";
-var rama_bd_colaboradores_prod = "produccion/colaboradores";
 
 var json_kaizen = {};
 var json_kaizen_obra = {};
@@ -24,39 +23,41 @@ $(document).ready(function(){
 	firebase.auth().onAuthStateChanged(function(user){
 		if(user){
 			username = user.uid;
-			firebase.database().ref(rama_bd_personal).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
+			firebase.database().ref(rama_bd_personal + "/" + username).once('value').then(function(snapshot){
 				var pers = snapshot.val();
-				if(pers.areas.administracion == true){
-					aut = "gerente";
-				} else {
-					firebase.database().ref(rama_bd_colaboradores_prod).orderByKey().equalTo(username).once('child_added').then(function(snapshot){
-						var col = snapshot.val();
-						if(col.tipo == "supervisor"){
-							snapshot.child("obras").forEach(function(childSnap){
-								obra = childSnap.val();
-								if(obra.activa == true){
-									var option2 = document.createElement('option');
-			        				option2.text = option2.value = obra.nombre; 
-			        				select.appendChild(option2);
-								}
-								aut = "supervisor";
-							});
-						} else if(col.tipo == "gerente"){
-							aut = "gerente";
-						} else {
-							aut = "nope";
-							alert("Usuario sin autorización");
-						}
-					});
-				}
-				if(aut == "gerente"){
+				if(snapshot.child("areas/administracion").val() == true || pers.credenciales < 3){
 					firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
 						snapshot.forEach(function(obraSnap){
 							var obra = obraSnap.val();
-							var option2 = document.createElement('option');
-			        		option2.text = option2.value = obra.nombre; 
-			        		select.appendChild(option2);
+							if(!obra.terminada){
+								var option2 = document.createElement('option');
+								option2.text = option2.value = obra.nombre; 
+								select.appendChild(option2);
+							}
 						});
+					});
+				} else {
+					var single = 0;
+					firebase.database().ref(rama_bd_obras_magico).once('value').then(function(snapshot){
+						snapshot.forEach(function(childSnap){
+							if(!childSnap.child("terminada").val()){
+								childSnap.child("supervior").forEach(function(supSnap){
+									if(supSnap.key == username && supSnap.child("acivo").val() == true){
+										single++;
+										var option2 = document.createElement('option');
+										option2.text = option2.value = childSnap.child("nombre").val(); 
+										select.appendChild(option2);
+									}
+								});
+							}
+						});
+						if(single == 1){
+							document.getElementById(id_obras_ddl_desplegar_kaizen).selectedIndex = 1;
+							$('#' + id_obras_ddl_desplegar_kaizen).addClass("hidden");
+							cargaKaizen();
+						} else {
+							$('#' + id_obras_ddl_desplegar_kaizen).removeClass("hidden");
+						}
 					});
 				}
 			});
@@ -65,6 +66,10 @@ $(document).ready(function(){
 });
 
 $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
+	cargaKaizen();
+});
+
+function cargaKaizen(){
 	calculaKaizen($('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val(),"global");
 	$('.celda').remove();
     $(".row_data").remove();
@@ -198,12 +203,8 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 			}
 			document.getElementById(id_elem).innerHTML = formatMoney(parseFloat(nV));
 	});
-	//editor.constructor(tableId, tableCellEditorParams)
-	//editor.SetEditable(element, cellEditorParams)
-	//editor.SetEditableClass(className, cellEditorParams)
 
-    //FALTA
-    //Revisar BRUTOs
+	//Carga la tabla
 	firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obras_ddl_desplegar_kaizen + " option:selected").val()).once('value').then(function(snapshot){
 		duracion_obra = parseFloat(snapshot.val().fechas.fecha_final_teorica) - parseFloat(snapshot.val().fechas.fecha_inicio_teorica);
 		json_kaizen = snapshot.val().procesos;
@@ -211,48 +212,52 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 		obra_clave = snapshot.val().clave;
 		var table = document.getElementById(id_datatable_desplegar_kaizen);
 		var num_procesos = snapshot.val().num_procesos;
-		/*if(num_procesos == 0){
-			createRow(snapshot.val(),table,"obraSimple");
-		} else {*/
-			var procesos = [];
-			var adic;
-			var misc;
-			var subp;
-			snapshot.child("procesos").forEach(function(childSnap){
-				var proc = childSnap.val();
-				if(proc.clave == "MISC")
-					procesos[num_procesos + 1] = {proc: proc, tipo: "procSimple"};//"misc"};
-				else {
-					var consec;
-					if(proc.clave == "ADIC"){
-						consec = num_procesos + 2;
-					} else {
-						consec = parseInt(proc.clave.substring(2,4));
-					}
-					if(proc.num_subprocesos == 0){
-						procesos[consec] = {proc: proc, tipo: "procSimple"};
-					} else {
-						subp = [];
-						childSnap.child("subprocesos").forEach(function(grandChildSnap){
-							var cl = grandChildSnap.val().clave;
-							var subcons = parseInt(cl.substring(cl.length-2,cl.length))
-							subp[subcons] = grandChildSnap.val();
-						});
-						procesos[consec] = {proc: proc, tipo: "procPadre", num_subprocesos: proc.num_subprocesos, subproc: subp};
-					}
+		var procesos = [];
+		var adic;
+		var misc;
+		var subp;
+		var simple = true;
+		snapshot.child("procesos").forEach(function(childSnap){
+			var proc = childSnap.val();
+			if(proc.clave == "MISC")
+				procesos[num_procesos + 1] = {proc: proc, tipo: "procSimple"};//"misc"};
+			else {
+				var consec;
+				if(proc.clave == "ADIC"){
+					consec = num_procesos + 2;
+				} else {
+					consec = parseInt(proc.clave.substring(2,4));
 				}
-			});
-			for(i=0;i<(num_procesos + 3);i++){
-				//
-				createRow(procesos[i].proc, table, procesos[i].tipo);
-				if(procesos[i].tipo == "procPadre"){
-					for(j=1;j<=procesos[i].num_subprocesos;j++){
-						createRow(procesos[i].subproc[j], table, "subproc");
-					}
+				if(proc.num_subprocesos == 0){
+					procesos[consec] = {proc: proc, tipo: "procSimple"};
+				} else {
+					simple = false;
+					subp = [];
+					childSnap.child("subprocesos").forEach(function(grandChildSnap){
+						var cl = grandChildSnap.val().clave;
+						var subcons = parseInt(cl.substring(cl.length-2,cl.length))
+						subp[subcons] = grandChildSnap.val();
+					});
+					procesos[consec] = {proc: proc, tipo: "procPadre", num_subprocesos: proc.num_subprocesos, subproc: subp};
 				}
 			}
-			createRow(snapshot.val(),table,"obra");
-		//}
+		});
+		if(simple){
+			$('#' + id_desplegar_subprocesos_button_kaizen).addClass('hidden');
+			$('#' + id_desplegar_subprocesos_button_kaizen).addClass('hidden');
+		} else {
+			$('#' + id_desplegar_subprocesos_button_kaizen).removeClass('hidden');
+			$('#' + id_desplegar_subprocesos_button_kaizen).removeClass('hidden');
+		}
+		for(i=0;i<(num_procesos + 3);i++){
+			createRow(procesos[i].proc, table, procesos[i].tipo);
+			if(procesos[i].tipo == "procPadre"){
+				for(j=1;j<=procesos[i].num_subprocesos;j++){
+					createRow(procesos[i].subproc[j], table, "subproc");
+				}
+			}
+		}
+		createRow(snapshot.val(),table,"obra");
 		addProfitNeto(snapshot.val(),table);
 
 		var x = document.getElementsByClassName("proceso")
@@ -272,7 +277,7 @@ $("#" + id_obras_ddl_desplegar_kaizen).change(function(){
 		}
 
 	});
-});
+};
 
 function addProfitNeto(obra, table){
 	var row = document.createElement('tr');
