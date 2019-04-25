@@ -178,6 +178,7 @@ $('#' + id_salida_button_registros).click(function(){
 function cierraRegistro(regSnap){
     var reg = regSnap.val();
     var checkin = parseInt(reg.checkin);
+    esp = reg.esp;
     var horas = new Date().getTime() - checkin;
     var updates = {
         horas: horas,
