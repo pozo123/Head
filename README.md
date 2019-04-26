@@ -37,12 +37,7 @@ REESTRUCTURA_BD:
  - app_obra -> reestructura_bd, el atributo SCORE lo dejo vacío
  
  actualizados/nuevos(24/4/19):
- - app_admon_colaborador -> (REVISAR HTML) rename, y reestructura_bd (elementos nuevos)
- - app_admon_areas -> rename, checo activo
  - app_admon_pago_kaizen -> (REVISAR HTML) nueva app + pad + checo si obra terminada
- - app_compras_asigna_contrato -> simple a misc, checo si terminada
- - app_compras_odec_kaizen -> obra simple a misc, borrar todo al guardar, contemplo adic para simple, reestructura_bd, solo un ddl, checo terminado
- - app_compras_pag_kaizen -> (REVISAR HTML) reestructura_bd, solo un ddl, checo terminado, obra simple a misc, borrar todo al guardar, contemplo adic para simple
  - app_desplegar_procesos -> contemplo terminada
  - app_asistencia -> (REVISAR HTML) boton carga, obra simple a misc y considera adic, reestructura_bd y contempla terminados, trab y pagos a rrhh
  - app_rrhh_trabajadores ->  reestructura_bd y contempla terminadas, trab y pagos a rrhh
