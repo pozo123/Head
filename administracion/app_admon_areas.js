@@ -1,5 +1,5 @@
-var id_colaborador_ddl_areas = "colaboradorDdlAreas";
-var id_guardar_button_areas = "guardadAreas";
+var id_colaborador_ddl_areas = "colaboradorDd";
+var id_guardar_button_areas = "guardarAreas";
 var rama_bd_personal = "personal";
 
 var id_proyectos_checkbox_area = "checkProyectosArea";
@@ -26,6 +26,10 @@ $('#tabAreas').click(function(){
 });
 
 $("#" + id_colaborador_ddl_areas).change(function(){
+    loadCheckboxesAreas();
+});
+
+function loadCheckboxesAreas(){
     firebase.database().ref(rama_bd_personal).orderByChild("nombre").equalTo($('#' + id_colaborador_ddl_areas + " option:selected").val()).once("child_added").then(function(snapshot){
         var areas = snapshot.val().areas;
         
@@ -45,23 +49,23 @@ $("#" + id_colaborador_ddl_areas).change(function(){
             $('#' + id_compras_checkbox_area).bootstrapToggle('off');
 
         if(areas.administracion === true)
-            $('#' + id_administracion_checkbox_area).bootstrapToggle('on');
+            $('#' + id_admin_checkbox_area).bootstrapToggle('on');
         else
-            $('#' + id_administracion_checkbox_area).bootstrapToggle('off');
+            $('#' + id_admin_checkbox_area).bootstrapToggle('off');
 
         if(areas.rrhh === true)
             $('#' + id_rrhh_checkbox_area).bootstrapToggle('on');
         else
             $('#' + id_rrhh_checkbox_area).bootstrapToggle('off');
     });
-});
+};
 
 $('#' + id_guardar_button_areas).click(function () {
     var areas = {
         proyectos: $('#' + id_proyectos_checkbox_area).prop('checked'),
         produccion: $('#' + id_produccion_checkbox_area).prop('checked'),
         compras: $('#' + id_compras_checkbox_area).prop('checked'),
-        administracion: $('#' + id_administracion_checkbox_area).prop('checked'),
+        administracion: $('#' + id_admin_checkbox_area).prop('checked'),
         rrhh: $('#' + id_rrhh_checkbox_area).prop('checked'),
     }
 
@@ -70,5 +74,4 @@ $('#' + id_guardar_button_areas).click(function () {
     });
 
     alert("¡Areas actualizados!")
-    loadCheckboxesAreas();
 });
