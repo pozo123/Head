@@ -1,9 +1,9 @@
-var id_colaborador_ddl_areas = "DDLcolaboradorAreas";
+var id_colaborador_ddl_areas = "colaboradorDdlAreas";
 var id_guardar_button_areas = "guardadAreas";
 var rama_bd_personal = "personal";
 
 var id_proyectos_checkbox_area = "checkProyectosArea";
-var id_produccion_checkbox_area = "checkproduccionArea";
+var id_produccion_checkbox_area = "checkProduccionArea";
 var id_compras_checkbox_area = "checkComprasArea";
 var id_admin_checkbox_area = "checkAdminArea";
 var id_rrhh_checkbox_area = "checkRRHHArea";
