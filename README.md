@@ -15,10 +15,12 @@ REESTRUCTURA_BD:
     - pagos
     - perfil
     - presupuesto
-    - proy_cuant_kaizen
     - reporte
     - reporte_obras
     - reporte_ppto
+    
+ actualizados/nuevos(29/4/19):
+ - proy_cuant_kaizen -> contemplo terminados y si simple a misc
 
  actualizados/nuevos(25/4/19):
  - app_proy_registros -> corregí error + nuevos registros usando el nuevo uml (REVISAR HTML)
