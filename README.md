@@ -7,26 +7,27 @@ REESTRUCTURA_BD:
  - rrhh: check
  - prod: check
  - proy
-    - bibliotecas -> definir ediciones y eliminados, cambiar las ramas adecuadsa
-    - dashboard -> checar cual es la ultima version
+    - bibliotecas -> definir areas (en donde como catalogo y en donde editar), definir ediciones y eliminados, cambiar las ramas adecuadsa
+    - dashboard -> checar cual es la ultima version, definir formato y datos
     - dashgrid -> obsoletos? hay que modificarlo
-    - gestionar_presu
-    - graphs
-    - pagos
-    - perfil
-    - presupuesto
+    - gestionar_presu -> depende de def_ppto. También gestiona procs, no?
+    - graphs -> definir formato
+    - pagos -> obsoletos? Van a haber pagos aquí? No sería en Kaizen? De aquí es útil el storage
+    - perfil -> obsoletos. Pasar cambio contraseña a app_principal
+    - presupuesto -> definir que si lleva y que no, separar pdf de crear elemento en bd
     - reporte_obras
-    - reporte_ppto
+    - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
- - app_proy_registros -> comenté que alimentara a kaizen
+ - app_proy_registros -> (REVISAR HTML) comenté que alimentara a kaizen (+corregí error + nuevos registros usando el nuevo uml)
+ - app_cierre_maestro -> comenté que alimentara a kaizen + reestructura_bd
+ - app_reporte_obras -> (REVISAR HTML, faltan divs y sobran dropdown checkboxes) reestructura_bd. 
  
  actualizados/nuevos(29/4/19):
  - app_proy_cuant_kaizen -> contemplo terminados y si simple a misc
  - app_reporte -> reestructura_bd y limpieza general de código
 
  actualizados/nuevos(25/4/19):
- - app_proy_registros -> corregí error + nuevos registros usando el nuevo uml (REVISAR HTML)
  - app_utilidad -> carga sólo las obras asignadas
  - app_distribucion_supervisores -> reestructura_bd
  - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
@@ -38,7 +39,6 @@ REESTRUCTURA_BD:
  - app_proy_asigna_proc -> reestructura_bd
  - app_kaizen_global -> ya lo reestructure, pero sigue haciendo falta checar todo pq no jalaba
  - score.js -> reestructura, permisos por credencial. Revisar si sobran/faltan pestañas
- - app_cierre_maestro -> reestructura_bd
  - app_obra -> reestructura_bd, el atributo SCORE lo dejo vacío
  
  actualizados/nuevos(24/4/19):
@@ -75,7 +75,6 @@ REESTRUCTURA_BD:
   
  actualizados/nuevos(26/2/19):
  - app_atributo
- - app_reporte_obras
    
  Por probar:
  - app_pagos_nomina
