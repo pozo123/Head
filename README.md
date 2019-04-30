@@ -18,6 +18,7 @@ REESTRUCTURA_BD:
     - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
+ - app_proy_actualizar_esp -> (REVISAR HTML) nueva app. 2 radio buttons y un botón nada más.
  - app_procesos -> Borro campos al actualizar para evitar duplicar + (reestructura_bd, fechas, no obra_prod, kaiz en procesos)
  - app_compras_proveedor -> (REVISAR HTML) nueva app. Incluye alta Y edicion
  - app_compras_importar_proveedores -> (REVISAR HTML) igual a importar trabajadores
