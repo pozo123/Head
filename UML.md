@@ -16,6 +16,15 @@
     - nickname: ? string
     - email: string
     - activo
+    - buzon:
+       - mensaje (por uid, solo los no leidos)
+          - destinatario (uid)
+          - remitente (uid)
+          - mensaje
+          - leido
+          - timestamps
+             - enviado
+             - leido
 - administracion:
    - flujos
       - obra (por nombre)
@@ -389,6 +398,15 @@
                   - proceso (clave de proc, subp u obra)
                   - pad: pad*
 - info_web
+- mensajes
+   - mensaje (por uid)
+      - destinatario (uid)
+      - remitente (uid)
+      - mensaje
+      - leido
+      - timestamps
+         - enviado
+         - leido
 - rrhh
    - diversos
       - diverso (por nombre)
