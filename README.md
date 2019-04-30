@@ -15,7 +15,6 @@ REESTRUCTURA_BD:
     - pagos -> obsoletos? Van a haber pagos aquí? No sería en Kaizen? De aquí es útil el storage
     - perfil -> obsoletos. Pasar cambio contraseña a app_principal
     - presupuesto -> definir que si lleva y que no, separar pdf de crear elemento en bd
-    - reporte_obras
     - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
@@ -158,7 +157,6 @@ DIEGO:
  
 TO DO:
  - Produccion
-   - Quitar datos_kaizen
    - Desplegar Kaizen
      - avance.pag > avance.real = pag en rojo 
      - hacer que las columnas prec y cuant se hagan grises si el otro tiene datos
@@ -169,7 +167,6 @@ TO DO:
      - editable
  - Proyectos
    - Revisar reporte_obras
-   - Si clase = produccion -> hacer mas simple el formato de ppto
  - Admin
    - Inve$time
    - Centro de costos.
