@@ -2,6 +2,35 @@
 
 var rama_bd_obras_magico = "obras";
 var rama_bd_obras = "obras";
+var rama_bd_personal = "personal";
+var rama_bd_mensajes = "mensajes";
+
+
+function sendMessage(uid_destinatario, uid_remitente, message){
+  var message = {
+    destinatario: uid_destinatario,
+    remitente: uid_remitente.
+    mensaje: message,
+    leido: 0,
+    timestamps: {
+      enviado: new Date().getTime(),
+      leido: 0,
+    }
+  }
+
+  var messageKey = firebase.database().ref(rama_bd_mensajes).push(message).key;
+  firebase.database().ref(rama_bd_personal + "/" + uid_destinatario + "/buzon/" + messageKey).set(message);
+}
+
+function markMessageAsRead(uid_lector, id_message){
+  var updates = {};
+  updates[id_message] = null;
+  firebase.database().ref(rama_bd_personal + "/" + uid_lector + "/buzon").update(updates);
+  var tru = true;
+  firebase.database().ref(rama_bd_mensajes + "/" + id_message + "/leido").set(tru);
+  var now = new Date().getTime();
+  firebase.database().ref(rama_bd_mensajes + "/" + id_message + "/timestamps/leido").set(now);
+}
 
 //tipo = "global" -> todo el kaizen (proceso y subproceso no son necesarios) o "unico" (sólo se calcula de uno);
 function calculaKaizen(obra,tipo,proceso,subproceso){
