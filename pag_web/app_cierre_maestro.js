@@ -76,13 +76,13 @@ function cierraRegistro(regSnap, path){
         var cant = cant_horas * precio_hora;
         var proc_path = reg.proceso.split("-");
         if(proc_path.length > 1){
-            sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0] + "/subprocesos/" + reg.proceso, cant);
+            //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0] + "/subprocesos/" + reg.proceso, cant);
             sumaScoreProc(reg.obra + "/procesos/" + proc_path[0] + "/subprocesos/" + reg.proceso, cant_horas,esp,reg.inge);
         } else {
             sumaScoreProc(reg.obra + "/procesos/" + reg.proceso, cant_horas,esp,reg.inge);
         }
-        sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0], cant);
-        sumaScoreKaizen(reg.obra,cant);
+        //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0], cant);
+        //sumaScoreKaizen(reg.obra,cant);
         if(reg.proceso == "PC00"){
             sumaScoreProc(reg.obra + "/presupuestos/" + reg.presupuesto, cant_horas,esp,reg.inge);
         }
@@ -104,11 +104,11 @@ function sumaScoreProc(query,cant,esp,u_uid){
         }
     });
 }
-
+/*
 function sumaScoreKaizen(query,cant){
     firebase.database().ref(rama_bd_obras + "/" + query + "/kaizen/PROYECTOS/PAG").once('value').then(function(snapshot){
         var precio_anterior = snapshot.exists() ? parseFloat(snapshot.val()) : 0;
         var nuevo_precio = precio_anterior + cant;
         firebase.database().ref(rama_bd_obras + "/" + query + "/kaizen/PROYECTOS/PAG").set(nuevo_precio);
     });
-}
+}*/
