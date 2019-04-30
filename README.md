@@ -18,6 +18,7 @@ REESTRUCTURA_BD:
     - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
+ - app_funciones -> sendMessage y markMessageAsRead
  - app_proy_registros -> (REVISAR HTML) comenté que alimentara a kaizen (+corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> comenté que alimentara a kaizen + reestructura_bd
  - app_reporte_obras -> (REVISAR HTML, faltan divs y sobran dropdown checkboxes) reestructura_bd. 
