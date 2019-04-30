@@ -18,6 +18,7 @@ REESTRUCTURA_BD:
     - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
+ - app_compras_importar_proveedores -> igual a importar trabajadores
  - app_funciones -> sendMessage y markMessageAsRead
  - app_proy_registros -> (REVISAR HTML) comenté que alimentara a kaizen (+corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> comenté que alimentara a kaizen + reestructura_bd
