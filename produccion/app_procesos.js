@@ -100,7 +100,7 @@ $('#' + id_proceso_ddl_procesos).change(function(){
 });
 
 $('#' + id_agregar_procesos).click(function() {
-    if($('#' + id_fecha_inicio_procesos).val() === "" || $('#' + id_fecha_final_procesos).val() === "" || (($("#" + id_subproceso_checkbox_proceso).checked == true) && ($('#' + id_categoria_ddl_procesos + " option:selected").val() === "" || $('#' + id_proceso_ddl_procesos + " option:selected").val() === "")) || $('#' + id_obra_ddl_procesos + " option:selected").val() === ""){
+    if($('#' + id_nombre_procesos).val() ||$('#' + id_fecha_inicio_procesos).val() === "" || $('#' + id_fecha_final_procesos).val() === "" || (($("#" + id_subproceso_checkbox_proceso).checked == true) && ($('#' + id_categoria_ddl_procesos + " option:selected").val() === "" || $('#' + id_proceso_ddl_procesos + " option:selected").val() === "")) || $('#' + id_obra_ddl_procesos + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {
         var f_i = new Date($('#' + id_fecha_inicio_procesos).val()).getTime();
@@ -133,6 +133,8 @@ $('#' + id_agregar_procesos).click(function() {
                     }
                     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/subprocesos/" + cl).set(subproceso);
                     firebase.database().ref(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text() + "/procesos/" + proc.clave + "/num_subprocesos").set(num_sub);
+                    $('#' + id_nombre_procesos).val("");
+                    $('#' + id_alcance_proceso_procesos).val("");
                 });
             } else {
                 console.log(rama_bd_obras_magico + "/" + $('#' + id_obra_ddl_procesos + " option:selected").text())
@@ -161,6 +163,8 @@ $('#' + id_agregar_procesos).click(function() {
                         firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/fechas/fecha_inicio_real").set(f_i);
                         firebase.database().ref(rama_bd_obras_magico + "/" + obra.nombre + "/procesos/PC00/fecha_inicio").set(f_i);
                     }
+                    $('#' + id_nombre_procesos).val("");
+                    $('#' + id_alcance_proceso_procesos).val("");
                 });
             }
         }
