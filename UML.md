@@ -218,6 +218,71 @@
       - finiquito
       - prestamos
       - caja_chica
+
+   - destajistas: 
+      - AFECTAN: app_destajistas
+      - SUSCRIBEN:
+      - destajista: (por nombre)
+         - nombre
+         - telefono
+         - cuenta_bancaria
+         - especialidad: ("IE"/"IHS"/"Ambas")
+- clientes
+   - cliente (por nombre)
+      - clave
+      - nombre
+      - telefono
+      - atencion
+         - numero (por push pero de array, 0,1,2)
+            - area
+            - celular
+            - email
+            - extension
+            - nombre
+      - direccion
+         - calle
+         - ciudad
+         - colonia
+         - cp
+         - delegacion
+         - numero
+- proyectos
+   - registros
+      - year
+         - semana
+            - registro (por cu)
+               - checkin
+               - esp
+               - horas (en ms)
+               - inge (uid)
+               - obra
+               - proceso (este es nuevo)
+               - presupuesto
+               - status
+   - cuantificaciones
+      - obra (por nombre)
+         - year
+            - semana
+               - cuantificacion (por push)
+                  - monto
+                  - descripcion
+                  - proceso (clave de proc, subp u obra)
+                  - pad: pad*
+- info_web
+- mensajes
+   - mensaje (por uid)
+      - destinatario (uid)
+      - remitente (uid)
+      - mensaje
+      - leido
+      - timestamps
+         - enviado
+         - leido
+- rrhh
+   - diversos
+      - diverso (por nombre)
+         - nombre
+         - distribuible (generalmente, no forzoso)
   - num_trabajadores_id: int (actualizado en app_rrhh_trabajadores y app_rrhh_importar_trabajadores)
   - trabajadores:
       - AFECTAN: app_trabajadores
@@ -348,71 +413,8 @@
                         - impuestos_diversos
                         - impuestos_asistencia (impuestos_asistencia_trabajador * asistencias_aqui/asistencias totales)
                      - total (subtotal + impuestos)
-   - destajistas: 
-      - AFECTAN: app_destajistas
-      - SUSCRIBEN:
-      - destajista: (por nombre)
-         - nombre
-         - telefono
-         - cuenta_bancaria
-         - especialidad: ("IE"/"IHS"/"Ambas")
-- clientes
-   - cliente (por nombre)
-      - clave
-      - nombre
-      - telefono
-      - atencion
-         - numero (por push pero de array, 0,1,2)
-            - area
-            - celular
-            - email
-            - extension
-            - nombre
-      - direccion
-         - calle
-         - ciudad
-         - colonia
-         - cp
-         - delegacion
-         - numero
-- proyectos
-   - registros
-      - year
-         - semana
-            - registro (por cu)
-               - checkin
-               - esp
-               - horas (en ms)
-               - inge (uid)
-               - obra
-               - proceso (este es nuevo)
-               - presupuesto
-               - status
-   - cuantificaciones
-      - obra (por nombre)
-         - year
-            - semana
-               - cuantificacion (por push)
-                  - monto
-                  - descripcion
-                  - proceso (clave de proc, subp u obra)
-                  - pad: pad*
-- info_web
-- mensajes
-   - mensaje (por uid)
-      - destinatario (uid)
-      - remitente (uid)
-      - mensaje
-      - leido
-      - timestamps
-         - enviado
-         - leido
-- rrhh
-   - diversos
-      - diverso (por nombre)
-         - nombre
-         - distribuible (generalmente, no forzoso)
 - compras
+   - num_proveedores_id
    - proveedores
       - proveedor (por ref)
          - razonSocial
