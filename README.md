@@ -18,6 +18,7 @@ REESTRUCTURA_BD:
     - reporte_ppto -> depende de def_ppto
     
  actualizados/nuevos(30/4/19):
+ - app_procesos -> Borro campos al actualizar para evitar duplicar + (reestructura_bd, fechas, no obra_prod, kaiz en procesos)
  - app_compras_proveedor -> (REVISAR HTML) nueva app. Incluye alta Y edicion
  - app_compras_importar_proveedores -> (REVISAR HTML) igual a importar trabajadores
  - app_funciones -> sendMessage y markMessageAsRead
@@ -34,7 +35,6 @@ REESTRUCTURA_BD:
  - app_utilidad -> carga sólo las obras asignadas
  - app_distribucion_supervisores -> reestructura_bd
  - app_gestionar_supervisores -> (REVISAR HTML) reestructura_bd, sólo se asigna por obra, se comenta un ddl
- - app_procesos -> reestructura_bd, fechas, no obra_prod, kaiz en procesos
  - app_editar_proceso -> reestructura_bd
  - Mande a obsoletos: app_prod_gestionar_pptos, app_colaboradores_compras, app_colaboradores_produccion, app_colaboradores_rrhh, app_datos_kaizen, app_obra_prod, app_personal, app_inge, app_permisos
  - app_desplegar_kaizen -> reestructura_bd, si sólo una obra se carga automático, si no subproc quito botones
