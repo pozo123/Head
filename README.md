@@ -22,6 +22,7 @@ REESTRUCTURA_BD:
  - app_proy_registros -> (REVISAR HTML) comenté que alimentara a kaizen (+corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> comenté que alimentara a kaizen + reestructura_bd
  - app_reporte_obras -> (REVISAR HTML, faltan divs y sobran dropdown checkboxes) reestructura_bd. 
+ - app_rrhh_trabajadores -> num_id_trabajadores + reestructura_bd y contempla terminadas, trab y pagos a rrhh
  
  actualizados/nuevos(29/4/19):
  - app_proy_cuant_kaizen -> contemplo terminados y si simple a misc
@@ -44,7 +45,6 @@ REESTRUCTURA_BD:
  actualizados/nuevos(24/4/19):
  - app_admon_pago_kaizen -> (REVISAR HTML) nueva app + pad + checo si obra terminada
  - app_desplegar_procesos -> contemplo terminada
- - app_rrhh_trabajadores ->  reestructura_bd y contempla terminadas, trab y pagos a rrhh
  - app_rrhh_horas_extra -> (REVISAR HTML) reestructura_bd, contemplo terminados, si obra simple mete a misc, simple también considera adicionales, botón carga semana anterior, trab y pagos a rrhh
   - app_rrhh_pagos_diversos -> (REVISAR HTML) si mismo trab, obra y proc, actualiza valor ahí, en impuestos y en total de nom y trab Y lo mismo que horas_extra, botón "Carga semana anterior" con id = "semanaAnteriorButtonDiversos" en hidden, contempla terminados, reestructura_bd, trab y pagos a rrhh
   - app_rrhh_importar_trabajadores ->trab a rrhh
