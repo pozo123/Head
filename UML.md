@@ -414,8 +414,12 @@
          - distribuible (generalmente, no forzoso)
 - compras
    - proveedores
-      - Por definir
-      
+      - proveedor (por ref)
+         - razonSocial
+         - direccion
+         - telefono
+         - atiende
+         - RFC
       
 - pad:
   - uid
