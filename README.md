@@ -18,8 +18,11 @@ REESTRUCTURA_BD:
     - reporte_obras
     - reporte_ppto
     
+ actualizados/nuevos(30/4/19):
+ - app_proy_registros -> comenté que alimentara a kaizen
+ 
  actualizados/nuevos(29/4/19):
- - proy_cuant_kaizen -> contemplo terminados y si simple a misc
+ - app_proy_cuant_kaizen -> contemplo terminados y si simple a misc
  - app_reporte -> reestructura_bd y limpieza general de código
 
  actualizados/nuevos(25/4/19):
