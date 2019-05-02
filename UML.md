@@ -137,14 +137,6 @@
          - supervisor (por id)
             - nombre
             - activo: bool
-      - presupuestos:
-         - presupuesto (por nombre(?))
-            - terminado
-            - consec
-            - consecutivos
-               - pdf
-            - nombre (ya lo llamo en registros)
-            - Todo lo de presupuestos??? Definir
       - procesos:
          - proceso (por clave):
             - terminado
@@ -177,6 +169,13 @@
                   - kaizen: *
                   - fecha_inicio
                   - fecha_final
+                  - presupuesto (por nombre(?) SOLO en los de ADIC y PC00)
+                     - terminado
+                     - consec
+                     - consecutivos
+                        - pdf
+                     - nombre
+                     - Todo lo de presupuestos??? Definir
             - OdeC: (En hoja)
                - year (por num)
                   - semana (por num)
