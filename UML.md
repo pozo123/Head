@@ -238,7 +238,6 @@
                - inge (uid)
                - obra
                - proceso (este es nuevo)
-               - presupuesto
                - status
    - cuantificaciones
       - obra (por nombre)
