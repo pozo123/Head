@@ -175,7 +175,7 @@
                   - SCORE: igual que proc simple
                   - categoria
                   - kaizen: *
-                  - fechas_inicio
+                  - fecha_inicio
                   - fecha_final
             - OdeC: (En hoja)
                - year (por num)
