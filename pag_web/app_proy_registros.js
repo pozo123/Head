@@ -15,10 +15,11 @@ var esp;
 var path = "";
 
 var precio_hora = 1300;
+var user;
 
 $(document).ready(function() {
-    var user = firebase.auth().currentUser;
-    firebase.database().ref(rama_bd_personal + "/" + user.uid).once('value').then(function(snapshot){
+    user = firebase.auth().currentUser.uid;
+    firebase.database().ref(rama_bd_personal + "/" + user).once('value').then(function(snapshot){
         esp = snapshot.child("esp").val();
         if(snapshot.child("areas/proyectos").val() && !snapshot.child("areas/administracion").val()){
             modoRegistros();
@@ -48,8 +49,7 @@ $(document).ready(function() {
 });
 
 function modoRegistros(){
-    var user = firebase.auth().currentUser;
-    firebase.database().ref(rama_bd_personal + "/" + user.uid).once('value').then(function(snapshot){
+    firebase.database().ref(rama_bd_personal + "/" + user).once('value').then(function(snapshot){
         if(snapshot.child("status").val()){
             $('#' + id_entrada_group_registros).addClass("hidden");
             $('#' + id_salida_button_registros).removeClass("hidden");
@@ -78,75 +78,55 @@ $('#' + id_obra_ddl_registros).change(function(){
 
         firebase.database().ref(rama_bd_obras + "/" + obra_nombre).once('value').then(function(snapshot){
             var obra = snapshot.val();
-            if(obra.num_procesos == 0 && obra.procesos.ADIC.num_subprocesos == 0){
-                snapshot.child("presupuestos").forEach(function(pptoSnap){
-                    var ppto = pptoSnap.val();
-                    if(!ppto.terminado){
+            snapshot.child("procesos").forEach(function(procSnap){
+                var proc = procSnap.val();
+                if(proc.num_subprocesos == 0){
+                    if(!proc.terminado && procSnap.key != "ADIC"){
                         var option2 = document.createElement('option');
-                        option2.text = pptoSnap.key + " (" + ppto.nombre + ")";
-                        option2.value = pptoSnap.key; 
+                        option2.text = procSnap.key + " (" + proc.nombre + ")";
+                        option2.value = procSnap.key; 
                         select.appendChild(option2);
                     }
-                });
-            } else {
-                snapshot.child("procesos").forEach(function(procSnap){
-                    var proc = procSnap.val();
-                    if(proc.num_subprocesos == 0){
-                        if(!proc.terminado){
+                } else {
+                    procSnap.child("subprocesos").forEach(function(subpSnap){
+                        var subp = subpSnap.val();
+                        if(!subp.terminado){
                             var option2 = document.createElement('option');
-                            option2.text = procSnap.key + " (" + proc.nombre + ")";
-                            option2.value = procSnap.key; 
+                            option2.text = subpSnap.key + " (" + subp.nombre + ")";
+                            option2.value = subpSnap.key; 
                             select.appendChild(option2);
                         }
-                    } else {
-                        procSnap.child("num_subprocesos").forEach(function(subpSnap){
-                            var subp = subpSnap.val();
-                            if(!subp.terminado){
-                                var option2 = document.createElement('option');
-                                option2.text = subpSnap.key + " (" + subp.nombre + ")";
-                                option2.value = subpSnap.key; 
-                                select.appendChild(option2);
-                            }
-                        });
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     }
 });
 
 $('#' + id_entrada_button_registros).click(function(){
     var obra_ddl = $('#' + id_obra_ddl_registros + " option:selected").val();
-    if(obra_ddl == "" || (obra_ddl == "Otros" && $('#' + id_otros_registros).val()) || $('#' + id_proc_ddl_registros + " option:selected").val()){
+    if(obra_ddl == "" || (obra_ddl == "Otros" && $('#' + id_otros_registros).val() == "") || (obra_ddl != "Otros" && $('#' + id_proc_ddl_registros + " option:selected").val() == "")){
         alert("Llena todos los campos");
     } else {
         var proc = "";
-        var ppto = "";
         if(obra_ddl == "Otros"){
-            proc = "NA";
-            ppto = $('#' + id_otros_registros).val();
-        } else if(obra_ddl == "simple"){
-            proc = "PC00";
-            ppto = $('#' + id_proc_ddl_registros + " option:selected").val();
-        } else if(obra_ddl == "padre"){
+            proc = $('#' + id_otros_registros).val();
+        } else {
             proc = $('#' + id_proc_ddl_registros + " option:selected").val();
-            ppto = "NA";
         }
-        var user = firebase.auth().currentUser;
         var reg = {
             esp: esp,
             horas: 0,
-            inge: user.uid,
+            inge: user,
             obra: $('#' + id_obra_ddl_registros + " option:selected").text(),
             proceso: proc,
-            presupuesto: ppto,
             status: false,
             checkin: new Date().getTime(),
         }
         var hoy = getWeek(new Date().getTime());
         var cu_reg = firebase.database().ref(rama_bd_registros + "/" + hoy[1] + "/" + hoy[0]).push(reg).key;
         var tru = true;
-        firebase.database().ref(rama_bd_personal + "/" + user.uid + "/status").set(tru);
+        firebase.database().ref(rama_bd_personal + "/" + user + "/status").set(tru);
         path = hoy[1] + "/" + hoy[0] + "/" + cu_reg;
     }
 });
@@ -169,9 +149,8 @@ $('#' + id_salida_button_registros).click(function(){
                 });
             });
         }
-        var user = firebase.auth().currentUser;
         var fal = false;
-        firebase.database().ref(rama_bd_personal + "/" + user.uid + "/status").set(fal);
+        firebase.database().ref(rama_bd_personal + "/" + user + "/status").set(fal);
     });
 });
 
@@ -187,7 +166,7 @@ function cierraRegistro(regSnap){
     firebase.database().ref(rama_bd_registros + "/" + path).update(updates);
     if(reg.obra != "Otros"){
         var cant_horas = parseFloat(horas / 3600000);
-        var cant = cant_horas * precio_hora;
+        //var cant = cant_horas * precio_hora;
         var proc_path = reg.proceso.split("-");
         if(proc_path.length > 1){
             //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0] + "/subprocesos/" + reg.proceso, cant);
@@ -197,25 +176,18 @@ function cierraRegistro(regSnap){
         }
         //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0], cant);
         //sumaScoreKaizen(reg.obra,cant);
-        if(reg.proceso == "PC00"){
-            sumaScoreProc(reg.obra + "/presupuestos/" + reg.presupuesto, cant_horas);
-        }
     }
 }
 
 function sumaScoreProc(query,cant){
     firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE").once('value').then(function(snapshot){
-        if(snapshot.exists() && (esp == "ie" || esp == "ihs")){
-            var u_uid = firebase.auth().currentUser.uid;
+        if(snapshot.exists()){
             var total = snapshot.child("total_trabajado").exists() ? parseFloat(snapshot.child("total_trabajado").val()) : 0;
-            var total_esp = snapshot.child("total_" + esp + "_trabajado").exists() ? parseFloat(snapshot.child("total_" + esp + "_trabajado").val()) : 0;
-            var horas_trabajador = snapshot.child(esp + "/" + u_uid + "/horas_trabajadas").exists() ? parseFloat(snapshot.child(esp + "/" + firebase.auth().currentUser.uid + "/horas_trabajadas").val()) : 0;
+            var horas_trabajador = snapshot.child("inges/" + user + "/horas_trabajadas").exists() ? parseFloat(snapshot.child("inges/" + user + "/horas_trabajadas").val()) : 0;
             total += cant;
-            total_esp += cant;
             horas_trabajador += cant;
             firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/total_trabajado").set(total);
-            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/total_" + esp + "_trabajado").set(total_esp);
-            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/" + esp + "/" + u_uid + "/horas_trabajadas").set(horas_trabajador);
+            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/inges/" + user + "/horas_trabajadas").set(horas_trabajador);
         }
     });
 }
