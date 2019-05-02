@@ -138,7 +138,6 @@ $('#' + id_registrar_button_obra).click(function () {
             procesos: procesos,
             fechas: fech,
             kaizen: kaiz,
-            SCORE: "",
         }
 
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy).val()).set(obra_mag);
