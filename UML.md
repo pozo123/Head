@@ -9,7 +9,7 @@
       - administracion: boolean
       - rrhh: bool
     - credenciales: (0 sisadmin, 1 director, 2 lider de area, 3 los demas, 4 bajas/glitches)
-    - esp (si tienes area proy, "ie", "ihs", "neutra")
+    - esp (si tienes area proy, "ie", "ihs")
     - status (si tienes area proy, true si trabajando)
     - uid: uid
     - nombre: string
@@ -144,21 +144,6 @@
             - consecutivos
                - pdf
             - nombre (ya lo llamo en registros)
-            - SCORE
-               - total_ie_prog (en horas)
-               - total_ihs_prog (en horas)
-               - total_prog (en horas)
-               - total_ihs_trabajado (en horas)
-               - total_ie_trabajado (en horas)
-               - total_trabajado (en horas)
-               - ie
-                  - trabajador (por uid)
-                     - horas_trabajadas (en horas)
-                     - horas_programadas (en horas)
-               - ihs
-                  - trabajador (por uid)
-                     - horas_trabajadas (en horas)
-                     - horas_programadas (en horas)
             - Todo lo de presupuestos??? Definir
       - procesos:
          - proceso (por clave):
@@ -168,11 +153,17 @@
             - alcance
             - clave
             - tipo: "adicional"/"continuo"/"miscelaneo"/"proyecto"
-            - SCORE (SOLO EN HOJA, formato igual que arriba)
             - fecha_inicio
             - fecha_final
             - num_subprocesos
             - kaizen: *
+            - SCORE (SOLO EN HOJA, formato igual que arriba)
+               - total_prog (en horas)
+               - total_trabajado (en horas)
+               - inges
+                  - inge (por uid)
+                     - horas_trabajadas (en horas) (separar en horas_trabajadas_ie y horas_trabajadas_ihs?
+                     - horas_programadas (en horas)
             - subprocesos:
                - subproceso (por clave):
                   - terminado
@@ -181,6 +172,7 @@
                   - alcance
                   - clave
                   - OdeC: igual que proc
+                  - SCORE: igual que proc simple
                   - categoria
                   - kaizen: *
                   - fechas_inicio
