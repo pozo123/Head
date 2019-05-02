@@ -169,7 +169,7 @@
                   - kaizen: *
                   - fecha_inicio
                   - fecha_final
-                  - presupuesto (por nombre(?) SOLO en los de ADIC y PC00)
+                  - presupuesto:
                      - terminado
                      - consec
                      - consecutivos
