@@ -17,7 +17,7 @@ REESTRUCTURA_BD:
     - reporte_ppto -> depende de def_ppto    
     
  actualizados/nuevos(2/5/19):
- - mande a obsoletos: dashgrid, pagos (todo se va a hacer con el admon), perfil, app_proy_asigna_proc
+ - mande a obsoletos: dashgrid, pagos (todo se va a hacer con el admon), perfil, app_proy_asigna_proc, app_graphs (hice funcion nueva en app_proy_dashboard)
  - app_proy_registros -> (REVISAR HTML) ya no pptos ni equipos, PC00-MISC, (+ comenté que alimentara a kaizen + corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> ya no pptos ni equipos (+ comenté que alimentara a kaizen + reestructura_bd)
  - app_obra -> pc00-misc, presupuestos, cambio de rama a administracion, reestructura_bd
