@@ -73,7 +73,7 @@ function cierraRegistro(regSnap, path){
     firebase.database().ref(rama_bd_registros + "/" + path).update(updates);
     if(reg.obra != "Otros"){
         var cant_horas = parseFloat(horas / 3600000);
-        var cant = cant_horas * precio_hora;
+        //var cant = cant_horas * precio_hora;
         var proc_path = reg.proceso.split("-");
         if(proc_path.length > 1){
             //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0] + "/subprocesos/" + reg.proceso, cant);
@@ -83,24 +83,18 @@ function cierraRegistro(regSnap, path){
         }
         //sumaScoreKaizen(reg.obra + "/procesos/" + proc_path[0], cant);
         //sumaScoreKaizen(reg.obra,cant);
-        if(reg.proceso == "PC00"){
-            sumaScoreProc(reg.obra + "/presupuestos/" + reg.presupuesto, cant_horas,esp,reg.inge);
-        }
     }
 }
 
-function sumaScoreProc(query,cant,esp,u_uid){
+function sumaScoreProc(query,cant){
     firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE").once('value').then(function(snapshot){
-        if(snapshot.exists() && (esp == "ie" || esp == "ihs")){
+        if(snapshot.exists()){
             var total = snapshot.child("total_trabajado").exists() ? parseFloat(snapshot.child("total_trabajado").val()) : 0;
-            var total_esp = snapshot.child("total_" + esp + "_trabajado").exists() ? parseFloat(snapshot.child("total_" + esp + "_trabajado").val()) : 0;
-            var horas_trabajador = snapshot.child(esp + "/" + u_uid + "/horas_trabajadas").exists() ? parseFloat(snapshot.child(esp + "/" + firebase.auth().currentUser.uid + "/horas_trabajadas").val()) : 0;
+            var horas_trabajador = snapshot.child("inges/" + user + "/horas_trabajadas").exists() ? parseFloat(snapshot.child("inges/" + user + "/horas_trabajadas").val()) : 0;
             total += cant;
-            total_esp += cant;
             horas_trabajador += cant;
             firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/total_trabajado").set(total);
-            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/total_" + esp + "_trabajado").set(total_esp);
-            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/" + esp + "/" + u_uid + "/horas_trabajadas").set(horas_trabajador);
+            firebase.database().ref(rama_bd_obras + "/" + query + "/SCORE/inges/" + user + "/horas_trabajadas").set(horas_trabajador);
         }
     });
 }
