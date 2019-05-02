@@ -2,29 +2,34 @@
 Depto. de Innovacion y Optimizacion
 
 REESTRUCTURA_BD:
- - admon: check
+ - admon: 
+    - app_admon_pago -> ya no va a ppto
+    - app_procesos -> no se puede dar adics ni pc00, esos son con pptos
  - compras: check
  - rrhh: check
  - prod: check
  - proy
     - bibliotecas -> definir areas (en donde como catalogo y en donde editar), definir ediciones y eliminados, cambiar las ramas adecuadsa
     - dashboard -> checar cual es la ultima version, definir formato y datos
-    - dashgrid -> obsoletos? hay que modificarlo
     - gestionar_presu -> depende de def_ppto. También gestiona procs, no?
     - graphs -> definir formato
-    - pagos -> obsoletos? Van a haber pagos aquí? No sería en Kaizen? De aquí es útil el storage
-    - perfil -> obsoletos. Pasar cambio contraseña a app_principal
     - presupuesto -> definir que si lleva y que no, separar pdf de crear elemento en bd
     - reporte_ppto -> depende de def_ppto
     
+    - app_obra -> score
+    - app_proy_asigna_proc -> obsoletos?
+    
+ actualizados/nuevos(2/5/19):
+ - mande a obsoletos: dashgrid, pagos (todo se va a hacer con el admon), perfil
+ - app_proy_registros -> (REVISAR HTML) ya no pptos ni equipos, PC00-MISC, (+ comenté que alimentara a kaizen + corregí error + nuevos registros usando el nuevo uml)
+ - app_cierre_maestro -> ya no pptos ni equipos (+ comenté que alimentara a kaizen + reestructura_bd)
+
  actualizados/nuevos(30/4/19):
  - app_proy_actualizar_esp -> (REVISAR HTML) nueva app. 2 radio buttons y un botón nada más.
  - app_procesos -> Borro campos al actualizar para evitar duplicar + (reestructura_bd, fechas, no obra_prod, kaiz en procesos)
  - app_compras_proveedor -> (REVISAR HTML) nueva app. Incluye alta Y edicion
  - app_compras_importar_proveedores -> (REVISAR HTML) igual a importar trabajadores
  - app_funciones -> sendMessage y markMessageAsRead
- - app_proy_registros -> (REVISAR HTML) comenté que alimentara a kaizen (+corregí error + nuevos registros usando el nuevo uml)
- - app_cierre_maestro -> comenté que alimentara a kaizen + reestructura_bd
  - app_reporte_obras -> (REVISAR HTML, faltan divs y sobran dropdown checkboxes) reestructura_bd. 
  - app_rrhh_trabajadores -> num_id_trabajadores + reestructura_bd y contempla terminadas, trab y pagos a rrhh
  
