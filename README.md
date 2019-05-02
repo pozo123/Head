@@ -14,15 +14,13 @@ REESTRUCTURA_BD:
     - gestionar_presu -> depende de def_ppto. También gestiona procs, no?
     - graphs -> definir formato
     - presupuesto -> definir que si lleva y que no, separar pdf de crear elemento en bd
-    - reporte_ppto -> depende de def_ppto
-    
-    - app_obra -> score
-    - app_proy_asigna_proc -> obsoletos?
+    - reporte_ppto -> depende de def_ppto    
     
  actualizados/nuevos(2/5/19):
- - mande a obsoletos: dashgrid, pagos (todo se va a hacer con el admon), perfil
+ - mande a obsoletos: dashgrid, pagos (todo se va a hacer con el admon), perfil, app_proy_asigna_proc
  - app_proy_registros -> (REVISAR HTML) ya no pptos ni equipos, PC00-MISC, (+ comenté que alimentara a kaizen + corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> ya no pptos ni equipos (+ comenté que alimentara a kaizen + reestructura_bd)
+ - app_obra -> pc00-misc, presupuestos, cambio de rama a administracion, reestructura_bd
 
  actualizados/nuevos(30/4/19):
  - app_proy_actualizar_esp -> (REVISAR HTML) nueva app. 2 radio buttons y un botón nada más.
@@ -48,7 +46,6 @@ REESTRUCTURA_BD:
  - app_proy_asigna_proc -> reestructura_bd
  - app_kaizen_global -> ya lo reestructure, pero sigue haciendo falta checar todo pq no jalaba
  - score.js -> reestructura, permisos por credencial. Revisar si sobran/faltan pestañas
- - app_obra -> reestructura_bd, el atributo SCORE lo dejo vacío
  
  actualizados/nuevos(24/4/19):
  - app_admon_pago_kaizen -> (REVISAR HTML) nueva app + pad + checo si obra terminada
