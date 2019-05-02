@@ -21,7 +21,7 @@ REESTRUCTURA_BD:
  - app_proy_registros -> (REVISAR HTML) ya no pptos ni equipos, PC00-MISC, (+ comenté que alimentara a kaizen + corregí error + nuevos registros usando el nuevo uml)
  - app_cierre_maestro -> ya no pptos ni equipos (+ comenté que alimentara a kaizen + reestructura_bd)
  - app_obra -> pc00-misc, presupuestos, cambio de rama a administracion, reestructura_bd
- - app_proy_dashboard -> nueva app (habrá que mandar "app_dashboard" a obsoletos)
+ - app_proy_scoreboard -> nueva app (habrá que mandar "app_dashboard" a obsoletos)
 
  actualizados/nuevos(30/4/19):
  - app_proy_actualizar_esp -> (REVISAR HTML) nueva app. 2 radio buttons y un botón nada más.
