@@ -61,11 +61,13 @@ $('#' + id_registrar_button_obra).click(function () {
     if(!$('#' + id_nombre_obra_ddl_obra_proy + " option:selected").val() == "" || !$('#' + id_clave_obra).val() || $('#' + id_cliente_ddl_obra + " option:selected").val() === ""){
         alert("Llena todos los campos requeridos");
     } else {   
+        var f_i = new Date($('#' + id_fecha_inicio_obra).val()).getTime();
+        var f_f = new Date($('#' + id_fecha_final_obra).val()).getTime();
         var fech = {
             fecha_inicio_real: 0,
-            fecha_inicio_teorica: new Date($('#' + id_fecha_inicio_obra).val()).getTime(),
+            fecha_inicio_teorica: f_i,
             fecha_final_real: 0,
-            fecha_final_teorica: new Date($('#' + id_fecha_final_obra).val()).getTime(),
+            fecha_final_teorica: f_f,
         }
         procesos["MISC"] = {
             terminado: false,
@@ -73,8 +75,8 @@ $('#' + id_registrar_button_obra).click(function () {
             nombre: "MISCELANEOS",
             clave: "MISC",
             tipo: "miscelaneo",    
-            fecha_inicio: 0,
-            fecha_final: 0,
+            fecha_inicio: f_i,
+            fecha_final: f_f,
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
@@ -86,12 +88,24 @@ $('#' + id_registrar_button_obra).click(function () {
             nombre: "PREPROYECTO",
             clave: "PC00",
             tipo: "proyecto",
-            fecha_inicio: 0,
-            fecha_final: 0,
+            fecha_inicio: f_i,
+            fecha_final: f_f,
             kaizen: kaiz,
             num_subprocesos: 0,
-            subprocesos: "",
-            SCORE: "",
+            subprocesos: {
+                PC00-MISC: {
+                    terminado: false,
+                    nombre: "Miescelaneos preproyecto",
+                    alcance: "Miscelaneos preproyecto",
+                    clave: "PC00-MISC",
+                    SCORE: "",
+                    categoria: "MISCELANEO",
+                    kaizen: kaiz,
+                    fecha_inicio: f_i,
+                    fecha_final: f_f,
+                    //presupuesto: "",
+                }
+            },
         };
         procesos["ADIC"] = {
             terminado: false,
@@ -99,8 +113,8 @@ $('#' + id_registrar_button_obra).click(function () {
             nombre: "ADICIONALES",
             clave: "ADIC",
             tipo: "adicional",
-            fecha_inicio: 0,
-            fecha_final: 0,
+            fecha_inicio: f_i,
+            fecha_final: f_f,
             kaizen: kaiz,
             num_subprocesos: 0,
             subprocesos: "",
@@ -124,8 +138,7 @@ $('#' + id_registrar_button_obra).click(function () {
             procesos: procesos,
             fechas: fech,
             kaizen: kaiz,
-            presupuestos: "",
-            SCORE: score,
+            SCORE: "",
         }
 
         firebase.database().ref(rama_bd_obras + "/" + $('#' + id_nombre_obra_ddl_obra_proy).val()).set(obra_mag);
