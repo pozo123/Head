@@ -114,6 +114,9 @@ $('#' + id_entrada_button_registros).click(function(){
         } else {
             proc = $('#' + id_proc_ddl_registros + " option:selected").val();
         }
+        if(proc == "PC00"){
+            proc = "PC00-MISC";
+        }
         var reg = {
             esp: esp,
             horas: 0,
